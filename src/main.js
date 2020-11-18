@@ -10,7 +10,10 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueNumeric from 'vue-numeric'
 Vue.use(VueNumeric)
+import Multiselect from 'vue-multiselect'
 
+// register globally
+Vue.component('multiselect', Multiselect)
 import VueHotkey from 'v-hotkey'
 
 Vue.use(VueHotkey)

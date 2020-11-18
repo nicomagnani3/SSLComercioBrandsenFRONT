@@ -1,5 +1,5 @@
 <template>
-  <b-container class="ListadoProductos">
+  <b-container class="ListadoPublicaciones">
     <br />
     <div v-if="loading">
       <span class="text-danger"> <b> Cargando</b></span>
@@ -20,7 +20,7 @@
         v-bind:key="producto.id"
       >
         <b-card
-          :title="producto.nombre"
+          :title="producto.titulo"
           img-src="https://picsum.photos/600/300/?image=25"
           img-alt="Image"
           img-top
@@ -37,9 +37,9 @@
   </b-container>
 </template>
 <script>
-import ProductosService from "@/services/ProductosService";
+import PublicacionService from "@/services/PublicacionService";
 export default {
-  name: "novedades",
+  name: "Listar Productos",
 
   data() {
     return {
@@ -48,18 +48,18 @@ export default {
     };
   },
   methods: {
-    async getProductos() {
+    async getPublicaciones() {
       try {
-        const response = await ProductosService.getProductos();
+        const response = await PublicacionService.getPublicaciones();
         this.productos = response.data.data;
         console.log(this.productos);
       } catch (err) {
-        this.novedades = "ATENCION NO SE PUDIERON OBTENER LOS PRODUCTOS";
+        this.productos = "ATENCION NO SE PUDIERON OBTENER LOS PRODUCTOS";
       }
     },
   },
   mounted() {
-    this.getProductos().then(() => {
+    this.getPublicaciones().then(() => {
       this.loading = false;
     });
   },

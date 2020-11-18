@@ -7,7 +7,8 @@ import Router from 'vue-router'
 import Login from '@/components/Inicio/Login.vue'
 import Registrarse from '@/components/Inicio/Registrar.vue'
 /* Productos */
-import ListarProductos from '@/components/productos/ListarProductos.vue'
+import ListarProductos from '@/components/publicaciones/ListarProductos.vue'
+import NuevaPublicacion from '@/components/publicaciones/NuevaPublicacion.vue'
 /* Menu */
 import Container from '@/components/menu/Container.vue'
 
@@ -26,6 +27,13 @@ const router = new Router({
       name: 'listar',
       component: ListarProductos,
       }, 
+      {
+        path: '/NuevaPublicacion',
+        name: 'NuevaPublicacion',
+        component: NuevaPublicacion 
+              
+       },
+
     ]
     },
     {
@@ -43,9 +51,10 @@ const router = new Router({
           path: '/registrar',
           name: 'Registrarse',
           component: Registrarse
-        },     
+        },
+
       ]
-    },
+    },  
     {
       path: '/.well-known/acme-challenge/:file'
     },

@@ -91,7 +91,7 @@ export default {
 
         this.setToken(response.data.token);
         this.setUsername(response.data.username);
-        //this.setuserId (response.data.userId);
+        this.setuserId (response.data.userId);
         this.setGrupos(response.data.grupos);
         //this.setNombre (response.data.nombre);
         this.setPermisos(response.data.permission);
