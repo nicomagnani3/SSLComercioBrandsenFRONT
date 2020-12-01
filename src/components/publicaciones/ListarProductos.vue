@@ -1,5 +1,5 @@
 <template>
-  <b-container class="ListadoPublicaciones">
+  <b-container class="ListarProductos">
     <br />
     <div v-if="loading">
       <span class="text-danger"> <b> Cargando</b></span>
@@ -52,7 +52,7 @@ export default {
       try {
         const response = await PublicacionService.getPublicaciones();
         this.productos = response.data.data;
-        console.log(this.productos);
+        
       } catch (err) {
         this.productos = "ATENCION NO SE PUDIERON OBTENER LOS PRODUCTOS";
       }

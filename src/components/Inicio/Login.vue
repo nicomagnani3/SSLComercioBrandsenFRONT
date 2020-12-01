@@ -44,11 +44,21 @@
           v-if="form.ingresar"
           variant="primary"
           >Ingresar
-        </b-button>
+        </b-button>      
+
         <div class="text-center" v-if="!form.ingresar">
           <b-spinner variant="primary" label="Text Centered"></b-spinner>
         </div>
       </b-form-group>
+       <b-form-group class="text-center">
+          <b-button
+          type="submit"
+          class="my-2"
+          @click="$router.push('registrar')"
+          variant="secondary"
+          >Registrarse
+        </b-button>
+            </b-form-group> 
     </b-form>
   </div>
 </template>
