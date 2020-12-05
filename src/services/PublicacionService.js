@@ -10,5 +10,11 @@ export default {
     addPublicacion(credentials) {
         return Api().post(API_URL + API_USER + "nueva_publicacion", credentials)
     },
-  
+    getImagen(credentials) {    
+        return Api().get(API_URL + API_USER + "getImagen", credentials)
+    },
+    addImagen(credentials) {    
+        return Api().post(API_URL + API_USER + "addImagen", credentials)
+    },
+    
 }
