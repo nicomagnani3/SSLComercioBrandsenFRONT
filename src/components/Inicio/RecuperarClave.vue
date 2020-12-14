@@ -1,14 +1,12 @@
 <template>
-  <div class="login">
+  <div class="recuperarClave">
     <br />
     <div class="text-center">
-      <p>¡Hola! Ingresá tu e‑mail y contraseña</p>
+      <p>¡Hola! Para recuperar tu contraseña ingresa tu email y se te enviara una clave provista</p>
     </div>
-
     <hr />
-
     <div class="text-center">
-      <p class="title h5 mt-2 text-center">Iniciar Sesion</p>
+      <p class="title h5 mt-2 text-center">Recuperar Contraeña</p>
     </div>
     <hr />
     <b-alert show variant="danger" v-if="error">{{ error }}</b-alert>
@@ -24,44 +22,20 @@
           placeholder="Direccion de correo electronico"
           class="line"
         ></b-form-input>
-      </b-form-group>
-
-      <b-form-group id="input-group-2">
-        <b-form-input
-          id="password"
-          v-model="form.password"
-          type="password"
-          required
-          autocomplete="current-password"
-          placeholder="Ingresa la contraseña"
-          class="line"
-        ></b-form-input>
-      </b-form-group>
+      </b-form-group>      
       <b-form-group class="text-center">
         <b-button
           type="submit"
           class="my-2"
           v-if="form.ingresar"
           variant="primary"
-          >Ingresar
+          >Recuperar
         </b-button>
 
         <div class="text-center" v-if="!form.ingresar">
           <b-spinner variant="primary" label="Text Centered"></b-spinner>
         </div>
-      </b-form-group>
-      <b-form-group class="text-center">
-        <b-button
-          type="submit"
-          class="my-2"
-          @click="$router.push('registrar')"
-          variant="secondary"
-          >Registrarse
-        </b-button>
-      </b-form-group>
-      <div class="text-center">
-        <router-link to="/recuperarClave">¿Haz olvidado la contraseña?</router-link>
-      </div>
+      </b-form-group>     
       <hr />
     </b-form>
   </div>
@@ -72,12 +46,11 @@ import { mapMutations } from "vuex";
 
 import AuthenticationService from "@/services/AuthenticationService";
 export default {
-  name: "Login",
+  name: "RecuperarClAVE",
   data() {
     return {
       form: {
-        email: "",
-        password: "",
+        email: "",        
         ingresar: true,
       },
       error: "",
@@ -96,20 +69,22 @@ export default {
     async login() {
       try {
         this.form.ingresar = false;
-        const { email, password } = this.form;
+        const { email } = this.form;
 
-        const response = await AuthenticationService.login({
-          email: email,
-          password: password,
-        });
-
-        this.setToken(response.data.token);
-        this.setUsername(response.data.username);
-        this.setuserId(response.data.userId);
-        this.setGrupos(response.data.grupos);
-        //this.setNombre (response.data.nombre);
-        this.setPermisos(response.data.permission);
-        this.$router.push("/");
+        const response = await AuthenticationService.recuperarClave({
+          email: email,         
+        });      
+        if (response.data.error == true){ 
+          this.form.ingresar = true;              
+                this.registrando = false     
+                  this.$bvToast.toast(response.data.data, {
+                  title: `No se pudo recuperar la clave`,
+                  toaster: "b-toaster-top-center",
+                  solid: true,
+                  variant: "danger",
+                  });   
+        }
+        console.log(response)
       } catch (err) {
         this.form.ingresar = true;
         this.error = err.response.data.errors[0];

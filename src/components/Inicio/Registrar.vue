@@ -63,8 +63,7 @@
         <b-form-input
           id="celular"
           v-model="persona.celular"
-          type="number"
-          autocomplete="celular"
+           type="number"        
           required
           placeholder="Celular"
           class="line"
@@ -233,7 +232,7 @@ export default {
       mensaje: "",
        value: 'CLIENTE',
         options: [
-          { text: 'Cliente', value: 'CLIENTE' },
+          { text: 'Usuario', value: 'CLIENTE' },
           { text: 'Comercio', value: 'EMPRESA' },     
         ]
       }
