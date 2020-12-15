@@ -6,6 +6,8 @@ import Router from 'vue-router'
 /* INICIO */
 import Login from '@/components/Inicio/Login.vue'
 import Registrarse from '@/components/Inicio/Registrar.vue'
+import RecuperarClave from '@/components/Inicio/RecuperarClave.vue'
+
 /* Productos */
 
 import NuevaPublicacion from '@/components/publicaciones/NuevaPublicacion.vue'
@@ -55,7 +57,11 @@ const router = new Router({
           name: 'Registrarse',
           component: Registrarse
         },
-
+        {
+          path: '/recuperarClave',
+          name: 'recuperarClave',
+          component: RecuperarClave
+        }
       ]
     },  
     {

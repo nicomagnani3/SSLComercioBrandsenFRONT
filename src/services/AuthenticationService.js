@@ -14,5 +14,8 @@ export default {
     },
     logout(credentials) {
         return Api().post(API_URL + API_USER + "logout", credentials)
+    },
+    recuperarClave(credentials) {
+        return Api().post(API_URL + API_USER + "recuperarClave", credentials)
     }
 }

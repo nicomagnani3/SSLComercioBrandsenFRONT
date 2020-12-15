@@ -15,22 +15,27 @@
       finish-button-text="Finalizar"
       color="#fff159"
     >
-      <b-col v-if="creando" class="text-center">
+      <b-col  v-if="creando" class="text-center">
         <div>
           <b-spinner
-          style="width: 7rem; height: 7rem;"
+            style="width: 5rem; height: 5rem"
             variant="warning"
             label="Text Centered"
             type="grow"
           ></b-spinner>
-          <span class="text-warning">
+          <span style="font-size: 24px" class="text-warning">
             <b>Creando publicacion,aguarde un instante....</b>
           </span>
           <b-spinner
-          style="width: 7rem; height: 7rem;"
+            style="width: 3rem; height: 3rem"
             variant="warning"
             label="Text Centered"
-            type="grow"
+          ></b-spinner>
+          <b-spinner
+            style="width: 3rem; height: 3rem"
+            variant="warning"
+            label="Text Centered"
+            type="variant"
           ></b-spinner>
         </div>
       </b-col>
@@ -48,7 +53,8 @@
         ></ListarCategoriasHijas>
       </tab-content>
       <tab-content title="Imagenes">
-        <ImagenesCarga :imagenes="imagenes"> </ImagenesCarga>
+        <ImagenesCarga :imagenes="imagenes" :imgPrimera="imgPrimera">
+        </ImagenesCarga>
       </tab-content>
       <tab-content title="Ultimos detalles">
         <div>
@@ -217,7 +223,8 @@ export default {
       alerts: [],
       montoEntregaInvalido: false,
       imagenes: [],
-      creando:false
+      imgPrimera: [],
+      creando: false,
     };
   },
   computed: {
@@ -227,7 +234,7 @@ export default {
     async onComplete() {
       const valid = await this.validate();
       if (valid) {
-        this.creando=true
+        this.creando = true;
         try {
           const response = await PublicacionService.addPublicacion({
             titulo: this.publicacion.titulo,
@@ -235,6 +242,7 @@ export default {
             fecha: this.publicacion.fecha,
             observaciones: this.publicacion.observaciones,
             imagenes: this.imagenes,
+            imgPrimera: this.imgPrimera.base64,
             categoria: this.categoriaSeleccionada,
             categoriasHija: this.categoriaHijaSeleccionada,
             usuarioID: this.getUserId,
