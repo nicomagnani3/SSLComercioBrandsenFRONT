@@ -7,10 +7,11 @@ import Router from 'vue-router'
 import Login from '@/components/Inicio/Login.vue'
 import Registrarse from '@/components/Inicio/Registrar.vue'
 /* Productos */
-import ListarProductos from '@/components/publicaciones/ListarProductos.vue'
+
 import NuevaPublicacion from '@/components/publicaciones/NuevaPublicacion.vue'
 /* Menu */
-import Container from '@/components/menu/Container.vue'
+import container from '@/components/menu/Container.vue'
+import home from '@/components/Home/Home.vue'
 
 Vue.use(Router)
 const router = new Router({
@@ -18,17 +19,19 @@ const router = new Router({
   base: process.env.BASE_URL,
   routes: [{
     path: '/',
-    component: Container ,
+    component: container ,
     meta: { 
       requireAuth: false
     },
-    children: [{
-      path: '/',
-      name: 'listar',
-      component: ListarProductos,
-      }, 
+    children: [
       {
-        path: '/NuevaPublicacion',
+        path: '/',
+        name: 'Home',
+        component: home 
+              
+       },
+      {
+        path: '/',
         name: 'NuevaPublicacion',
         component: NuevaPublicacion 
               

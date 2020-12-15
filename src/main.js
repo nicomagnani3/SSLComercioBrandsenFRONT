@@ -15,6 +15,11 @@ import VueNumeric from 'vue-numeric'
 Vue.use(VueNumeric)
 import Multiselect from 'vue-multiselect'
 
+import VueGlide from 'vue-glide-js'
+import 'vue-glide-js/dist/vue-glide.css'
+
+Vue.use(VueGlide)
+
 // register globally
 Vue.component('multiselect', Multiselect)
 import VueHotkey from 'v-hotkey'
