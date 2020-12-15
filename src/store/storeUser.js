@@ -11,7 +11,7 @@ export default {
         token: sessionStorage.getItem('token') || null,      
         grupos: sessionStorage.getItem('grupos') ||  null,
         permisos: sessionStorage.getItem('permisos') ||  null,
-        userId :sessionStorage.getItem('userId') || '',     
+        userId :sessionStorage.getItem('userId') || null,     
         nombre:sessionStorage.getItem('nombre') ||  null,
 
 
@@ -111,6 +111,7 @@ export default {
             return JSON.parse(state.grupos);
         },
         getUserId(state) {
+            console.log(JSON.parse(state.userId))
             return JSON.parse(state.userId);
         },
         
