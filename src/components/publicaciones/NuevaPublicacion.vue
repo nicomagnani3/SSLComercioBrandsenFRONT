@@ -13,7 +13,7 @@
       back-button-text="Volver!"
       next-button-text="Siguiente!"
       finish-button-text="Finalizar"
-      color="#fff159"
+      color="#ffc107"
     >
       <b-col  v-if="creando" class="text-center">
         <div>
@@ -254,7 +254,7 @@ export default {
             solid: true,
             variant: "success",
           });
-          this.$router.push({ name: "/Home" });
+          this.$router.push("/");
         } catch (error) {
           error.response.data.data.forEach((data) => {
             this.$bvToast.toast(`No se pudo crear la publicacion`, {

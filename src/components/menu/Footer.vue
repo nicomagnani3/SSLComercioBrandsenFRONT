@@ -1,5 +1,5 @@
 <template>
-    <footer id="sticky-footer" class="footer text-center">
+    <footer style=" background-color: #ffc107;" id="sticky-footer" class="footer text-center">
        
         <span class="footer-text">Powered by </span>
 <!--
@@ -30,17 +30,18 @@ export default {
 
 .footer-text {
     font-size: 80%;
+    
 }
-/*
+
 .footer {
-  position: absolute;
+
   bottom: 0;
   width: 100%;
  
   height: 160px;
   line-height: 160px; 
-  background-color: #f5f5f5;
+  background-color: #ffc107;
 }
-*/
+
 </style>
 

@@ -53,9 +53,21 @@
       return {
         slide: 0,
        
-      }
-      }
+     productos: [],
+      sliding: null,
+    };
+  },
+  methods: {
+    onSlideStart(slide) {
+      console.log(slide);
+      this.sliding = true;
+    },
+    onSlideEnd(slide) {
+      console.log(slide);
+      this.sliding = false;
+    },
      }
+    }
 
    
 </script>

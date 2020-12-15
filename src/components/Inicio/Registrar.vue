@@ -3,7 +3,7 @@
     <div class="text-center">
       <img
         src="@/assets/locallogo.png"
-        style="width: 200px"
+        style="width: 500px"
         class="rounded"
         alt="..."
       />

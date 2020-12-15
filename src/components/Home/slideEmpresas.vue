@@ -124,8 +124,18 @@
     data() {
       return {
         slide: 0,
-       
+       sliding:null
       }
+      },
+      methods:{
+          onSlideStart(slide) {
+      console.log(slide);
+      this.sliding = true;
+    },
+    onSlideEnd(slide) {
+      console.log(slide);
+      this.sliding = false;
+    },
       }
      }
 
