@@ -1,8 +1,16 @@
 <template>
   <div class="registrar">
+    <div class="text-center">
+      <img
+        src="@/assets/locallogo.png"
+        style="width: 200px"
+        class="rounded"
+        alt="..."
+      />
+    </div> 
     <b-form action class="form" @submit.prevent="registrarse">
       <hr/>
-      <p class="title h5 mt-2 text-center"><small>Registrate en mercado local</small></p>
+      <p class="title h2 mt-2 text-center"><small>Completa los datos para registrarte</small></p>
       <br/>
         <div class="title h5 mt-2 text-center">
     <b-form-radio-group v-model="value" :options="options" :state="state" name="radio-validation">
@@ -187,13 +195,13 @@
       >
       <b-alert show v-if="mensaje" variant="secondary">{{ mensaje }}</b-alert>
       <b-row>
-        <b-col class="text-left">
+        <!-- <b-col class="text-left">
           <b-button @click="volver()" variant="outline-secondary">
             <b-icon icon="arrow-left-short"></b-icon>Volver
           </b-button>
-        </b-col>
-        <b-col class="text-right">
-          <b-button type="submit" class="my-2" variant="primary"
+        </b-col> -->
+        <b-col  class="text-center">
+          <b-button type="submit"  block variant="primary"
             >Registrar
             <b-icon
               icon="arrow-counterclockwise"

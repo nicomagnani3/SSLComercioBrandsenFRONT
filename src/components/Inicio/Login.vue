@@ -1,14 +1,20 @@
 <template>
-  <div class="login">
+  <div class="login">  
+       <div class="text-center">
+      <img
+        src="@/assets/locallogo.png"
+        style="width: 200px"
+        class="rounded"
+        alt="..."
+      />
+    </div>  
     <br />
+     <br />
     <div class="text-center">
       <p>¡Hola! Ingresá tu e‑mail y contraseña</p>
     </div>
-
-    <hr />
-
     <div class="text-center">
-      <p class="title h5 mt-2 text-center">Iniciar Sesion</p>
+      <p class="title h3 mt-2 text-center">Iniciar Sesion</p>
     </div>
     <hr />
     <b-alert show variant="danger" v-if="error">{{ error }}</b-alert>
@@ -37,12 +43,12 @@
           class="line"
         ></b-form-input>
       </b-form-group>
+      <hr />
       <b-form-group class="text-center">
         <b-button
           type="submit"
-          class="my-2"
-          v-if="form.ingresar"
-          variant="primary"
+        block variant="primary"
+          v-if="form.ingresar"         
           >Ingresar
         </b-button>
 
@@ -52,17 +58,18 @@
       </b-form-group>
       <b-form-group class="text-center">
         <b-button
-          type="submit"
-          class="my-2"
+            block
           @click="$router.push('registrar')"
-          variant="secondary"
-          >Registrarse
+          variant="outline-light"
+          >Crear cuenta
         </b-button>
       </b-form-group>
       <div class="text-center">
-        <router-link to="/recuperarClave">¿Haz olvidado la contraseña?</router-link>
+        <router-link to="/recuperarClave"
+          >¿Haz olvidado la contraseña?</router-link
+        >
       </div>
-      <hr />
+    
     </b-form>
   </div>
 </template>

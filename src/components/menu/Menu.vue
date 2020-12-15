@@ -5,14 +5,14 @@
   </div>
   <div v-else>
     <b-navbar toggleable="lg" type="light" variant="warning">
-      <b-navbar-brand :to="{name: 'listar'}"><Header/> </b-navbar-brand>
+      <b-navbar-brand :to="'/'"><Header/> </b-navbar-brand>
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>      
         <b-navbar-nav>
                 <b-nav-item >Categorias</b-nav-item>
                 <b-nav-item >Ofertas</b-nav-item>
                 <b-nav-item >Tiendas Oficiales</b-nav-item>
-                <b-nav-item :to="{name:'NuevaPublicacion'}">Vender</b-nav-item>
+                <b-nav-item :to="{name:'nuevaPublicacion'}">Vender</b-nav-item>
         </b-navbar-nav>
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">         

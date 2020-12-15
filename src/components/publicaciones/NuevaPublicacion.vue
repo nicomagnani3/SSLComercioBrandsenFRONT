@@ -254,7 +254,7 @@ export default {
             solid: true,
             variant: "success",
           });
-          this.$router.push({ name: "listar" });
+          this.$router.push({ name: "/Home" });
         } catch (error) {
           error.response.data.data.forEach((data) => {
             this.$bvToast.toast(`No se pudo crear la publicacion`, {

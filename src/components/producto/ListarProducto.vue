@@ -223,7 +223,7 @@ export default {
             variant: "success",
           });
           this.creando = response.data.error;
-          this.$router.push({ name: "listar" });
+          this.$router.push({ name: "/" });
         } catch (error) {
           error.response.data.data.forEach((data) => {
             this.$bvToast.toast(`No se pudo crear la publicacion`, {
