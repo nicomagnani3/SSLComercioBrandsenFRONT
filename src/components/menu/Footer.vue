@@ -1,5 +1,5 @@
 <template>
-    <footer style=" background-color: #ffc107;" id="sticky-footer" class="footer text-center">
+    <footer style=" background-color: #FFCE4E;" id="sticky-footer" class="footer text-center">
        
         <span class="footer-text">Powered by </span>
 <!--
@@ -40,7 +40,7 @@ export default {
  
   height: 160px;
   line-height: 160px; 
-  background-color: #ffc107;
+  background-color:#FFCE4E;
 }
 
 </style>

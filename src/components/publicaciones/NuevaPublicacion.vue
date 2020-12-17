@@ -13,7 +13,7 @@
       back-button-text="Volver!"
       next-button-text="Siguiente!"
       finish-button-text="Finalizar"
-      color="#ffc107"
+      color="#FFCE4E"
     >
       <b-col  v-if="creando" class="text-center">
         <div>
@@ -80,7 +80,7 @@
                 <b-col lg="5" md="6">
                   <b-form-group
                     id="titulo-label"
-                    label="Titulo :"
+                    label="Titulo (describa con detalles) :"
                     label-for="titulo"
                   >
                     <ValidationProvider

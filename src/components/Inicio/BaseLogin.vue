@@ -54,7 +54,7 @@ export default {
   font-family: "Montserrat", sans-serif;
   height: 100vh;
   /*background-color: #1a1a1a; */
-  background-color: #ffc107;
+  background-color: #FFCE4E;
 }
 
 .base-box {

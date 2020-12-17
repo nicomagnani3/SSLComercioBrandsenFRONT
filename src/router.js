@@ -9,7 +9,7 @@ import Registrarse from '@/components/Inicio/Registrar.vue'
 import RecuperarClave from '@/components/Inicio/RecuperarClave.vue'
 
 /* Productos */
-
+import BuscarProductos from "@/components/Home/BuscarProductos.vue"; 
 import NuevaPublicacion from '@/components/publicaciones/NuevaPublicacion.vue'
 /* Menu */
 import container from '@/components/menu/Container.vue'
@@ -29,8 +29,7 @@ const router = new Router({
       {
         path: '/',
         name: 'Home',
-        component: home 
-              
+        component: home               
        },
       {
         path: '/nuevaPublicacion',
@@ -38,10 +37,14 @@ const router = new Router({
         component: NuevaPublicacion,
         meta: {
           requireAuth: true
-        },
-              
+        },              
        },
-
+       {
+       path: '/buscarProductos',
+        name: 'buscarProductos',
+        component: BuscarProductos,   
+        props: true            
+       },
     ]
     },
     {

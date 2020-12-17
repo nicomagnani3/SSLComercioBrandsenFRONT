@@ -2,7 +2,7 @@
   <div class="registrar">
     <div class="text-center">
       <img
-        src="@/assets/locallogo.png"
+        src="@/assets/locallogo.jpg"
         style="width: 500px"
         class="rounded"
         alt="..."

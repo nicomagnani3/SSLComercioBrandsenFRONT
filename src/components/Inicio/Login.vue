@@ -2,7 +2,7 @@
   <div class="login">  
        <div class="text-center">
       <img
-        src="@/assets/locallogo.png"
+        src="@/assets/locallogo.jpg"
         style="width: 500px"
         class="rounded"
         alt="..."
@@ -127,8 +127,6 @@ export default {
 </script>
 
 <style scoped>
-html {
-  background-color: #ecedf7;
-}
+
 </style>
 
