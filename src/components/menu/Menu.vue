@@ -4,7 +4,7 @@
     <b-spinner variant="primary" label="Text Centered"></b-spinner>
   </div>
   <div v-else>
-    <b-navbar toggleable="lg" type="light" variant="warning">
+    <b-navbar toggleable="lg" type="light" class="nav">
       <b-navbar-brand :to="'/'"><Header /> </b-navbar-brand>
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
@@ -14,6 +14,8 @@
           <b-nav-item>Tiendas Oficiales</b-nav-item>
           <b-nav-item :to="{ name: 'nuevaPublicacion' }">Vender</b-nav-item>
         </b-navbar-nav>
+
+        
 
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
@@ -33,12 +35,12 @@
       </b-collapse>
     </b-navbar>
 
-    <div style="background-color: #ffce4e !important">
+    <div  style="background-color: #ffce4e !important">
       <b-col md="5" offset-md="3">
         <b-form-group class="mb-0">
           <b-input-group>
-            <b-form-input
-              style="height: 51px"
+            <b-form-input 
+              style="height: 30px "
               @keyup.enter="buscarProducto(filterPrev)"
               v-model="filterPrev"
               placeholder="Buscar productos por nombre o categoria "
@@ -129,5 +131,11 @@ export default {
   border: 1px solid rgb(212, 40, 40);
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
   margin: 5px;
+}
+
+.nav{
+
+  background-color: #ffce4e;
+
 }
 </style>

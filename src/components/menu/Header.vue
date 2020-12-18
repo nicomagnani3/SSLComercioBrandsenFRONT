@@ -19,7 +19,7 @@ export default {
 <style >
 
     .logo {
-        max-width: 200px;
+        max-width: 300px;
 }
 
     

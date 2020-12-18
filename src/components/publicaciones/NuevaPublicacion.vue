@@ -40,7 +40,9 @@
         </div>
       </b-col>
 
-      <tab-content title="¡Hola! Antes que nada contanos,¿qué vas a publicar?">
+      <tab-content title="¡Hola! Antes que nada contanos,¿qué vas a publicar?"                
+                  
+>                  
         <ListarCategorias
           :categorias="this.categorias"
           @update-categoria="update"
