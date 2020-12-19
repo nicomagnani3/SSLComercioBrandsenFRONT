@@ -15,8 +15,6 @@
           <b-nav-item :to="{ name: 'nuevaPublicacion' }">Vender</b-nav-item>
         </b-navbar-nav>
 
-        
-
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-nav-item-dropdown right>
@@ -35,17 +33,18 @@
       </b-collapse>
     </b-navbar>
 
-    <div  style="background-color: #ffce4e !important">
+    <div style="background-color: #ffce4e !important">
       <b-col md="5" offset-md="3">
         <b-form-group class="mb-0">
           <b-input-group>
-            <b-form-input 
-              style="height: 30px "
+            <b-form-input
+              style="height: 30px"
               @keyup.enter="buscarProducto(filterPrev)"
               v-model="filterPrev"
-              placeholder="Buscar productos por nombre o categoria "
+              placeholder="Buscar productos por nombre"
             ></b-form-input>
             <b-input-group-append>
+              
               <b-button size="sm" @click="buscarProducto(filterPrev)"
                 ><b-icon icon="search"></b-icon
               ></b-button>
@@ -79,13 +78,23 @@ export default {
   },
   methods: {
     buscarProducto(producto) {
-      console.log("entro");
-      this.$router.push({
-        name: "buscarProductos",
-        params: {
-          producto: producto,
-        },
-      });
+       const path = `/buscarProductos/${producto}`;
+      if (this.$route.path !== path) this.$router.push({
+          name: "buscarProductos",
+          params: {
+            producto: producto,
+          },
+        }); 
+    /*   this.$router
+        .replace({
+          name: "buscarProductos",
+          params: {
+            producto: producto,
+          },
+        })
+        .catch((err) => {
+          console.log(err);
+        }); */
     },
     ...mapActions("storeUser", ["LOGOUT_REQUEST"]),
     logout() {
@@ -133,9 +142,7 @@ export default {
   margin: 5px;
 }
 
-.nav{
-
+.nav {
   background-color: #ffce4e;
-
 }
 </style>

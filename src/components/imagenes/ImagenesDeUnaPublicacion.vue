@@ -8,7 +8,7 @@
     </span>
     <b-spinner variant="primary" label="Text Centered"></b-spinner>
   </div>
-  <div v-else >
+  <div v-else  >
     <vueper-slides
       slide-image-inside
     >

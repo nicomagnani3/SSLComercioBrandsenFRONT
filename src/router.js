@@ -40,7 +40,7 @@ const router = new Router({
         },              
        },
        {
-       path: '/buscarProductos',
+       path: '/buscarProductos/:producto',
         name: 'buscarProductos',
         component: BuscarProductos,   
         props: true            

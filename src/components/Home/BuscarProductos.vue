@@ -7,7 +7,7 @@
     </span>
     <b-spinner variant="primary" label="Text Centered"></b-spinner>
   </div>
-  <div v-else>
+  <div v-else class="body">
     <b-container fluid class="bv-example-row">
       <b-row align-h="start">
         <b-col md="4">
@@ -21,13 +21,16 @@
           <ul id="example-2">
             <li v-for="item in categorias" :key="item.id">
               <br />
-               <a style="text-decoration: underline;"  @click="buscarPorCategoria(item)">{{ item.nombre }}</a>
-            
+              <a
+                style="text-decoration: underline"
+                @click="buscarPorCategoria(item)"
+                >{{ item.nombre }}</a
+              >
             </li>
           </ul>
         </b-col>
 
-        <b-col cols="5">          
+        <b-col cols="5">
           <div v-if="productos.length == 0">
             <br /><br /><br /><br /><br />
             <b-alert show variant="success">
@@ -42,11 +45,13 @@
               </p>
             </b-alert>
           </div>
-            <br />
+          <br />
           <transition
             name="fade"
             v-for="producto in productos"
             v-bind:key="producto.id"
+            :current-page="currentPage"
+            :per-page="perPage"
           >
             <div class="col-md-8 col- col-sm-12 col-lg-6 col-xl-6">
               <div class="card" style="width: 28rem">
@@ -67,21 +72,40 @@
                     Fecha de publicacion: {{ producto.fecha | formatDate }}
                   </h5>
 
-                  <b-button variant="outline-primary" @click="verImagenes(producto)"
+                  <b-button
+                    variant="outline-primary"
+                    @click="verImagenes(producto)"
                     ><b-icon icon="images"></b-icon
                   ></b-button>
                 </div>
               </div>
-              <br> <br>
-            </div>            
+              <br />
+              <br />
+            </div>
           </transition>
+          <!--  <div class="overflow-auto">
+            <b-pagination
+              v-model="currentPage"
+              :total-rows="rows"
+              :per-page="perPage"
+              aria-controls="my-table"
+            ></b-pagination>
+          </div> -->
         </b-col>
       </b-row>
-        <div id="modalVerImagenes">
-      <b-modal size="xl" ref="modalVerImagenes" title="Listado de imagenes" hide-footer>
-        <ImagenesDeUnaPublicacion @okImagenesPublicacion="okImagenesPublicacion" :idPublicacion="this.idPublicacionImagen"></ImagenesDeUnaPublicacion>
-      </b-modal>
-    </div>
+      <div id="modalVerImagenes">
+        <b-modal
+          size="xl"
+          ref="modalVerImagenes"
+          title="Listado de imagenes"
+          hide-footer
+        >
+          <ImagenesDeUnaPublicacion
+            @okImagenesPublicacion="okImagenesPublicacion"
+            :idPublicacion="this.idPublicacionImagen"
+          ></ImagenesDeUnaPublicacion>
+        </b-modal>
+      </div>
     </b-container>
   </div>
 </template>
@@ -90,42 +114,68 @@
 import ImagenesDeUnaPublicacion from "@/components/imagenes/ImagenesDeUnaPublicacion.vue";
 import PublicacionService from "@/services/PublicacionService";
 import CategoriasService from "@/services/CategoriasService";
-import axios from "axios";
+//import axios from "axios";
 export default {
   name: "BuscarProductos",
   components: {
-    ImagenesDeUnaPublicacion
+    ImagenesDeUnaPublicacion,
+  },
+  props: {
+    producto: {
+      type: String,
+      required: true,
+    },
   },
   data() {
     return {
-      producto: "",
+      perPage: 3,
+      currentPage: 1,
+      productos: [],
       loading: true,
       categorias: [],
-      idPublicacionImagen:null
+      idPublicacionImagen: null,
     };
   },
   created() {
-    this.producto = this.$route.params.producto;
+    this.getPublicacionesPorNombre();
+    this.getcategorias();
+  },
+  computed: {
+    rows() {
+      return this.productos.length;
+    },
+  },
+  watch: {
+    producto() {
+      this.getPublicacionesPorNombre();
+      this.getcategorias();
+    },
   },
   methods: {
     async getPublicacionesPorNombre() {
+      this.loading = true;
       try {
         const response = await PublicacionService.getPublicacionesPorNombre({
           titulo: this.producto,
         });
         this.productos = response.data.data;
-        this.getImporte(this.productos);        
+        this.getImporte(this.productos);
       } catch (err) {
         this.productos = "ATENCION NO SE PUDIERON OBTENER LAS NOVEDADES";
+      } finally {
+        this.loading = false;
       }
     },
     async getcategorias() {
+      this.loading = true;
       try {
         const response = await CategoriasService.getCategorias();
         this.categorias = response.data.data;
         this.categorias = this.ordenarDatos(this.categorias);
       } catch (err) {
         this.categorias = "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS";
+      } finally {
+        this.loading = false;
       }
     },
     getImporte(productos) {
@@ -149,41 +199,33 @@ export default {
         return 0;
       });
     },
-    async buscarPorCategoria(item){
-   
-      this.loading=true
-       try {
+    async buscarPorCategoria(item) {
+      this.loading = true;
+      try {
         const response = await PublicacionService.getPublicacionesPorCategoria({
           idCategoria: item.id,
         });
         this.productos = response.data.data;
-         this.loading=response.data.error
-        this.getImporte(this.productos); 
-        console.log(response.data.data)       
+        this.loading = response.data.error;
+        this.getImporte(this.productos);
+        console.log(response.data.data);
       } catch (err) {
         this.productos = "ATENCION NO SE PUDIERON OBTENER LAS NOVEDADES";
       }
     },
-    verImagenes(producto){
-      this.idPublicacionImagen=producto.id
-      this.$refs["modalVerImagenes"].show();      
+    verImagenes(producto) {
+      this.idPublicacionImagen = producto.id;
+      this.$refs["modalVerImagenes"].show();
     },
-    okImagenesPublicacion(){
-       this.$refs["modalVerImagenes"].hide();   
-    }
+    okImagenesPublicacion() {
+      this.$refs["modalVerImagenes"].hide();
+    },
   },
   mounted() {
-    axios
-      .all([this.getcategorias(), this.getPublicacionesPorNombre()])
-      .then(() => {
-        this.loading = false;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+   
   },
 };
 </script>
-<style scoped>
+<style >
 
 </style>
