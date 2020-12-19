@@ -15,7 +15,7 @@
       finish-button-text="Finalizar"
       color="#FFCE4E"
     >
-      <b-col  v-if="creando" class="text-center">
+      <b-col v-if="creando" class="text-center">
         <div>
           <b-spinner
             style="width: 5rem; height: 5rem"
@@ -40,9 +40,7 @@
         </div>
       </b-col>
 
-      <tab-content title="¡Hola! Antes que nada contanos,¿qué vas a publicar?"                
-                  
->                  
+      <tab-content title="¡Hola! Antes que nada contanos,¿qué vas a publicar?">
         <ListarCategorias
           :categorias="this.categorias"
           @update-categoria="update"
@@ -229,17 +227,15 @@ export default {
       creando: false,
     };
   },
-   created() {
-      console.log(this.getUserId)
-      if (this.getUserId == null){
-          this.$router.push({
-          name: "login",
-          params: {
-            autentificacion: false,
-          },
-        });  
-      }
-
+  created() {
+    if (this.getUserId == null) {
+      this.$router.push({
+        name: "login",
+        params: {
+          autentificacion: false,
+        },
+      });
+    }
   },
   computed: {
     ...mapGetters("storeUser", ["getUserId"]),
@@ -324,6 +320,15 @@ export default {
       if (result == true) {
         if (Number(this.publicacion.precio) <= 10) {
           this.montoEntregaInvalido = true;
+          return false;
+        }
+        if (this.getUserId == null) {
+          this.$router.push({
+            name: "login",
+            params: {
+              autentificacion: false,
+            },
+          });
           return false;
         }
       }
