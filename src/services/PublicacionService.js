@@ -16,5 +16,14 @@ export default {
     addImagen(credentials) {    
         return Api().post(API_URL + API_USER + "addImagen", credentials)
     },
+    getPublicacionesPorNombre(credentials) {    
+        return Api().post(API_URL + API_USER + "getPublicacionesPorNombre", credentials)
+    },
+    getPublicacionesPorCategoria(credentials) {    
+        return Api().post(API_URL + API_USER + "getpublicacionescategoria", credentials)
+    },
+    getImagenesPublicacion(credentials) {    
+        return Api().post(API_URL + API_USER + "getImagenesPublicacion", credentials)
+    },
     
 }
