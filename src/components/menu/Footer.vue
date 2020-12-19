@@ -1,8 +1,7 @@
 <template>
-    <footer style=" background-color: #FFCE4E;" id="sticky-footer" class="footer text-center">
+    <footer style=" background-color: #ffce4e;"  class="footer text-center">
        
-        <span class="footer-text">Powered by </span>
-<!--
+        <span class="footer-text">Powered by </span><!--
         <span><a href="http://frontiniyasoc.com.ar/">
             <img class="logo" src="@/assets/frontini-blanco.png" alt="" height="auto" > 
             </a>
@@ -33,14 +32,14 @@ export default {
     
 }
 
-.footer {
+.footer text-center {
 
   bottom: 0;
   width: 100%;
  
   height: 160px;
   line-height: 160px; 
-  background-color:#FFCE4E;
+  background-color:#ffce4e;
 }
 
 </style>

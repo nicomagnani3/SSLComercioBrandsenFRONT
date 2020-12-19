@@ -229,6 +229,18 @@ export default {
       creando: false,
     };
   },
+   created() {
+      console.log(this.getUserId)
+      if (this.getUserId == null){
+          this.$router.push({
+          name: "login",
+          params: {
+            autentificacion: false,
+          },
+        });  
+      }
+
+  },
   computed: {
     ...mapGetters("storeUser", ["getUserId"]),
   },

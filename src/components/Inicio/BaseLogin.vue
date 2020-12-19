@@ -1,10 +1,13 @@
 <template>
+
   <b-container fluid class="base-user">
+    
     <b-row class="h-100 justify-content-center align-items-center">
       <b-col sm="8" md="6" xl="3" >
         <router-view />
       </b-col>
     </b-row>
+    
   </b-container>
 </template>
 

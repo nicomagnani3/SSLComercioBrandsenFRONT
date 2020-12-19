@@ -84,17 +84,7 @@ export default {
           params: {
             producto: producto,
           },
-        }); 
-    /*   this.$router
-        .replace({
-          name: "buscarProductos",
-          params: {
-            producto: producto,
-          },
-        })
-        .catch((err) => {
-          console.log(err);
-        }); */
+        });  
     },
     ...mapActions("storeUser", ["LOGOUT_REQUEST"]),
     logout() {
@@ -103,40 +93,20 @@ export default {
       });
     },
   },
-  /*   methods: {
-    async getProductos() {
-      try {
-        const response = await ProductosService.getProductos();
-        this.productos = response.data.data;
-      } catch (err) {
-        this.productos = "ATENCION NO SE PUDIERON OBTENER LAS NOVEDADES";
-      }
-    },
-  },
-  mounted() {
-    this.getProductos().then(() => {
-      this.loading = false;
-    });
-  }, */
+  
 };
 </script>
 
 <style scoped>
 .Buscador {
-  width: 75%;
-  /* height: 60px; */
+  width: 75%;  
   background-color: #ffce4e;
-  /* border-radius: 57px; */
-  /* margin: 0px; */
-  /* display: flex; */
-  /* align-items: center; */
   justify-content: center;
 }
 
 .buscar {
   width: 39%;
   height: 64%;
-
   border: 1px solid rgb(212, 40, 40);
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
   margin: 5px;
