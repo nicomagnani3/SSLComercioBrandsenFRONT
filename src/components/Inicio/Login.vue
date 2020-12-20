@@ -1,15 +1,15 @@
 <template>
-  <div class="login">  
-       <div class="text-center">
+  <div class="login">
+    <div class="text-center">
       <img
         src="@/assets/locallogo.jpg"
         style="width: 500px"
         class="rounded"
         alt="..."
       />
-    </div>  
+    </div>
     <br />
-     <br />
+    <br />
     <div class="text-center">
       <p>¡Hola! Ingresá tu e‑mail y contraseña</p>
     </div>
@@ -45,10 +45,7 @@
       </b-form-group>
       <hr />
       <b-form-group class="text-center">
-        <b-button
-          type="submit"
-        block variant="primary"
-          v-if="form.ingresar"         
+        <b-button type="submit" block variant="primary" v-if="form.ingresar"
           >Ingresar
         </b-button>
 
@@ -58,7 +55,7 @@
       </b-form-group>
       <b-form-group class="text-center">
         <b-button
-            block
+          block
           @click="$router.push('registrar')"
           variant="outline-light"
           >Crear cuenta
@@ -69,7 +66,9 @@
           >¿Haz olvidado la contraseña?</router-link
         >
       </div>
-    
+      <b-button  @click="volver()"  variant="outline-secondary">                                       
+              <b-icon icon="arrow-left-short"></b-icon>Volver 
+          </b-button>  
     </b-form>
   </div>
 </template>
@@ -80,6 +79,8 @@ import { mapMutations } from "vuex";
 import AuthenticationService from "@/services/AuthenticationService";
 export default {
   name: "Login",
+  props: {   
+  },
   data() {
     return {
       form: {
@@ -90,6 +91,20 @@ export default {
       error: "",
     };
   },
+  created() {
+    
+    if ( this.$route.params.autentificacion == false) {
+      this.$bvToast.toast(
+        `Usted tiene que iniciar sesion para poder publicar en Mercado Local`,
+        {
+          title: 'Atencion!!',
+          toaster: "b-toaster-top-center",
+          solid: true,
+          variant: "danger",
+        }
+      );
+    }
+  },
   methods: {
     ...mapMutations("storeUser", [
       "setToken",
@@ -99,7 +114,9 @@ export default {
       "setPermisos",
       "setNombre",
     ]),
-
+    volver(){
+      this.$router.push("/");
+    },
     async login() {
       try {
         this.form.ingresar = false;
@@ -127,6 +144,5 @@ export default {
 </script>
 
 <style scoped>
-
 </style>
 

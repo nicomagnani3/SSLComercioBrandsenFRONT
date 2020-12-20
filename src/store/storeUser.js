@@ -83,6 +83,7 @@ export default {
     actions: {
         LOGOUT_REQUEST: ({state,commit}) => {
             state.username = '';
+         
             commit('clearToken');
         },
 
