@@ -10,24 +10,22 @@
       indicators
       background="#ababab"
       img-width="1024"
-      img-height="250"
+      img-height="300"
       style="text-shadow: 1px 1px 2px #333;"
       @sliding-start="onSlideStart"
       @sliding-end="onSlideEnd"
     >
 
       <b-carousel-slide class="carrousel"
-        caption="First slide"
-        text="Nulla vitae elit libero, a pharetra augue mollis interdum."
-        img-src="https://picsum.photos/1024/480/?image=52"
+        img-src="https://http2.mlstatic.com/optimize/o:f_webp/resources/deals/exhibitors_resources/mla-home-desktop-slider-picture-a09d7f48-499f-4838-82f1-b519c1ca28bc.jpg"
       ></b-carousel-slide>
 
-      <b-carousel-slide class="carrousel" img-src="https://picsum.photos/1024/480/?image=54">
-        <h1>Hello world!</h1>
+      <b-carousel-slide class="carrousel" img-src="https://http2.mlstatic.com/optimize/o:f_webp/resources/deals/exhibitors_resources/mla-home-desktop-slider-picture-f6d56ce6-efc6-42e9-b0bd-3138377d5941.jpg">
+        <h1></h1>
       </b-carousel-slide>
 
-       <b-carousel-slide class="carrousel" img-src="https://picsum.photos/1024/480/?image=54">
-        <h1>Hello world!</h1>
+       <b-carousel-slide class="carrousel" img-src="https://http2.mlstatic.com/optimize/o:f_webp/resources/deals/exhibitors_resources/mla-home-desktop-slider-picture-134597c7-757a-426a-b790-0cadb7a68f4c.jpg">
+        <h1></h1>
       </b-carousel-slide>
 
      </b-carousel>
@@ -52,6 +50,7 @@
     data() {
       return {
         slide: 0,
+        img1: 'blackfriday.jpg',
        
      productos: [],
       sliding: null,
@@ -74,6 +73,8 @@
 
 
 <style scoped>
+ 
+ 
   .carrousel{
 
       height: 250px;

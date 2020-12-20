@@ -9,7 +9,7 @@
           :slide-ratio="1 / 4"
           
           :dragging-distance="60"
-          :breakpoints="{ 800: { visibleSlides: 2, slideMultiple: 2 } }"
+          :breakpoints="{ 800: {visibleSlides: 2, slideMultiple: 2} }"
         >
           <vueper-slide
             v-for="producto in productos"
