@@ -166,6 +166,7 @@ export default {
         this.loading = false;
       }
     },
+    
     async getcategorias() {
       this.loading = true;
       try {

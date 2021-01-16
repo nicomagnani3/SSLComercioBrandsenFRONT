@@ -63,7 +63,7 @@
               style="height: 30px"
               @keyup.enter="buscarProducto(filterPrev)"
               v-model="filterPrev"
-              placeholder="Buscar productos por nombre"
+              placeholder="Buscar Servicios,emprendimientos o productos por nombre"
             ></b-form-input>
             <b-input-group-append>
               <b-button size="sm" @click="buscarProducto(filterPrev)"
