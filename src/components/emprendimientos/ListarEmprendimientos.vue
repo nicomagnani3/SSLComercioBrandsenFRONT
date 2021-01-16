@@ -3,7 +3,7 @@
     <b-row class="pb-2">
       <b-col class="text-center pt-3">
         <p class="h3 text-center">
-          ¿Que tipo de categoria es el producto que necesitas publicar?
+          ¿Que tipo de emprendimiento vas a publicar?
         </p>
       </b-col>
     </b-row>
@@ -11,7 +11,7 @@
       ref="selectableTable"
       selectable
       :select-mode="selectMode"
-      :items="categorias"
+      :items="emprendimientos"
       :fields="fields"
       @row-selected="onRowSelected"
       responsive="sm"
@@ -21,9 +21,9 @@
 </template>    
 <script>
 export default {
-  name: "ListadoCategorias",
+  name: "ListadoEmprendimientos",
   props: {
-    categorias:{ 
+    emprendimientos:{ 
       type: Array,
     },
   },
@@ -39,7 +39,7 @@ export default {
   created() {},
   methods: {   
     onRowSelected(items) {
-      this.$emit("update-categoria", items);
+      this.$emit("update-emprendimiento", items);
     },
     
   },

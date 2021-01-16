@@ -11,6 +11,11 @@ import RecuperarClave from '@/components/Inicio/RecuperarClave.vue'
 /* Productos */
 import BuscarProductos from "@/components/Home/BuscarProductos.vue"; 
 import NuevaPublicacion from '@/components/publicaciones/NuevaPublicacion.vue'
+/* Emprendimiento */
+import NuevoEmprendimiento from '@/components/emprendimientos/NuevoEmprendimiento.vue'
+/* Servicio */
+import NuevoServicio from '@/components/servicios/NuevoServicio.vue'
+
 /* Menu */
 import container from '@/components/menu/Container.vue'
 import home from '@/components/Home/Home.vue'
@@ -39,6 +44,22 @@ const router = new Router({
           requireAuth: true
         },              
        },
+       {
+       path: '/nuevoEmprendimiento',
+        name: 'nuevoEmprendimiento',
+        component: NuevoEmprendimiento,
+        meta: {
+          requireAuth: true
+        },              
+       },
+       {
+       path: '/nuevoServicio',
+       name: 'nuevoServicio',
+       component: NuevoServicio,
+       meta: {
+         requireAuth: true
+       },              
+      },
        {
        path: '/buscarProductos/:producto',
         name: 'buscarProductos',

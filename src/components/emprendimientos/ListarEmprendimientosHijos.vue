@@ -1,9 +1,9 @@
-<template>  
+<template> 
   <div>
     <b-row class="pb-2">
       <b-col class="text-center pt-3">
         <p class="h3 text-center">
-          ¿Que tipo de categoria es el producto que necesitas publicar?
+         Contanos un poco mas con detalle tu emprendimiento!
         </p>
       </b-col>
     </b-row>
@@ -11,7 +11,7 @@
       ref="selectableTable"
       selectable
       :select-mode="selectMode"
-      :items="categorias"
+      :items="emprendimientos"
       :fields="fields"
       @row-selected="onRowSelected"
       responsive="sm"
@@ -21,30 +21,30 @@
 </template>    
 <script>
 export default {
-  name: "ListadoCategorias",
-  props: {
-    categorias:{ 
+  name: "ListadoEmprendimientosHijos",
+  props: {  
+    emprendimientos: {
       type: Array,
+      required: false,
     },
   },
   data() {
     return {    
+      isBusy: false,   
       selectMode: "single",
       fields: [{ key: "nombre", class: "text-center p2" }],
     };
   },
-  computed: {
+  computed: {    
+  },    
 
-  },
-  created() {},
-  methods: {   
+  methods: {
     onRowSelected(items) {
-      this.$emit("update-categoria", items);
+      this.$emit("update-emprendimientoHijo", items);
     },
-    
   },
   mounted() {
-   this.$refs.selectableTable.selectRow(0)
+       this.$refs.selectableTable.selectRow(1)
   },
 };
 </script>

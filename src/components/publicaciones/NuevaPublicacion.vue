@@ -39,21 +39,26 @@
           ></b-spinner>
         </div>
       </b-col>
-
-      <tab-content title="¡Hola! Antes que nada contanos,¿qué vas a publicar?">
+      <tab-content
+        title="¿Que tipo de categoria es el producto que necesitas publicar?"
+      >
         <ListarCategorias
           :categorias="this.categorias"
           @update-categoria="update"
         ></ListarCategorias>
       </tab-content>
-      <tab-content title="¿Qué necesitas publicar?">
+      <tab-content title="¿Qué necesitas publicar?"  :before-change="validarCategoriaHija">
         <ListarCategoriasHijas
           :categoriasHijas="this.categoriaHijaElegida"
           @update-categoria="updateCategoriaHija"
         ></ListarCategoriasHijas>
       </tab-content>
-      <tab-content title="Imagenes">
-        <ImagenesCarga :imagenes="imagenes" :imgPrimera="imgPrimera">
+      <tab-content title="Imagenes"
+      :before-change="validarImagenes">
+        <ImagenesCarga
+             ref="altaImagenes"
+         :imagenes="imagenes" 
+        :imgPrimera="imgPrimera">
         </ImagenesCarga>
       </tab-content>
       <tab-content title="Ultimos detalles">
@@ -179,7 +184,6 @@
                   </b-form-group>
                 </b-col>
               </b-row>
-              <!--        </b-card> -->
             </b-container>
           </ValidationObserver>
         </div>
@@ -195,16 +199,13 @@ import axios from "axios";
 import CategoriasService from "@/services/CategoriasService";
 import ListarCategorias from "@/components/categorias/ListarCategorias.vue";
 import ListarCategoriasHijas from "@/components/categorias/ListarCategoriasHijas.vue";
-//import ListarProductos from "@/components/producto/ListarProducto.vue";
 import ImagenesCarga from "@/components/imagenes/ImagenesCarga.vue";
-
 export default {
   name: "nuevaPublicacion",
   components: {
     ListarCategorias,
     ListarCategoriasHijas,
     ImagenesCarga,
-    /* ListarProductos, */
   },
   data() {
     return {
@@ -241,6 +242,17 @@ export default {
     ...mapGetters("storeUser", ["getUserId"]),
   },
   methods: {
+    async validarImagenes() {
+      let result = await this.$refs.altaImagenes.validate();
+      return result;
+    },
+    async validarCategoriaHija() {
+      if (  this.categoriaHijaSeleccionada == null){
+        return false
+      }
+      return true 
+    },
+    
     async onComplete() {
       const valid = await this.validate();
       if (valid) {
@@ -315,6 +327,7 @@ export default {
         this.categorias = "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS";
       }
     },
+
     async validate() {
       let result = await this.$refs.nuevaPublicacion.validate();
       if (result == true) {

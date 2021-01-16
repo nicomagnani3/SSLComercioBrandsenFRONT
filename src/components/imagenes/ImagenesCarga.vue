@@ -7,7 +7,7 @@
         </b-col>
       </b-row>
       <ValidationObserver ref="altaImagenes">
-        <b-card no-body class="mb-3 p-0" header="Imagen Principal">
+        <b-card no-body class="mb-3 p-0" header="Imagen Principal (esta imagen es la que se vera en los encabezados)">
           <b-container class="pb-3">
             <b-row no-gutters>
               <b-col cols="12" sm="6" md="4" lg="2">
@@ -70,7 +70,7 @@
             </b-row>
           </b-container>
         </b-card>
-        <b-card   v-if="this.cantImagenesAsubir > 0" no-body class="mb-3 p-0" header="Imagenes Secundarias">
+        <b-card   v-if="this.cantImagenesAsubir > 0" no-body class="mb-3 p-0" header="Imagenes Secundarias (Opcional)">
           <transition
             v-for="(value, index) in this.imagenes"
             :key="index"

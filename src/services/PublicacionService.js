@@ -25,5 +25,7 @@ export default {
     getImagenesPublicacion(credentials) {    
         return Api().post(API_URL + API_USER + "getImagenesPublicacion", credentials)
     },
-    
+    getTipoPublicaciones(credentials) {    
+        return Api().get(API_URL + API_USER + "get_tipoPublicacion", credentials)
+    },
 }

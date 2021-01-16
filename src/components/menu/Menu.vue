@@ -12,9 +12,18 @@
           <b-nav-item>Categorias</b-nav-item>
           <b-nav-item>Ofertas</b-nav-item>
           <b-nav-item>Tiendas Oficiales</b-nav-item>
-          <b-nav-item :to="{ name: 'nuevaPublicacion' }">Vender</b-nav-item>
+          <b-nav-item-dropdown>
+            <template slot="button-content">
+              <span class="light">Vender</span>
+            </template>           
+            <b-dropdown-item :to="{ name: 'nuevoEmprendimiento' }">Emprendimiento</b-dropdown-item>
+             <b-dropdown-item :to="{ name: 'nuevaPublicacion' }"
+              >Producto</b-dropdown-item
+            >
+            <b-dropdown-item :to="{ name: 'nuevoServicio' }">Servicio</b-dropdown-item>
+          </b-nav-item-dropdown>
         </b-navbar-nav>
-       <b-alert variant="success" show dismissible>
+        <b-alert variant="success" show dismissible>
           Mercado Local aporta el 10% de los ingresos a asociaciones benéficas
           de Brandsen
         </b-alert>
@@ -22,14 +31,14 @@
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-navbar-nav v-if="logeado" class="ml-auto">
-          <b-nav-item class="light mx-4 my-0 py-0">
-            <b-icon icon="user" />Bienvenido,
-            <b>{{username}}</b>
-            <div class="my-0 py-0 text-md-center">              
-              <b>{{nombre}}</b>
-            </div>
-          </b-nav-item>          
-        </b-navbar-nav>
+            <b-nav-item class="light mx-4 my-0 py-0">
+              <b-icon icon="user" />Bienvenido,
+              <b>{{ username }}</b>
+              <div class="my-0 py-0 text-md-center">
+                <b>{{ nombre }}</b>
+              </div>
+            </b-nav-item>
+          </b-navbar-nav>
           <b-nav-item-dropdown right>
             <!-- Using 'button-content' slot -->
             <template #button-content>
@@ -41,13 +50,11 @@
             <b-dropdown-item :to="{ name: 'Registrarse' }"
               >Crear cuenta</b-dropdown-item
             >
-            <b-dropdown-item  @click.prevent="logout"
-              >SALIR</b-dropdown-item
-            >
+            <b-dropdown-item @click.prevent="logout">SALIR</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
-    </b-navbar>  
+    </b-navbar>
     <div style="background-color: #ffce4e !important">
       <b-col md="5" offset-md="3">
         <b-form-group class="mb-0">
@@ -83,18 +90,17 @@ export default {
       loading: false,
       filterPrev: null,
       filter: null,
-      logeado:false
+      logeado: false,
     };
   },
-  created (){
-    if (this.getUserId != null){
-        this.logeado=true
+  created() {
+    if (this.getUserId != null) {
+      this.logeado = true;
     }
-   
   },
   computed: {
     ...mapState("storeUser", ["username", "nombre", "grupos"]),
-    ...mapGetters("storeUser", ["hasPermisos", "getGrupos","getUserId"]),
+    ...mapGetters("storeUser", ["hasPermisos", "getGrupos", "getUserId"]),
   },
   methods: {
     buscarProducto(producto) {
@@ -109,7 +115,7 @@ export default {
     },
     ...mapActions("storeUser", ["LOGOUT_REQUEST"]),
     logout() {
-        this.logeado=false
+      this.logeado = false;
       this.LOGOUT_REQUEST().then(() => {
         this.$router.push("/").catch({});
       });
