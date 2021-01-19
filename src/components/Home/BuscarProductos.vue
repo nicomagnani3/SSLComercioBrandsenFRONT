@@ -12,25 +12,40 @@
       <b-row align-h="start">
         <b-col md="4">
           <br />
-          <br />
           <H1>{{ producto }}</H1>
-          <p>Resultados: {{ this.cantidadProductos() }}</p>
+          <strong>Resultados: {{ this.cantidadProductos() }}</strong>
           <br />
           <br />
-          <h3>Categorias:</h3>
-          <ul id="example-2">
-            <li v-for="item in categorias" :key="item.id">
-              <br />
-              <a
-                style="text-decoration: underline"
-                @click="buscarPorCategoria(item)"
-                >{{ item.nombre }}</a
+          <b-col col lg="5">
+            <h4>Productos</h4>
+            <ul class="list-group">
+              <li
+                class="list-group-item"
+                v-for="item in categorias"
+                :key="item.id"
               >
-            </li>
-          </ul>
+                <a @click="buscarPorCategoria(item)">{{ item.nombre }}</a>
+              </li>
+            </ul>
+          </b-col>
+          <b-col col lg="5">
+          <br />
+          <h4 >Servicios</h4>
+          <div>
+            <ul class="list-group">
+              <li
+                class="list-group-item"
+                v-for="item in servicios"
+                :key="item.id"
+              >
+                <a @click="buscarPorEmprendimiento(item)">{{ item.nombre }}</a>
+              </li>
+            </ul>
+          </div>
+        </b-col>
         </b-col>
 
-        <b-col cols="5">
+        <b-col>
           <div v-if="productos.length == 0">
             <br /><br /><br /><br /><br />
             <b-alert show variant="success">
@@ -45,53 +60,74 @@
               </p>
             </b-alert>
           </div>
-          <br />
           <transition
-            name="fade"
             v-for="producto in productos"
             v-bind:key="producto.id"
-            :current-page="currentPage"
             :per-page="perPage"
+            :current-page="currentPage"
           >
-            <div class="col-md-8 col- col-sm-12 col-lg-6 col-xl-6">
-              <div class="card" style="width: 28rem">
-                <div class="card-header">
-                  <h2 class="text-center">{{ producto.titulo }}</h2>
-                </div>
-
-                <div class="card-body">
-                  <img
-                    class="card-img-top"
-                    :src="`data:image/png;base64, ${producto.imagen}`"
-                    alt="Card image cap"
-                  />
-                  <hr />
-                  <h3>Precio: {{ producto.precio }}</h3>
-
-                  <h5>
-                    Fecha de publicacion: {{ producto.fecha | formatDate }}
-                  </h5>
-
-                  <b-button
-                    variant="outline-primary"
-                    @click="verImagenes(producto)"
-                    ><b-icon icon="images"></b-icon
-                  ></b-button>
-                </div>
-              </div>
-              <br />
-              <br />
+            <div>
+              <b-card no-body class="overflow-hidden" style="max-width: 956px">
+                <br />
+                <b-row no-gutters>
+                  <b-col md="6">
+                    <b-card-img
+                      :src="`data:image/png;base64, ${producto.imagen}`"
+                      alt="Image"
+                      class="rounded-0"
+                    ></b-card-img>
+                  </b-col>
+                  <b-col md="6">
+                    <b-card-body>
+                      <h1>{{ producto.titulo }}</h1>
+                      <h4>Precio: {{ producto.precio }}</h4>
+                      <h5>
+                        Fecha de publicacion: {{ producto.fecha | formatDate }}
+                      </h5>
+                      <b-button
+                        variant="outline-primary"
+                        @click="verImagenes(producto)"
+                        ><b-icon icon="images"></b-icon
+                      ></b-button>
+                      <a
+                        :href="
+                          'https://api.whatsapp.com/send?text=Hola!%20,desde%20MercadoLocal%20observe%20la%20publicacion%20'+producto.titulo +
+                          ',queria%20obtener%20mas%20detalles' +
+                          
+                          '&phone=+54' +
+                          producto.telefono
+                        "
+                        target="_black"
+                      >
+                        <img
+                          src="@/assets/wsp.png"
+                          alt=""
+                          height="auto"
+                          style="width: 65px"
+                        />
+                      </a>
+                    </b-card-body>
+                  </b-col>
+                </b-row>
+              </b-card>
             </div>
           </transition>
-          <!--  <div class="overflow-auto">
-            <b-pagination
-              v-model="currentPage"
-              :total-rows="rows"
-              :per-page="perPage"
-              aria-controls="my-table"
-            ></b-pagination>
-          </div> -->
         </b-col>
+        <b-col col lg="2">
+          <br />
+          <h4>Emprendimientos</h4>
+          <div>
+            <ul class="list-group">
+              <li
+                class="list-group-item"
+                v-for="item in emprendimientos"
+                :key="item.id"
+              >
+                <a @click="buscarPorEmprendimiento(item)">{{ item.nombre }}</a>
+              </li>
+            </ul>
+          </div>
+        </b-col>       
       </b-row>
       <div id="modalVerImagenes">
         <b-modal
@@ -114,6 +150,9 @@
 import ImagenesDeUnaPublicacion from "@/components/imagenes/ImagenesDeUnaPublicacion.vue";
 import PublicacionService from "@/services/PublicacionService";
 import CategoriasService from "@/services/CategoriasService";
+import EmprendimientoService from "@/services/EmprendimientoService";
+import ServiciosService from "@/services/ServiciosService";
+
 //import axios from "axios";
 export default {
   name: "BuscarProductos",
@@ -128,17 +167,21 @@ export default {
   },
   data() {
     return {
-      perPage: 3,
-      currentPage: 1,
+      perPage: 2,
+      currentPage: 1,     
       productos: [],
       loading: true,
       categorias: [],
+      emprendimientos: [],
+      servicios: [],
       idPublicacionImagen: null,
     };
   },
   created() {
     this.getPublicacionesPorNombre();
     this.getcategorias();
+    this.getEmprendimientos();
+    this.getServicios();
   },
   computed: {
     rows() {
@@ -149,6 +192,8 @@ export default {
     producto() {
       this.getPublicacionesPorNombre();
       this.getcategorias();
+      this.getEmprendimientos();
+      this.getServicios();
     },
   },
   methods: {
@@ -158,7 +203,7 @@ export default {
         const response = await PublicacionService.getPublicacionesPorNombre({
           titulo: this.producto,
         });
-        this.productos = response.data.data;
+        this.productos = response.data.data;        
         this.getImporte(this.productos);
       } catch (err) {
         this.productos = "ATENCION NO SE PUDIERON OBTENER LAS NOVEDADES";
@@ -166,15 +211,41 @@ export default {
         this.loading = false;
       }
     },
-    
+
     async getcategorias() {
       this.loading = true;
       try {
         const response = await CategoriasService.getCategorias();
         this.categorias = response.data.data;
-        this.categorias = this.ordenarDatos(this.categorias);
+        this.categorias = this.ordenarDatos(this.categorias);    
       } catch (err) {
         this.categorias = "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS";
+      } finally {
+        this.loading = false;
+      }
+    },
+    async getEmprendimientos() {
+      this.loading = true;
+      try {
+        const response = await EmprendimientoService.getEmprendimientos();       
+        this.emprendimientos = response.data.data;
+        this.emprendimientos = this.ordenarDatos(this.emprendimientos);
+      } catch (err) {
+        this.emprendimientos =
+          "ATENCION NO SE PUDIERON OBTENER LOS emprendimientos";
+      } finally {
+        this.loading = false;
+      }
+    },
+     async getServicios() {
+      this.loading = true;
+      try {
+        const response = await ServiciosService.getServicios();     
+        this.servicios = response.data.data;
+        this.servicios = this.ordenarDatos(this.servicios);
+      } catch (err) {
+        this.servicios =
+          "ATENCION NO SE PUDIERON OBTENER LOS servicios";
       } finally {
         this.loading = false;
       }
@@ -207,13 +278,29 @@ export default {
           idCategoria: item.id,
         });
         this.productos = response.data.data;
+        console.log(this.productos)
         this.loading = response.data.error;
         this.getImporte(this.productos);
-        console.log(response.data.data);
       } catch (err) {
         this.productos = "ATENCION NO SE PUDIERON OBTENER LAS NOVEDADES";
       }
     },
+    async buscarPorEmprendimiento(item) {
+      this.loading = true;
+      try {
+        const response = await EmprendimientoService.searchPublicacionesPorEmprendimiento(
+          {
+            idEmprendimiento: item.id,
+          }
+        );
+        this.productos = response.data.data;
+        this.loading = response.data.error;
+        this.getImporte(this.productos);
+      } catch (err) {
+        this.productos = "ATENCION NO SE PUDIERON OBTENER LAS NOVEDADES";
+      }
+    },
+
     verImagenes(producto) {
       this.idPublicacionImagen = producto.id;
       this.$refs["modalVerImagenes"].show();
@@ -222,11 +309,8 @@ export default {
       this.$refs["modalVerImagenes"].hide();
     },
   },
-  mounted() {
-   
-  },
+  mounted() {},
 };
 </script>
 <style >
-
 </style>
