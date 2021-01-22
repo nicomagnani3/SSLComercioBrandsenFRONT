@@ -15,15 +15,18 @@
           <b-nav-item-dropdown>
             <template slot="button-content">
               <span class="light">Publicar</span>
-            </template>           
-            <b-dropdown-item :to="{ name: 'nuevoEmprendimiento' }">Emprendimiento</b-dropdown-item>
-             <b-dropdown-item :to="{ name: 'nuevaPublicacion' }"
+            </template>
+            <b-dropdown-item :to="{ name: 'nuevoEmprendimiento' }"
+              >Emprendimiento</b-dropdown-item
+            >
+            <b-dropdown-item :to="{ name: 'nuevaPublicacion' }"
               >Producto</b-dropdown-item
             >
-            <b-dropdown-item :to="{ name: 'nuevoServicio' }">Servicio</b-dropdown-item>
+            <b-dropdown-item :to="{ name: 'nuevoServicio' }"
+              >Servicio</b-dropdown-item
+            >
           </b-nav-item-dropdown>
-            <b-nav-item :to="{ name: 'renovarContrato' }">Contratos</b-nav-item>
-
+          <b-nav-item :to="{ name: 'renovarContrato' }">Contratos</b-nav-item>
         </b-navbar-nav>
         <b-alert variant="success" show dismissible>
           Mercado Local aporta el 10% de los ingresos a asociaciones benéficas
@@ -95,7 +98,7 @@ export default {
       logeado: false,
     };
   },
-  created() {   
+  created() {
     if (this.getUserId != null) {
       this.logeado = true;
     }
@@ -106,14 +109,16 @@ export default {
   },
   methods: {
     buscarProducto(producto) {
-      const path = `/buscarProductos/${producto}`;
-      if (this.$route.path !== path)
-        this.$router.push({
-          name: "buscarProductos",
-          params: {
-            producto: producto,
-          },
-        });
+      if (producto != null) {
+        const path = `/buscarProductos/${producto}`;
+        if (this.$route.path !== path)
+          this.$router.push({
+            name: "buscarProductos",
+            params: {
+              producto: producto,
+            },
+          });
+      }
     },
     ...mapActions("storeUser", ["LOGOUT_REQUEST"]),
     logout() {
@@ -121,6 +126,7 @@ export default {
       this.LOGOUT_REQUEST().then(() => {
         this.$router.push("/").catch({});
       });
+      location.reload();
     },
   },
 };

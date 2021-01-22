@@ -1,5 +1,4 @@
 <template>
- <transition name="modal">
   <div v-if="loading" class="text-center">
     <br />
     <br />
@@ -8,30 +7,20 @@
     </span>
     <b-spinner variant="primary" label="Text Centered"></b-spinner>
   </div>
-  <div v-else  >
+  <div v-else>
     <vueper-slides
-      slide-image-inside
+     autoplay
+      
     >
       <vueper-slide
         v-for="imagen in imagenes"
         :key="imagen.numero"
         :image="`data:image/png;base64, ${imagen.imagen}`"
+        style="    width: 346px;
+    height: 369px;"
       />
     </vueper-slides>
-
-    <!-- <b-row>
-      <b-col class="text-right">
-        <b-button
-          type="button"
-          @click="aceptarDetalle()"
-          v-hotkey="{ enter: aceptarDetalle }"
-          variant="primary"
-          >Aceptar</b-button
-        >
-      </b-col>
-    </b-row>  -->
   </div>
-  </transition>
 </template>
 
 <script>
@@ -70,6 +59,7 @@ export default {
           idPublicacion: this.idPublicacion,
         });
         this.imagenes = response.data.data;
+        console.log(this.imagenes)
       } catch (err) {
         this.imagenes = "ATENCION NO SE PUDIERON OBTENER LAS IMAGENES";
       }
@@ -89,4 +79,5 @@ export default {
 </script>
 
 <style>
+
 </style>

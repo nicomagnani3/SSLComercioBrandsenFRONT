@@ -15,9 +15,9 @@
         <b-container class="pb-3">
           <b-row no-gutters>
             <b-col g="5" md="6">
+              <br />
               <b-alert show variant="primary"
-                >La fecha de expiracion de las publicaciones gratis es
-                17/02/2020</b-alert
+                >La fecha de expiracion del paquete es 17/02/2020</b-alert
               >
             </b-col>
           </b-row>
@@ -26,102 +26,178 @@
       <b-card
         no-body
         class="mb-3 p-0"
-        header="Renovar por 30 dias mas las publicaciones gratis"
+        header="Comprar un paquete para realizar publicaciones"
       >
         <b-container class="pb-3">
-          <b-row>
-            <b-col g="5" md="6">
-              <form
-                action="/process_payment"
-                method="post"
-                id="paymentForm"
-                @submit="getCardToken()"
-              >
-                <h4>Detalles de la empresa/comercio</h4>
-                <b-row>
-                  <b-col lg="8" md="10">
-                    <label for="email">e-mail</label>
-                    <input
-                      id="email"
-                      v-model="email"
-                      name="email"
-                      type="text"
-                      value="test@test.com"
-                    />
-                  </b-col>
-                </b-row>
-                <b-row>
-                  <b-col lg="5" md="6">
-                    <label for="docType">Tipo de documento</label>
+          <ValidationObserver ref="renovarContrato">
+            <b-form
+              @submit="getCardToken"
+              @reset="onReset"
+              v-if="show"
+              id="paymentForm"
+            >
+              <b-row class="pb-2">
+                <b-col class="text-center pt-3">
+                  <p class="h3 text-center">Tipo de plan</p>
+                </b-col>
+              </b-row>
+              <b-row>
+                <b-col lg="4" md="6">
+                  <b-form-group id="plan-label" label="Plan :" label-for="plan">
                     <b-form-select
-                      id="docType"
-                      name="docType"
-                      v-model="selected"
-                      :options="options"
-                      data-checkout="docType"
+                      id="plan"
+                      data-checkout="Plan"
+                      size="sm"
+                      v-model="form.selectedPlan"
+                      :options="optionsPlan"
+                      required
                     ></b-form-select>
-                  </b-col>
-                  <b-col lg="5" md="6">
-                    <label for="docNumber">Número de documento</label>
-                    <input
+                  </b-form-group>
+                </b-col>
+              </b-row>
+
+              <b-row class="pb-2">
+                <b-col class="text-center pt-3">
+                  <p class="h3 text-center">Detalles de la empresa/comercio</p>
+                </b-col>
+              </b-row>
+              <b-row>
+                <b-col lg="6" md="6">
+                  <b-form-group
+                    id="email-label"
+                    label="E-mail :"
+                    label-for="email"
+                  >
+                    <b-form-input
+                      size="sm"
+                      name="email"
+                      value="test@test.com"
+                      v-model="form.email"
+                      type="email"
+                      id="email"
+                      required
+                    ></b-form-input>
+                  </b-form-group>
+                </b-col>
+              </b-row>
+              <b-row>
+                <b-col lg="4" md="6">
+                  <b-form-group
+                    id="docType-label"
+                    label="Tipo de documento :"
+                    label-for="docType"
+                  >
+                    <b-form-select
+                      required
+                      data-checkout="docType"
+                      id="docType"
+                      size="sm"
+                      v-model="form.selected"
+                      :options="options"
+                    ></b-form-select>
+                  </b-form-group>
+                </b-col>
+                <b-col lg="4" md="6">
+                  <b-form-group
+                    id="docNumber-label"
+                    label="Numero de documento :"
+                    label-for="docNumber"
+                  >
+                    <b-form-input
+                      required
                       id="docNumber"
-                      v-model="docNumber"
+                      size="sm"
                       name="docNumber"
-                      data-checkout="docNumber"
-                      type="text"
-                    />
-                  </b-col>
-                </b-row>
-                <h3>Detalles de la tarjeta</h3>
-                <div>
-                  <div>
-                    <label for="cardholderName">Titular de la tarjeta</label>
-                    <input
+                      type="number"
+                      v-model="form.docNumber"
+                    ></b-form-input>
+                  </b-form-group>
+                </b-col>
+              </b-row>
+              <b-row class="pb-2">
+                <b-col class="text-center pt-3">
+                  <p class="h3 text-center">Datos de la tarjeta</p>
+                </b-col>
+              </b-row>
+              <b-row>
+                <b-col lg="6" md="6">
+                  <b-form-group
+                    id="cardholderName-label"
+                    label="Titular :"
+                    label-for="cardholderName"
+                  >
+                    <b-form-input
+                      required
                       id="cardholderName"
-                      v-model="cardholderName"
+                      size="sm"
                       data-checkout="cardholderName"
                       type="text"
-                    />
-                  </div>
-                  <div>
-                    <label for="">Fecha de vencimiento</label>
-                    <div>
-                      <input
-                        type="text"
-                        v-model="cardExpirationMonth"
-                        placeholder="MM"
-                        id="cardExpirationMonth"
-                        data-checkout="cardExpirationMonth"
-                        onselectstart="return false"
-                        onpaste="return false"
-                        oncopy="return false"
-                        oncut="return false"
-                        ondrag="return false"
-                        ondrop="return false"
-                        autocomplete="off"
-                      />
-                      <span class="date-separator">/</span>
-                      <input
-                        type="text"
-                        v-model="cardExpirationYear"
-                        placeholder="YY"
-                        id="cardExpirationYear"
-                        data-checkout="cardExpirationYear"
-                        onselectstart="return false"
-                        onpaste="return false"
-                        oncopy="return false"
-                        oncut="return false"
-                        ondrag="return false"
-                        ondrop="return false"
-                        autocomplete="off"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label for="cardNumber">Número de la tarjeta</label>
-                    <input
+                      v-model="form.cardholderName"
+                    ></b-form-input>
+                  </b-form-group>
+                </b-col>
+              </b-row>
+              <p>Vencimiento de la tarjeta</p>
+              <b-row>
+                <b-col lg="2" md="4">
+                  <b-form-group
+                    id="cardExpirationMonth-label"
+                    label="Mes :"
+                    label-for="cardExpirationMonth"
+                  >
+                    <b-form-input
+                      required
                       type="text"
-                      v-model="cardNumber"
+                      v-model="form.cardExpirationMonth"
+                      placeholder="MM"
+                      id="cardExpirationMonth"
+                      data-checkout="cardExpirationMonth"
+                      onselectstart="return false"
+                      onpaste="return false"
+                      oncopy="return false"
+                      oncut="return false"
+                      ondrag="return false"
+                      ondrop="return false"
+                      autocomplete="off"
+                    ></b-form-input>
+                  </b-form-group>
+                </b-col>
+                <span class="date-separator">/</span>
+                <b-col lg="2" md="4">
+                  <b-form-group
+                    id="cardExpirationMonth-label"
+                    label="Año :"
+                    label-for="cardExpirationMonth"
+                  >
+                    <b-form-input
+                      required
+                      type="text"
+                      v-model="form.cardExpirationYear"
+                      placeholder="YY"
+                      id="cardExpirationMonth"
+                      data-checkout="cardExpirationYear"
+                      onselectstart="return false"
+                      onpaste="return false"
+                      oncopy="return false"
+                      oncut="return false"
+                      ondrag="return false"
+                      ondrop="return false"
+                      autocomplete="off"
+                    ></b-form-input>
+                  </b-form-group>
+                </b-col>
+              </b-row>
+              <b-row>
+                <b-col lg="6" md="6">
+                  <b-form-group
+                    id="cardNumber-label"
+                    label="Numero de la tarjeta:"
+                    label-for="cardNumber"
+                  >
+                    <b-form-input
+                      required
+                      type="number"
+                      v-model="form.cardNumber"
                       @change="guessPaymentMethod()"
                       id="cardNumber"
                       data-checkout="cardNumber"
@@ -132,13 +208,21 @@
                       ondrag="return false"
                       ondrop="return false"
                       autocomplete="off"
-                    />
-                  </div>
-                  <div>
-                    <label for="securityCode">Código de seguridad</label>
-                    <input
+                    ></b-form-input>
+                  </b-form-group>
+                </b-col>
+              </b-row>
+              <b-row>
+                <b-col lg="2" md="6">
+                  <b-form-group
+                    id="securityCode-label"
+                    label="Codigo de seguridad:"
+                    label-for="securityCode"
+                  >
+                    <b-form-input
+                      required
                       id="securityCode"
-                      v-model="securityCode"
+                      v-model="form.securityCode"
                       data-checkout="securityCode"
                       type="text"
                       onselectstart="return false"
@@ -148,46 +232,54 @@
                       ondrag="return false"
                       ondrop="return false"
                       autocomplete="off"
-                    />
-                  </div>
-                  <div id="issuerInput">
-                    <label for="issuer">Banco emisor</label>
-                    <select
-                      id="issuer"
+                    ></b-form-input>
+                  </b-form-group>
+                </b-col>
+              </b-row>
+              <b-row>
+                <b-col lg="6" md="6">
+                  <b-form-group
+                    id="issuerInput-label"
+                    label="Banco emisor :"
+                    label-for="issuerInput"
+                  >
+                    <b-form-select
+                      required
+                      id="issuerInput"
                       name="issuer"
                       data-checkout="issuer"
-                    ></select>
-                  </div>
-                  <div>
-                    <label for="installments">Cuotas</label>
-                    <select
+                      size="sm"
+                      v-model="form.selectedBanco"
+                      :options="optionsBanco"
+                    ></b-form-select>
+                  </b-form-group>
+                </b-col>
+              </b-row>
+              <b-row>
+                <b-col lg="4" md="4">
+                  <b-form-group
+                    id="transactionAmount-label"
+                    label="Cuotas:"
+                    label-for="transactionAmount"
+                  >
+                    <b-form-input
+                      required
                       type="text"
-                      id="installments"
-                      name="installments"
-                    ></select>
-                  </div>
-                  <div>
-                    <input
-                      type="hidden"
                       name="transactionAmount"
                       id="transactionAmount"
                       value="100"
-                      v-model="transactionAmount"
-                    />
-                    <input
-                      type="hidden"
-                      name="paymentMethodId"
-                      id="paymentMethodId"
-                    />
-                    <input type="hidden" name="description" id="description" />
-                    <br />
-                    <b-button type="submit" @click="pagar()">Renovar</b-button>
-                    <br />
-                  </div>
-                </div>
-              </form>
-            </b-col>
-          </b-row>
+                      v-model="form.transactionAmount"
+                    ></b-form-input>
+                  </b-form-group>
+                </b-col>
+              </b-row>
+              <b-row class="pb-2">
+                <b-col class="text-center pt-3">
+                  <b-button type="submit" variant="primary">Comprar</b-button>
+                </b-col>
+              </b-row>
+            </b-form>
+          </ValidationObserver>
         </b-container>
       </b-card>
     </div>
@@ -197,39 +289,46 @@
 
 <script>
 export default {
-  name: "tipoPublicacion",
-  props: {
-    tipoPublicacion: {
-      type: Array,
-    },
-  },
+  name: "RenovarContrato",
+  props: {},
   data() {
     return {
+      show: true,
       selected: null,
-      email: null,
-      docNumber: null,
-      cardholderName: null,
-      cardExpirationMonth: null,
-      cardExpirationYear: null,
-      cardNumber: null,
-      securityCode: null,
-      transactionAmount: 1,
+      form: {
+        email: null,
+        docNumber: null,
+        cardholderName: null,
+        cardExpirationMonth: null,
+        cardExpirationYear: null,
+        cardNumber: null,
+        securityCode: null,
+        transactionAmount: 1,
+      },
+
       options: [
         { value: "DNI", text: "DNI" },
         { value: "CI", text: "Cédula de Identidad" },
         { value: "LI", text: "Libreta Cívica" },
         { value: "LE", text: "Libreta de Enrolamiento" },
       ],
+      selectedPlan: null,
+      optionsPlan: [
+        { value: "E", text: "Plan Estandar" },
+        { value: "P", text: "Plan Premium" },
+      ],
+      selectedBanco: null,
+      optionsBanco: [
+        { value: "E", text: "Plan Estandar" },
+        { value: "P", text: "Plan Premium" },
+      ],
     };
   },
   computed: {},
   created() {},
   methods: {
-    onRowSelected(items) {
-      this.$emit("update-tipoPublicacion", items);
-    },
     guessPaymentMethod() {
-      let cardnumber = this.cardNumber;
+      let cardnumber = this.form.cardNumber;
       console.log(cardNumber);
       if (cardnumber.length >= 6) {
         let bin = cardnumber.substring(0, 6);
@@ -275,19 +374,36 @@ export default {
       }
     },
 
-    getCardToken() {
+    async getCardToken() {
+      event.preventDefault();
+      alert(JSON.stringify(this.form));
       console.log("entrosubmit");
       doSubmit = false;
       event.preventDefault();
       if (!doSubmit) {
-        let $form = document.getElementById("paymentForm");
-        window.Mercadopago.createToken($form, setCardTokenAndPay);
+        //let $form = document.getElementById("paymentForm");
+        window.Mercadopago.createToken(this.form, setCardTokenAndPay);
         return false;
       }
     },
+    onReset(event) {
+      event.preventDefault();
+      (this.form.email = null),
+        (this.form.docNumber = null),
+        (this.form.cardholderName = null),
+        (this.form.cardExpirationMonth = null),
+        (this.form.cardExpirationYear = null),
+        (this.form.cardNumber = null),
+        (this.form.securityCode = null),
+        (this.form.transactionAmount = 1),
+        (this.show = false);
+      this.$nextTick(() => {
+        this.show = true;
+      });
+    },
     setCardTokenAndPay(status, response) {
       if (status == 200 || status == 201) {
-        let form = document.getElementById("paymentForm");
+        let form = this.form
         let card = document.createElement("input");
         card.setAttribute("name", "token");
         card.setAttribute("type", "hidden");

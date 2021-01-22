@@ -49,8 +49,7 @@ export default {
         this.productos = this.productos.filter(
         (c) => c.destacado == true
       );
-        this.getImporte(this.productos);
-        console.log(this.productos);
+        this.getImporte(this.productos);        
       } catch (err) {
         this.categorias = "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS";
       }

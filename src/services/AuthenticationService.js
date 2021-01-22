@@ -4,7 +4,7 @@ const API_URL = "api/";
 
 export default {
     register(credentials) {
-        return Api().post(API_URL + API_USER +'register', credentials)
+        return Api().post(API_URL + API_USER + 'register_usuario', credentials)
     },
     registerEmpresa(credentials) {
         return Api().post(API_URL + API_USER +'register_empresa', credentials)

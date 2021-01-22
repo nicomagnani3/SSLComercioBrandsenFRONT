@@ -6,8 +6,7 @@
           :visible-slides="5"
           slide-multiple
           :gap="1"
-          :slide-ratio="1 / 4"
-          
+          :slide-ratio="1 / 4"          
           :dragging-distance="60"
           :breakpoints="{ 800: {visibleSlides: 2, slideMultiple: 2} }"
         >
@@ -47,8 +46,12 @@ export default {
       try {
         const response = await ProductosService.getProductos();
         this.productos = response.data.data;
-        this.getImporte(this.productos);
         console.log(this.productos);
+          this.productos = this.productos.filter(
+        (c) => c.destacado == true
+      );
+        this.getImporte(this.productos);
+        
       } catch (err) {
         this.categorias = "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS";
       }

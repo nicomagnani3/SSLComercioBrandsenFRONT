@@ -24,25 +24,29 @@
                 v-for="item in categorias"
                 :key="item.id"
               >
-                <a @click="buscarPorCategoria(item)">{{ item.nombre }}</a>
+                <a class="buscador" @click="buscarPorCategoria(item)">{{
+                  item.nombre
+                }}</a>
               </li>
             </ul>
           </b-col>
           <b-col col lg="5">
-          <br />
-          <h4 >Servicios</h4>
-          <div>
-            <ul class="list-group">
-              <li
-                class="list-group-item"
-                v-for="item in servicios"
-                :key="item.id"
-              >
-                <a @click="buscarPorEmprendimiento(item)">{{ item.nombre }}</a>
-              </li>
-            </ul>
-          </div>
-        </b-col>
+            <br />
+            <h4>Servicios</h4>
+            <div>
+              <ul class="list-group">
+                <li
+                  class="list-group-item"
+                  v-for="item in servicios"
+                  :key="item.id"
+                >
+                  <a class="buscador" @click="buscarPorServicio(item)">{{
+                    item.nombre
+                  }}</a>
+                </li>
+              </ul>
+            </div>
+          </b-col>
         </b-col>
 
         <b-col>
@@ -60,6 +64,7 @@
               </p>
             </b-alert>
           </div>
+          <br />
           <transition
             v-for="producto in productos"
             v-bind:key="producto.id"
@@ -79,23 +84,29 @@
                   </b-col>
                   <b-col md="6">
                     <b-card-body>
-                      <h1>{{ producto.titulo }}</h1>
-                      <h4>Precio: {{ producto.precio }}</h4>
+                      <h3>
+                        <strong>{{ producto.titulo }} </strong
+                        ><span
+                          v-if="producto.destacado"
+                          class="badge badge-primary"
+                        >
+                          Destacado</span
+                        >
+                      </h3>
+                      <h4 v-if="producto.precio > 0">
+                        Precio: {{ producto.precio }}
+                      </h4>
                       <h5>
                         Fecha de publicacion: {{ producto.fecha | formatDate }}
                       </h5>
-                      <b-button
-                        variant="outline-primary"
-                        @click="verImagenes(producto)"
-                        ><b-icon icon="images"></b-icon
-                      ></b-button>
+                      <p>{{ producto.padre }}</p>
                       <a
                         :href="
-                          'https://api.whatsapp.com/send?text=Hola!%20,desde%20MercadoLocal%20observe%20la%20publicacion%20'+producto.titulo +
+                          'https://api.whatsapp.com/send?text=Hola!%20,desde%20MercadoLocal%20observe%20la%20publicacion%20' +
+                          producto.titulo +
                           ',queria%20obtener%20mas%20detalles' +
-                          
                           '&phone=+54' +
-                          producto.telefono
+                          acomodarCelular(producto.telefono)
                         "
                         target="_black"
                       >
@@ -106,6 +117,19 @@
                           style="width: 65px"
                         />
                       </a>
+
+                      <b-button
+                        variant="outline-primary"
+                        @click="verImagenes(producto)"
+                        ><b-icon icon="images"></b-icon
+                      ></b-button>
+                      <b-button
+                      v-if="producto.descripcion != 'SN'"
+                        style="margin: 11px"
+                        variant="outline-primary"
+                        @click="verdetalles(producto)"
+                        ><b-icon icon="layout-text-sidebar"></b-icon
+                      ></b-button>
                     </b-card-body>
                   </b-col>
                 </b-row>
@@ -123,17 +147,21 @@
                 v-for="item in emprendimientos"
                 :key="item.id"
               >
-                <a @click="buscarPorEmprendimiento(item)">{{ item.nombre }}</a>
+                <a class="buscador" @click="buscarPorEmprendimiento(item)">{{
+                  item.nombre
+                }}</a>
               </li>
             </ul>
           </div>
-        </b-col>       
+        </b-col>
       </b-row>
-      <div id="modalVerImagenes">
+
+      <div>
         <b-modal
+          centered
+          id="modal-xl"
           size="xl"
           ref="modalVerImagenes"
-          title="Listado de imagenes"
           hide-footer
         >
           <ImagenesDeUnaPublicacion
@@ -142,6 +170,19 @@
           ></ImagenesDeUnaPublicacion>
         </b-modal>
       </div>
+      <div>
+           
+        <b-modal
+        title="Descripcion del producto"          
+         id="modal-xl" size="xl"
+          ref="modalVerProductos"
+          hide-footer
+        >   
+        <p>{{descripcion}}</p>
+                      
+        </b-modal>
+      </div>
+      
     </b-container>
   </div>
 </template>
@@ -167,8 +208,10 @@ export default {
   },
   data() {
     return {
+      verImagen: false,
+      descripcion:null,
       perPage: 2,
-      currentPage: 1,     
+      currentPage: 1,
       productos: [],
       loading: true,
       categorias: [],
@@ -197,13 +240,20 @@ export default {
     },
   },
   methods: {
+    acomodarCelular(telefono) {
+      if (telefono[0] == 0) {
+        return telefono.substr(1);
+      }
+      return telefono;
+    },
     async getPublicacionesPorNombre() {
       this.loading = true;
       try {
         const response = await PublicacionService.getPublicacionesPorNombre({
           titulo: this.producto,
         });
-        this.productos = response.data.data;        
+        this.productos = response.data.data;
+        console.log(this.productos);
         this.getImporte(this.productos);
       } catch (err) {
         this.productos = "ATENCION NO SE PUDIERON OBTENER LAS NOVEDADES";
@@ -217,7 +267,7 @@ export default {
       try {
         const response = await CategoriasService.getCategorias();
         this.categorias = response.data.data;
-        this.categorias = this.ordenarDatos(this.categorias);    
+        this.categorias = this.ordenarDatos(this.categorias);
       } catch (err) {
         this.categorias = "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS";
       } finally {
@@ -227,7 +277,7 @@ export default {
     async getEmprendimientos() {
       this.loading = true;
       try {
-        const response = await EmprendimientoService.getEmprendimientos();       
+        const response = await EmprendimientoService.getEmprendimientos();
         this.emprendimientos = response.data.data;
         this.emprendimientos = this.ordenarDatos(this.emprendimientos);
       } catch (err) {
@@ -237,15 +287,14 @@ export default {
         this.loading = false;
       }
     },
-     async getServicios() {
+    async getServicios() {
       this.loading = true;
       try {
-        const response = await ServiciosService.getServicios();     
+        const response = await ServiciosService.getServicios();
         this.servicios = response.data.data;
         this.servicios = this.ordenarDatos(this.servicios);
       } catch (err) {
-        this.servicios =
-          "ATENCION NO SE PUDIERON OBTENER LOS servicios";
+        this.servicios = "ATENCION NO SE PUDIERON OBTENER LOS servicios";
       } finally {
         this.loading = false;
       }
@@ -278,7 +327,6 @@ export default {
           idCategoria: item.id,
         });
         this.productos = response.data.data;
-        console.log(this.productos)
         this.loading = response.data.error;
         this.getImporte(this.productos);
       } catch (err) {
@@ -300,10 +348,28 @@ export default {
         this.productos = "ATENCION NO SE PUDIERON OBTENER LAS NOVEDADES";
       }
     },
-
+    async buscarPorServicio(item) {
+      this.loading = true;
+      try {
+        const response = await ServiciosService.searchPublicacionesPorServicio({
+          id: item.id,
+        });
+        this.productos = response.data.data;
+        this.loading = response.data.error;
+        this.getImporte(this.productos);
+      } catch (err) {
+        this.productos = "ATENCION NO SE PUDIERON OBTENER LAS NOVEDADES";
+      }
+    },
     verImagenes(producto) {
+      this.verImagen = true;
       this.idPublicacionImagen = producto.id;
       this.$refs["modalVerImagenes"].show();
+    },
+    verdetalles(producto) {
+      console.log(producto);
+      this.descripcion=producto.descripcion
+      this.$refs["modalVerProductos"].show();
     },
     okImagenesPublicacion() {
       this.$refs["modalVerImagenes"].hide();
@@ -313,4 +379,8 @@ export default {
 };
 </script>
 <style >
+.buscador:hover {
+  color: rgb(255, 206, 78);
+  cursor: pointer;
+}
 </style>

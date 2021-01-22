@@ -47,146 +47,31 @@
           @update-categoria="update"
         ></ListarCategorias>
       </tab-content>
-      <tab-content title="¿Qué necesitas publicar?"  :before-change="validarCategoriaHija">
+      <tab-content
+        title="¿Qué necesitas publicar?"
+        :before-change="validarCategoriaHija"
+      >
         <ListarCategoriasHijas
           :categoriasHijas="this.categoriaHijaElegida"
           @update-categoria="updateCategoriaHija"
         ></ListarCategoriasHijas>
       </tab-content>
-      <tab-content title="Imagenes"
-      :before-change="validarImagenes">
-        <ImagenesCarga
-             ref="altaImagenes"
-         :imagenes="imagenes" 
-        :imgPrimera="imgPrimera">
-        </ImagenesCarga>
+      <tab-content
+        title="Detalles del producto"
+        :before-change="validarDetalleProducto"
+      >
+        <DetallePublicacion
+          ref="detallePublicacion"
+          :publicacion="this.publicacion"
+        ></DetallePublicacion>
       </tab-content>
-      <tab-content title="Ultimos detalles">
-        <div>
-          <b-row class="pb-2">
-            <b-col class="text-center pt-3">
-              <p class="h3 text-center">Detalles de tu publicacion</p>
-            </b-col>
-          </b-row>
-          <ValidationObserver ref="nuevaPublicacion">
-            <b-container class="pb-3">
-              <b-form-group>
-                <b-alert
-                  v-for="alert in alerts"
-                  dismissible
-                  v-bind:key="alert.key"
-                  show
-                  :variant="alert.variant"
-                  >{{ alert.message }}</b-alert
-                >
-              </b-form-group>
-              <!--    <b-card class="mb-3" header="Publicacion"> -->
-              <b-row>
-                <b-col lg="5" md="6">
-                  <b-form-group
-                    id="titulo-label"
-                    label="Titulo (describa con detalles) :"
-                    label-for="titulo"
-                  >
-                    <ValidationProvider
-                      :name="'titulo '"
-                      :rules="'required'"
-                      v-slot="{ errors, valid }"
-                    >
-                      <b-form-input
-                        size="sm"
-                        v-model="publicacion.titulo"
-                        :state="errors[0] ? false : valid ? true : null"
-                      ></b-form-input>
-                      <b-form-invalid-feedback
-                        v-for="error in errors"
-                        :key="error.key"
-                      >
-                        {{ error }}
-                      </b-form-invalid-feedback>
-                    </ValidationProvider>
-                  </b-form-group>
-                </b-col>
-                <b-col lg="5" md="6">
-                  <b-form-group
-                    id="precio-label"
-                    label="Precio:"
-                    label-for="precio"
-                  >
-                    <ValidationProvider
-                      :name="'precio '"
-                      :rules="'required'"
-                      v-slot="{ errors, valid }"
-                    >
-                      <vue-numeric
-                        style="text-align: right"
-                        v-model="publicacion.precio"
-                        separator="."
-                        :min="0"
-                        :precision="2"
-                        v-on:input="actualizarMontoEntrega"
-                        :state="errors[0] ? false : valid ? true : null"
-                      ></vue-numeric>
-                      <p
-                        v-if="montoEntregaInvalido"
-                        style="color: red; font-size: 10px"
-                      >
-                        el monto debe ser mayor
-                      </p>
-                    </ValidationProvider>
-                  </b-form-group>
-                </b-col>
-              </b-row>
-              <b-row>
-                <b-col lg="5" md="6">
-                  <b-form-group
-                    id="fecha-label"
-                    label="Fecha  "
-                    label-for="fecha"
-                  >
-                    <ValidationProvider
-                      name="fecha "
-                      :rules="'required'"
-                      v-slot="{ errors, valid }"
-                    >
-                      <b-form-input
-                        v-model="publicacion.fecha"
-                        :state="errors[0] ? false : valid ? true : null"
-                        size="sm"
-                        type="date"
-                      >
-                      </b-form-input>
-                      <b-form-invalid-feedback
-                        v-for="error in errors"
-                        :key="error.key"
-                      >
-                        {{ error }}
-                      </b-form-invalid-feedback>
-                    </ValidationProvider>
-                  </b-form-group>
-                </b-col>
-              </b-row>
-              <b-row>
-                <b-col cols="12">
-                  <b-form-group
-                    class="mb-0"
-                    id="observaciones-label"
-                    label="Observaciones"
-                    label-for="observaciones"
-                  >
-                    <b-form-textarea
-                      id="observaciones"
-                      size="sm"
-                      rows="1"
-                      v-model="publicacion.observaciones"
-                      placeholder="Observaciones"
-                    ></b-form-textarea>
-                  </b-form-group>
-                </b-col>
-              </b-row>
-            </b-container>
-          </ValidationObserver>
-        </div>
+      <tab-content title="Imagenes" :before-change="validarImagenes">
+        <ImagenesCarga
+          ref="altaImagenes"
+          :imagenes="imagenes"
+          :imgPrimera="imgPrimera"
+        >
+        </ImagenesCarga>
       </tab-content>
     </form-wizard>
   </div>
@@ -200,12 +85,14 @@ import CategoriasService from "@/services/CategoriasService";
 import ListarCategorias from "@/components/categorias/ListarCategorias.vue";
 import ListarCategoriasHijas from "@/components/categorias/ListarCategoriasHijas.vue";
 import ImagenesCarga from "@/components/imagenes/ImagenesCarga.vue";
+import DetallePublicacion from "@/components/publicaciones/DetallePublicacion.vue";
 export default {
   name: "nuevaPublicacion",
   components: {
     ListarCategorias,
     ListarCategoriasHijas,
     ImagenesCarga,
+    DetallePublicacion,
   },
   data() {
     return {
@@ -215,12 +102,7 @@ export default {
       categoriaHijaElegida: [],
       categoriaHijaSeleccionada: null,
       loading: true,
-      publicacion: {
-        titulo: null,
-        precio: 0,
-        fecha: new Date().toISOString().slice(0, 10),
-        observaciones: null,
-      },
+      publicacion: [],
       alerts: [],
       montoEntregaInvalido: false,
       imagenes: [],
@@ -247,15 +129,24 @@ export default {
       return result;
     },
     async validarCategoriaHija() {
-      if (  this.categoriaHijaSeleccionada == null){
-        return false
+      if (this.categoriaHijaSeleccionada == null) {
+        return false;
       }
-      return true 
+      return true;
     },
-    
+    async validarDetalleProducto() {
+      let result = await this.$refs.detallePublicacion.validate();
+      return result;
+    },
     async onComplete() {
-      const valid = await this.validate();
-      if (valid) {
+      if (this.getUserId == null) {
+        this.$router.push({
+          name: "login",
+          params: {
+            autentificacion: false,
+          },
+        });
+      } else {
         this.creando = true;
         try {
           const response = await PublicacionService.addPublicacion({
@@ -268,6 +159,7 @@ export default {
             categoria: this.categoriaSeleccionada,
             categoriasHija: this.categoriaHijaSeleccionada,
             usuarioID: this.getUserId,
+            destacada:this.publicacion.destacada
           });
 
           this.$root.$bvToast.toast(`Usted a creado una publicacion`, {
