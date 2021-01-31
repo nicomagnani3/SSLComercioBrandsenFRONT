@@ -1,7 +1,7 @@
 <template>
   
     
-      <b-carousel class="carrousel ml-4 mr-4"  
+      <b-carousel class="carrousel "  
       
       id="carousel-1"
       v-model="slide"
@@ -17,14 +17,15 @@
     >
 
       <b-carousel-slide class="carrousel"
-        img-src="https://http2.mlstatic.com/optimize/o:f_webp/resources/deals/exhibitors_resources/mla-home-desktop-slider-picture-a09d7f48-499f-4838-82f1-b519c1ca28bc.jpg"
+        img-src="https://http2.mlstatic.com/optimize/o:f_webp/resources/deals/exhibitors_resources/mla-home-desktop-slider-picture-290f11b5-c9d4-4fe1-b74f-36ba54cca903.jpg"
+        img-width="1024%"
       ></b-carousel-slide>
 
-      <b-carousel-slide class="carrousel" img-src="https://http2.mlstatic.com/optimize/o:f_webp/resources/deals/exhibitors_resources/mla-home-desktop-slider-picture-f6d56ce6-efc6-42e9-b0bd-3138377d5941.jpg">
+      <b-carousel-slide class="carrousel" img-src="https://http2.mlstatic.com/optimize/o:f_webp/resources/exhibitors/MLA-verano-liquidacion/7f048300-5449-11eb-ad67-51076904dbb8-home-slider_desktop.jpg">
         <h1></h1>
       </b-carousel-slide>
 
-       <b-carousel-slide class="carrousel" img-src="https://http2.mlstatic.com/optimize/o:f_webp/resources/deals/exhibitors_resources/mla-home-desktop-slider-picture-134597c7-757a-426a-b790-0cadb7a68f4c.jpg">
+       <b-carousel-slide class="carrousel" img-src="https://http2.mlstatic.com/optimize/o:f_webp/resources/deals/exhibitors_resources/mla-home-desktop-slider-picture-b313de13-522c-40c7-bec2-c0a946403ba0.jpg">
         <h1></h1>
       </b-carousel-slide>
 
@@ -50,7 +51,7 @@
     data() {
       return {
         slide: 0,
-        img1: 'blackfriday.jpg',
+        img1: 'portada1.jpg',
        
      productos: [],
       sliding: null,
@@ -75,12 +76,7 @@
 <style scoped>
  
  
-  .carrousel{
-
-      height: 250px;
-      
-  }
-
+  
   
 
 </style>>

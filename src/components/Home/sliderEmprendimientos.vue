@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <b-container>
     <h3 class="m-5 titulo">Emprendimientos destacados</h3>
         <vueper-slides
           class="no-shadow"
@@ -13,15 +13,13 @@
           <vueper-slide
             v-for="producto in productos"
             :key="producto.id"
-            :title="tituloAjustar(producto.titulo)"
-            :content="producto.precio.fontsize(4).fontcolor('#FFCE4E')"
             :image="`data:image/png;base64, ${producto.imagen}`"
-        
+            class="item"
           />  
        
         </vueper-slides>
    
-  </div>
+  </b-container>
 </template>
 
 
@@ -100,6 +98,10 @@ export default {
   font-size: 7em;
   opacity: 0.7;
 }
+
+.item{
+    box-shadow: 3px 3px 5px 3px rgba(0, 0, 0, 0.2);;
+  }
 </style>
 
 

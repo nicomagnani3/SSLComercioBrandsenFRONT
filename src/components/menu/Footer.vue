@@ -1,15 +1,41 @@
 <template>
-    <footer style=" background-color: #ffce4e;"  class="footer text-center">
-       
-        <span class="footer-text">Powered by </span><!--
-        <span><a href="http://frontiniyasoc.com.ar/">
-            <img class="logo" src="@/assets/frontini-blanco.png" alt="" height="auto" > 
-            </a>
-        </span>
-         <div class="my-3 text-center">
-            <small>Copyright &copy; Frontini & Asoc</small>
-        </div>  -->
-    </footer>
+ <b-container fluid class="contenedor">
+  <b-row class="fila">
+    <b-col align-self="center">
+        
+        <img class="logo" src="@/assets/locallogo.jpg" alt="">
+    </b-col>
+
+    <b-col align-self="center">
+        
+        <ul>
+            <li>Buscá articulos en brandsen</li>
+            <li>Buscá servicios en brandsen</li>
+            <li>Buscá profesionales en brandsen</li>
+        </ul>
+    
+    </b-col>
+    
+    
+    <b-col align-self="center"> 
+    
+        
+        <ul>
+            <li>Todo en un mismo sitio</li>
+            <li>Rápido y fácil</li>
+            <li>Las mejores ofertas</li>
+        </ul>
+    </b-col>
+
+    <b-col md="2" align-self="end"> 
+        <a href=""><b-icon icon="bag-dash" font-scale="3"></b-icon></a>
+        <a href=""><b-icon icon="bag-dash" font-scale="3"></b-icon></a>
+        <a href=""><b-icon icon="bag-dash" font-scale="3"></b-icon></a>  
+    </b-col>
+    
+  </b-row>
+  
+</b-container>
 </template>
 
 
@@ -17,30 +43,34 @@
 export default {
     name: "Footer",
     data () {
-        return {
-            imgFooter : 'od_footer.png'
-        }
+       
     }
 }
 </script>
 
+<style  scoped>
 
-<style>
+    .contenedor{
 
-.footer-text {
-    font-size: 80%;
+        width: 100%;
+        height: 300px;
+        background-color: #ffce4e;;
+    }
     
-}
+    .columna{
 
-.footer text-center {
+        border: 1px solid black;
+        
+    }
 
-  bottom: 0;
-  width: 100%;
- 
-  height: 160px;
-  line-height: 160px; 
-  background-color:#ffce4e;
-}
+    .fila{height: 300px;}
+    
+
+    .logo{
+        width: 300px;
+    }
+    
+
 
 </style>
 

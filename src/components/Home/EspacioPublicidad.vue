@@ -1,7 +1,7 @@
 <template>
     
     <b-container>
-        <img src="https://tpc.googlesyndication.com/simgad/15795295128915361711" alt="">
+        <img class="imagen" src="@/assets/publi.jpg" alt="">
 
     </b-container>
 
@@ -12,7 +12,18 @@
 
 <script>
 export default {
-    name: 'Publicidad'
-    
+    name: "Publicidad",
+    data () {
+        return {
+            img: 'publi.jpg'
+        }
+    }
 }
 </script>
+
+<style  scoped>
+    .imagen{
+
+        width: 100%;
+    }
+</style>

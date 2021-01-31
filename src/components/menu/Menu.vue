@@ -11,7 +11,7 @@
         <b-navbar-nav>
           <b-nav-item>Categorias</b-nav-item>
           <b-nav-item>Ofertas</b-nav-item>
-          <b-nav-item>Tiendas Oficiales</b-nav-item>
+          <b-nav-item>Tiendas </b-nav-item>
           <b-nav-item-dropdown>
             <template slot="button-content">
               <span class="light">Vender</span>
@@ -23,13 +23,30 @@
             <b-dropdown-item :to="{ name: 'nuevoServicio' }">Servicio</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
-        <b-alert variant="success" show dismissible>
-          Mercado Local aporta el 10% de los ingresos a asociaciones benéficas
-          de Brandsen
-        </b-alert>
+
+        <b-navbar-nav>
+
+        <b-col class="buscarPs" >
+        <b-form-group class="mb-0 ">
+          <b-input-group>
+            <b-form-input
+              style="height: 30px"
+              @keyup.enter="buscarProducto(filterPrev)"
+              v-model="filterPrev"
+              placeholder="Buscar "
+            ></b-form-input>
+            <b-input-group-append>
+              <b-button size="sm" @click="buscarProducto(filterPrev)"
+                ><b-icon icon="search"></b-icon
+              ></b-button>
+            </b-input-group-append>
+          </b-input-group>
+        </b-form-group>
+      </b-col>  
+        </b-navbar-nav>
 
         <!-- Right aligned nav items -->
-        <b-navbar-nav class="ml-auto">
+        <b-navbar-nav class="">
           <b-navbar-nav v-if="logeado" class="ml-auto">
             <b-nav-item class="light mx-4 my-0 py-0">
               <b-icon icon="user" />Bienvenido,
@@ -55,25 +72,8 @@
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
-    <div style="background-color: #ffce4e !important">
-      <b-col md="5" offset-md="3">
-        <b-form-group class="mb-0">
-          <b-input-group>
-            <b-form-input
-              style="height: 30px"
-              @keyup.enter="buscarProducto(filterPrev)"
-              v-model="filterPrev"
-              placeholder="Buscar Servicios,emprendimientos o productos por nombre"
-            ></b-form-input>
-            <b-input-group-append>
-              <b-button size="sm" @click="buscarProducto(filterPrev)"
-                ><b-icon icon="search"></b-icon
-              ></b-button>
-            </b-input-group-append>
-          </b-input-group>
-        </b-form-group>
-      </b-col>
-    </div>
+    
+    
   </div>
 </template>
 <script>
@@ -125,6 +125,14 @@ export default {
 </script>
 
 <style scoped>
+
+.buscarPs{
+
+  padding: 10px;
+  
+
+
+}
 .Buscador {
   width: 75%;
   background-color: #ffce4e;
@@ -142,4 +150,6 @@ export default {
 .nav {
   background-color: #ffce4e;
 }
+
+
 </style>
