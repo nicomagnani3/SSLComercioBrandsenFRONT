@@ -15,6 +15,9 @@ import NuevaPublicacion from '@/components/publicaciones/NuevaPublicacion.vue'
 import NuevoEmprendimiento from '@/components/emprendimientos/NuevoEmprendimiento.vue'
 /* Servicio */
 import NuevoServicio from '@/components/servicios/NuevoServicio.vue'
+/* Contratos */
+import RenovarContrato from '@/components/contratos/RenovarContrato.vue'
+
 
 /* Menu */
 import container from '@/components/menu/Container.vue'
@@ -64,8 +67,19 @@ const router = new Router({
        path: '/buscarProductos/:producto',
         name: 'buscarProductos',
         component: BuscarProductos,   
-        props: true            
+        props: true,
+        meta: {
+          requireAuth: false
+        },           
        },
+       {
+        path: '/renovarContrato',
+         name: 'renovarContrato',
+         component: RenovarContrato,
+         meta: {
+          requireAuth: true
+        },  
+        },
     ]
     },
     {

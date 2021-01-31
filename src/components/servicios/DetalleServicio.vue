@@ -44,7 +44,7 @@
               </ValidationProvider>
             </b-form-group>
           </b-col>
-          <b-col lg="5" md="6">
+       <!--    <b-col lg="5" md="6">
             <b-form-group id="precio-label" label="Precio:" label-for="precio">
               <ValidationProvider
                 :name="'precio '"
@@ -68,12 +68,12 @@
                 </p>
               </ValidationProvider>
             </b-form-group>
-          </b-col>
+          </b-col> -->
         </b-row>
         <b-row>
           <b-col lg="10" md="10">
             <b-form-checkbox v-model="publicacion.destacada" name="checkbox-1">
-              Publicacion destacada
+              Publicacion destacada (las publicaciones destacadas tienen un costo adicional y se visualizan en el home de Mercado Local)
             </b-form-checkbox>
           </b-col>
           <hr />
@@ -83,7 +83,7 @@
             <b-form-group
               class="mb-0"
               id="observaciones-label"
-              label="Observaciones"
+              label="Descripción(opcional)"
               label-for="observaciones"
             >
               <b-form-textarea
@@ -91,7 +91,7 @@
                 size="sm"
                 rows="1"
                 v-model="publicacion.observaciones"
-                placeholder="Observaciones"
+                placeholder="Descripción del servicio que vas a publicar"
               ></b-form-textarea>
             </b-form-group>
           </b-col>

@@ -76,7 +76,6 @@ import axios from "axios";
 import EmprendimientoService from "@/services/EmprendimientoService";
 import ListarEmprendimientos from "@/components/emprendimientos/ListarEmprendimientos.vue";
 import DetalleEmprendimiento from "@/components/emprendimientos/DetalleEmprendimiento.vue";
-//import ListarProductos from "@/components/producto/ListarProducto.vue";
 import ImagenesCarga from "@/components/imagenes/ImagenesCarga.vue";
 
 
@@ -141,12 +140,7 @@ export default {
       let result = await this.$refs.altaImagenes.validate();
       return result;
     },
-    async onComplete() {
-        console.log("termino")
-        console.log( this.emprendimientoSeleccionado )
-         console.log(  this.publicacionEmprendimiento)
-         console.log(this.imagenesEmprendimiento)
-         console.log(this.imgPrimeraEmprendimiento)
+    async onComplete() {      
           if (this.getUserId == null) {
               this.$router.push({
                 name: "login",

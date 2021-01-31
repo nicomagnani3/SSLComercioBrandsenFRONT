@@ -6,6 +6,7 @@
         style="width: 500px"
         class="rounded"
         alt="..."
+        @click="home()"
       />
     </div>
     <br />
@@ -106,6 +107,9 @@ export default {
     }
   },
   methods: {
+    home(){
+       this.$router.push("/");
+    },
     ...mapMutations("storeUser", [
       "setToken",
       "setUsername",
