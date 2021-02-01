@@ -106,6 +106,10 @@ export default {
             return state.token != null
         },
         hasPermisos: (state) => (permiso) => {
+      
+            if(state.permisos == null){
+                return false
+            }
             return JSON.parse(state.permisos.includes(permiso)) || JSON.parse(state.permisos.includes('ADMINISTRADOR')) ;
         },
         getGrupos(state) {

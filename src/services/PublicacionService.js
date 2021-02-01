@@ -28,4 +28,10 @@ export default {
     getTipoPublicaciones(credentials) {    
         return Api().get(API_URL + API_USER + "get_tipoPublicacion", credentials)
     },
+    getPublicacionesUsuarios(credentials) {    
+        return Api().post(API_URL + API_USER + "get_publicaciones_usuarios", credentials)
+    },
+    eliminarPublicacion(credentials) {    
+        return Api().post(API_URL + API_USER + "eliminar_publicacion", credentials)
+    },
 }

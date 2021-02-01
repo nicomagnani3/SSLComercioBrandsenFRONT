@@ -17,8 +17,8 @@ import NuevoEmprendimiento from '@/components/emprendimientos/NuevoEmprendimient
 import NuevoServicio from '@/components/servicios/NuevoServicio.vue'
 /* Contratos */
 import RenovarContrato from '@/components/contratos/RenovarContrato.vue'
-
-
+/* misProductos */
+import MisProductos from '@/components/usuarios/MisProductos.vue'
 /* Menu */
 import container from '@/components/menu/Container.vue'
 import home from '@/components/Home/Home.vue'
@@ -80,6 +80,14 @@ const router = new Router({
           requireAuth: true
         },  
         },
+        {
+          path: '/misproductos',
+           name: 'misproductos',
+           component: MisProductos,
+           meta: {
+            requireAuth: true
+          },  
+          },
     ]
     },
     {
