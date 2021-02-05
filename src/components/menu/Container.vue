@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="contenedor">
       <div class="wrapper">        
       <Menu/>
         <router-view class="content"/>
@@ -67,6 +67,11 @@ export default {
         line-height: 2.5;
   }
 
+  .contenedor{
+
+    height: auto;
+  }
+
   html {
     position: relative;
     height: 100%;
@@ -109,11 +114,12 @@ export default {
       /*display: block;*/
       
       margin-top:10px;
-      height: 50px;
+      
       line-height: 50px;
       /*
       */
-      color:white;
+      color: black;
+      font-weight: bold;
      background-color: #ececec;
   }
 

@@ -9,8 +9,7 @@
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-item>Categorias</b-nav-item>
-          <b-nav-item>Ofertas</b-nav-item>
+          
           <b-nav-item>Tiendas </b-nav-item>
           <b-nav-item-dropdown>
             <template slot="button-content">
@@ -137,7 +136,7 @@ export default {
 .buscarPs{
 
   padding: 10px;
-  
+  width: 450px;
 
 
 }

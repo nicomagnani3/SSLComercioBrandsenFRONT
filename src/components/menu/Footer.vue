@@ -1,23 +1,24 @@
 <template>
  <b-container fluid class="contenedor">
   <b-row class="fila">
-    <b-col align-self="center">
+    <b-col xs="12" md="6" lg="3" align-self="center">
         
         <img class="logo" src="@/assets/locallogo.jpg" alt="">
     </b-col>
 
-    <b-col align-self="center">
+    <b-col xs="12" md="12" lg="3" align-self="center">
         
         <ul>
             <li>Buscá articulos en brandsen</li>
             <li>Buscá servicios en brandsen</li>
             <li>Buscá profesionales en brandsen</li>
+
         </ul>
     
     </b-col>
     
     
-    <b-col align-self="center"> 
+    <b-col xs="12" md="12" lg="3" align-self="center"> 
     
         
         <ul>
@@ -27,10 +28,10 @@
         </ul>
     </b-col>
 
-    <b-col md="2" align-self="end"> 
-        <a href=""><b-icon icon="bag-dash" font-scale="3"></b-icon></a>
-        <a href=""><b-icon icon="bag-dash" font-scale="3"></b-icon></a>
-        <a href=""><b-icon icon="bag-dash" font-scale="3"></b-icon></a>  
+    <b-col xs="12" md="12" lg="3" align-self="end"> 
+        <a href=""> <img  class="icono" src="@/assets/logowsp.png" alt=""> </a>
+        <a href=""> <img  class="icono" src="@/assets/logo-ig.png" alt=""> </a>
+        <a href=""> <img  class="icono" src="@/assets/icono-face.png" alt=""> </a> 
     </b-col>
     
   </b-row>
@@ -43,7 +44,9 @@
 export default {
     name: "Footer",
     data () {
-       
+       return {
+            
+        }
     }
 }
 </script>
@@ -52,9 +55,10 @@ export default {
 
     .contenedor{
 
-        width: 100%;
-        height: 300px;
-        background-color: #ffce4e;;
+        
+        height: auto;
+        background-color: #ffce4e;
+        padding: 50px;
     }
     
     .columna{
@@ -63,11 +67,13 @@ export default {
         
     }
 
-    .fila{height: 300px;}
-    
-
     .logo{
         width: 300px;
+    }
+
+    .icono{
+        width: 35px;
+        margin: 5px;
     }
     
 

@@ -8,11 +8,7 @@
           :visible-slides="5"
           slide-multiple
           :gap="1"
-<<<<<<< HEAD
-          :slide-ratio="1 / 4"
-=======
-          :slide-ratio="1 / 4"          
->>>>>>> 95069730733c499c41fbb7b5ca0f6bb3bea5acb3
+          :slide-ratio="1 / 4"     
           :dragging-distance="60"
           :breakpoints="{ 800: {visibleSlides: 2, slideMultiple: 2} }"
         >

@@ -5,7 +5,7 @@
 
       <Slider />
       <b-container fluid class="subtitulo"> 
-          <P>Mercado local Aporta el 10% de los ingresos a la caridad</P>
+          <P>Mercado local Aporta el 10% de los ingresos a Entidades Beneficas</P>
       </b-container>
       <SliderProductos />
       <sliderServicios/>
@@ -60,6 +60,7 @@ export default {
 <style>
 .body {
   background-color: #ebebeb;
+  height: auto;
 }
 
 .subtitulo{
