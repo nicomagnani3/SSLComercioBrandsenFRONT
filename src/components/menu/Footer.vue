@@ -44,9 +44,15 @@
 export default {
     name: "Footer",
     data () {
+<<<<<<< HEAD
        return {
             
         }
+=======
+       return{
+
+       };
+>>>>>>> 2ba06be9ed4ed5f88d354be211a85f593d8c65f8
     }
 }
 </script>

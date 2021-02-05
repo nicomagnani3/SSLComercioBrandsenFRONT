@@ -8,7 +8,12 @@
           :visible-slides="5"
           slide-multiple
           :gap="1"
+<<<<<<< HEAD
           :slide-ratio="1 / 4"     
+=======
+
+          :slide-ratio="1 / 4"          
+>>>>>>> 2ba06be9ed4ed5f88d354be211a85f593d8c65f8
           :dragging-distance="60"
           :breakpoints="{ 800: {visibleSlides: 2, slideMultiple: 2} }"
         >
@@ -42,7 +47,7 @@ export default {
   data() {
     return {
       productos: [],
-      sliding: null,
+     
     };
   },
   methods: {

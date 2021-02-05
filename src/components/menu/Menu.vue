@@ -11,42 +11,52 @@
         <b-navbar-nav>
           
           <b-nav-item>Tiendas </b-nav-item>
-          <b-nav-item-dropdown>
+          <b-nav-item-dropdown v-if="hasPermisos('CREAR')">
             <template slot="button-content">
               <span class="light">Publicar</span>
             </template>
-            <b-dropdown-item :to="{ name: 'nuevoEmprendimiento' }"
+            <b-dropdown-item
+              :to="{ name: 'nuevoEmprendimiento' }"
+              v-if="hasPermisos('CREAR_EMPRENDIMIENTO')"
               >Emprendimiento</b-dropdown-item
             >
-            <b-dropdown-item :to="{ name: 'nuevaPublicacion' }"
+            <b-dropdown-item
+              :to="{ name: 'nuevaPublicacion' }"
+              v-if="hasPermisos('CREAR_PRODUCTO')"
               >Producto</b-dropdown-item
             >
-            <b-dropdown-item :to="{ name: 'nuevoServicio' }"
+            <b-dropdown-item
+              :to="{ name: 'nuevoServicio' }"
+              v-if="hasPermisos('CREAR_SERVICIO')"
               >Servicio</b-dropdown-item
             >
           </b-nav-item-dropdown>
           <b-nav-item :to="{ name: 'renovarContrato' }">Contratos</b-nav-item>
+          <b-nav-item
+            :to="{ name: 'misproductos' }"
+            v-if="hasPermisos('MIS_PRODUCTOS')"
+            >Mis Productos</b-nav-item
+          >
         </b-navbar-nav>
 
         <b-navbar-nav>
-
-        <b-col class="buscarPs" >
-        <b-form-group class="mb-0 ">
-          <b-input-group>
-            <b-form-input
-              style="height: 30px"
-              @keyup.enter="buscarProducto(filterPrev)"
-              v-model="filterPrev"
-              placeholder="Buscar "
-            ></b-form-input>
-            <b-input-group-append>
-              <b-button size="sm" @click="buscarProducto(filterPrev)"
-                ><b-icon icon="search"></b-icon
-              ></b-button>
-            </b-input-group-append>
-          </b-input-group>
-        </b-form-group>
-      </b-col>  
+          <b-col class="buscarPs">
+            <b-form-group class="mb-0">
+              <b-input-group>
+                <b-form-input
+                  style="height: 30px"
+                  @keyup.enter="buscarProducto(filterPrev)"
+                  v-model="filterPrev"
+                  placeholder="Buscar "
+                ></b-form-input>
+                <b-input-group-append>
+                  <b-button size="sm" @click="buscarProducto(filterPrev)"
+                    ><b-icon icon="search"></b-icon
+                  ></b-button>
+                </b-input-group-append>
+              </b-input-group>
+            </b-form-group>
+          </b-col>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->
@@ -76,8 +86,6 @@
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
-    
-    
   </div>
 </template>
 <script>
@@ -132,13 +140,14 @@ export default {
 </script>
 
 <style scoped>
-
-.buscarPs{
-
+.buscarPs {
   padding: 10px;
+<<<<<<< HEAD
   width: 450px;
 
 
+=======
+>>>>>>> 2ba06be9ed4ed5f88d354be211a85f593d8c65f8
 }
 .Buscador {
   width: 75%;
@@ -157,6 +166,4 @@ export default {
 .nav {
   background-color: #ffce4e;
 }
-
-
 </style>
