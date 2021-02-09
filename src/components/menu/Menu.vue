@@ -142,12 +142,9 @@ export default {
 <style scoped>
 .buscarPs {
   padding: 10px;
-<<<<<<< HEAD
   width: 450px;
 
 
-=======
->>>>>>> 2ba06be9ed4ed5f88d354be211a85f593d8c65f8
 }
 .Buscador {
   width: 75%;
