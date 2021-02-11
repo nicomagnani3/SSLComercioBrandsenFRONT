@@ -73,6 +73,13 @@
         >
         </ImagenesCarga>
       </tab-content>
+           <tab-content title="Pagar la publicacion" :before-change="validarPago">
+        <PagarEmprendimiento
+          ref="validarPago"
+          :destacada="this.publicacion.destacada"
+        >
+        </PagarEmprendimiento>
+      </tab-content>
     </form-wizard>
   </div>
 </template>
@@ -85,6 +92,8 @@ import CategoriasService from "@/services/CategoriasService";
 import ListarCategorias from "@/components/categorias/ListarCategorias.vue";
 import ListarCategoriasHijas from "@/components/categorias/ListarCategoriasHijas.vue";
 import ImagenesCarga from "@/components/imagenes/ImagenesCarga.vue";
+import PagarEmprendimiento from "@/components/emprendimientos/PagarEmprendimiento.vue";
+
 import DetallePublicacion from "@/components/publicaciones/DetallePublicacion.vue";
 export default {
   name: "nuevaPublicacion",
@@ -93,6 +102,7 @@ export default {
     ListarCategoriasHijas,
     ImagenesCarga,
     DetallePublicacion,
+    PagarEmprendimiento
   },
   data() {
     return {
@@ -124,6 +134,15 @@ export default {
     ...mapGetters("storeUser", ["getUserId"]),
   },
   methods: {
+       async validarPago() {
+      let result = await this.$refs.validarPago.validate();
+      console.log(result)
+      if (result == false){
+        alert("Debe efectuar el pago para poder finalizar la publicacion en Malambo")
+        return false;
+      }
+      return result;
+    },
     async validarImagenes() {
       let result = await this.$refs.altaImagenes.validate();
       return result;

@@ -75,9 +75,13 @@
         >
         </ImagenesCarga>
       </tab-content>
-      <!--   <tab-content title="Pagar Publicacion">
-        <PagoPublicacion> </PagoPublicacion>
-      </tab-content> -->
+      <tab-content title="Pagar el Servicio" :before-change="validarPago">
+        <PagarEmprendimiento
+          ref="validarPago"
+          :destacada="this.publicacion.destacada"
+        >
+        </PagarEmprendimiento>
+      </tab-content>
     </form-wizard>
   </div>
 </template>
@@ -91,6 +95,8 @@ import ListarServiciosHijos from "@/components/servicios/ListarServiciosHijos.vu
 import DetalleServicio from "@/components/servicios/DetalleServicio.vue";
 //import PagoPublicacion from "@/components/publicaciones/PagoPublicacion.vue";
 import ImagenesCarga from "@/components/imagenes/ImagenesCarga.vue";
+import PagarEmprendimiento from "@/components/emprendimientos/PagarEmprendimiento.vue";
+
 
 export default {
   name: "nuevaPublicacion",
@@ -99,6 +105,7 @@ export default {
     ListarServicios,
     ListarServiciosHijos,
     DetalleServicio,
+    PagarEmprendimiento
     //PagoPublicacion,
   },
   data() {
@@ -132,6 +139,15 @@ export default {
     ...mapGetters("storeUser", ["getUserId"]),
   },
   methods: {
+    async validarPago() {
+      let result = await this.$refs.validarPago.validate();
+      console.log(result)
+      if (result == false){
+        alert("Debe efectuar el pago para poder finalizar la publicacion en Malambo")
+        return false;
+      }
+      return result;
+    },
     async validarDetalleservicio() {
       let result = await this.$refs.detalleServicio.validate();
       return result;
