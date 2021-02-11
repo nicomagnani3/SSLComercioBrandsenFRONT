@@ -96,10 +96,13 @@
                       <h4 v-if="producto.precio > 0">
                         Precio: {{ producto.precio }}
                       </h4>
+                       <strong>{{ producto.padre }}</strong>
+                       <br><hr>
                       <h5>
                         Fecha de publicacion: {{ producto.fecha | formatDate }}
                       </h5>
-                      <p>{{ producto.padre }}</p>
+                     
+                       <p v-if="producto.telefono != NULL">Telefono: {{ producto.telefono }}</p>
                       <a
                         :href="
                           'https://api.whatsapp.com/send?text=Hola!%20,desde%20MercadoLocal%20observe%20la%20publicacion%20' +
@@ -174,7 +177,8 @@
            
         <b-modal
         title="Descripcion del producto"          
-         id="modal-xl" size="xl"
+         id="modal-xl" 
+         centered 
           ref="modalVerProductos"
           hide-footer
         >   

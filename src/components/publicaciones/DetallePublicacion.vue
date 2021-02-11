@@ -126,7 +126,7 @@
                 <b-form-textarea
                   id="observaciones"
                   size="sm"
-                  rows="1"
+                  rows="8"
                   v-model="publicacion.observaciones"
                   placeholder="Descripcion del producto que vas a publicar"
                 ></b-form-textarea>

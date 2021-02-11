@@ -31,7 +31,9 @@
         <b-container class="pb-3">
           <ValidationObserver ref="renovarContrato">
             <b-form
-              @submit="getCardToken"
+              @submit="getCardToken($event)"
+              action="http://localhost:8000/api/process_payment"
+              method="POST"
               @reset="onReset"
               v-if="show"
               id="paymentForm"
@@ -87,31 +89,27 @@
                     label="Tipo de documento :"
                     label-for="docType"
                   >
+
                     <b-form-select
+                      name="docType"
+                      type="text"
                       required
                       data-checkout="docType"
                       id="docType"
                       size="sm"
-                      v-model="form.selected"
-                      :options="options"
+                      v-model="form.docType"
                     ></b-form-select>
                   </b-form-group>
                 </b-col>
                 <b-col lg="4" md="6">
-                  <b-form-group
-                    id="docNumber-label"
-                    label="Numero de documento :"
-                    label-for="docNumber"
-                  >
-                    <b-form-input
-                      required
-                      id="docNumber"
-                      size="sm"
-                      name="docNumber"
-                      type="number"
-                      v-model="form.docNumber"
-                    ></b-form-input>
-                  </b-form-group>
+                  <label for="docNumber">Número de documento</label>
+                  <input
+                    id="docNumber"
+                    name="docNumber"
+                    data-checkout="docNumber"
+                    v-model="form.docNumber"
+                    type="text"
+                  />
                 </b-col>
               </b-row>
               <b-row class="pb-2">
@@ -137,7 +135,7 @@
                   </b-form-group>
                 </b-col>
               </b-row>
-              <p>Vencimiento de la tarjeta</p>
+              <p>Vencimiento de la tarjetas</p>
               <b-row>
                 <b-col lg="2" md="4">
                   <b-form-group
@@ -174,7 +172,7 @@
                       type="text"
                       v-model="form.cardExpirationYear"
                       placeholder="YY"
-                      id="cardExpirationMonth"
+                      id="cardExpirationYear"
                       data-checkout="cardExpirationYear"
                       onselectstart="return false"
                       onpaste="return false"
@@ -195,10 +193,6 @@
                     label-for="cardNumber"
                   >
                     <b-form-input
-                      required
-                      type="number"
-                      v-model="form.cardNumber"
-                      @change="guessPaymentMethod()"
                       id="cardNumber"
                       data-checkout="cardNumber"
                       onselectstart="return false"
@@ -208,6 +202,10 @@
                       ondrag="return false"
                       ondrop="return false"
                       autocomplete="off"
+                      type="text"
+                      required
+                      v-model="form.cardNumber"
+                      @change="guessPaymentMethod($event)"
                     ></b-form-input>
                   </b-form-group>
                 </b-col>
@@ -238,21 +236,15 @@
               </b-row>
               <b-row>
                 <b-col lg="6" md="6">
-                  <b-form-group
-                    id="issuerInput-label"
-                    label="Banco emisor :"
-                    label-for="issuerInput"
-                  >
-                    <b-form-select
-                      required
-                      id="issuerInput"
+                  <div id="issuerInput">
+                    <label for="issuer">Banco emisor</label>
+                    <select
+                      id="issuer"
                       name="issuer"
                       data-checkout="issuer"
-                      size="sm"
-                      v-model="form.selectedBanco"
-                      :options="optionsBanco"
-                    ></b-form-select>
-                  </b-form-group>
+                      v-model="form.issuer"
+                    ></select>
+                  </div>
                 </b-col>
               </b-row>
               <b-row>
@@ -262,15 +254,27 @@
                     label="Cuotas:"
                     label-for="transactionAmount"
                   >
-                    <b-form-input
-                      required
+                    <select
                       type="text"
-                      name="transactionAmount"
-                      id="transactionAmount"
-                      value="100"
-                      v-model="form.transactionAmount"
-                    ></b-form-input>
+                      v-model="form.installments"
+                      id="installments"
+                      name="installments"
+                    ></select>
                   </b-form-group>
+                  <input
+                    type="hidden"
+                    name="transactionAmount"
+                    id="transactionAmount"
+                    value="10000"
+                    v-model="form.transactionAmount"
+                  />
+                  <input
+                    type="hidden"
+                    name="paymentMethodId"
+                    id="paymentMethodId"
+                    v-model="form.paymentMethodId"
+                  />
+                  <input type="hidden" name="description" v-model="form.description" id="description" />
                 </b-col>
               </b-row>
               <b-row class="pb-2">
@@ -288,6 +292,8 @@
 <script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
 
 <script>
+import PublicacionService from "@/services/PublicacionService";
+
 export default {
   name: "RenovarContrato",
   props: {},
@@ -295,6 +301,8 @@ export default {
     return {
       show: true,
       selected: null,
+      doSubmit: false,
+
       form: {
         email: null,
         docNumber: null,
@@ -303,15 +311,14 @@ export default {
         cardExpirationYear: null,
         cardNumber: null,
         securityCode: null,
-        transactionAmount: 1,
+        transactionAmount: 10000,
+        url: null,
+        docType:null,
+        description:null,
+        paymentMethodId:null,
+        installments:null,
+        issuer:null
       },
-
-      options: [
-        { value: "DNI", text: "DNI" },
-        { value: "CI", text: "Cédula de Identidad" },
-        { value: "LI", text: "Libreta Cívica" },
-        { value: "LE", text: "Libreta de Enrolamiento" },
-      ],
       selectedPlan: null,
       optionsPlan: [
         { value: "E", text: "Plan Estandar" },
@@ -327,36 +334,34 @@ export default {
   computed: {},
   created() {},
   methods: {
-    guessPaymentMethod() {
-      let cardnumber = this.form.cardNumber;
-      console.log(cardNumber);
+    guessPaymentMethod(event) {
+      let cardnumber = document.getElementById("cardNumber").value;
       if (cardnumber.length >= 6) {
         let bin = cardnumber.substring(0, 6);
         window.Mercadopago.getPaymentMethod(
           {
             bin: bin,
           },
-          this.setPaymentMethod()
+          this.setPaymentMethod
         );
       }
     },
     setPaymentMethod(status, response) {
-      console.log("entra setPaymentMethod");
       if (status == 200) {
         let paymentMethod = response[0];
-        this.transactionAmount = paymentMethod.id;
+        document.getElementById("paymentMethodId").value = paymentMethod.id;
 
-        getIssuers(paymentMethod.id);
+        this.getIssuers(paymentMethod.id);
       } else {
         alert(`payment method info error: ${response}`);
       }
     },
     getIssuers(paymentMethodId) {
-      window.Mercadopago.getIssuers(paymentMethodId, setIssuers);
+      window.Mercadopago.getIssuers(paymentMethodId, this.setIssuers);
     },
     setIssuers(status, response) {
       if (status == 200) {
-        let issuerSelect = this.issuer;
+        let issuerSelect = document.getElementById("issuer");
         response.forEach((issuer) => {
           let opt = document.createElement("option");
           opt.text = issuer.name;
@@ -364,7 +369,7 @@ export default {
           issuerSelect.appendChild(opt);
         });
 
-        getInstallments(
+        this.getInstallments(
           document.getElementById("paymentMethodId").value,
           document.getElementById("transactionAmount").value,
           issuerSelect.value
@@ -373,17 +378,52 @@ export default {
         alert(`issuers method info error: ${response}`);
       }
     },
-
-    async getCardToken() {
+    getInstallments(paymentMethodId, transactionAmount, issuerId) {
+      window.Mercadopago.getInstallments(
+        {
+          payment_method_id: paymentMethodId,
+          amount: parseFloat(transactionAmount),
+          issuer_id: parseInt(issuerId),
+        },
+        this.setInstallments
+      );
+    },
+    setInstallments(status, response) {
+      if (status == 200) {
+        document.getElementById("installments").options.length = 0;
+        response[0].payer_costs.forEach((payerCost) => {
+          let opt = document.createElement("option");
+          opt.text = payerCost.recommended_message;
+          opt.value = payerCost.installments;
+          document.getElementById("installments").appendChild(opt);
+        });
+      } else {
+        alert(`installments method info error: ${response}`);
+      }
+    },
+    getCardToken(event) {
       event.preventDefault();
-      alert(JSON.stringify(this.form));
-      console.log("entrosubmit");
-      doSubmit = false;
-      event.preventDefault();
-      if (!doSubmit) {
-        //let $form = document.getElementById("paymentForm");
-        window.Mercadopago.createToken(this.form, setCardTokenAndPay);
-        return false;
+      if (!this.doSubmit) {
+        alert(this.form);
+        let $form = document.getElementById("paymentForm");
+        alert($form);
+        window.Mercadopago.createToken(this.form, this.setCardTokenAndPay);
+        alert(window.Mercadopago.createToken(this.form, this.setCardTokenAndPay));
+        //this.mercadoPagoAPI();
+      }
+    },
+    setCardTokenAndPay(status, response) {      
+      if (status == 200 || status == 201) {
+        let form = document.getElementById("paymentForm");
+        let card = document.createElement("input");
+        card.setAttribute("name", "token");
+        card.setAttribute("type", "hidden");
+        card.setAttribute("value", response.id);
+        form.appendChild(card);
+        this.doSubmit = true;
+        form.submit();
+      } else {
+        alert("Verify filled data!\n" + JSON.stringify(response, null, 4));
       }
     },
     onReset(event) {
@@ -401,22 +441,28 @@ export default {
         this.show = true;
       });
     },
-    setCardTokenAndPay(status, response) {
-      if (status == 200 || status == 201) {
-        let form = this.form
-        let card = document.createElement("input");
-        card.setAttribute("name", "token");
-        card.setAttribute("type", "hidden");
-        card.setAttribute("value", response.id);
-        form.appendChild(card);
-        doSubmit = true;
-        form.submit();
-      } else {
-        alert("Verify filled data!\n" + JSON.stringify(response, null, 4));
-      }
+    async mercadoPagoAPI() {
+      try {
+        const response = await PublicacionService.mercadoPago({
+          email: this.form.email,
+          docNumber: this.form.docNumber,
+          titularTarjeta: this.form.cardholderName,
+          mesTarjeta: this.form.cardExpirationMonth,
+          añoTarjeta: this.form.cardExpirationYear,
+          numTarjeta: this.form.cardNumber,
+          codigoSeguridad: this.form.securityCode,
+          cuotas: this.form.transactionAmount,
+        });
+        console.log(response.data);
+      } catch (error) {}
     },
   },
-  mounted() {},
+  mounted() {
+    window.Mercadopago.setPublishableKey(
+      "TEST-062c5ddc-eeb4-40c6-b068-efde028b2af1"
+    );
+    window.Mercadopago.getIdentificationTypes();
+  },
 };
 </script>
 

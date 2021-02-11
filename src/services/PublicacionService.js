@@ -34,4 +34,7 @@ export default {
     eliminarPublicacion(credentials) {    
         return Api().post(API_URL + API_USER + "eliminar_publicacion", credentials)
     },
+    mercadoPago(credentials) {    
+        return Api().post(API_URL + API_USER + "process_payment", credentials)
+    },
 }

@@ -2,7 +2,7 @@
   <div class="registrar">
     <div class="text-center">
       <img
-       @click="home()"
+        @click="home()"
         src="@/assets/locallogo.jpg"
         style="width: 500px"
         class="rounded"
@@ -15,6 +15,17 @@
         <small>Completa los datos para registrarte</small>
       </p>
       <br />
+      <b-input-group size="lg">         
+          <b-form-select
+            id="plan"
+            data-checkout="Plan"           
+            v-model="value"
+            :options="options"
+            required
+          ></b-form-select>
+ </b-input-group>
+<br>
+      <!-- 
       <div class="title h5 mt-2 text-center">
         <b-form-radio-group
           v-model="value"
@@ -25,13 +36,12 @@
           <b-form-invalid-feedback :state="state"
             >Por favor seleccione una opcion</b-form-invalid-feedback
           >
-          <!--       <b-form-valid-feedback :state="state">Gracias su eleccion es {{value}}</b-form-valid-feedback> -->
         </b-form-radio-group>
-      </div>
-      <div v-if="this.value == 1 ||this.value == 5 ||this.value ==4 ">
-        <b-input-group  size="lg">
-         <b-input-group-prepend  is-text>
-            <b-icon  icon="person-fill"></b-icon>
+      </div> -->
+      <div v-if="this.value == 1 || this.value == 5 || this.value == 4">
+        <b-input-group size="lg">
+          <b-input-group-prepend is-text>
+            <b-icon icon="person-fill"></b-icon>
           </b-input-group-prepend>
           <b-form-input
             id="nombre"
@@ -50,7 +60,6 @@
             <b-icon icon="person-fill"></b-icon>
           </b-input-group-prepend>
           <b-form-input
-          
             id="apellido"
             size="lg"
             v-model="persona.apellido"
@@ -67,7 +76,7 @@
             <b-icon icon="card-checklist"></b-icon>
           </b-input-group-prepend>
           <b-form-input
-          size="lg"
+            size="lg"
             id="dni"
             v-model="persona.DNI"
             type="number"
@@ -82,20 +91,18 @@
           <b-input-group-prepend is-text>
             <b-icon icon="phone"></b-icon>
           </b-input-group-prepend>
-          
+
           <b-form-input
-          size="lg"
+            size="lg"
             id="celular"
             v-model="persona.celular"
             type="number"
             required
-            placeholder="Celular"
+            placeholder="Celular,con la caracteristica y sin el 15, ejemplo 2223461957"
             class="line"
           ></b-form-input>
         </b-input-group>
-        <p>
-          Por favor,ingrese el numero con la caracteristica y sin el 15, ejemplo 2223461957
-        </p>
+        <br />
         <b-input-group size="lg">
           <b-input-group-prepend is-text>
             <b-icon icon="envelope"></b-icon>
@@ -134,7 +141,7 @@
             <b-icon icon="lock-fill"></b-icon>
           </b-input-group-prepend>
           <b-form-input
-          size="lg"
+            size="lg"
             id="Currentpassword"
             v-model="persona.password_confirmation"
             type="password"
@@ -147,7 +154,7 @@
         </b-input-group>
         <br />
       </div>
-      <div v-if="this.value==3 || this.value == 2">
+      <div v-if="this.value == 3 || this.value == 2">
         <b-input-group size="lg">
           <b-input-group-prepend is-text>
             <b-icon icon="person-fill"></b-icon>
@@ -159,7 +166,7 @@
             type="text"
             autocomplete="nombreEmpresa"
             required
-            :placeholder="'Nombre de '+ nombreTipoUser(this.value)"
+            :placeholder="'Nombre de ' + nombreTipoUser(this.value)"
             class="line"
           ></b-form-input>
         </b-input-group>
@@ -190,13 +197,11 @@
             v-model="empresa.celular"
             type="number"
             required
-            placeholder="Celular"
+            placeholder="Celular,con la caracteristica y sin el 15, ejemplo 2223461957"
             class="line"
           ></b-form-input>
         </b-input-group>
-        <p>
-          Por favor,ingrese el numero con la caracteristica y sin el 15, ejemplo 2223461957
-        </p>
+        <br />
         <b-input-group size="lg">
           <b-input-group-prepend is-text>
             <b-icon icon="lock-fill"></b-icon>
@@ -219,7 +224,7 @@
             <b-icon icon="lock-fill"></b-icon>
           </b-input-group-prepend>
           <b-form-input
-          size="lg"
+            size="lg"
             id="Currentpassword"
             v-model="empresa.password_confirmation"
             type="password"
@@ -281,13 +286,19 @@ export default {
       contraseñaIncorrecta: false,
       registrando: false,
       mensaje: "",
-      value:1,
+      value: null,
       options: [
+        {
+          value: null,
+          text: "Seleccione el tipo de usuario para registrarse",
+          selected: true,
+          disabled: true,
+        },
         { text: "Usuario", value: 1 },
         { text: "Profesional", value: 5 },
-        { text: "Emprendedor", value:4},
-        { text: "Comercio", value: 3},
-         { text: "Empresa", value: 2 },
+        { text: "Emprendedor", value: 4 },
+        { text: "Comercio", value: 3 },
+        { text: "Empresa", value: 2 },
       ],
     };
   },
@@ -297,22 +308,22 @@ export default {
     },
   },
   methods: {
-    home(){
-       this.$router.push("/");
+    home() {
+      this.$router.push("/");
     },
     registrarse() {
-      if (this.value == 1 ||this.value == 5 || this.value == 4) {
+      if (this.value == 1 || this.value == 5 || this.value == 4) {
         this.registrarCliente();
       } else {
         this.registrarEmpresa();
       }
     },
-    async registrarCliente() {    
+    async registrarCliente() {
       this.registrando = true;
       if (this.persona.password == this.persona.password_confirmation) {
         try {
           this.contraseñaIncorrecta = false;
-          console.log(this.persona.email)
+          console.log(this.persona.email);
           const response = await AuthenticationService.register({
             nombre: this.persona.nombre,
             apellido: this.persona.apellido,
@@ -365,7 +376,7 @@ export default {
             nombre: this.empresa.nombreEmpresa,
             email: this.empresa.emailEmpresa,
             password: this.empresa.password,
-             celular: this.empresa.celular,
+            celular: this.empresa.celular,
 
             grupo: this.value,
           });
@@ -409,11 +420,11 @@ export default {
     volver() {
       this.$router.push({ name: "listar" });
     },
-    nombreTipoUser(nombre){
-      if (nombre == 2){
-        return 'empresa'
+    nombreTipoUser(nombre) {
+      if (nombre == 2) {
+        return "empresa";
       }
-      return 'comercio'
+      return "comercio";
     },
   },
 };

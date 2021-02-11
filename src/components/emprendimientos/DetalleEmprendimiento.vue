@@ -89,7 +89,7 @@
               <b-form-textarea
                 id="observaciones"
                 size="sm"
-                rows="1"
+                rows="8"
                 v-model="publicacion.observaciones"
                 placeholder="Descripción de tu emprendimiento"
               ></b-form-textarea>
