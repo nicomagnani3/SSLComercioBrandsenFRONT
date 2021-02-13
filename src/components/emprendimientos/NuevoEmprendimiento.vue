@@ -66,6 +66,13 @@
         >
         </ImagenesCarga>
       </tab-content>
+      <tab-content title="Pagar el emprendimiento" :before-change="validarPago">
+        <PagarEmprendimiento
+          ref="validarPago"
+          :destacada="this.publicacionEmprendimiento.destacada"
+        >
+        </PagarEmprendimiento>
+      </tab-content>
     </form-wizard>
   </div>
 </template>
@@ -76,15 +83,16 @@ import axios from "axios";
 import EmprendimientoService from "@/services/EmprendimientoService";
 import ListarEmprendimientos from "@/components/emprendimientos/ListarEmprendimientos.vue";
 import DetalleEmprendimiento from "@/components/emprendimientos/DetalleEmprendimiento.vue";
+import PagarEmprendimiento from "@/components/emprendimientos/PagarEmprendimiento.vue";
 import ImagenesCarga from "@/components/imagenes/ImagenesCarga.vue";
-
 
 export default {
   name: "nuevaPublicacion",
   components: {
-    ImagenesCarga,    
+    ImagenesCarga,
     ListarEmprendimientos,
     DetalleEmprendimiento,
+    PagarEmprendimiento,
   },
   data() {
     return {
@@ -100,7 +108,7 @@ export default {
       emprendimientosHijos: [],
       emprendimientoHijoElegido: [],
       emprendimientoHijoSeleccionado: null,
-
+      pagoPublicacion:false,
       loading: true,
       publicacion: {
         titulo: null,
@@ -136,50 +144,59 @@ export default {
       let result = await this.$refs.detalleEmprendimiento.validate();
       return result;
     },
+    async validarPago() {
+      let result = await this.$refs.validarPago.validate();
+      console.log(result)
+      if (result == false){
+        alert("Debe efectuar el pago para poder finalizar la publicacion en Malambo")
+        return false;
+      }
+      return result;
+    },
     async validarImagenes() {
       let result = await this.$refs.altaImagenes.validate();
       return result;
     },
-    async onComplete() {      
-          if (this.getUserId == null) {
-              this.$router.push({
-                name: "login",
-                params: {
-                  autentificacion: false,
-                },
-              });
-          }else{
-             this.creando = true;
-              try {
-                  const response = await EmprendimientoService.addEmprendimiento({
-                    titulo: this.publicacionEmprendimiento.titulo,
-                    importe: this.publicacionEmprendimiento.precio,                  
-                    observaciones: this.publicacionEmprendimiento.observaciones,
-                    destacada:this.publicacionEmprendimiento.destacada,
-                    imagenes: this.imagenesEmprendimiento,
-                    imgPrimera: this.imgPrimeraEmprendimiento.base64,
-                    emprendimiento: this.emprendimientoSeleccionado,                    
-                    usuarioID: this.getUserId,
-                  });
-                  this.$root.$bvToast.toast(`Usted a creado una publicacion`, {
-                    title: response.data.data,
-                    toaster: "b-toaster-top-center succes",
-                    solid: true,
-                    variant: "success",
-                  });
-                  this.$router.push("/");
-              } catch (error) {
-                error.response.data.data.forEach((data) => {
-                  this.$bvToast.toast(`No se pudo crear la publicacion`, {
-                    title: data,
-                    toaster: "b-toaster-top-center",
-                    solid: true,
-                    variant: "danger",
-                  });
-                });
-              }
-           }   
-    }, 
+    async onComplete() {
+      if (this.getUserId == null) {
+        this.$router.push({
+          name: "login",
+          params: {
+            autentificacion: false,
+          },
+        });
+      } else {
+        this.creando = true;
+        try {
+          const response = await EmprendimientoService.addEmprendimiento({
+            titulo: this.publicacionEmprendimiento.titulo,
+            importe: this.publicacionEmprendimiento.precio,
+            observaciones: this.publicacionEmprendimiento.observaciones,
+            destacada: this.publicacionEmprendimiento.destacada,
+            imagenes: this.imagenesEmprendimiento,
+            imgPrimera: this.imgPrimeraEmprendimiento.base64,
+            emprendimiento: this.emprendimientoSeleccionado,
+            usuarioID: this.getUserId,
+          });
+          this.$root.$bvToast.toast(`Usted a creado una publicacion`, {
+            title: response.data.data,
+            toaster: "b-toaster-top-center succes",
+            solid: true,
+            variant: "success",
+          });
+          this.$router.push("/");
+        } catch (error) {
+          error.response.data.data.forEach((data) => {
+            this.$bvToast.toast(`No se pudo crear la publicacion`, {
+              title: data,
+              toaster: "b-toaster-top-center",
+              solid: true,
+              variant: "danger",
+            });
+          });
+        }
+      }
+    },
     updateEmprendimiento(emprendimiento) {
       this.emprendimientoSeleccionado = emprendimiento[0].id;
     },
@@ -193,7 +210,7 @@ export default {
         }
         return 0;
       });
-    },  
+    },
     async getEmprendimientos() {
       try {
         const response = await EmprendimientoService.getEmprendimientos();
@@ -202,7 +219,7 @@ export default {
       } catch (err) {
         this.categorias = "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS";
       }
-    },  
+    },
     async validate() {
       let result = await this.$refs.nuevaPublicacion.validate();
       if (result == true) {
@@ -222,11 +239,10 @@ export default {
       }
       return result;
     },
-  
   },
   mounted() {
     axios
-      .all([      
+      .all([
         this.getEmprendimientos(),
         //this.getEmprendimientosHijos(),
       ])

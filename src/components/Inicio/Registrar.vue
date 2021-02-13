@@ -15,8 +15,9 @@
         <small>Completa los datos para registrarte</small>
       </p>
       <br />
-      <b-input-group size="lg">         
+      <b-input-group size="xl">         
           <b-form-select
+          class="mb-3"
             id="plan"
             data-checkout="Plan"           
             v-model="value"
