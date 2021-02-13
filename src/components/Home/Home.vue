@@ -12,7 +12,7 @@
       <sliderEmprendimientos/>
       <Sliderempresa />
       <Publicidad />
-     
+      
      
      
      </div>
@@ -30,6 +30,7 @@ import sliderEmprendimientos from "@/components/Home/sliderEmprendimientos.vue";
 
 
 
+
 export default {
   name: "Home",
 
@@ -40,7 +41,8 @@ export default {
     Sliderempresa,
     Publicidad,
     sliderEmprendimientos,
-       
+    
+    
     
   },
   

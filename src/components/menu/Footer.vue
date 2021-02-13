@@ -3,7 +3,7 @@
   <b-row class="fila">
     <b-col xs="12" md="6" lg="3" align-self="center">
         
-        <img class="logo" src="@/assets/locallogo.jpg" alt="">
+        <img class="logo" src="@/assets/MalamboLogo.png" alt="">
     </b-col>
 
     <b-col xs="12" md="12" lg="3" align-self="center">

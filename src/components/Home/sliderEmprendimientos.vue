@@ -1,6 +1,7 @@
 <template>
   <b-container>
     <h3 class="m-5 titulo">Emprendimientos destacados</h3>
+    
         <vueper-slides
           class="no-shadow"
           :visible-slides="5"
@@ -13,12 +14,14 @@
           <vueper-slide
             v-for="producto in productos"
             :key="producto.id"
+            :title="tituloAjustar(producto.titulo)"
+            :content="producto.precio.fontsize(4).fontcolor('#FFCE4E')"
             :image="`data:image/png;base64, ${producto.imagen}`"
-            class="item"
+        
           />  
        
         </vueper-slides>
-   
+     
   </b-container>
 </template>
 
@@ -47,7 +50,8 @@ export default {
         this.productos = this.productos.filter(
         (c) => c.destacado == true
       );
-        this.getImporte(this.productos);        
+        this.getImporte(this.productos);
+        console.log(this.productos);
       } catch (err) {
         this.categorias = "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS";
       }
@@ -97,10 +101,6 @@ export default {
   font-size: 7em;
   opacity: 0.7;
 }
-
-.item{
-    box-shadow: 3px 3px 5px 3px rgba(0, 0, 0, 0.2);;
-  }
 </style>
 
 

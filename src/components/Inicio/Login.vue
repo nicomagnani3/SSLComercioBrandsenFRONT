@@ -2,8 +2,8 @@
   <div class="login">
     <div class="text-center">
       <img
-        src="@/assets/locallogo.jpg"
-        style="width: 500px"
+        src="@/assets/MalamboLogo.png"
+        style="width: 120%"
         class="rounded"
         alt="..."
         @click="home()"

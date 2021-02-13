@@ -3,7 +3,7 @@
     <div class="text-center">
       <img
         @click="home()"
-        src="@/assets/locallogo.jpg"
+        src="@/assets/MalamboLogo.png"
         style="width: 500px"
         class="rounded"
         alt="..."

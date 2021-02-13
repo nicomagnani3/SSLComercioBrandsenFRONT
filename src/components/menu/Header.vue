@@ -1,6 +1,6 @@
 <template>
     <div class="Header text-left" >
-        <img  class="logo" src="@/assets/locallogo.jpg"  alt="" height="auto" >
+        <img  class="logo" src="@/assets/MalamboLogo.png"  alt="" height="auto" >
     </div>
 
 </template>
@@ -10,7 +10,7 @@ export default {
     name: "Header",
     data () {
         return {
-            imgHeader: 'locallogo.jpg'
+            imgHeader: 'MalamboLogo.png'
         }
     }
 }
