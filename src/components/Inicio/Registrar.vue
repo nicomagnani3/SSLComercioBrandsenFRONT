@@ -1,14 +1,14 @@
 <template>
   <div class="registrar">
-    <div class="text-center">
+    
       <img
         @click="home()"
         src="@/assets/MalamboLogo.png"
-        style="width: 500px"
+        style="width: 600px"
         class="rounded"
         alt="..."
       />
-    </div>
+    
     <b-form action class="form" @submit.prevent="registrarse">
       <hr />
       <p class="title h2 mt-2 text-center">
@@ -24,7 +24,7 @@
             :options="options"
             required
           ></b-form-select>
- </b-input-group>
+      </b-input-group>
 <br>
       <!-- 
       <div class="title h5 mt-2 text-center">
@@ -431,5 +431,8 @@ export default {
 };
 </script>
 
-<style >
+<style>
+
+
+
 </style>

@@ -5,7 +5,7 @@
 
       <Slider />
       <b-container fluid class="subtitulo"> 
-          <P>Mercado local Aporta el 10% de los ingresos a Entidades Beneficas</P>
+          <P>Malambo Aporta el 10% de los ingresos a Apad brandsen</P>
       </b-container>
       <SliderProductos />
       <sliderServicios/>
@@ -44,6 +44,7 @@ export default {
     
     
     
+    
   },
   
   data() {
@@ -75,11 +76,6 @@ export default {
   color: white;
 
 }
-
-
-
-
-
 
 
 </style>

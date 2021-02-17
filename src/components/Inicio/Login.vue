@@ -1,9 +1,9 @@
 <template>
-  <div class="login">
+  <div class="">
     <div class="text-center">
       <img
         src="@/assets/MalamboLogo.png"
-        style="width: 120%"
+        style="width: 600px"
         class="rounded"
         alt="..."
         @click="home()"
@@ -148,5 +148,10 @@ export default {
 </script>
 
 <style scoped>
+  
+  .login{
+    width: 80%;
+  }
+
 </style>
 
