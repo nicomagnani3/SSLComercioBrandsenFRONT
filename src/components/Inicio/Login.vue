@@ -96,7 +96,7 @@ export default {
     
     if ( this.$route.params.autentificacion == false) {
       this.$bvToast.toast(
-        `Usted tiene que iniciar sesion para poder publicar en Mercado Local`,
+        `Usted tiene que iniciar sesion para poder publicar en Malambo`,
         {
           title: 'Atencion!!',
           toaster: "b-toaster-top-center",

@@ -115,7 +115,7 @@ export default {
     ...mapGetters("storeUser", ["hasPermisos", "getGrupos", "getUserId"]),
   },
   methods: {
-    buscarProducto(producto) {
+    buscarProducto(producto) {     
       if (producto != null) {
         const path = `/buscarProductos/${producto}`;
         if (this.$route.path !== path)

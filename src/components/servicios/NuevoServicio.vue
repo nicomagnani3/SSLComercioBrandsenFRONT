@@ -8,7 +8,7 @@
   <div v-else>
     <form-wizard
       @on-complete="onComplete"
-      title="Mercado Local te simplifica las cosas"
+      title="Malambo te simplifica las cosas"
       subtitle="Elegi lo que quieras publicar en unos simples pasos"
       back-button-text="Volver!"
       next-button-text="Siguiente!"

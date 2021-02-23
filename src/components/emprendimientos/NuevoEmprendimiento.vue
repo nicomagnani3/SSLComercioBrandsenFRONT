@@ -8,38 +8,13 @@
   <div v-else>
     <form-wizard
       @on-complete="onComplete"
-      title="Mercado Local te simplifica las cosas"
+      title="Malambo te simplifica las cosas"
       subtitle="Elegi lo que quieras publicar en unos simples pasos"
       back-button-text="Volver!"
       next-button-text="Siguiente!"
-      finish-button-text="Finalizar"
+      finish-button-text="Obtener boton de pago"
       color="#FFCE4E"
     >
-      <b-col v-if="creando" class="text-center">
-        <div>
-          <b-spinner
-            style="width: 5rem; height: 5rem"
-            variant="warning"
-            label="Text Centered"
-            type="grow"
-          ></b-spinner>
-          <span style="font-size: 24px" class="text-warning">
-            <b>Creando publicacion,aguarde un instante....</b>
-          </span>
-          <b-spinner
-            style="width: 3rem; height: 3rem"
-            variant="warning"
-            label="Text Centered"
-          ></b-spinner>
-          <b-spinner
-            style="width: 3rem; height: 3rem"
-            variant="warning"
-            label="Text Centered"
-            type="variant"
-          ></b-spinner>
-        </div>
-      </b-col>
-
       <tab-content title="¡Hola! Antes que nada contanos,¿qué vas a publicar?">
         <ListarEmprendimientos
           :emprendimientos="this.emprendimientos"
@@ -61,15 +36,17 @@
       >
         <ImagenesCarga
           ref="altaImagenes"
-          :imagenes="imagenesEmprendimiento"
-          :imgPrimera="imgPrimeraEmprendimiento"
+          :imagenes="this.imagenesEmprendimiento"
+          :imgPrimera="this.imgPrimeraEmprendimiento"
         >
         </ImagenesCarga>
       </tab-content>
-      <tab-content title="Pagar el emprendimiento" :before-change="validarPago">
+      <tab-content title="Pagar el emprendimiento">
         <PagarEmprendimiento
-          ref="validarPago"
+          :publicacion="this.publicacionEmprendimiento"
           :destacada="this.publicacionEmprendimiento.destacada"
+          :imagen="this.imgPrimeraEmprendimiento"
+          :finalizo="this.presionoFinalizar"
         >
         </PagarEmprendimiento>
       </tab-content>
@@ -85,6 +62,7 @@ import ListarEmprendimientos from "@/components/emprendimientos/ListarEmprendimi
 import DetalleEmprendimiento from "@/components/emprendimientos/DetalleEmprendimiento.vue";
 import PagarEmprendimiento from "@/components/emprendimientos/PagarEmprendimiento.vue";
 import ImagenesCarga from "@/components/imagenes/ImagenesCarga.vue";
+import MercadoPago from "@/services/MercadoPago";
 
 export default {
   name: "nuevaPublicacion",
@@ -96,6 +74,7 @@ export default {
   },
   data() {
     return {
+      presionoFinalizar: false,
       tipoPublicacion: [],
       tipoPublicacionSeleccionada: null,
       categorias: [],
@@ -108,22 +87,28 @@ export default {
       emprendimientosHijos: [],
       emprendimientoHijoElegido: [],
       emprendimientoHijoSeleccionado: null,
-      pagoPublicacion:false,
-      loading: true,
-      publicacion: {
-        titulo: null,
-        precio: 0,
-        fecha: new Date().toISOString().slice(0, 10),
-        observaciones: null,
-      },
+      pagoPublicacion: false,
+      loading: true,     
       publicacionEmprendimiento: [],
       alerts: [],
       montoEntregaInvalido: false,
-      imagenes: [],
-      imgPrimera: [],
-      imgPrimeraEmprendimiento: [],
+         
+      imgPrimeraEmprendimiento: [
+        {
+          id: 0,
+        url: "https://picsum.photos/400/400/?image=20",
+        file: null,
+        tipo: null,
+        loadingImg: false,
+        estado: 1,
+        key: 0,
+        obligatorio: true,
+        base64: "",
+        primera: false,
+        }
+      ],
       imagenesEmprendimiento: [],
-      creando: false,
+      presionoCrear: false,
     };
   },
   created() {
@@ -146,9 +131,10 @@ export default {
     },
     async validarPago() {
       let result = await this.$refs.validarPago.validate();
-      console.log(result)
-      if (result == false){
-        alert("Debe efectuar el pago para poder finalizar la publicacion en Malambo")
+      if (result == false) {
+        alert(
+          "Debe efectuar el pago para poder finalizar la publicacion en Malambo"
+        );
         return false;
       }
       return result;
@@ -158,6 +144,7 @@ export default {
       return result;
     },
     async onComplete() {
+      this.presionoFinalizar = true;
       if (this.getUserId == null) {
         this.$router.push({
           name: "login",
@@ -166,36 +153,61 @@ export default {
           },
         });
       } else {
-        this.creando = true;
-        try {
-          const response = await EmprendimientoService.addEmprendimiento({
-            titulo: this.publicacionEmprendimiento.titulo,
-            importe: this.publicacionEmprendimiento.precio,
-            observaciones: this.publicacionEmprendimiento.observaciones,
-            destacada: this.publicacionEmprendimiento.destacada,
-            imagenes: this.imagenesEmprendimiento,
-            imgPrimera: this.imgPrimeraEmprendimiento.base64,
-            emprendimiento: this.emprendimientoSeleccionado,
-            usuarioID: this.getUserId,
-          });
-          this.$root.$bvToast.toast(`Usted a creado una publicacion`, {
-            title: response.data.data,
-            toaster: "b-toaster-top-center succes",
-            solid: true,
-            variant: "success",
-          });
-          this.$router.push("/");
-        } catch (error) {
-          error.response.data.data.forEach((data) => {
-            this.$bvToast.toast(`No se pudo crear la publicacion`, {
-              title: data,
-              toaster: "b-toaster-top-center",
-              solid: true,
-              variant: "danger",
-            });
-          });
+        if (!this.presionoCrear){
+              this.crearPublicacion();    
         }
+       
       }
+    },
+    async crearPublicacion() {
+      this.presionoCrear = true;
+      
+      try {
+        const response = await EmprendimientoService.addEmprendimiento({
+          titulo: this.publicacionEmprendimiento.titulo,
+          importe: this.publicacionEmprendimiento.precio,
+          observaciones: this.publicacionEmprendimiento.observaciones,
+          destacada: this.publicacionEmprendimiento.destacada,
+          imagenes: this.imagenesEmprendimiento,
+          imgPrimera: this.imgPrimeraEmprendimiento[0].base64,
+          emprendimiento: this.emprendimientoSeleccionado,
+          usuarioID: this.getUserId,
+        });
+        if (response.data.error == false) {
+          this.validarPagoMercadoPago(response.data.data)
+        }
+      } catch (error) {
+        this.$bvToast.toast(`No se pudo crear la publicacion`, {
+          title: error.data,
+          toaster: "b-toaster-top-center",
+          solid: true,
+          variant: "danger",
+        });
+        this.$router.push({
+          name: "Home",
+        });
+      }
+    },
+    async validarPagoMercadoPago(idPublicacion){
+       let precioPublicacion = this.publicacionEmprendimiento.destacada
+          ? 600
+          : 400;
+        const response = await MercadoPago.crearPreferencia({
+          titulo: this.publicacionEmprendimiento.titulo,
+          precioPublicacion: precioPublicacion,
+          idPublicacion:idPublicacion,
+          descripcion: this.publicacionEmprendimiento.observaciones,         
+        });      
+        this.createCheckoutButton(response.data.id);
+    },
+    createCheckoutButton(preference) {
+      var script = document.createElement("script");
+      script.src =
+        "https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js";
+      script.type = "text/javascript";
+      script.dataset.preferenceId = preference;
+      document.getElementById("button-checkout").innerHTML = "";
+      document.querySelector("#button-checkout").appendChild(script);
     },
     updateEmprendimiento(emprendimiento) {
       this.emprendimientoSeleccionado = emprendimiento[0].id;

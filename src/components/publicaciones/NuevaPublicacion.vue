@@ -8,7 +8,7 @@
   <div v-else>
     <form-wizard
       @on-complete="onComplete"
-      title="Mercado Local te simplifica las cosas"
+      title="Malambo te simplifica las cosas"
       subtitle="Elegi lo que quieras publicar en unos simples pasos"
       back-button-text="Volver!"
       next-button-text="Siguiente!"
@@ -68,15 +68,17 @@
       <tab-content title="Imagenes" :before-change="validarImagenes">
         <ImagenesCarga
           ref="altaImagenes"
-          :imagenes="imagenes"
-          :imgPrimera="imgPrimera"
+          :imagenes="this.imagenes"
+          :imgPrimera="this.imgPrimera"
         >
         </ImagenesCarga>
       </tab-content>
-           <tab-content title="Pagar la publicacion" :before-change="validarPago">
-        <PagarEmprendimiento
-          ref="validarPago"
+      <tab-content title="Pagar la publicacion" >
+        <PagarEmprendimiento         
+          :publicacion="this.publicacion"
           :destacada="this.publicacion.destacada"
+          :imagen="this.imgPrimera"
+          :finalizo="this.presionoFinalizar"
         >
         </PagarEmprendimiento>
       </tab-content>
@@ -93,6 +95,7 @@ import ListarCategorias from "@/components/categorias/ListarCategorias.vue";
 import ListarCategoriasHijas from "@/components/categorias/ListarCategoriasHijas.vue";
 import ImagenesCarga from "@/components/imagenes/ImagenesCarga.vue";
 import PagarEmprendimiento from "@/components/emprendimientos/PagarEmprendimiento.vue";
+import MercadoPago from "@/services/MercadoPago";
 
 import DetallePublicacion from "@/components/publicaciones/DetallePublicacion.vue";
 export default {
@@ -102,10 +105,12 @@ export default {
     ListarCategoriasHijas,
     ImagenesCarga,
     DetallePublicacion,
-    PagarEmprendimiento
+    PagarEmprendimiento,
   },
   data() {
     return {
+      presionoFinalizar: false,
+      presionoCrear: false,
       categorias: [],
       categoriaSeleccionada: null,
       categoriasHijas: [],
@@ -116,7 +121,18 @@ export default {
       alerts: [],
       montoEntregaInvalido: false,
       imagenes: [],
-      imgPrimera: [],
+      imgPrimera: [   {
+          id: 0,
+        url: "https://picsum.photos/400/400/?image=20",
+        file: null,
+        tipo: null,
+        loadingImg: false,
+        estado: 1,
+        key: 0,
+        obligatorio: true,
+        base64: "",
+        primera: false,
+        }],
       creando: false,
     };
   },
@@ -133,16 +149,7 @@ export default {
   computed: {
     ...mapGetters("storeUser", ["getUserId"]),
   },
-  methods: {
-       async validarPago() {
-      let result = await this.$refs.validarPago.validate();
-      console.log(result)
-      if (result == false){
-        alert("Debe efectuar el pago para poder finalizar la publicacion en Malambo")
-        return false;
-      }
-      return result;
-    },
+  methods: {  
     async validarImagenes() {
       let result = await this.$refs.altaImagenes.validate();
       return result;
@@ -158,6 +165,7 @@ export default {
       return result;
     },
     async onComplete() {
+      this.presionoFinalizar = true;
       if (this.getUserId == null) {
         this.$router.push({
           name: "login",
@@ -166,39 +174,59 @@ export default {
           },
         });
       } else {
-        this.creando = true;
-        try {
-          const response = await PublicacionService.addPublicacion({
-            titulo: this.publicacion.titulo,
-            importe: this.publicacion.precio,
-            fecha: this.publicacion.fecha,
-            observaciones: this.publicacion.observaciones,
-            imagenes: this.imagenes,
-            imgPrimera: this.imgPrimera.base64,
-            categoria: this.categoriaSeleccionada,
-            categoriasHija: this.categoriaHijaSeleccionada,
-            usuarioID: this.getUserId,
-            destacada:this.publicacion.destacada
-          });
-
-          this.$root.$bvToast.toast(`Usted a creado una publicacion`, {
-            title: response.data.data,
-            toaster: "b-toaster-top-center succes",
-            solid: true,
-            variant: "success",
-          });
-          this.$router.push("/");
-        } catch (error) {
-          error.response.data.data.forEach((data) => {
-            this.$bvToast.toast(`No se pudo crear la publicacion`, {
-              title: data,
-              toaster: "b-toaster-top-center",
-              solid: true,
-              variant: "danger",
-            });
-          });
+        if (!this.presionoCrear) {
+          this.crearPublicacion();
         }
       }
+    },
+    async crearPublicacion() {
+      this.presionoCrear = true;
+      try {
+        const response = await PublicacionService.addPublicacion({
+          titulo: this.publicacion.titulo,
+          importe: this.publicacion.precio,
+          fecha: this.publicacion.fecha,
+          observaciones: this.publicacion.observaciones,
+          imagenes: this.imagenes,
+          imgPrimera: this.imgPrimera[0].base64,
+          categoria: this.categoriaSeleccionada,
+          categoriasHija: this.categoriaHijaSeleccionada,
+          usuarioID: this.getUserId,
+          destacada: this.publicacion.destacada,
+        });
+        if (response.data.error == false) {
+          this.validarPagoMercadoPago(response.data.data);
+        }       
+      } catch (error) {
+        error.response.data.data.forEach((data) => {
+          this.$bvToast.toast(`No se pudo crear la publicacion`, {
+            title: data,
+            toaster: "b-toaster-top-center",
+            solid: true,
+            variant: "danger",
+          });
+        });
+      }
+    },
+    async validarPagoMercadoPago(idPublicacion) {
+      let precioPublicacion = this.publicacion.destacada ? 700 : 500;
+      const response = await MercadoPago.crearPreferencia({
+        titulo: this.publicacion.titulo,
+        precioPublicacion: precioPublicacion,
+        idPublicacion: idPublicacion,
+        descripcion: this.publicacion.observaciones,
+        tipo:"PUBLICACION"
+      });
+      this.createCheckoutButton(response.data.id);
+    },
+    createCheckoutButton(preference) {
+      var script = document.createElement("script");
+      script.src =
+        "https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js";
+      script.type = "text/javascript";
+      script.dataset.preferenceId = preference;
+      document.getElementById("button-checkout").innerHTML = "";
+      document.querySelector("#button-checkout").appendChild(script);
     },
     updateCategoriaHija(categoriaHija) {
       this.categoriaHijaSeleccionada = categoriaHija[0].id;

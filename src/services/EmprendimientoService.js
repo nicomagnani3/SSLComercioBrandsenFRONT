@@ -16,5 +16,8 @@ export default {
     searchPublicacionesPorEmprendimiento(credentials) {    
         return Api().post(API_URL + API_USER + "search_publicaciones_emprendimientos", credentials)
     },
+    setPagoPublicacion(credentials) {    
+        return Api().get(API_URL + API_USER + "set_pago_publicacion/"+ credentials.publicacion)
+    },
   
 }

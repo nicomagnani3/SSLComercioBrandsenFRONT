@@ -23,6 +23,9 @@ import MisProductos from '@/components/usuarios/MisProductos.vue'
 import container from '@/components/menu/Container.vue'
 import home from '@/components/Home/Home.vue'
 
+import CrearPublicacion from '@/components/publicaciones/CrearPublicacion.vue'
+
+
 Vue.use(Router)
 const router = new Router({
   mode: 'history',
@@ -70,7 +73,17 @@ const router = new Router({
         props: true,
         meta: {
           requireAuth: false
-        },           
+        }, 
+      }, 
+      { 
+      path: '/crearPublicacion/publicacion:publicacion/tipo:tipo',
+        name: 'crearPublicacion',
+        component: CrearPublicacion,   
+        props: true,    
+        meta: {
+          requireAuth: false
+        },        
+          
        },
        {
         path: '/renovarContrato',

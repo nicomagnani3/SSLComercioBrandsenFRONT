@@ -17,7 +17,11 @@
             >{{ alert.message }}</b-alert
           >
         </b-form-group>
-        <!--    <b-card class="mb-3" header="Publicacion"> -->
+           <b-card class="mb-3" header="Emprendimiento" align="center" border-variant="success"  
+            header-border-variant= "success"
+        header-bg-variant="transparent"        
+
+       > 
         <b-row>
           <b-col lg="5" md="6">
             <b-form-group
@@ -44,36 +48,11 @@
               </ValidationProvider>
             </b-form-group>
           </b-col>
-     <!--      <b-col lg="5" md="6">
-            <b-form-group id="precio-label" label="Precio:" label-for="precio">
-              <ValidationProvider
-                :name="'precio '"
-                :rules="'required'"
-                v-slot="{ errors, valid }"
-              >
-                <vue-numeric
-                  style="text-align: right"
-                  v-model="publicacion.precio"
-                  separator="."
-                  :min="0"
-                  :precision="2"
-                  v-on:input="actualizarMontoEntrega"
-                  :state="errors[0] ? false : valid ? true : null"
-                ></vue-numeric>
-                <p
-                  v-if="montoEntregaInvalido"
-                  style="color: red; font-size: 10px"
-                >
-                  el monto debe ser mayor
-                </p>
-              </ValidationProvider>
-            </b-form-group>
-          </b-col> -->
         </b-row>
           <b-row>
           <b-col lg="10" md="10">
             <b-form-checkbox v-model="publicacion.destacada" name="checkbox-1">
-              Publicacion destacada (las publicaciones destacadas tienen un costo adicional y se visualizan en el home de Mercado Local)
+              Publicacion destacada (las publicaciones destacadas tienen un costo adicional y se visualizan en el home de Malambo)
             </b-form-checkbox>
           </b-col>
           <hr />
@@ -96,6 +75,7 @@
             </b-form-group>
           </b-col>
         </b-row>
+           </b-card>
       </b-container>
     </ValidationObserver>
   </div>

@@ -151,13 +151,15 @@
               />
               <input type="hidden" name="description" id="description" />
               <br />
-              <b-button type="submit" @click="pagar()">Pagar</b-button>
+              <b-button type="submit" @click="pagar()">Pagas</b-button>
               <br />
             </div>
           </div>
         </form>
       </b-col>
+
     </b-row>
+
   </div>
 </template> 
 <script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
@@ -267,7 +269,29 @@ export default {
       }
     },
   },
-  mounted() {},
+  mounted() {
+    const mercadopago = require ('mercadopago');
+mercadopago.configurations.setAccessToken("TEST-2514124411818500-011422-d22e8b5914eed6985697778bb51cf2e4-202574647"); 
+
+
+let preference = {
+  items: [
+    {
+      title: 'Mi producto',
+      unit_price: 100,
+      quantity: 1,
+    }
+  ]
+};
+
+mercadopago.preferences.create(preference)
+.then(function(response){
+// Este valor reemplazará el string "<%= global.id %>" en tu HTML
+  global.id = response.body.id;
+}).catch(function(error){
+  console.log(error);
+});
+  },
 };
 </script>
 

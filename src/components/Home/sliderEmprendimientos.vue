@@ -46,6 +46,7 @@ export default {
     async getPorductos() {
       try {
         const response = await EmprendimientoService.getPublicacionEmprendimientos();
+      
         this.productos = response.data.data;
         this.productos = this.productos.filter(
         (c) => c.destacado == true

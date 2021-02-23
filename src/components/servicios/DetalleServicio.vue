@@ -73,7 +73,7 @@
         <b-row>
           <b-col lg="10" md="10">
             <b-form-checkbox v-model="publicacion.destacada" name="checkbox-1">
-              Publicacion destacada (las publicaciones destacadas tienen un costo adicional y se visualizan en el home de Mercado Local)
+              Publicacion destacada (las publicaciones destacadas tienen un costo adicional y se visualizan en el home de Malambo)
             </b-form-checkbox>
           </b-col>
           <hr />

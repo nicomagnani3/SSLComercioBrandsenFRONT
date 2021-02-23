@@ -7,19 +7,31 @@
         </b-col>
       </b-row>
       <ValidationObserver ref="altaImagenes">
-        <b-card no-body class="mb-3 p-0" header="Imagen Principal (esta imagen es la que se vera en los encabezados)">
+        <b-card
+          no-body
+          class="mb-3 p-0"
+          header="Imagen Principal (esta imagen es la que se vera en los encabezados)"
+          border-variant="success"
+          header-border-variant="success"
+          header-bg-variant="transparent"
+        >
+         <transition
+            v-for="(value, index) in this.imgPrimera"
+            :key="index"
+            name="fade"
+          >
           <b-container class="pb-3">
             <b-row no-gutters>
               <b-col cols="12" sm="6" md="4" lg="2">
                 <div
-                  v-if="imgPrimera.loadingImg"
+                  v-if="value.loadingImg"
                   class="py-5 text-center"
                 ></div>
                 <b-card-img
                   :src="
-                    imgPrimera.url == null
+                    value.url == null
                       ? 'https://picsum.photos/400/400/?image=20'
-                      :  imgPrimera.url
+                      : value.url
                   "
                   v-else
                   class="rounded-0"
@@ -27,7 +39,7 @@
               </b-col>
               <b-col cols="12" sm="6" md="8" lg="10">
                 <b-card-body class="p-3">
-                  <b-card-text>                    
+                  <b-card-text>
                     <b-row>
                       <b-col md="8" class="mt-2 mt-md-0">
                         <b-form-group
@@ -36,24 +48,24 @@
                           label-for="documento"
                         >
                           <ValidationProvider
-                            :name="'archivo' + '0'"
+                            :name="'archivo0'"
                             :rules="'required'"
                             v-slot="{ errors, valid }"
                           >
                             <b-form-file
-                              v-model=" imgPrimera.file"
+                              v-model="value.file"
                               size="sm"
                               accept="image/jpeg"
                               :state="
                                 errors[0]
-                                  ? valid &&  imgPrimera.file &&  imgPrimera.url
+                                  ? valid && value.file && value.url
                                     ? true
                                     : false
                                   : null
                               "
                               placeholder="Seleccione una imagen..."
                               browse-text="Examinar"
-                              @change="upAws($event, imgPrimera)"
+                              @change="upAws($event, value)"
                             ></b-form-file>
                             <b-form-invalid-feedback
                               v-for="error in errors"
@@ -69,8 +81,17 @@
               </b-col>
             </b-row>
           </b-container>
+         </transition>
         </b-card>
-        <b-card   v-if="this.cantImagenesAsubir > 0" no-body class="mb-3 p-0" header="Imagenes Secundarias (Opcional)">
+        <b-card
+          v-if="this.cantImagenesAsubir > 0"
+          no-body
+          class="mb-3 p-0"
+          header="Imagenes Secundarias (Opcional)"
+          border-variant="success"
+          header-border-variant="success"
+          header-bg-variant="transparent"
+        >
           <transition
             v-for="(value, index) in this.imagenes"
             :key="index"
@@ -155,7 +176,7 @@
           variant="primary"
           >Nueva
         </b-button>
-      </b-col>      
+      </b-col>
     </div>
   </b-container>
 </template>
@@ -175,6 +196,7 @@ export default {
         key: 0,
         obligatorio: true,
         base64: "",
+        primera: false,
       }),
     },
     imgPrimera: {
@@ -189,12 +211,12 @@ export default {
         key: 0,
         obligatorio: true,
         base64: "",
+        primera: true,
       }),
     },
-  
   },
   data() {
-    return {    
+    return {
       url: null,
       loading: false,
       loadingImg: false,
@@ -202,7 +224,11 @@ export default {
     };
   },
   computed: {},
-  created() {},
+  created() {
+    console.log(this.imgPrimera);
+    console.log(this.imagenes);
+
+  },
 
   methods: {
     upAws(event, img) {
@@ -215,12 +241,13 @@ export default {
       reader.onload = (e) => {
         img.base64 = e.target.result;
       };
+
       reader.readAsDataURL(file);
     },
     close() {
       this.$emit("cancelar", false);
     },
-    agregarImagen() {      
+    agregarImagen() {
       this.cantImagenesAsubir++;
       this.imagenes.push({
         borrado: 0,
@@ -231,7 +258,7 @@ export default {
         file: null,
         obligatorio: false,
       });
-    },      
+    },
     async validate() {
       if (!this.loadingImg && !this.loading) {
         let result = await this.$refs.altaImagenes.validate();
@@ -239,7 +266,7 @@ export default {
       } else {
         return false;
       }
-    },   
+    },
 
     quitarImagen(imagen) {
       let confirmacion = confirm(
@@ -255,21 +282,11 @@ export default {
         imagen.estado = 0;
       }
     },
-
-    loadimg(event, data) {
-      //var reader = new FileReader();
-      data.url = event.target.files[0];
-      //reader.onload = e => {
-      //  data.url = e.target.result;
-      //};
-      //reader.readAsDataURL(file);
-    },
   },
 };
 </script>
 
 <style>
-
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.2s;

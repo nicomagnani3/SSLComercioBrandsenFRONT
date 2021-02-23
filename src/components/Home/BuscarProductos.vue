@@ -93,19 +93,19 @@
                           Destacado</span
                         >
                       </h3>
-                      <h4 v-if="producto.precio > 0">
-                        Precio: {{ producto.precio }}
-                      </h4>
                        <strong>{{ producto.padre }}</strong>
                        <br><hr>
+                        <h4 v-if="Number(producto.precio) > Number(0)">
+                        Precio: {{ getImporte(producto.precio) }}
+                      </h4>
                       <h5>
                         Fecha de publicacion: {{ producto.fecha | formatDate }}
                       </h5>
                      
-                       <p v-if="producto.telefono != NULL">Telefono: {{ producto.telefono }}</p>
+                       <p v-if="producto.telefono != null">Telefono: {{ producto.telefono }}</p>
                       <a
                         :href="
-                          'https://api.whatsapp.com/send?text=Hola!%20,desde%20MercadoLocal%20observe%20la%20publicacion%20' +
+                          'https://api.whatsapp.com/send?text=Hola!%20,desde%20Malambo%20observe%20la%20publicacion%20' +
                           producto.titulo +
                           ',queria%20obtener%20mas%20detalles' +
                           '&phone=+54' +
@@ -213,7 +213,7 @@ export default {
   data() {
     return {
       verImagen: false,
-      descripcion:null,
+      descripcion:"",
       perPage: 2,
       currentPage: 1,
       productos: [],
@@ -221,7 +221,7 @@ export default {
       categorias: [],
       emprendimientos: [],
       servicios: [],
-      idPublicacionImagen: null,
+      idPublicacionImagen: "",
     };
   },
   created() {
@@ -258,7 +258,7 @@ export default {
         });
         this.productos = response.data.data;
         console.log(this.productos);
-        this.getImporte(this.productos);
+        //this.getImporte(this.productos);
       } catch (err) {
         this.productos = "ATENCION NO SE PUDIERON OBTENER LAS NOVEDADES";
       } finally {
@@ -303,12 +303,11 @@ export default {
         this.loading = false;
       }
     },
-    getImporte(productos) {
-      productos.forEach((producto) => {
+    getImporte(precio) {     
         const options2 = { style: "currency", currency: "USD" };
         const numberFormat2 = new Intl.NumberFormat("en-US", options2);
-        producto.precio = numberFormat2.format(producto.precio);
-      });
+        return numberFormat2.format(precio);
+      
     },
     cantidadProductos() {
       return this.productos.length;
@@ -331,8 +330,9 @@ export default {
           idCategoria: item.id,
         });
         this.productos = response.data.data;
+        console.log(this.productos)
         this.loading = response.data.error;
-        this.getImporte(this.productos);
+        //this.getImporte(this.productos);
       } catch (err) {
         this.productos = "ATENCION NO SE PUDIERON OBTENER LAS NOVEDADES";
       }
@@ -347,7 +347,7 @@ export default {
         );
         this.productos = response.data.data;
         this.loading = response.data.error;
-        this.getImporte(this.productos);
+        //this.getImporte(this.productos);
       } catch (err) {
         this.productos = "ATENCION NO SE PUDIERON OBTENER LAS NOVEDADES";
       }
@@ -360,7 +360,7 @@ export default {
         });
         this.productos = response.data.data;
         this.loading = response.data.error;
-        this.getImporte(this.productos);
+        //this.getImporte(this.productos);
       } catch (err) {
         this.productos = "ATENCION NO SE PUDIERON OBTENER LAS NOVEDADES";
       }

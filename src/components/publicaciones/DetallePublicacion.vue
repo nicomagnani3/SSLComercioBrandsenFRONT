@@ -110,7 +110,7 @@
                 name="checkbox-1"
               >
                 Publicacion destacada (las publicaciones destacadas tienen un
-                costo adicional y se visualizan en el home de Mercado Local)
+                costo adicional y se visualizan en el home de Malambo)
               </b-form-checkbox>
             </b-col>
             <hr />

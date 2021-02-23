@@ -37,4 +37,7 @@ export default {
     mercadoPago(credentials) {    
         return Api().post(API_URL + API_USER + "process_payment", credentials)
     },
+    setPagoPublicacion(credentials) {    
+        return Api().get(API_URL + API_USER + "set_pago_publicacion_producto/"+ credentials.publicacion)
+    },
 }

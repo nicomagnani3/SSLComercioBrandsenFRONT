@@ -21,10 +21,9 @@ export default {
    Menu,      
     Footer 
   },
-  computed: {
+  props: {
    
-    
-  },
+  },  
   methods: {
    
       printAlltoast () {
@@ -48,7 +47,10 @@ export default {
       }
   },
   mounted () {
-  }
+  },
+  created() {
+   
+  },
         
  
 
