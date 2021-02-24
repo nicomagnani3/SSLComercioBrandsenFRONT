@@ -15,73 +15,70 @@
           header-border-variant="success"
           header-bg-variant="transparent"
         >
-         <transition
+          <transition
             v-for="(value, index) in this.imgPrimera"
             :key="index"
             name="fade"
           >
-          <b-container class="pb-3">
-            <b-row no-gutters>
-              <b-col cols="12" sm="6" md="4" lg="2">
-                <div
-                  v-if="value.loadingImg"
-                  class="py-5 text-center"
-                ></div>
-                <b-card-img
-                  :src="
-                    value.url == null
-                      ? 'https://i.pinimg.com/originals/ad/53/64/ad53643d33b99130bc99e04d19857e39.png'
-                      : value.url
-                  "
-                  v-else
-                  class="rounded-0"
-                ></b-card-img>
-              </b-col>
-              <b-col cols="12" sm="6" md="8" lg="10">
-                <b-card-body class="p-3">
-                  <b-card-text>
-                    <b-row>
-                      <b-col md="8" class="mt-2 mt-md-0">
-                        <b-form-group
-                          id="archivo-label"
-                          label="Imagen"
-                          label-for="documento"
-                        >
-                          <ValidationProvider
-                            :name="'archivo0'"
-                            :rules="'required'"
-                            v-slot="{ errors, valid }"
+            <b-container class="pb-3">
+              <b-row no-gutters>
+                <b-col cols="12" sm="6" md="4" lg="2">
+                  <div v-if="value.loadingImg" class="py-5 text-center"></div>
+                  <b-card-img
+                    :src="
+                      value.url == null
+                        ? 'https://i.pinimg.com/originals/ad/53/64/ad53643d33b99130bc99e04d19857e39.png'
+                        : value.url
+                    "
+                    v-else
+                    class="rounded-0"
+                  ></b-card-img>
+                </b-col>
+                <b-col cols="12" sm="6" md="8" lg="10">
+                  <b-card-body class="p-3">
+                    <b-card-text>
+                      <b-row>
+                        <b-col md="8" class="mt-2 mt-md-0">
+                          <b-form-group
+                            id="archivo-label"
+                            label="Imagen"
+                            label-for="documento"
                           >
-                            <b-form-file
-                              v-model="value.file"
-                              size="sm"
-                              accept="image/jpeg"
-                              :state="
-                                errors[0]
-                                  ? valid && value.file && value.url
-                                    ? true
-                                    : false
-                                  : null
-                              "
-                              placeholder="Seleccione una imagen..."
-                              browse-text="Examinar"
-                              @change="upAws($event, value)"
-                            ></b-form-file>
-                            <b-form-invalid-feedback
-                              v-for="error in errors"
-                              :key="error.key"
-                              >{{ error }}</b-form-invalid-feedback
+                            <ValidationProvider
+                              :name="'archivo0'"
+                              :rules="'required'"
+                              v-slot="{ errors, valid }"
                             >
-                          </ValidationProvider>
-                        </b-form-group>
-                      </b-col>
-                    </b-row>
-                  </b-card-text>
-                </b-card-body>
-              </b-col>
-            </b-row>
-          </b-container>
-         </transition>
+                              <b-form-file
+                                v-model="value.file"
+                                size="sm"
+                                accept="image/jpeg"
+                                :state="
+                                  errors[0]
+                                    ? valid && value.file && value.url
+                                      ? true
+                                      : false
+                                    : null
+                                "
+                                placeholder="Seleccione una imagen..."
+                                browse-text="Examinar"
+                                @change="upAws($event, value)"
+                              ></b-form-file>
+                              <b-form-invalid-feedback
+                                v-for="error in errors"
+                                :key="error.key"
+                                >{{ error }}</b-form-invalid-feedback
+                              >
+                            </ValidationProvider>
+                          </b-form-group>
+                        </b-col>
+                      </b-row>
+                    </b-card-text>
+                  </b-card-body>
+                </b-col>
+              </b-row>
+            </b-container>
+          </transition>
         </b-card>
         <b-card
           v-if="this.cantImagenesAsubir > 0"
@@ -188,7 +185,8 @@ export default {
       type: Array,
       default: () => ({
         id: 0,
-        url: "https://i.pinimg.com/originals/ad/53/64/ad53643d33b99130bc99e04d19857e39.png",
+        url:
+          "https://i.pinimg.com/originals/ad/53/64/ad53643d33b99130bc99e04d19857e39.png",
         file: null,
         tipo: null,
         loadingImg: false,
@@ -203,7 +201,8 @@ export default {
       type: Array,
       default: () => ({
         id: 0,
-        url: 'https://i.pinimg.com/originals/ad/53/64/ad53643d33b99130bc99e04d19857e39.png',
+        url:
+          "https://i.pinimg.com/originals/ad/53/64/ad53643d33b99130bc99e04d19857e39.png",
         file: null,
         tipo: null,
         loadingImg: false,
@@ -227,7 +226,6 @@ export default {
   created() {
     console.log(this.imgPrimera);
     console.log(this.imagenes);
-
   },
 
   methods: {
@@ -262,10 +260,26 @@ export default {
     async validate() {
       if (!this.loadingImg && !this.loading) {
         let result = await this.$refs.altaImagenes.validate();
+              if (result == true) {
+                  if (! this.sonImagenesValidas(this.imagenes) || !this.sonImagenesValidas(this.imgPrimera)){
+                        alert("Atencion: se permiten solo fotos JPG")
+                        return false;
+                  }
+              }
         return result;
       } else {
         return false;
       }
+    },
+    sonImagenesValidas(imagenes) {
+      let validas = true;
+      imagenes.forEach((img) => {
+        if (img.file.type != "image/jpeg") {
+          validas = false;
+          return false;
+        }
+      });
+      return validas;
     },
 
     quitarImagen(imagen) {

@@ -63,7 +63,7 @@
                         >
                       </h3>
                       <h4 v-if="producto.precio > 0">
-                        Precio: {{ producto.precio }}
+                        Precio $: {{ producto.precio }}
                       </h4>
                       <h5>
                         Fecha de publicacion: {{ producto.fecha | formatDate }}
