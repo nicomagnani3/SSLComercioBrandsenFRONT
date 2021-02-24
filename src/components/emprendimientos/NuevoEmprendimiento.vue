@@ -6,6 +6,8 @@
     <b-spinner variant="primary" label="Text Centered"></b-spinner>
   </div>
   <div v-else>
+    <b-row>
+      <b-col cols="12">
     <form-wizard
       @on-complete="onComplete"
       title="Malambo te simplifica las cosas"
@@ -13,9 +15,13 @@
       back-button-text="Volver!"
       next-button-text="Siguiente!"
       finish-button-text="Obtener boton de pago"
-      color="#FFCE4E"
+      color="#000000"
+      step-size="lg"
+      error-color="#dc3545"
+     
     >
-      <tab-content title="¡Hola! Antes que nada contanos,¿qué vas a publicar?">
+   
+      <tab-content title="¡Hola! Antes que nada contanos,¿qué vas a publicar?" style="color: rgb(10 10 10);">
         <ListarEmprendimientos
           :emprendimientos="this.emprendimientos"
           @update-emprendimiento="updateEmprendimiento"
@@ -51,6 +57,8 @@
         </PagarEmprendimiento>
       </tab-content>
     </form-wizard>
+      </b-col>
+    </b-row>
   </div>
 </template>
 
@@ -96,7 +104,7 @@ export default {
       imgPrimeraEmprendimiento: [
         {
           id: 0,
-        url: "https://picsum.photos/400/400/?image=20",
+        url: 'https://i.pinimg.com/originals/ad/53/64/ad53643d33b99130bc99e04d19857e39.png',
         file: null,
         tipo: null,
         loadingImg: false,

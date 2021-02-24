@@ -3,7 +3,8 @@
     <div class="text-center">
       <img
         src="@/assets/MalamboLogo.png"
-        style="width: 600px"
+              style="width: 100%; max-width: 600px"
+
         class="rounded"
         alt="..."
         @click="home()"
@@ -63,9 +64,9 @@
         </b-button>
       </b-form-group>
       <div class="text-center">
-        <router-link to="/recuperarClave"
+        <!-- <router-link to="/recuperarClave"
           >¿Haz olvidado la contraseña?</router-link
-        >
+        > -->
       </div>
       <b-button  @click="volver()"  variant="outline-secondary">                                       
               <b-icon icon="arrow-left-short"></b-icon>Volver 

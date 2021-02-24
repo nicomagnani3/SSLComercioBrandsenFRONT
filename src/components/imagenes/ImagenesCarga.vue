@@ -30,7 +30,7 @@
                 <b-card-img
                   :src="
                     value.url == null
-                      ? 'https://picsum.photos/400/400/?image=20'
+                      ? 'https://i.pinimg.com/originals/ad/53/64/ad53643d33b99130bc99e04d19857e39.png'
                       : value.url
                   "
                   v-else
@@ -104,7 +104,7 @@
                   <b-card-img
                     :src="
                       value.url == null
-                        ? 'https://picsum.photos/400/400/?image=20'
+                        ? 'https://i.pinimg.com/originals/ad/53/64/ad53643d33b99130bc99e04d19857e39.png'
                         : value.url
                     "
                     v-else
@@ -188,7 +188,7 @@ export default {
       type: Array,
       default: () => ({
         id: 0,
-        url: "https://picsum.photos/400/400/?image=20",
+        url: "https://i.pinimg.com/originals/ad/53/64/ad53643d33b99130bc99e04d19857e39.png",
         file: null,
         tipo: null,
         loadingImg: false,
@@ -203,7 +203,7 @@ export default {
       type: Array,
       default: () => ({
         id: 0,
-        url: "https://picsum.photos/400/400/?image=20",
+        url: 'https://i.pinimg.com/originals/ad/53/64/ad53643d33b99130bc99e04d19857e39.png',
         file: null,
         tipo: null,
         loadingImg: false,

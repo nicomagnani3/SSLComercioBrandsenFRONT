@@ -13,7 +13,9 @@
       back-button-text="Volver!"
       next-button-text="Siguiente!"
       finish-button-text="Finalizar"
-      color="#FFCE4E"
+       color="#000000"
+      step-size="lg"
+      error-color="#dc3545"
     >
       <b-col v-if="creando" class="text-center">
         <div>
@@ -123,7 +125,7 @@ export default {
       imagenes: [],
       imgPrimera: [   {
           id: 0,
-        url: "https://picsum.photos/400/400/?image=20",
+        url: 'https://i.pinimg.com/originals/ad/53/64/ad53643d33b99130bc99e04d19857e39.png',
         file: null,
         tipo: null,
         loadingImg: false,

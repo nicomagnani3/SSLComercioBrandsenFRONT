@@ -64,10 +64,7 @@
           :publicacion="this.publicacion"
         ></DetalleServicio>
       </tab-content>
-      <tab-content
-        title="Imagenes"
-        :before-change="validarImagenes"
-      >
+      <tab-content title="Imagenes" :before-change="validarImagenes">
         <ImagenesCarga
           ref="altaImagenes"
           :imagenes="imagenesEmprendimiento"
@@ -75,10 +72,12 @@
         >
         </ImagenesCarga>
       </tab-content>
-      <tab-content title="Pagar el Servicio" :before-change="validarPago">
+      <tab-content title="Pagar el Servicio">
         <PagarEmprendimiento
-          ref="validarPago"
+          :publicacion="this.publicacion"
           :destacada="this.publicacion.destacada"
+          :imagen="this.imgPrimeraEmprendimiento"
+          :finalizo="this.presionoFinalizar"
         >
         </PagarEmprendimiento>
       </tab-content>
@@ -96,7 +95,7 @@ import DetalleServicio from "@/components/servicios/DetalleServicio.vue";
 //import PagoPublicacion from "@/components/publicaciones/PagoPublicacion.vue";
 import ImagenesCarga from "@/components/imagenes/ImagenesCarga.vue";
 import PagarEmprendimiento from "@/components/emprendimientos/PagarEmprendimiento.vue";
-
+import MercadoPago from "@/services/MercadoPago";
 
 export default {
   name: "nuevaPublicacion",
@@ -105,11 +104,13 @@ export default {
     ListarServicios,
     ListarServiciosHijos,
     DetalleServicio,
-    PagarEmprendimiento
+    PagarEmprendimiento,
     //PagoPublicacion,
   },
   data() {
     return {
+      presionoFinalizar: false,
+      presionoCrear: false,
       servicios: [],
       servicioSeleccionado: null,
       serviciosHijos: [],
@@ -119,13 +120,26 @@ export default {
       publicacion: [],
       imagenes: [],
       imgPrimera: [],
-      imgPrimeraEmprendimiento: [],
+      imgPrimeraEmprendimiento: [
+        {
+          id: 0,
+          url:
+            "https://i.pinimg.com/originals/ad/53/64/ad53643d33b99130bc99e04d19857e39.png",
+          file: null,
+          tipo: null,
+          loadingImg: false,
+          estado: 1,
+          key: 0,
+          obligatorio: true,
+          base64: "",
+          primera: false,
+        },
+      ],
       imagenesEmprendimiento: [],
       creando: false,
     };
   },
   created() {
-    console.log("entro aca");
     if (this.getUserId == null) {
       this.$router.push({
         name: "login",
@@ -139,15 +153,6 @@ export default {
     ...mapGetters("storeUser", ["getUserId"]),
   },
   methods: {
-    async validarPago() {
-      let result = await this.$refs.validarPago.validate();
-      console.log(result)
-      if (result == false){
-        alert("Debe efectuar el pago para poder finalizar la publicacion en Malambo")
-        return false;
-      }
-      return result;
-    },
     async validarDetalleservicio() {
       let result = await this.$refs.detalleServicio.validate();
       return result;
@@ -163,12 +168,8 @@ export default {
       let result = await this.$refs.altaImagenes.validate();
       return result;
     },
-    async onComplete() {      
-      console.log(this.servicioSeleccionado);
-      console.log(this.serviciosHijoSeleccionado);
-      console.log(this.publicacion);
-      console.log(this.imagenesEmprendimiento);
-      console.log(this.imgPrimeraEmprendimiento);
+    async onComplete() {
+      this.presionoFinalizar = true;
       if (this.getUserId == null) {
         this.$router.push({
           name: "login",
@@ -177,37 +178,60 @@ export default {
           },
         });
       } else {
-        this.creando = true;
-        try {
-          const response = await ServiciosService.addServicio({
-            titulo: this.publicacion.titulo,
-            importe: this.publicacion.precio,
-            observaciones: this.publicacion.observaciones,
-            destacada: this.publicacion.destacada,
-            imagenes: this.imagenesEmprendimiento,
-            imgPrimera: this.imgPrimeraEmprendimiento.base64,
-            servicio: this.servicioSeleccionado,
-            servicioHijo: this.serviciosHijoSeleccionado,
-            usuarioID: this.getUserId,
-          });
-          this.$root.$bvToast.toast(`Usted a creado una publicacion`, {
-            title: response.data.data,
-            toaster: "b-toaster-top-center succes",
-            solid: true,
-            variant: "success",
-          });
-          this.$router.push("/");
-        } catch (error) {
-          error.response.data.data.forEach((data) => {
-            this.$bvToast.toast(`No se pudo crear la publicacion`, {
-              title: data,
-              toaster: "b-toaster-top-center",
-              solid: true,
-              variant: "danger",
-            });
-          });
+        if (!this.presionoCrear) {
+          this.crearPublicacion();
         }
       }
+    },
+    async crearPublicacion() {
+      this.presionoCrear = true;
+      try {
+        const response = await ServiciosService.addServicio({
+          titulo: this.publicacion.titulo,
+          importe: this.publicacion.precio,
+          observaciones: this.publicacion.observaciones,
+          destacada: this.publicacion.destacada,
+          imagenes: this.imagenesEmprendimiento,
+          imgPrimera: this.imgPrimeraEmprendimiento[0].base64,
+          servicio: this.servicioSeleccionado,
+          servicioHijo: this.serviciosHijoSeleccionado,
+          usuarioID: this.getUserId,
+        });
+        if (response.data.error == false) {
+          this.validarPagoMercadoPago(response.data.data);
+        }
+      } catch (error) {
+        this.$bvToast.toast(
+          `No se pudo crear la publicacion, vuelva a intentarlo por favor`,
+          {
+            title: error.data,
+            toaster: "b-toaster-top-center",
+            solid: true,
+            variant: "danger",
+          }
+        );
+        this.$router.push("/");
+      }
+    },
+    async validarPagoMercadoPago(idPublicacion) {
+      let precioPublicacion = this.publicacion.destacada ? 700 : 500;
+      const response = await MercadoPago.crearPreferencia({
+        titulo: this.publicacion.titulo,
+        precioPublicacion: precioPublicacion,
+        idPublicacion: idPublicacion,
+        descripcion: this.publicacion.observaciones,
+        tipo: "SERVICIO",
+      });
+      this.createCheckoutButton(response.data.id);
+    },
+     createCheckoutButton(preference) {
+      var script = document.createElement("script");
+      script.src =
+        "https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js";
+      script.type = "text/javascript";
+      script.dataset.preferenceId = preference;
+      document.getElementById("button-checkout").innerHTML = "";
+      document.querySelector("#button-checkout").appendChild(script);
     },
     update(servicio) {
       this.servicioSeleccionado = servicio[0].id;

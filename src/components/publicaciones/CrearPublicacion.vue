@@ -35,6 +35,8 @@
 <script>
 import EmprendimientoService from "@/services/EmprendimientoService";
 import PublicacionService from "@/services/PublicacionService";
+import ServiciosService from "@/services/ServiciosService";
+
 //import axios from "axios";
 export default {
   name: "crearPublicacion",
@@ -60,6 +62,10 @@ export default {
     if (this.tipo == "EMPRENDIMIENTO") {
       this.setearPago();
     }
+    if (this.tipo == "SERVICIO") {
+      this.setearPagoservicio();
+    }
+    
 
     /*    
  console.log(this.$route.params)  */
@@ -82,6 +88,12 @@ export default {
     },
     async setearPagoPublicacion() {
       const response = await PublicacionService.setPagoPublicacion({
+        publicacion: this.publicacion,
+      });
+      console.log(response);
+    },
+    async setearPagoservicio() {
+      const response = await ServiciosService.setPagoPublicacion({
         publicacion: this.publicacion,
       });
       console.log(response);

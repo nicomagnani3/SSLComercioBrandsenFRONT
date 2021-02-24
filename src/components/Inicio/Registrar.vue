@@ -1,31 +1,30 @@
 <template>
   <div class="registrar">
-    
-      <img
-        @click="home()"
-        src="@/assets/MalamboLogo.png"
-        style="width: 600px"
-        class="rounded"
-        alt="..."
-      />
-    
+    <img
+      @click="home()"
+      src="@/assets/MalamboLogo.png"
+      style="width: 100%; max-width: 600px"
+      class="rounded"
+      alt="..."
+    />
+
     <b-form action class="form" @submit.prevent="registrarse">
       <hr />
       <p class="title h2 mt-2 text-center">
         <small>Completa los datos para registrarte</small>
       </p>
       <br />
-      <b-input-group size="xl">         
-          <b-form-select
-          class="mb-3"
-            id="plan"
-            data-checkout="Plan"           
-            v-model="value"
-            :options="options"
-            required
-          ></b-form-select>
+      <b-input-group size="lg">
+        <b-form-select
+          size="lg"
+          id="plan"
+          data-checkout="Plan"
+          v-model="value"
+          :options="options"
+          required
+        ></b-form-select>
       </b-input-group>
-<br>
+      <br />
       <!-- 
       <div class="title h5 mt-2 text-center">
         <b-form-radio-group
@@ -243,11 +242,6 @@
       >
       <b-alert show v-if="mensaje" variant="secondary">{{ mensaje }}</b-alert>
       <b-row>
-        <!-- <b-col class="text-left">
-          <b-button @click="volver()" variant="outline-secondary">
-            <b-icon icon="arrow-left-short"></b-icon>Volver
-          </b-button>
-        </b-col> -->
         <b-col class="text-center">
           <b-button type="submit" block variant="primary"
             >Registrar
@@ -260,6 +254,10 @@
           </b-button>
         </b-col>
       </b-row>
+      <br />
+      <b-col class="text-center">
+        <router-link to="/login">¿Ya tenes una cuenta?Ingresa aca</router-link>
+      </b-col>
     </b-form>
   </div>
 </template>
@@ -432,7 +430,4 @@ export default {
 </script>
 
 <style>
-
-
-
 </style>

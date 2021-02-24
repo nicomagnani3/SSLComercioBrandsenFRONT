@@ -2,7 +2,7 @@
   <div>
     <b-row class="pb-2">
       <b-col class="text-center pt-3">
-        <p class="h3 text-center">
+        <p class="h2 text-center">
           ¿Que tipo de emprendimiento vas a publicar?
         </p>
       </b-col>
@@ -15,6 +15,7 @@
       :fields="fields"
       @row-selected="onRowSelected"
       responsive="sm"
+       hover medium 
     >
     </b-table>
   </div>
@@ -30,7 +31,7 @@ export default {
   data() {
     return {    
       selectMode: "single",
-      fields: [{ key: "nombre", class: "text-center p2" }],
+      fields: [{ key: "nombre", class: "text-center p2" ,  style:"padding:1rem;"}],
     };
   },
   computed: {

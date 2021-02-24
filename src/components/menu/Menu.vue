@@ -15,16 +15,16 @@
             <template slot="button-content">
               <span class="light">Publicar</span>
             </template>
-            <b-dropdown-item
-              :to="{ name: 'nuevoEmprendimiento' }"
-              v-if="hasPermisos('CREAR_EMPRENDIMIENTO')"
-              >Emprendimiento</b-dropdown-item
-            >
-            <b-dropdown-item
+             <b-dropdown-item
               :to="{ name: 'nuevaPublicacion' }"
               v-if="hasPermisos('CREAR_PRODUCTO')"
               >Producto</b-dropdown-item
             >
+            <b-dropdown-item
+              :to="{ name: 'nuevoEmprendimiento' }"
+              v-if="hasPermisos('CREAR_EMPRENDIMIENTO')"
+              >Emprendimiento</b-dropdown-item
+            >           
             <b-dropdown-item
               :to="{ name: 'nuevoServicio' }"
               v-if="hasPermisos('CREAR_SERVICIO')"
