@@ -64,6 +64,18 @@ export default {
     slideritem,
   },
   methods: {
+      verProducto(producto) {
+      if (producto != null) {
+        const path = `/buscarProductos/${producto.titulo}`;
+        if (this.$route.path !== path)
+          this.$router.push({
+            name: "buscarProductos",
+            params: {
+              producto: producto.titulo,
+            },
+          });
+      }
+    },
     async getPorductos() {
       try {
         const response = await EmprendimientoService.getPublicacionEmprendimientos();

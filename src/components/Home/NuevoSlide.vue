@@ -20,7 +20,7 @@
           alt="Image"
           img-height="300px; max-height:300px"
           @click="verProducto(producto)"
-          :sub-title="producto.titulo"
+          :sub-title="tituloAjustar(producto.titulo)"
         >
           <b-button  @click="verProducto(producto)" variant="primary">Ver más</b-button>
         </b-card>
@@ -64,6 +64,7 @@ export default {
   },
 
   methods: {
+   
     async getPorductos() {
       try {
         const response = await ProductosService.getProductos();
@@ -82,8 +83,8 @@ export default {
       });
     },
     tituloAjustar(titulo) {
-      titulo = this.primerMayuscula(titulo.toLowerCase());
-      return titulo.fontsize(6).fontcolor("#FFCE4E ");
+      return this.primerMayuscula(titulo.toLowerCase());
+       
     },
     primerMayuscula(string) {
       return string.charAt(0).toUpperCase() + string.slice(1);

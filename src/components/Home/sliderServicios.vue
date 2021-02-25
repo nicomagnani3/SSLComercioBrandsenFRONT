@@ -22,7 +22,9 @@
           @click="verProducto(producto)"
           :sub-title="tituloAjustar(producto.titulo)"
         >
-          <b-button  @click="verProducto(producto)" variant="primary">Ver más</b-button>
+          <b-button @click="verProducto(producto)" variant="primary"
+            >Ver más</b-button
+          >
         </b-card>
       </slideritem>
       <!-- Customizable loading -->
@@ -65,13 +67,23 @@ export default {
   },
 
   methods: {
+      verProducto(producto) {
+      if (producto != null) {
+        const path = `/buscarProductos/${producto.titulo}`;
+        if (this.$route.path !== path)
+          this.$router.push({
+            name: "buscarProductos",
+            params: {
+              producto: producto.titulo,
+            },
+          });
+      }
+    },
     async getPorductos() {
       try {
         const response = await ServiciosService.getPublicacionServicios();
         this.productos = response.data.data;
-        this.productos = this.productos.filter(
-        (c) => c.destacado == true
-      );
+        this.productos = this.productos.filter((c) => c.destacado == true);
         this.getImporte(this.productos);
       } catch (err) {
         this.categorias = "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS";
@@ -85,13 +97,12 @@ export default {
       });
     },
     tituloAjustar(titulo) {
-      titulo = this.primerMayuscula(titulo.toLowerCase());
-      return titulo
+     return this.primerMayuscula(titulo.toLowerCase());
+      
     },
     primerMayuscula(string) {
       return string.charAt(0).toUpperCase() + string.slice(1);
     },
-   
   },
   mounted() {
     axios
@@ -120,7 +131,6 @@ export default {
   font-size: 7em;
   opacity: 0.7;
 }
-
 </style>
 
 
