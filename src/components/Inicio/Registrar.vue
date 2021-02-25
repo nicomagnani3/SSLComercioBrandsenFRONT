@@ -322,7 +322,6 @@ export default {
       if (this.persona.password == this.persona.password_confirmation) {
         try {
           this.contraseñaIncorrecta = false;
-          console.log(this.persona.email);
           const response = await AuthenticationService.register({
             nombre: this.persona.nombre,
             apellido: this.persona.apellido,
@@ -332,7 +331,6 @@ export default {
             password: this.persona.password,
             grupo: this.value,
           });
-          console.log(response.data.error);
           if (response.data.error == true) {
             this.registrando = false;
             this.$bvToast.toast(response.data.data, {
@@ -379,7 +377,6 @@ export default {
 
             grupo: this.value,
           });
-          console.log(response.data.error);
           if (response.data.error == true) {
             this.registrando = false;
             this.$bvToast.toast(response.data.data, {

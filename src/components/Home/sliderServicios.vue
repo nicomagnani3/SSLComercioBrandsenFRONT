@@ -1,46 +1,69 @@
 <template>
   <b-container>
-    <h3 class="m-5 titulo">Servicios destacados</h3>
-        <vueper-slides
-          class="no-shadow"
-          :visible-slides="5"
-          slide-multiple
-          :gap="1"
-          :slide-ratio="1 / 4"          
-          :dragging-distance="60"
-          :breakpoints="{ 800: {visibleSlides: 2, slideMultiple: 2} }"
+    <b-row class="pb-3">
+      <b-col lg="2" sm="4" class="text-center"></b-col>
+      <b-col md="8" sm="6" class="text-left pt-3">
+        <div>
+          <p class="h1 text-center">Servicios destacados</p>
+        </div>
+      </b-col>
+    </b-row>
+    <slider ref="slider" :options="options">
+      <slideritem
+        v-for="(producto, index) in productos"
+        :key="index"
+        style="width: 20%; margin-right: 1%; max-width: 20%"
+      >
+        <b-card
+          :img-src="`data:image/png;base64, ${producto.imagen}`"
+          img-alt="Image"
+          alt="Image"
+          img-height="300px; max-height:300px"
+          @click="verProducto(producto)"
+          :sub-title="tituloAjustar(producto.titulo)"
         >
-          <vueper-slide
-            v-for="producto in productos"
-            :key="producto.id"
-            :title="tituloAjustar(producto.titulo)"
-            :content="producto.precio.fontsize(4).fontcolor('#FFCE4E')"
-            :image="`data:image/png;base64, ${producto.imagen}`"
-            class="item"
-          />  
-       
-        </vueper-slides>
-   
+          <b-button  @click="verProducto(producto)" variant="primary">Ver más</b-button>
+        </b-card>
+      </slideritem>
+      <!-- Customizable loading -->
+      <div class="text-center" slot="loading">
+        <span class="text-danger">
+          <b>Cargando</b>
+        </span>
+        <b-spinner variant="primary" label="Text Centered"></b-spinner>
+      </div>
+    </slider>
   </b-container>
 </template>
-
 
 
 <script>
 import axios from "axios";
 import ServiciosService from "@/services/ServiciosService";
-import { VueperSlides, VueperSlide } from "vueperslides";
-import "vueperslides/dist/vueperslides.css";
+import { slider, slideritem } from "vue-concise-slider";
 export default {
-  name: "slider",
-  components: { VueperSlides, VueperSlide },
-
+  name: "NuevoSlide",
   data() {
     return {
       productos: [],
-      sliding: null,
+      options: {
+        currentPage: 0,
+        thresholdDistance: 100,
+        thresholdTime: 500,
+        autoplay: 4000,
+        loop: true,
+        direction: "horizontal",
+        loopedSlides: 5,
+        slidesToScroll: 1,
+        effect: "slide",
+      },
     };
   },
+  components: {
+    slider,
+    slideritem,
+  },
+
   methods: {
     async getPorductos() {
       try {
@@ -50,7 +73,6 @@ export default {
         (c) => c.destacado == true
       );
         this.getImporte(this.productos);
-        console.log(this.productos);
       } catch (err) {
         this.categorias = "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS";
       }
@@ -64,14 +86,12 @@ export default {
     },
     tituloAjustar(titulo) {
       titulo = this.primerMayuscula(titulo.toLowerCase());
-      return titulo.fontsize(6).fontcolor("#FFCE4E ");
+      return titulo
     },
     primerMayuscula(string) {
       return string.charAt(0).toUpperCase() + string.slice(1);
     },
-    accederLink(){
-      console.log("entro")
-    }
+   
   },
   mounted() {
     axios

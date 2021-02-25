@@ -175,7 +175,6 @@ export default {
 
     },
     async addImagenPRUEVA() {  
-      console.log(this.image)      
       try {
         await PublicacionService.addImagen({
           imagen:this.image 
@@ -233,7 +232,6 @@ export default {
     },
 
     async addImagen(imagen) {
-      console.log(imagen);
       try {
         await PublicacionService.addImagen(imagen);
       } catch (err) {
@@ -281,7 +279,6 @@ export default {
          
         );
         this.miImagen = response.data.data;
-        console.log(this.miImagen)
       } catch (err) {
         this.$bvToast.toast(err.response.data.message, {
           title: "Atencion!",

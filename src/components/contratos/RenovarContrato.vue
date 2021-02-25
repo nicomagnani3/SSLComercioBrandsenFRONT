@@ -453,7 +453,6 @@ export default {
           codigoSeguridad: this.form.securityCode,
           cuotas: this.form.transactionAmount,
         });
-        console.log(response.data);
       } catch (error) {}
     },
   },

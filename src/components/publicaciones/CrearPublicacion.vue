@@ -55,7 +55,6 @@ export default {
     return {};
   },
   created() {
-    console.log(this.tipo);
     if (this.tipo == "PUBLICACION") {
       this.setearPagoPublicacion();
     }
@@ -65,10 +64,6 @@ export default {
     if (this.tipo == "SERVICIO") {
       this.setearPagoservicio();
     }
-    
-
-    /*    
- console.log(this.$route.params)  */
   },
   computed: {},
   watch: {
@@ -79,24 +74,19 @@ export default {
       this.$router.push("/");
     },
     async setearPago() {
-      console.log(this.publicacion);
-      console.log("salio created");
-      const response = await EmprendimientoService.setPagoPublicacion({
+      await EmprendimientoService.setPagoPublicacion({
         publicacion: this.publicacion,
       });
-      console.log(response);
     },
     async setearPagoPublicacion() {
-      const response = await PublicacionService.setPagoPublicacion({
+      await PublicacionService.setPagoPublicacion({
         publicacion: this.publicacion,
       });
-      console.log(response);
     },
     async setearPagoservicio() {
-      const response = await ServiciosService.setPagoPublicacion({
+      await ServiciosService.setPagoPublicacion({
         publicacion: this.publicacion,
       });
-      console.log(response);
     },
   },
   mounted() {},

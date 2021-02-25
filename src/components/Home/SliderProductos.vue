@@ -50,7 +50,6 @@ export default {
       try {
         const response = await ProductosService.getProductos();
         this.productos = response.data.data;
-        console.log(this.productos);
           this.productos = this.productos.filter(
         (c) => c.destacado == true
       );
@@ -74,9 +73,7 @@ export default {
     primerMayuscula(string) {
       return string.charAt(0).toUpperCase() + string.slice(1);
     },
-    accederLink(){
-      console.log("entro")
-    }
+  
   },
   mounted() {
     axios

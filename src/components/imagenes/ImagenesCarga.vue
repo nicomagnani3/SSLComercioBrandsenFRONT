@@ -224,8 +224,7 @@ export default {
   },
   computed: {},
   created() {
-    console.log(this.imgPrimera);
-    console.log(this.imagenes);
+   
   },
 
   methods: {

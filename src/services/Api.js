@@ -6,7 +6,6 @@ import router from '../router'
 export default () => {
 
 
-    //console.log(process.env);
 
     let instance = axios.create({
         baseURL: process.env.VUE_APP_API_URL,

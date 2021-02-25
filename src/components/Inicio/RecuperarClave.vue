@@ -84,7 +84,6 @@ export default {
                   variant: "danger",
                   });   
         }
-        console.log(response)
       } catch (err) {
         this.form.ingresar = true;
         this.error = err.response.data.errors[0];

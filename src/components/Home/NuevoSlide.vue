@@ -1,118 +1,139 @@
 <template>
-
-<b-container style="width:100%;height:550px">
-    <h3 class=" titulo">Productos en oferta</h3>
-   <!-- Using the slider component -->
-   <slider ref="slider" :options="options" @slide='slide' @tap='onTap' @init='onInit'>
-       <!-- slideritem wrapped package with the components you need -->
-       <slideritem v-for="(item,index) in someList" :key="index" :style="item.style">
-
-        <b-card 
-          img-src="https://http2.mlstatic.com/D_NQ_NP_797041-MLA31010002588_062019-O.webp"
+  <b-container>
+    <b-row class="pb-3">
+      <b-col lg="2" sm="4" class="text-center"></b-col>
+      <b-col md="8" sm="6" class="text-left pt-3">
+        <div>
+          <p class="h1 text-center">Productos en oferta</p>
+        </div>
+      </b-col>
+    </b-row>
+    <slider ref="slider" :options="options">
+      <slideritem
+        v-for="(producto, index) in productos"
+        :key="index"
+        style="width: 20%; margin-right: 1%; max-width: 20%"
+      >
+        <b-card
+          :img-src="`data:image/png;base64, ${producto.imagen}`"
           img-alt="Image"
-          img-top
-          tag="article"
-          img-height="300px"
-          class=" itemCarrusel "
-        > 
-          
-          <b-button href="#" variant="primary">Ver más</b-button>
-                            
-
-                            
-        </b-card > 
-
-
-
-       </slideritem>
-       <!-- Customizable loading -->
-       <div slot="loading">loading...</div>
-   </slider>
-</b-container>
+          alt="Image"
+          img-height="300px; max-height:300px"
+          @click="verProducto(producto)"
+          :sub-title="producto.titulo"
+        >
+          <b-button  @click="verProducto(producto)" variant="primary">Ver más</b-button>
+        </b-card>
+      </slideritem>
+      <!-- Customizable loading -->
+      <div class="text-center" slot="loading">
+        <span class="text-danger">
+          <b>Cargando</b>
+        </span>
+        <b-spinner variant="primary" label="Text Centered"></b-spinner>
+      </div>
+    </slider>
+  </b-container>
 </template>
 <script>
+import axios from "axios";
+import ProductosService from "@/services/ProductosService";
 // import slider components
-import { slider, slideritem } from 'vue-concise-slider'
+import { slider, slideritem } from "vue-concise-slider";
 export default {
-name: 'NuevoSlide',
-data () {
-   return {
-     //data list [array]
-     someList:[
-       {
-         html: 'slide1',
-         style: {
-            
-            'width': '23.5%',
-            'margin-right': '2%'
-             
-         }
-       },
-       {
-         html: 'slide2',
-         style: {
-           
-            'width': '23.5%',
-            'margin-right': '2%'
-         }
-       },
-       {
-         html: 'slide3',
-         style: {
-            
-            'width': '23.5%',
-            'margin-right': '2%',
-            
-         }
-       },
-       {
-         html: 'slide4',
-         style: {
-            
-            'width': '23.5%',
-            'margin-right': '2%'
-         }
-       },
-       {
-         html: 'slide5',
-         style: {
-            
-            'width': '23.5%',
-            'margin-right': '2%'
-         }
-       },
-       {
-         html: 'slide6',
-         style: {
-            
-            'width': '23.5%',
-            'margin-right': '2%'
-         }
-       },
-       {
-         html: 'slide7',
-         style: {
-            
-            'width': '23.5%',
-            'margin-right': '2%'
-         }
-       },
-       
-     ],
-     //Slider configuration [obj]
-     options: {
+  name: "NuevoSlide",
+  data() {
+    return {
+      productos: [],
+      options: {
         currentPage: 0,
-        infinite: 4,
-        slidesToScroll: 4,
-        loop: true
-     }
-   }
- },
- components: {
-   slider,
-   slideritem
- }
-}
+        thresholdDistance: 100,
+        thresholdTime: 500,
+        autoplay: 4000,
+        loop: true,
+        direction: "horizontal",
+        loopedSlides: 5,
+        slidesToScroll: 1,
+        effect: "slide",
+      },
+    };
+  },
+  components: {
+    slider,
+    slideritem,
+  },
+
+  methods: {
+    async getPorductos() {
+      try {
+        const response = await ProductosService.getProductos();
+        this.productos = response.data.data;
+        this.productos = this.productos.filter((c) => c.destacado == true);
+        this.getImporte(this.productos);
+      } catch (err) {
+        this.categorias = "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS";
+      }
+    },
+    getImporte(productos) {
+      productos.forEach((producto) => {
+        const options2 = { style: "currency", currency: "USD" };
+        const numberFormat2 = new Intl.NumberFormat("en-US", options2);
+        producto.precio = numberFormat2.format(producto.precio);
+      });
+    },
+    tituloAjustar(titulo) {
+      titulo = this.primerMayuscula(titulo.toLowerCase());
+      return titulo.fontsize(6).fontcolor("#FFCE4E ");
+    },
+    primerMayuscula(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    },
+    verProducto(producto) {
+      if (producto != null) {
+        const path = `/buscarProductos/${producto.titulo}`;
+        if (this.$route.path !== path)
+          this.$router.push({
+            name: "buscarProductos",
+            params: {
+              producto: producto.titulo,
+            },
+          });
+      }
+    },
+  },
+  mounted() {
+    axios
+      .all([this.getPorductos()])
+      .then(() => {
+        this.loading = false;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
+};
 </script>
+
+
+<style scoped>
+.container {
+  width: 50%;
+  max-width: 50%;
+}
+
+.texto {
+  color: rgb(226, 205, 199);
+  font-family: "Poppins", sans-serif;
+}
+.vueperslide__title {
+  font-size: 7em;
+  opacity: 0.7;
+}
+
+.item {
+  box-shadow: 3px 3px 5px 3px rgba(0, 0, 0, 0.2);
+}
+</style>
+
 
 

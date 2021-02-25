@@ -257,7 +257,6 @@ export default {
           titulo: this.producto,
         });
         this.productos = response.data.data;
-        console.log(this.productos);
         //this.getImporte(this.productos);
       } catch (err) {
         this.productos = "ATENCION NO SE PUDIERON OBTENER LAS NOVEDADES";
@@ -330,7 +329,6 @@ export default {
           idCategoria: item.id,
         });
         this.productos = response.data.data;
-        console.log(this.productos)
         this.loading = response.data.error;
         //this.getImporte(this.productos);
       } catch (err) {
@@ -371,7 +369,6 @@ export default {
       this.$refs["modalVerImagenes"].show();
     },
     verdetalles(producto) {
-      console.log(producto);
       this.descripcion=producto.descripcion
       this.$refs["modalVerProductos"].show();
     },

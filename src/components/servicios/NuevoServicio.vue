@@ -158,7 +158,6 @@ export default {
       return result;
     },
     async validarServicioHijo() {
-      console.log(this.serviciosHijoSeleccionado);
       if (this.serviciosHijoSeleccionado == null) {
         return false;
       }
@@ -241,7 +240,6 @@ export default {
       this.serviciosHijoElegido = this.ordenarDatos(this.serviciosHijoElegido);
     },
     updateServicioHijo(serHija) {
-      console.log("update");
       this.serviciosHijoSeleccionado = serHija[0].id;
     },
     ordenarDatos(categoria) {

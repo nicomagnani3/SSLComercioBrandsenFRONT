@@ -199,7 +199,6 @@ export default {
     },
     guessPaymentMethod() {
       let cardnumber = this.cardNumber;
-      console.log(cardNumber);
       if (cardnumber.length >= 6) {
         let bin = cardnumber.substring(0, 6);
         window.Mercadopago.getPaymentMethod(
@@ -211,7 +210,6 @@ export default {
       }
     },
     setPaymentMethod(status, response) {
-      console.log("entra setPaymentMethod");
       if (status == 200) {
         let paymentMethod = response[0];
         this.transactionAmount = paymentMethod.id;
@@ -245,7 +243,6 @@ export default {
     },
 
     getCardToken() {
-      console.log("entrosubmit");
       doSubmit = false;
       event.preventDefault();
       if (!doSubmit) {
