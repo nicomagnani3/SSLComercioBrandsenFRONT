@@ -1,4 +1,9 @@
 <template>
+  <div class="text-center" v-if="loading">
+    <span class="text-danger"> <b> Cargando</b></span>
+    <b-spinner variant="primary" label="Text Centered"></b-spinner>
+  </div>
+  <div v-else>
   <b-container>
     <b-row class="pb-3">
       <b-col lg="2" sm="4" class="text-center"></b-col>
@@ -34,6 +39,7 @@
       </div>
     </slider>
   </b-container>
+  </div>
 </template>
 
 
@@ -45,6 +51,7 @@ export default {
   name: "SlideEmprendimietnos",
   data() {
     return {
+      loading :false,
       productos: [],
       options: {
         currentPage: 0,

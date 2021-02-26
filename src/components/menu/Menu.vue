@@ -7,15 +7,56 @@
     <b-navbar toggleable="lg" type="light" class="nav">
       <b-navbar-brand :to="'/'"><Header /> </b-navbar-brand>
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-      <b-collapse id="nav-collapse" is-nav>
+      <b-collapse class="navbar-collapse" id="nav-collapse" is-nav>
         <b-navbar-nav>
-          
-          <b-nav-item>Tiendas </b-nav-item>
+          <b-nav-item-dropdown>
+            <template slot="button-content">
+              <span class="light">Productos</span>
+            </template>
+
+            <li
+              class="list-group-item"
+              v-for="item in categorias"
+              :key="item.id"
+            >
+              <a class="buscador" @click="buscarProductoporCategoria(item)">{{
+                item.nombre
+              }}</a>
+            </li>
+          </b-nav-item-dropdown>
+          <b-nav-item-dropdown>
+            <template slot="button-content">
+              <span class="light">Emprendimientos</span>
+            </template>
+            <li
+              class="list-group-item"
+              v-for="item in emprendimientos"
+              :key="item.id"
+            >
+              <a class="buscador" @click="buscarProductoporCategoria(item)">{{
+                item.nombre
+              }}</a>
+            </li>
+          </b-nav-item-dropdown>
+          <b-nav-item-dropdown>
+            <template slot="button-content">
+              <span class="light">Servicios</span>
+            </template>
+            <li
+              class="list-group-item"
+              v-for="item in servicios"
+              :key="item.id"
+            >
+              <a class="buscador" @click="buscarProductoporCategoria(item)">{{
+                item.nombre
+              }}</a>
+            </li>
+          </b-nav-item-dropdown>
           <b-nav-item-dropdown v-if="hasPermisos('CREAR')">
             <template slot="button-content">
               <span class="light">Publicar</span>
             </template>
-             <b-dropdown-item
+            <b-dropdown-item
               :to="{ name: 'nuevaPublicacion' }"
               v-if="hasPermisos('CREAR_PRODUCTO')"
               >Producto</b-dropdown-item
@@ -24,7 +65,7 @@
               :to="{ name: 'nuevoEmprendimiento' }"
               v-if="hasPermisos('CREAR_EMPRENDIMIENTO')"
               >Emprendimiento</b-dropdown-item
-            >           
+            >
             <b-dropdown-item
               :to="{ name: 'nuevoServicio' }"
               v-if="hasPermisos('CREAR_SERVICIO')"
@@ -91,7 +132,11 @@
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
 import Header from "@/components/menu/Header.vue";
+import CategoriasService from "@/services/CategoriasService";
+import EmprendimientoService from "@/services/EmprendimientoService";
+import ServiciosService from "@/services/ServiciosService";
 
+import axios from "axios";
 export default {
   name: "Menu",
   components: {
@@ -103,6 +148,9 @@ export default {
       filterPrev: null,
       filter: null,
       logeado: false,
+      categorias: [],
+      emprendimientos: [],
+      servicios: [],
     };
   },
   created() {
@@ -115,17 +163,82 @@ export default {
     ...mapGetters("storeUser", ["hasPermisos", "getGrupos", "getUserId"]),
   },
   methods: {
-    buscarProducto(producto) {     
-      if (producto != null) {
-        const path = `/buscarProductos/${producto}`;
-        if (this.$route.path !== path)
-          this.$router.push({
-            name: "buscarProductos",
-            params: {
-              producto: producto,
-            },
-          });
+  
+
+    buscarProducto(producto) {
+      const path = `/buscarProductos/${producto}`;
+      console.log(this.$route.path);
+      if (this.$route.path !== path)
+        this.$router.push({
+          name: "buscarProductos",
+          params: {
+            producto: producto,
+          },
+        });
+    },
+    async getEmprendimientos() {
+      this.loading = true;
+      try {
+        const response = await EmprendimientoService.getEmprendimientos();
+        this.emprendimientos = response.data.data;
+        this.emprendimientos = this.ordenarDatos(this.emprendimientos);
+      } catch (err) {
+        this.emprendimientos =
+          "ATENCION NO SE PUDIERON OBTENER LOS emprendimientos";
+      } finally {
+        this.loading = false;
       }
+    },
+    async getServicios() {
+      this.loading = true;
+      try {
+        const response = await ServiciosService.getServicios();
+        this.servicios = response.data.data;
+        this.servicios = this.ordenarDatos(this.servicios);
+      } catch (err) {
+        this.servicios = "ATENCION NO SE PUDIERON OBTENER LOS servicios";
+      } finally {
+        this.loading = false;
+      }
+    },
+    async getcategorias() {
+      this.loading = true;
+      try {
+        const response = await CategoriasService.getCategorias();
+        this.categorias = response.data.data;
+        this.categorias = this.ordenarDatos(this.categorias);
+      } catch (err) {
+        this.categorias = "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS";
+      } finally {
+        this.loading = false;
+      }
+    },
+    ordenarDatos(categoria) {
+      return categoria.sort(function (a, b) {
+        if (a.nombre > b.nombre) {
+          return 1;
+        }
+        if (a.nombre < b.nombre) {
+          return -1;
+        }
+        return 0;
+      });
+    },
+
+    buscarProductoporCategoria(categoria) {
+
+      const path = `/buscarProductos/${categoria.nombre}`;
+      if (this.$route.path !== path)
+        this.$router.push({
+          name: "buscarProductos",
+          query: {
+            q: this.searchQuery,
+            t: new Date().getTime(),
+          },
+          params: {
+            producto: categoria.nombre,
+          },
+        });
     },
     ...mapActions("storeUser", ["LOGOUT_REQUEST"]),
     logout() {
@@ -136,6 +249,20 @@ export default {
       location.reload();
     },
   },
+  mounted() {
+    axios
+      .all([
+        this.getcategorias(),
+        this.getEmprendimientos(),
+        this.getServicios(),
+      ])
+      .then(() => {
+        this.loading = false;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
 };
 </script>
 
@@ -143,13 +270,10 @@ export default {
 .buscarPs {
   padding: 10px;
   width: 450px;
-
-
 }
 .Buscador {
-  width: 75%;
-  background-color: #ffce4e;
-  justify-content: center;
+  color: rgb(255, 206, 78);
+  cursor: pointer;
 }
 
 .buscar {
