@@ -24,7 +24,7 @@
                 v-for="item in categorias"
                 :key="item.id"
               >
-                <a class="buscador" @click="buscarPorCategoria(item)">{{
+                <a class="buscador" @click="buscarPorCategoria(item.id)">{{
                   item.nombre
                 }}</a>
               </li>
@@ -207,7 +207,15 @@ export default {
   props: {
     producto: {
       type: String,
-      required: true,
+      required: false,
+    },
+      tipoCategoria: {
+      type: String,
+      required: false,
+    },
+      categoria: {
+      type: Number,
+      required: false,
     },
   },
   data() {
@@ -225,10 +233,16 @@ export default {
     };
   },
   created() {
-    this.getPublicacionesPorNombre();
+    //this.getPublicacionesPorNombre();
     this.getcategorias();
     this.getEmprendimientos();
     this.getServicios();
+    if (this.tipoCategoria == "PRODUCTO"){
+        this.buscarPorCategoria(this.categoria)
+    }else{
+          this.getPublicacionesPorNombre();
+
+    }
   },
   computed: {
     rows() {
@@ -257,7 +271,6 @@ export default {
           titulo: this.producto,
         });
         this.productos = response.data.data;
-        console.log(this.productos);
         //this.getImporte(this.productos);
       } catch (err) {
         this.productos = "ATENCION NO SE PUDIERON OBTENER LAS NOVEDADES";
@@ -327,14 +340,14 @@ export default {
       this.loading = true;
       try {
         const response = await PublicacionService.getPublicacionesPorCategoria({
-          idCategoria: item.id,
+          idCategoria: item,
         });
         this.productos = response.data.data;
-        console.log(this.productos)
-        this.loading = response.data.error;
         //this.getImporte(this.productos);
       } catch (err) {
         this.productos = "ATENCION NO SE PUDIERON OBTENER LAS NOVEDADES";
+      }finally {
+        this.loading = false;
       }
     },
     async buscarPorEmprendimiento(item) {
@@ -371,7 +384,6 @@ export default {
       this.$refs["modalVerImagenes"].show();
     },
     verdetalles(producto) {
-      console.log(producto);
       this.descripcion=producto.descripcion
       this.$refs["modalVerProductos"].show();
     },

@@ -116,7 +116,6 @@ export default {
             return JSON.parse(state.grupos);
         },
         getUserId(state) {
-            console.log(JSON.parse(state.userId))
             return JSON.parse(state.userId);
         },
         

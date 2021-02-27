@@ -121,7 +121,6 @@ export default {
           idUsuario: this.getUserId,
         });       
         this.publicaciones = response.data.data;
-        console.log(this.publicaciones);
       } catch (err) {
         this.$bvToast.toast(
           `No se pudo obtener el listado de publicaciones, actualiza la pagina o vuelva a intentarlo`,
@@ -135,10 +134,8 @@ export default {
       }
     },
     eliminar(publicacion) {
-      console.log(publicacion);
       var opcion = confirm("Esta seguro que desea borrar la publicacion?");
       if (opcion) {
-        console.log("entro");
         this.eliminarPublicacion(publicacion);
       }
     },

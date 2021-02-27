@@ -59,7 +59,6 @@ export default {
           idPublicacion: this.idPublicacion,
         });
         this.imagenes = response.data.data;
-        console.log(this.imagenes)
       } catch (err) {
         this.imagenes = "ATENCION NO SE PUDIERON OBTENER LAS IMAGENES";
       }

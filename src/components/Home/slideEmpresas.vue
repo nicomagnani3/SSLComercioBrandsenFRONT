@@ -150,12 +150,12 @@
       }
       },
       methods:{
-          onSlideStart(slide) {
-      console.log(slide);
+          onSlideStart() {
+      
       this.sliding = true;
     },
-    onSlideEnd(slide) {
-      console.log(slide);
+    onSlideEnd() {
+  
       this.sliding = false;
     },
       }
