@@ -4,6 +4,7 @@
       
 
       <Slider />
+      <sliderPubli/>
       <b-container fluid class="subtitulo"> 
           <P>Malambo Aporta el 10% de los ingresos a Apad brandsen</P>
       </b-container>
@@ -27,6 +28,7 @@ import Sliderempresa from "@/components/Home/slideEmpresas.vue";
 import Publicidad from "@/components/Home/EspacioPublicidad.vue";
 import sliderServicios from "@/components/Home/sliderServicios.vue";
 import sliderEmprendimientos from "@/components/Home/sliderEmprendimientos.vue";
+import sliderPubli from "@/components/Home/sliderPubli.vue";
 
 
 
@@ -41,6 +43,9 @@ export default {
     Sliderempresa,
     Publicidad,
     sliderEmprendimientos,
+    sliderPubli,
+    
+  
     
     
     

@@ -51,7 +51,7 @@
     data() {
       return {
         slide: 0,
-        img1: 'portada1.jpg',
+        
        
      productos: [],
       sliding: null,

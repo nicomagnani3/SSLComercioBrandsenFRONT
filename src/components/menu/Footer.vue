@@ -33,7 +33,15 @@
         <a href=""> <img  class="icono" src="@/assets/logo-ig.png" alt=""> </a>
         <a href=""> <img  class="icono" src="@/assets/icono-face.png" alt=""> </a> 
     </b-col>
-    
+ 
+  </b-row>
+
+  <b-row class="big">
+      <b-col>
+          <p>Desarrollado por</p>
+          <a href=""> <img  class="logoBig" src="@/assets/bigdata.png" alt=""> </a> 
+      </b-col>
+
   </b-row>
   
 </b-container>
@@ -58,7 +66,7 @@ export default {
         
         height: auto;
         background-color: #ffce4e;
-        padding: 50px;
+        
     }
     
     .columna{
@@ -74,6 +82,17 @@ export default {
     .icono{
         width: 35px;
         margin: 5px;
+    }
+
+    .logoBig{
+
+        width:150px;
+        
+    }
+
+    .big{
+
+        text-align: center;
     }
     
 
