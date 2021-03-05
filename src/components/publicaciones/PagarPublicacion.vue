@@ -4,9 +4,10 @@
       <b-row class="pb-2">
         <b-col class="text-center pt-3">
           <br />
-          <p class="h3 text-center">Pagar publicaicon</p>
+          <p class="h3 text-center">Pagar publicacion</p>
           <strong
-            >Tu emprendimiento/ servicio se pagara con el contrato que contataste</strong
+            >Para que tu pago sea seguro integramos Mercado Pago en el
+            sistema</strong
           >
         </b-col>
       </b-row>
@@ -35,11 +36,29 @@
                             <div class="col-md-4 product-detail">
                               <h3>{{ this.publicacion.titulo }}</h3>
                               <div class="product-info">
-                                <div>     
-                             <hr>
+                                <div>
+                                  <div
+                                    v-if="
+                                      Number(this.publicacion.precio) >
+                                      Number(0)
+                                    "
+                                  >
+                                    <b>Precio: </b
+                                    >{{
+                                      this.getImporte(this.publicacion.precio)
+                                    }}
+                                  </div>
+                                  <!--   <b>Descripcion: </b
+                                  ><span id="product-description">{{
+                                    this.publicacion.observaciones
+                                  }}</span
+                                  ><br /> -->
                                   <b>Autor: </b>{{ username }}<br />
+                                  <b>Publicacion destacada: </b
+                                  >{{ this.esDestacada(this.publicacion.destacada) }}<br />
                                  
                                 </div>
+                             
                               </div>
                             </div>
                           </div>
@@ -83,16 +102,58 @@
                 >presione aqui para renovarlo</a
               ></b-alert
             >
-              <b-alert v-if="verificarCantPublicaciones()" show variant="danger"
-              >Atencion: Usted llego al limite de publicaciones, no podra realizar la
-              publicacion
+            <b-alert v-if="verificarCantPublicaciones()" show variant="danger"
+              >Atencion: Usted llego al limite de publicaciones, no podra
+              realizar la publicacion
               <a href="renovarContrato" class="alert-link"
                 >presione aqui para renovarlo y comprar nuevas publicaciones</a
               ></b-alert
-            > 
+            >
           </b-container>
         </b-card>
-      </div>    
+      </div>
+      <div v-else>
+        <!--payment-->
+        <b-card
+          v-if="finalizo"
+          border-variant="success"
+          header="Pagar y finalizar"
+          header-bg-variant="success"
+          header-text-variant="white"
+          align="center"
+        >
+          <section class="payment-form dark">
+            <div class="container_payment">
+              <div class="form-payment">
+                <div class="products">
+                  <h3 class="title">Obtuviste tu boton de pago</h3>
+                  <div class="item">
+                    <span class="price" id="summary-price"></span>
+                    <p class="item-name">
+                      Presiona el boton "pagar" para pagar la publicacion<strong>
+                        {{ this.publicacion.titulo }}</strong
+                      >, cuando finalizes el pago tu publicacion se cargara en
+                      Malambo<span id="summary-quantity"></span>
+                    </p>
+                  </div>
+                  <br />
+                  <div class="total">
+                    Total :${{ this.ponerPrecio(this.publicacion.destacada)
+                    }}<span class="price" id="summary-total"></span>
+                  </div>
+                </div>
+                <div class="payment-details">
+                  <div class="form-group col-sm-12">
+                    <br />
+                    <div id="button-checkout"></div>
+                    <br />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </b-card>
+      </div>
     </div>
   </b-container>
 </template> 
@@ -102,10 +163,7 @@ import { mapState } from "vuex";
 
 export default {
   name: "PagarEmprendimiento",
-  props: {
-    destacada: {
-      type: Boolean,
-    },
+  props: {  
     imagen: {
       type: Array,
     },
@@ -118,12 +176,16 @@ export default {
     finalizo: {
       type: Boolean,
     },
-     contrato: {
+    contrato: {
+      type: Array,
+    },
+    preciosPublicacion: {
       type: Array,
     },
   },
   data() {
     return {
+      
       fields: [
         { key: "desde", label: "Fecha Inicio", class: "text-center p2" },
         { key: "hasta", label: "Fecha Vencimiento", class: "text-left p2" },
@@ -146,33 +208,33 @@ export default {
   },
   methods: {
     esDestacada(destacada) {
+      console.log(this.publicacion.destacada)
       return destacada == true ? "SI" : "NO";
     },
     ponerPrecio(destacada) {
-      return destacada == true ? "700" : "500";
+      return destacada ?  this.preciosPublicacion[1].precio : this.preciosPublicacion[0].precio;
     },
     getImporte(precio) {
       const options2 = { style: "currency", currency: "USD" };
       const numberFormat2 = new Intl.NumberFormat("en-US", options2);
       return numberFormat2.format(precio);
     },
-    verificarVencimiento(){
+    verificarVencimiento() {
       var fechaHoy = new Date();
       fechaHoy.setHours(0, 0, 0, 0);
       var fechaContrato = new Date(this.contrato[0].hasta);
-        fechaContrato.setHours(0, 0, 0, 0);       
-      return fechaHoy.getTime() > fechaContrato.getTime()     
+      fechaContrato.setHours(0, 0, 0, 0);
+      return fechaHoy.getTime() > fechaContrato.getTime();
     },
-    verificarCantPublicaciones(){
-      if (this.publicacion.destacada){
-          return this.contrato[0].cantDestacada <= 0
-      }else{
-        this.contrato[0].cantnormal <= 0
+    verificarCantPublicaciones() {
+      if (this.publicacion.destacada) {
+        return this.contrato[0].cantDestacada <= 0;
+      } else {
+        this.contrato[0].cantnormal <= 0;
       }
-    }
+    },
   },
-  mounted() {
-  },
+  mounted() {},
 };
 </script>
 

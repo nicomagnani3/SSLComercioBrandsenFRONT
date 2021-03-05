@@ -40,4 +40,8 @@ export default {
     setPagoPublicacion(credentials) {    
         return Api().get(API_URL + API_USER + "set_pago_publicacion_producto/"+ credentials.publicacion)
     },
+    getPreciosPublicaciones(credentials) {    
+        return Api().get(API_URL + API_USER + "get_precios_publicaciones", credentials)
+    },
+    
 }

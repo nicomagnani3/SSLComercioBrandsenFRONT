@@ -24,6 +24,7 @@ import container from '@/components/menu/Container.vue'
 import home from '@/components/Home/Home.vue'
 
 import CrearPublicacion from '@/components/publicaciones/CrearPublicacion.vue'
+import CrearContrato from '@/components/contratos/CrearContrato.vue'
 
 
 Vue.use(Router)
@@ -82,8 +83,16 @@ const router = new Router({
         props: true,    
         meta: {
           requireAuth: false
-        },        
-          
+        }, 
+      },
+        {     
+        path: '/crearContrato/publicacion:publicacion',
+        name: 'crearContrato',
+        component: CrearContrato,   
+        props: true,    
+        meta: {
+          requireAuth: false
+        },  
        },
        {
         path: '/renovarContrato',

@@ -1,6 +1,6 @@
 <template>
   <div>
-      <h3 class="m-5 titulo">Los mejores negocios te esperan </h3>
+      <h3 class="m-5 titulo text-center">Los mejores negocios te esperan </h3>
      <b-container class="contenedorPubli mb-5">   
         <b-row >  
             <b-col  > 

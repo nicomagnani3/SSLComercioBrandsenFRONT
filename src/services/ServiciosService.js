@@ -14,9 +14,7 @@ export default {
     addServicio(credentials) {
         return Api().post(API_URL + API_USER + "nuevo_servicio", credentials)
     },  
-    getProductos(credentials) {    
-        return Api().get(API_URL + API_USER + "get_publicaciones", credentials)
-    },
+ 
     getPublicacionServicios(credentials) {    
         return Api().get(API_URL + API_USER + "get_publicaciones_servicios", credentials)
     },

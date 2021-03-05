@@ -12,8 +12,8 @@
       subtitle="Elegi lo que quieras publicar en unos simples pasos"
       back-button-text="Volver!"
       next-button-text="Siguiente!"
-      finish-button-text="Finalizar"
-       color="#000000"
+      :finish-button-text="this.valorBotonFinalizar"
+      color="#000000"
       step-size="lg"
       error-color="#dc3545"
     >
@@ -64,7 +64,9 @@
       >
         <DetallePublicacion
           ref="detallePublicacion"
+          :contrato="this.contrato"
           :publicacion="this.publicacion"
+          :preciosPublicacion="this.preciosPublicacion"
         ></DetallePublicacion>
       </tab-content>
       <tab-content title="Imagenes" :before-change="validarImagenes">
@@ -75,14 +77,15 @@
         >
         </ImagenesCarga>
       </tab-content>
-      <tab-content title="Pagar la publicacion" >
-        <PagarEmprendimiento         
+      <tab-content title="Pagar la publicacion">
+        <PagarPublicacion
           :publicacion="this.publicacion"
-          :destacada="this.publicacion.destacada"
           :imagen="this.imgPrimera"
           :finalizo="this.presionoFinalizar"
+          :contrato="this.contrato"
+          :preciosPublicacion="this.preciosPublicacion"
         >
-        </PagarEmprendimiento>
+        </PagarPublicacion>
       </tab-content>
     </form-wizard>
   </div>
@@ -90,14 +93,15 @@
 
 <script>
 import PublicacionService from "@/services/PublicacionService";
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import axios from "axios";
 import CategoriasService from "@/services/CategoriasService";
 import ListarCategorias from "@/components/categorias/ListarCategorias.vue";
 import ListarCategoriasHijas from "@/components/categorias/ListarCategoriasHijas.vue";
 import ImagenesCarga from "@/components/imagenes/ImagenesCarga.vue";
-import PagarEmprendimiento from "@/components/emprendimientos/PagarEmprendimiento.vue";
+import PagarPublicacion from "@/components/publicaciones/PagarPublicacion.vue";
 import MercadoPago from "@/services/MercadoPago";
+import Contratos from "@/services/ContratosService";
 
 import DetallePublicacion from "@/components/publicaciones/DetallePublicacion.vue";
 export default {
@@ -107,7 +111,7 @@ export default {
     ListarCategoriasHijas,
     ImagenesCarga,
     DetallePublicacion,
-    PagarEmprendimiento,
+    PagarPublicacion,
   },
   data() {
     return {
@@ -121,20 +125,27 @@ export default {
       loading: true,
       publicacion: [],
       alerts: [],
+      valorBotonFinalizar: "Obtener boton de pago!",
+      contrato: [],
       montoEntregaInvalido: false,
       imagenes: [],
-      imgPrimera: [   {
+      preciosPublicacion: [],
+      tieneContrato: false,
+      imgPrimera: [
+        {
           id: 0,
-        url: 'https://i.pinimg.com/originals/ad/53/64/ad53643d33b99130bc99e04d19857e39.png',
-        file: null,
-        tipo: null,
-        loadingImg: false,
-        estado: 1,
-        key: 0,
-        obligatorio: true,
-        base64: "",
-        primera: false,
-        }],
+          url:
+            "https://i.pinimg.com/originals/ad/53/64/ad53643d33b99130bc99e04d19857e39.png",
+          file: null,
+          tipo: null,
+          loadingImg: false,
+          estado: 1,
+          key: 0,
+          obligatorio: true,
+          base64: "",
+          primera: false,
+        },
+      ],
       creando: false,
     };
   },
@@ -149,9 +160,10 @@ export default {
     }
   },
   computed: {
+    ...mapState("storeUser", ["grupos"]),
     ...mapGetters("storeUser", ["getUserId"]),
   },
-  methods: {  
+  methods: {
     async validarImagenes() {
       let result = await this.$refs.altaImagenes.validate();
       return result;
@@ -197,8 +209,23 @@ export default {
           destacada: this.publicacion.destacada,
         });
         if (response.data.error == false) {
-          this.validarPagoMercadoPago(response.data.data);
-        }       
+          if (this.tieneContrato) {
+            this.$root.$bvToast.toast(
+              "Se creo con exito la publicacion, gracias por confiar en MALAMBO",
+              {
+                title: "Atencion!",
+                toaster: "b-toaster-top-center",
+                solid: true,
+                variant: "success",
+              }
+            );
+            this.$router.push({
+              name: "Home",
+            });
+          } else {
+            this.validarPagoMercadoPago(response.data.data);
+          }
+        }
       } catch (error) {
         error.response.data.data.forEach((data) => {
           this.$bvToast.toast(`No se pudo crear la publicacion`, {
@@ -211,13 +238,15 @@ export default {
       }
     },
     async validarPagoMercadoPago(idPublicacion) {
-      let precioPublicacion = this.publicacion.destacada ? 700 : 500;
+      let precioPublicacion = this.publicacion.destacada
+        ? this.preciosPublicacion[1].precio
+        : this.preciosPublicacion[0].precio;
       const response = await MercadoPago.crearPreferencia({
         titulo: this.publicacion.titulo,
         precioPublicacion: precioPublicacion,
         idPublicacion: idPublicacion,
         descripcion: this.publicacion.observaciones,
-        tipo:"PUBLICACION"
+        tipo: "PUBLICACION",
       });
       this.createCheckoutButton(response.data.id);
     },
@@ -288,13 +317,108 @@ export default {
       }
       return result;
     },
-    actualizarMontoEntrega() {
-      this.montoEntregaInvalido = false;
+    async getContratosUser() {
+      console.log(this.contrato);
+      if (this.grupos == "COMERCIO" || this.grupos == "EMPRESA") {
+        try {
+          const response = await Contratos.getContratosUser({
+            user: this.getUserId,
+          });
+          this.contrato = response.data.data;
+          if (response.data.error == false && response.data.data.length > 0) {
+            this.tieneContrato = true;
+            //this.verTipoPublicacion();
+            this.valorBotonFinalizar = "Finalizar";
+            this.verificarContrato();
+          } else {
+            this.$root.$bvToast.toast(
+              "No tenes ningun contrato disponible para publicar, te recomendamos crear uno o renovar el anterior",
+              {
+                title: "Atencion!",
+                toaster: "b-toaster-top-center",
+                solid: true,
+                variant: "danger",
+              }
+            );
+            this.$router.push({
+              name: "renovarContrato",
+            });
+          }
+        } catch (err) {
+          this.$bvToast.toast(err.response.data.message, {
+            title: "Atencion!",
+            toaster: "b-toaster-top-center",
+            solid: true,
+            variant: "danger",
+          });
+        }
+      }
+    },
+    verificarContrato() {
+      var fechaHoy = new Date();
+      fechaHoy.setHours(0, 0, 0, 0);
+      var fechaContrato = new Date(this.contrato[0].hasta);
+      console.log(fechaHoy >= fechaContrato);
+      fechaContrato.setHours(0, 0, 0, 0);
+      if (fechaHoy <= fechaContrato) {
+        if (
+          this.contrato[0].cantDestacada <= 0 &&
+          this.contrato[0].cantnormal <= 0
+        ) {
+          this.$root.$bvToast.toast(
+            "No dispones de publicaciones para publicar el producto,volve a renovar el contrato aca!",
+            {
+              title: "Atencion!",
+              toaster: "b-toaster-top-center",
+              solid: true,
+              variant: "danger",
+            }
+          );
+          this.$router.push({
+            name: "renovarContrato",
+          });
+        }
+      } else {
+        this.$root.$bvToast.toast(
+          "La fecha de el contrato se vencio, volve a renovarlo para publicar en MALAMBO",
+          {
+            title: "Atencion!",
+            toaster: "b-toaster-top-center",
+            solid: true,
+            variant: "danger",
+          }
+        );
+        this.$router.push({
+          name: "renovarContrato",
+        });
+      }
+    },
+    async getPreciosPublicaciones() {
+      try {
+        const response = await PublicacionService.getPreciosPublicaciones();
+        this.preciosPublicacion = response.data.data;
+      } catch (err) {
+        this.$root.$bvToast.toast(
+          "No estamos encontrando los precios de la publiccaion, de mientras podes ver los productos publicados en MALAMBO ;)",
+          {
+            title: "Atencion!",
+            toaster: "b-toaster-top-center",
+            solid: true,
+            variant: "danger",
+          }
+        );
+        this.$router.push("/");
+      }
     },
   },
   mounted() {
     axios
-      .all([this.getcategorias(), this.getcategoriasHijas()])
+      .all([
+        this.getcategorias(),
+        this.getcategoriasHijas(),
+        this.getContratosUser(),
+        this.getPreciosPublicaciones(),
+      ])
       .then(() => {
         this.loading = false;
       })

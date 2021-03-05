@@ -202,6 +202,20 @@
           ></b-form-input>
         </b-input-group>
         <br />
+          
+        <b-input-group size="lg">
+          <b-input-group-prepend is-text>
+            <b-icon icon="link"></b-icon>
+          </b-input-group-prepend>
+          <b-form-input
+            id="web"
+            size="lg"
+            v-model="empresa.web"
+            placeholder="URL de tu web"
+            class="line"
+          ></b-form-input>
+        </b-input-group>
+        <br />
         <b-input-group size="lg">
           <b-input-group-prepend is-text>
             <b-icon icon="lock-fill"></b-icon>
@@ -281,6 +295,7 @@ export default {
         password: "",
         password_confirmation: "",
         celular: null,
+        web:""
       },
       contraseñaIncorrecta: false,
       registrando: false,
@@ -374,7 +389,7 @@ export default {
             email: this.empresa.emailEmpresa,
             password: this.empresa.password,
             celular: this.empresa.celular,
-
+            web:this.empresa.web,
             grupo: this.value,
           });
           if (response.data.error == true) {

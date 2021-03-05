@@ -72,7 +72,17 @@
               >Servicio</b-dropdown-item
             >
           </b-nav-item-dropdown>
-          <b-nav-item :to="{ name: 'renovarContrato' }">Contratos</b-nav-item>
+          <b-nav-item-dropdown v-if="hasPermisos('MIS_CONTRATOS')"  :to="{ name: 'renovarContrato' }">
+            <template slot="button-content">
+              <span class="light">Contrato</span>
+            </template>
+            <b-dropdown-item
+              :to="{ name: 'renovarContrato' }"
+              v-if="hasPermisos('VER_CONTRATO')"
+              >Ver</b-dropdown-item
+            >
+                  
+          </b-nav-item-dropdown>
           <b-nav-item
             :to="{ name: 'misproductos' }"
             v-if="hasPermisos('MIS_PRODUCTOS')"

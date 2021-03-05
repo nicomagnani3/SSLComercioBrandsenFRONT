@@ -85,8 +85,8 @@
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
 import PublicacionService from "@/services/PublicacionService";
+import { mapGetters, mapState } from "vuex";
 
 export default {
   components: {},
@@ -107,6 +107,7 @@ export default {
     };
   },
   computed: {
+      ...mapState("storeUser", ["grupos"]),
     ...mapGetters("storeUser", ["getUserId", "getGrupos"]),
   },
   mounted() {
@@ -134,6 +135,7 @@ export default {
       }
     },
     eliminar(publicacion) {
+      console.log(this.grupos)
       var opcion = confirm("Esta seguro que desea borrar la publicacion?");
       if (opcion) {
         this.eliminarPublicacion(publicacion);
@@ -143,8 +145,11 @@ export default {
         this.loading=true
         try {
         const response = await PublicacionService.eliminarPublicacion({
+          grupo:this.grupos,
+           idUsuario: this.getUserId,
           idPublicacion: publicacion.id,
-          tipo:publicacion.tipo
+          tipo:publicacion.tipo,
+          destacada:publicacion.destacada
         });
         if ( response.data.error == false){
            this.misPublicaciones()
