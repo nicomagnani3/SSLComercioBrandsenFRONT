@@ -8,6 +8,15 @@
         </div>
       </b-col>
     </b-row>
+     <div v-if="loading" class="text-center">
+      <b-spinner
+        style="width: 3rem; height: 3rem"
+        variant="warning"
+        label="Text Centered"
+      >
+      </b-spinner>
+    </div>
+    <div v-else>
     <slider ref="slider" :options="options">
       <slideritem
         v-for="(producto, index) in productos"
@@ -35,6 +44,7 @@
         <b-spinner variant="primary" label="Text Centered"></b-spinner>
       </div>
     </slider>
+    </div>
   </b-container>
 </template>
 
@@ -48,6 +58,7 @@ export default {
   data() {
     return {
       productos: [],
+          loading: true,
       options: {
         currentPage: 0,
         thresholdDistance: 100,
@@ -82,20 +93,14 @@ export default {
     async getPorductos() {
       try {
         const response = await ServiciosService.getPublicacionServicios();
-        this.productos = response.data.data;
-        this.productos = this.productos.filter((c) => c.destacado == true);
-        this.getImporte(this.productos);
+          if (response.data.error == false) {
+          this.productos = response.data.data;
+          //this.getImporte(this.productos);
+        }     
       } catch (err) {
         this.categorias = "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS";
       }
-    },
-    getImporte(productos) {
-      productos.forEach((producto) => {
-        const options2 = { style: "currency", currency: "USD" };
-        const numberFormat2 = new Intl.NumberFormat("en-US", options2);
-        producto.precio = numberFormat2.format(producto.precio);
-      });
-    },
+    },    
     tituloAjustar(titulo) {
      return this.primerMayuscula(titulo.toLowerCase());
       

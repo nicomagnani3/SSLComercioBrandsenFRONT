@@ -1,7 +1,11 @@
 <template>
-  <div class="text-center" v-if="loading">
-    <span class="text-danger"> <b> Cargando</b></span>
-    <b-spinner variant="primary" label="Text Centered"></b-spinner>
+  <div v-if="loading" class="text-center">
+    <b-spinner
+      style="width: 3rem; height: 3rem"
+      variant="warning"
+      label="Text Centered"
+    >
+    </b-spinner>
   </div>
   <div v-else>
     <b-navbar toggleable="lg" type="light" class="nav">
@@ -72,7 +76,10 @@
               >Servicio</b-dropdown-item
             >
           </b-nav-item-dropdown>
-          <b-nav-item-dropdown v-if="hasPermisos('MIS_CONTRATOS')"  :to="{ name: 'renovarContrato' }">
+          <b-nav-item-dropdown
+            v-if="hasPermisos('MIS_CONTRATOS')"
+            :to="{ name: 'renovarContrato' }"
+          >
             <template slot="button-content">
               <span class="light">Contrato</span>
             </template>
@@ -81,7 +88,6 @@
               v-if="hasPermisos('VER_CONTRATO')"
               >Ver</b-dropdown-item
             >
-                  
           </b-nav-item-dropdown>
           <b-nav-item
             :to="{ name: 'misproductos' }"
@@ -90,7 +96,23 @@
           >
         </b-navbar-nav>
 
-        <b-navbar-nav>
+        <div class="input-group">
+          <b-form-input
+            class="form-control form-text"
+            type="text"
+            size="15"
+            maxlength="128"
+            @keyup.enter="buscarProducto(filterPrev)"
+            v-model="filterPrev"
+            placeholder="Buscar "
+          ></b-form-input>
+
+          <b-button size="sm" @click="buscarProducto(filterPrev)"
+            ><b-icon icon="search"></b-icon
+          ></b-button>
+        </div>
+
+        <!--     
           <b-col class="buscarPs">
             <b-form-group class="mb-0">
               <b-input-group>
@@ -107,8 +129,7 @@
                 </b-input-group-append>
               </b-input-group>
             </b-form-group>
-          </b-col>
-        </b-navbar-nav>
+          </b-col> -->
 
         <!-- Right aligned nav items -->
         <b-navbar-nav class="">
@@ -173,11 +194,8 @@ export default {
     ...mapGetters("storeUser", ["hasPermisos", "getGrupos", "getUserId"]),
   },
   methods: {
-  
-
     buscarProducto(producto) {
       const path = `/buscarProductos/${producto}`;
-      console.log(this.$route.path);
       if (this.$route.path !== path)
         this.$router.push({
           name: "buscarProductos",
@@ -236,7 +254,6 @@ export default {
     },
 
     buscarProductoporCategoria(categoria) {
-
       const path = `/buscarProductos/${categoria.nombre}`;
       if (this.$route.path !== path)
         this.$router.push({
@@ -277,21 +294,9 @@ export default {
 </script>
 
 <style scoped>
-.buscarPs {
-  padding: 10px;
-  width: 450px;
-}
 .Buscador {
   color: rgb(255, 206, 78);
   cursor: pointer;
-}
-
-.buscar {
-  width: 39%;
-  height: 64%;
-  border: 1px solid rgb(212, 40, 40);
-  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
-  margin: 5px;
 }
 
 .nav {

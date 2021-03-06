@@ -1,9 +1,12 @@
 <template>
-  <div v-if="loading" class="text-center">
-    <span class="text-danger">
-      <b>Cargando</b>
-    </span>
-    <b-spinner variant="primary" label="Text Centered"></b-spinner>
+    <div v-if="loading" class="text-center">
+    <br /><br />    <br /><br />
+    <b-spinner
+      style="width: 11rem; height: 11rem"
+      variant="warning"
+      label="Text Centered"
+    >
+    </b-spinner>
   </div>
   <div v-else>
     <form-wizard
@@ -318,7 +321,6 @@ export default {
       return result;
     },
     async getContratosUser() {
-      console.log(this.contrato);
       if (this.grupos == "COMERCIO" || this.grupos == "EMPRESA") {
         try {
           const response = await Contratos.getContratosUser({
@@ -358,7 +360,6 @@ export default {
       var fechaHoy = new Date();
       fechaHoy.setHours(0, 0, 0, 0);
       var fechaContrato = new Date(this.contrato[0].hasta);
-      console.log(fechaHoy >= fechaContrato);
       fechaContrato.setHours(0, 0, 0, 0);
       if (fechaHoy <= fechaContrato) {
         if (

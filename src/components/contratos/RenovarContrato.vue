@@ -1,18 +1,14 @@
 <template>
   <b-container>
     <div v-if="loading" class="text-center">
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <span class="text-danger">
-        <b>Cargando</b>
-      </span>
-      <b-spinner variant="primary" label="Text Centered"></b-spinner>
-    </div>
+    <br /><br />    <br /><br />
+    <b-spinner
+      style="width: 11rem; height: 11rem"
+      variant="warning"
+      label="Text Centered"
+    >
+    </b-spinner>
+  </div>
     <div v-else>
       <b-row class="pb-2">
         <b-col class="text-center pt-3">
@@ -185,7 +181,6 @@ export default {
   methods: {
     pagarPaquete() {
       this.presionoBtnPagar = true;
-      console.log(this.selectedpaquete);
       if (this.getUserId == null) {
         this.$router.push({
           name: "login",
@@ -200,7 +195,6 @@ export default {
       }
     },
     async crearPaquete() {
-      console.log("fin");     
       this.presionoCrear = true;
       try {
         const response = await Contratos.addContrato({
@@ -213,7 +207,6 @@ export default {
           cantdestacadas:
             Number(this.selectedpaquete[0].cantDestacada)           
         });
-        console.log(response.data);
          if (response.data.error == false) {
           this.validarPagoMercadoPago(response.data.data)
         } 
@@ -229,10 +222,7 @@ export default {
         });
       }
     },
-     async validarPagoMercadoPago(idPublicacion){     
-       console.log(this.selectedpaquete[0].nombre)  
-       console.log(Math.trunc(this.selectedpaquete[0].precio))
-       console.log(idPublicacion)
+     async validarPagoMercadoPago(idPublicacion){   
         const response = await MercadoPago.crearContrato({
           titulo:this.selectedpaquete[0].nombre,
           precioPublicacion:Math.trunc( this.selectedpaquete[0].precio),
@@ -258,7 +248,6 @@ export default {
     onRowSelected(items) {
       this.presionoCrear = false;
       this.presionoBtnPagar = false;
-      console.log(items);
       this.selectedpaquete = items;
     },
     getImporte(importe) {
@@ -271,7 +260,6 @@ export default {
       try {
         const response = await Contratos.getPaquetes({});
         this.planes = response.data.data;
-        console.log(this.planes);
         if (response.data.error == false) {
           if (this.grupos == "COMERCIO" || this.grupos == "EMPRESA") {
             this.planes = this.planes.filter((c) => c.tipo == 1);
@@ -279,7 +267,6 @@ export default {
             this.planes = this.planes.filter((c) => c.tipo == 2);
           }
         }
-        console.log(this.grupos);
       } catch (err) {
         this.$bvToast.toast(err.response.data.message, {
           title: "Atencion!",

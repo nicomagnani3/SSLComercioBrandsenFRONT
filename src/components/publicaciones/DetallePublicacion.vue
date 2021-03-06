@@ -215,7 +215,6 @@ export default {
   },
   computed: {
     fpreciosPublicaciones() {
-      console.log(this.preciosPublicacion);
       let mc = this.preciosPublicacion.map((e) => ({
         value: e.id,
         text: e.nombre + ":  $" + " " + e.precio,

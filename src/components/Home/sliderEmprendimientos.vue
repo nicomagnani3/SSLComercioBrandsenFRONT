@@ -1,9 +1,4 @@
 <template>
-  <div class="text-center" v-if="loading">
-    <span class="text-danger"> <b> Cargando</b></span>
-    <b-spinner variant="primary" label="Text Centered"></b-spinner>
-  </div>
-  <div v-else>
   <b-container>
     <b-row class="pb-3">
       <b-col lg="2" sm="4" class="text-center"></b-col>
@@ -13,6 +8,15 @@
         </div>
       </b-col>
     </b-row>
+     <div v-if="loading" class="text-center">
+      <b-spinner
+        style="width: 3rem; height: 3rem"
+        variant="warning"
+        label="Text Centered"
+      >
+      </b-spinner>
+    </div>
+    <div v-else>
     <slider ref="slider" :options="options">
       <slideritem
         v-for="(producto, index) in productos"
@@ -38,8 +42,8 @@
         <b-spinner variant="primary" label="Text Centered"></b-spinner>
       </div>
     </slider>
+    </div>
   </b-container>
-  </div>
 </template>
 
 
@@ -51,7 +55,7 @@ export default {
   name: "SlideEmprendimietnos",
   data() {
     return {
-      loading :false,
+      loading :true,
       productos: [],
       options: {
         currentPage: 0,
@@ -85,24 +89,15 @@ export default {
     },
     async getPorductos() {
       try {
-        const response = await EmprendimientoService.getPublicacionEmprendimientos();
-      
-        this.productos = response.data.data;
-        this.productos = this.productos.filter(
-        (c) => c.destacado == true
-      );
-        this.getImporte(this.productos);
+        const response = await EmprendimientoService.getPublicacionEmprendimientos();   
+        if (response.data.error == false) {
+           this.productos = response.data.data;
+        }        
       } catch (err) {
-        this.categorias = "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS";
+        this.loading = true;
+        this.productos = "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS";
       }
-    },
-    getImporte(productos) {
-      productos.forEach((producto) => {
-        const options2 = { style: "currency", currency: "USD" };
-        const numberFormat2 = new Intl.NumberFormat("en-US", options2);
-        producto.precio = numberFormat2.format(producto.precio);
-      });
-    },
+    },  
     tituloAjustar(titulo) {
       titulo = this.primerMayuscula(titulo.toLowerCase());
       return titulo

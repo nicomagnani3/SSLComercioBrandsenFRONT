@@ -1,22 +1,24 @@
 <template>
   <div v-if="loading" class="text-center">
-    <br />
-    <br />
-    <span class="text-danger">
-      <b>Cargando</b>
-    </span>
-    <b-spinner variant="primary" label="Text Centered"></b-spinner>
+    <br /><br />
+    <b-spinner
+      style="width: 11rem; height: 11rem"
+      variant="warning"
+      label="Text Centered"
+    >
+    </b-spinner>
   </div>
   <div v-else class="body">
     <b-container fluid class="bv-example-row">
-      <b-row align-h="start">
-        <b-col md="4">
+      <b-row class="text-center">
+     
+          <b-col class="d-none d-sm-none d-md-block" >
           <br />
           <H1>{{ producto }}</H1>
           <strong>Resultados: {{ this.cantidadProductos() }}</strong>
           <br />
           <br />
-          <b-col col lg="5">
+       
             <h4>Productos</h4>
             <ul class="list-group">
               <li
@@ -29,8 +31,7 @@
                 }}</a>
               </li>
             </ul>
-          </b-col>
-          <b-col col lg="5">
+        
             <br />
             <h4>Servicios</h4>
             <div>
@@ -46,24 +47,10 @@
                 </li>
               </ul>
             </div>
-          </b-col>
+         
         </b-col>
 
-        <b-col>
-          <div v-if="productos.length == 0">
-            <br /><br /><br /><br /><br />
-            <b-alert show variant="success">
-              <h4 class="alert-heading">
-                <b-icon scale="1.5" icon="search" variant="info"></b-icon> No
-                hay publicaciones que coincidan con tu búsqueda.!
-              </h4>
-              <p>
-                *Revisá la ortografía de la palabra.<br />
-                *Utilizá palabras más genéricas o menos palabras.<br />
-                *Navegá por las categorías para encontrar un producto similar
-              </p>
-            </b-alert>
-          </div>
+        <b-col cols="6">         
           <br />
           <transition
             v-for="producto in productos"
@@ -93,16 +80,19 @@
                           Destacado</span
                         >
                       </h3>
-                       <strong>{{ producto.padre }}</strong>
-                       <br><hr>
-                        <h4 v-if="Number(producto.precio) > Number(0)">
+                      <strong>{{ producto.padre }}</strong>
+                      <br />
+                      <hr />
+                      <h4 v-if="Number(producto.precio) > Number(0)">
                         Precio: {{ getImporte(producto.precio) }}
                       </h4>
                       <h5>
                         Fecha de publicacion: {{ producto.fecha | formatDate }}
                       </h5>
-                     
-                       <p v-if="producto.telefono != null">Telefono: {{ producto.telefono }}</p>
+
+                      <p v-if="producto.telefono != null">
+                        Telefono: {{ producto.telefono }}
+                      </p>
                       <a
                         :href="
                           'https://api.whatsapp.com/send?text=Hola!%20,desde%20Malambo%20observe%20la%20publicacion%20' +
@@ -127,7 +117,7 @@
                         ><b-icon icon="images"></b-icon
                       ></b-button>
                       <b-button
-                      v-if="producto.descripcion != 'SN'"
+                        v-if="producto.descripcion != 'SN'"
                         style="margin: 11px"
                         variant="outline-primary"
                         @click="verdetalles(producto)"
@@ -139,8 +129,22 @@
               </b-card>
             </div>
           </transition>
+           <div v-if="(this.productos.length == 0) && (this.loading == false)">
+            <br /><br />
+            <b-alert show variant="success">
+              <h4 class="alert-heading">
+                <b-icon scale="1.5" icon="search" variant="info"></b-icon> No
+                hay publicaciones que coincidan con tu búsqueda.!
+              </h4>
+              <p>
+                *Revisá la ortografía de la palabra.<br />
+                *Utilizá palabras más genéricas o menos palabras.<br />
+                *Navegá por las categorías para encontrar un producto similar
+              </p>
+            </b-alert>
+          </div>
         </b-col>
-        <b-col col lg="2">
+        <b-col class="d-none d-sm-none d-md-block" >
           <br />
           <h4>Emprendimientos</h4>
           <div>
@@ -174,19 +178,16 @@
         </b-modal>
       </div>
       <div>
-           
         <b-modal
-        title="Descripcion del producto"          
-         id="modal-xl" 
-         centered 
+          title="Descripcion del producto"
+          id="modal-xl"
+          centered
           ref="modalVerProductos"
           hide-footer
-        >   
-        <p>{{descripcion}}</p>
-                      
+        >
+          <p>{{ descripcion }}</p>
         </b-modal>
       </div>
-      
     </b-container>
   </div>
 </template>
@@ -209,11 +210,11 @@ export default {
       type: String,
       required: false,
     },
-      tipoCategoria: {
+    tipoCategoria: {
       type: String,
       required: false,
     },
-      categoria: {
+    categoria: {
       type: Number,
       required: false,
     },
@@ -221,7 +222,7 @@ export default {
   data() {
     return {
       verImagen: false,
-      descripcion:"",
+      descripcion: "",
       perPage: 2,
       currentPage: 1,
       productos: [],
@@ -237,11 +238,10 @@ export default {
     this.getcategorias();
     this.getEmprendimientos();
     this.getServicios();
-    if (this.tipoCategoria == "PRODUCTO"){
-        this.buscarPorCategoria(this.categoria)
-    }else{
-          this.getPublicacionesPorNombre();
-
+    if (this.tipoCategoria == "PRODUCTO") {
+      this.buscarPorCategoria(this.categoria);
+    } else {
+      this.getPublicacionesPorNombre();
     }
   },
   computed: {
@@ -270,7 +270,10 @@ export default {
         const response = await PublicacionService.getPublicacionesPorNombre({
           titulo: this.producto,
         });
-        this.productos = response.data.data;
+        if (response.data.error == false) {
+          this.productos = response.data.data;
+        }
+
         //this.getImporte(this.productos);
       } catch (err) {
         this.productos = "ATENCION NO SE PUDIERON OBTENER LAS NOVEDADES";
@@ -283,8 +286,10 @@ export default {
       this.loading = true;
       try {
         const response = await CategoriasService.getCategorias();
-        this.categorias = response.data.data;
-        this.categorias = this.ordenarDatos(this.categorias);
+        if (response.data.error == false) {
+          this.categorias = response.data.data;
+          this.categorias = this.ordenarDatos(this.categorias);
+        }
       } catch (err) {
         this.categorias = "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS";
       } finally {
@@ -295,8 +300,10 @@ export default {
       this.loading = true;
       try {
         const response = await EmprendimientoService.getEmprendimientos();
-        this.emprendimientos = response.data.data;
-        this.emprendimientos = this.ordenarDatos(this.emprendimientos);
+        if (response.data.error == false) {
+          this.emprendimientos = response.data.data;
+          this.emprendimientos = this.ordenarDatos(this.emprendimientos);
+        }
       } catch (err) {
         this.emprendimientos =
           "ATENCION NO SE PUDIERON OBTENER LOS emprendimientos";
@@ -308,19 +315,20 @@ export default {
       this.loading = true;
       try {
         const response = await ServiciosService.getServicios();
-        this.servicios = response.data.data;
-        this.servicios = this.ordenarDatos(this.servicios);
+        if (response.data.error == false) {
+          this.servicios = response.data.data;
+          this.servicios = this.ordenarDatos(this.servicios);
+        }
       } catch (err) {
         this.servicios = "ATENCION NO SE PUDIERON OBTENER LOS servicios";
       } finally {
         this.loading = false;
       }
     },
-    getImporte(precio) {     
-        const options2 = { style: "currency", currency: "USD" };
-        const numberFormat2 = new Intl.NumberFormat("en-US", options2);
-        return numberFormat2.format(precio);
-      
+    getImporte(precio) {
+      const options2 = { style: "currency", currency: "USD" };
+      const numberFormat2 = new Intl.NumberFormat("en-US", options2);
+      return numberFormat2.format(precio);
     },
     cantidadProductos() {
       return this.productos.length;
@@ -342,11 +350,14 @@ export default {
         const response = await PublicacionService.getPublicacionesPorCategoria({
           idCategoria: item,
         });
-        this.productos = response.data.data;
+        if (response.data.error == false) {
+          this.productos = response.data.data;
+        }
+
         //this.getImporte(this.productos);
       } catch (err) {
         this.productos = "ATENCION NO SE PUDIERON OBTENER LAS NOVEDADES";
-      }finally {
+      } finally {
         this.loading = false;
       }
     },
@@ -358,8 +369,11 @@ export default {
             idEmprendimiento: item.id,
           }
         );
-        this.productos = response.data.data;
-        this.loading = response.data.error;
+        if (response.data.error == false) {
+          this.productos = response.data.data;
+          this.loading = response.data.error;
+        }
+
         //this.getImporte(this.productos);
       } catch (err) {
         this.productos = "ATENCION NO SE PUDIERON OBTENER LAS NOVEDADES";
@@ -371,8 +385,11 @@ export default {
         const response = await ServiciosService.searchPublicacionesPorServicio({
           id: item.id,
         });
-        this.productos = response.data.data;
-        this.loading = response.data.error;
+        if (response.data.error == false) {
+          this.productos = response.data.data;
+          this.loading = response.data.error;
+        }
+
         //this.getImporte(this.productos);
       } catch (err) {
         this.productos = "ATENCION NO SE PUDIERON OBTENER LAS NOVEDADES";
@@ -384,7 +401,7 @@ export default {
       this.$refs["modalVerImagenes"].show();
     },
     verdetalles(producto) {
-      this.descripcion=producto.descripcion
+      this.descripcion = producto.descripcion;
       this.$refs["modalVerProductos"].show();
     },
     okImagenesPublicacion() {

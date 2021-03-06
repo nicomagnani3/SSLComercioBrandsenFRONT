@@ -16,7 +16,7 @@ export default {
     },  
  
     getPublicacionServicios(credentials) {    
-        return Api().get(API_URL + API_USER + "get_publicaciones_servicios", credentials)
+        return Api().get(API_URL + API_USER + "get_publicaciones_servicios_destacados", credentials)
     },
     searchPublicacionesPorServicio(credentials) {    
         return Api().post(API_URL + API_USER + "search_publicaciones_servicios", credentials)

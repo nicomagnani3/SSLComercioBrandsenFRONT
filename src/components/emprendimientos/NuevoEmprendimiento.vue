@@ -1,9 +1,12 @@
 <template>
-  <div v-if="loading" class="text-center">
-    <span class="text-danger">
-      <b>Cargando</b>
-    </span>
-    <b-spinner variant="primary" label="Text Centered"></b-spinner>
+    <div v-if="loading" class="text-center">
+    <br /><br />    <br /><br />
+    <b-spinner
+      style="width: 11rem; height: 11rem"
+      variant="warning"
+      label="Text Centered"
+    >
+    </b-spinner>
   </div>
   <div v-else>
     <b-row>
@@ -161,7 +164,6 @@ export default {
     },
     async crearPublicacion() {
       this.presionoCrear = true;
-      console.log(this.publicacionEmprendimiento.destacada);
       try {
         const response = await EmprendimientoService.addEmprendimiento({
           titulo: this.publicacionEmprendimiento.titulo,
@@ -247,7 +249,6 @@ export default {
           user: this.getUserId,
         });
         this.contrato = response.data.data;
-        console.log(this.contrato);
         if (response.data.error == false && response.data.data.length > 0) {
           this.verTipoPublicacion();
           this.verificarContrato();
@@ -285,7 +286,6 @@ export default {
       var fechaHoy = new Date();
       fechaHoy.setHours(0, 0, 0, 0);
       var fechaContrato = new Date(this.contrato[0].hasta);
-        console.log(fechaHoy >= fechaContrato)
       fechaContrato.setHours(0, 0, 0, 0);
       if (fechaHoy <= fechaContrato){      
         if (this.contrato[0].cantDestacada <= 0  && this.contrato[0].cantnormal <= 0){

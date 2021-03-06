@@ -1,11 +1,12 @@
 <template>
-  <div v-if="loading" class="text-center">
-    <br />
-    <br />
-    <span class="text-danger">
-      <b>Cargando</b>
-    </span>
-    <b-spinner variant="primary" label="Text Centered"></b-spinner>
+ <div v-if="loading" class="text-center">
+    <br /><br />
+    <b-spinner
+      style="width: 11rem; height: 11rem"
+      variant="warning"
+      label="Text Centered"
+    >
+    </b-spinner>
   </div>
   <div v-else class="body">
     <b-row class="pb-3">
@@ -135,7 +136,6 @@ export default {
       }
     },
     eliminar(publicacion) {
-      console.log(this.grupos)
       var opcion = confirm("Esta seguro que desea borrar la publicacion?");
       if (opcion) {
         this.eliminarPublicacion(publicacion);

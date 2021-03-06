@@ -208,7 +208,6 @@ export default {
   },
   methods: {
     esDestacada(destacada) {
-      console.log(this.publicacion.destacada)
       return destacada == true ? "SI" : "NO";
     },
     ponerPrecio(destacada) {
