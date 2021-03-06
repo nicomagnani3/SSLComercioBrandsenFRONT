@@ -43,5 +43,8 @@ export default {
     getPreciosPublicaciones(credentials) {    
         return Api().get(API_URL + API_USER + "get_precios_publicaciones", credentials)
     },
+    getRubros(credentials) {    
+        return Api().get(API_URL + API_USER + "get_rubros", credentials)
+    },
     
 }

@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-//import store from './store.js'
+import store from './store.js'
 
 
 /* INICIO */
@@ -129,8 +129,8 @@ const router = new Router({
           component: Registrarse
         },
         {
-          path: '/recuperarClave',
-          name: 'recuperarClave',
+          path: '/cambiarClave',
+          name: 'cambiarClave',
           component: RecuperarClave
         }
       ]
@@ -146,7 +146,7 @@ const router = new Router({
 })
 
 
-/* router.beforeEach((to, from, next) => {
+ router.beforeEach((to, from, next) => {
   const requireAuth = to.matched.some(record => record.meta.requireAuth)
 
   if (requireAuth && !store.getters['storeUser/isAuthenticated']) {
@@ -161,7 +161,7 @@ const router = new Router({
     }
    
   }
-}) */
+}) 
 
 
 export default router

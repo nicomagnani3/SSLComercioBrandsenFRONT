@@ -9,10 +9,10 @@
     </b-spinner>
   </div>
   <div v-else class="body">
-    <b-container fluid class="bv-example-row">
+    <b-container  fluid class="bv-example-row">
       <b-row class="text-center">
      
-          <b-col class="d-none d-sm-none d-md-block" >
+          <b-col  cols="3" class="d-none d-sm-none d-md-block" >
           <br />
           <H1>{{ producto }}</H1>
           <strong>Resultados: {{ this.cantidadProductos() }}</strong>
@@ -50,7 +50,7 @@
          
         </b-col>
 
-        <b-col cols="6">         
+        <b-col>         
           <br />
           <transition
             v-for="producto in productos"
@@ -58,10 +58,10 @@
             :per-page="perPage"
             :current-page="currentPage"
           >
-            <div>
-              <b-card no-body class="overflow-hidden" style="max-width: 956px">
+           
+              <b-card  no-body class="overflow-hidden" style="max-width:auto;max-height:auto">
                 <br />
-                <b-row no-gutters>
+                <b-row >
                   <b-col md="6">
                     <b-card-img
                       :src="`data:image/png;base64, ${producto.imagen}`"
@@ -69,7 +69,7 @@
                       class="rounded-0"
                     ></b-card-img>
                   </b-col>
-                  <b-col md="6">
+                  <b-col md="4">
                     <b-card-body>
                       <h3>
                         <strong>{{ producto.titulo }} </strong
@@ -80,14 +80,13 @@
                           Destacado</span
                         >
                       </h3>
-                      <strong>{{ producto.padre }}</strong>
-                      <br />
+                      <strong>{{ producto.padre }}</strong>                     
                       <hr />
-                      <h4 v-if="Number(producto.precio) > Number(0)">
+                      <h5 v-if="Number(producto.precio) > Number(0)">
                         Precio: {{ getImporte(producto.precio) }}
-                      </h4>
+                      </h5>
                       <h5>
-                        Fecha de publicacion: {{ producto.fecha | formatDate }}
+                        Fecha: {{ producto.fecha | formatDate }}
                       </h5>
 
                       <p v-if="producto.telefono != null">
@@ -127,7 +126,7 @@
                   </b-col>
                 </b-row>
               </b-card>
-            </div>
+           
           </transition>
            <div v-if="(this.productos.length == 0) && (this.loading == false)">
             <br /><br />
@@ -144,7 +143,7 @@
             </b-alert>
           </div>
         </b-col>
-        <b-col class="d-none d-sm-none d-md-block" >
+        <b-col  cols="3" class="d-none d-sm-none d-md-block" >
           <br />
           <h4>Emprendimientos</h4>
           <div>

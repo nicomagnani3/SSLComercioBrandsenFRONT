@@ -1,12 +1,19 @@
 <template>
-  <div class="recuperarClave">
+  <div class="registrar">
+    <img
+      @click="home()"
+      src="@/assets/MalamboLogo.png"
+      style="width: 100%; max-width: 600px"
+      class="rounded"
+      alt="..."
+    />
     <br />
     <div class="text-center">
-      <p>¡Hola! Para recuperar tu contraseña ingresa tu email y se te enviara una clave provista</p>
+      <p>¡Hola! Para cambiar tu contraseña ingresa tu nueva contraseña</p>
     </div>
     <hr />
     <div class="text-center">
-      <p class="title h5 mt-2 text-center">Recuperar Contraeña</p>
+      <p class="title h5 mt-2 text-center">Cambiar Contraeña</p>
     </div>
     <hr />
     <b-alert show variant="danger" v-if="error">{{ error }}</b-alert>
@@ -14,35 +21,66 @@
     <b-form @submit.prevent="login">
       <b-form-group id="input-group-1">
         <b-form-input
+          disabled
           id="email"
-          v-model="form.email"
-          type="email"
+          v-model="this.getUsername"
           autocomplete="username"
           required
           placeholder="Direccion de correo electronico"
           class="line"
         ></b-form-input>
-      </b-form-group>      
+      </b-form-group>
+      <b-input-group size="lg">
+        <b-input-group-prepend is-text>
+          <b-icon icon="lock-fill"></b-icon>
+        </b-input-group-prepend>
+        <b-form-input
+          id="password"
+          size="lg"
+          v-model="form.password"
+          type="password"
+          required
+          autocomplete="current-password"
+          placeholder="Ingresa la nueva contraseña"
+          class="line"
+        ></b-form-input>
+      </b-input-group>
+      <br />
+      <b-input-group size="lg">
+        <b-input-group-prepend is-text>
+          <b-icon icon="lock-fill"></b-icon>
+        </b-input-group-prepend>
+        <b-form-input
+          size="lg"
+          id="Currentpassword"
+          v-model="form.password_confirmation"
+          type="password"
+          required
+          autocomplete="current-password"
+          placeholder="Confirmar la nueva contraseña"
+          class="line"
+        ></b-form-input>
+      </b-input-group>
       <b-form-group class="text-center">
         <b-button
           type="submit"
           class="my-2"
           v-if="form.ingresar"
           variant="primary"
-          >Recuperar
+          >Cambiar
         </b-button>
 
         <div class="text-center" v-if="!form.ingresar">
           <b-spinner variant="primary" label="Text Centered"></b-spinner>
         </div>
-      </b-form-group>     
+      </b-form-group>
       <hr />
     </b-form>
   </div>
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapGetters } from "vuex";
 
 import AuthenticationService from "@/services/AuthenticationService";
 export default {
@@ -50,43 +88,56 @@ export default {
   data() {
     return {
       form: {
-        email: "",        
+        email: "",
+        password: "",
+        password_confirmation: "",
         ingresar: true,
       },
       error: "",
+      contraseñaIncorrecta:false
     };
   },
+  created() {
+    console.log(this.getUsername);
+  },
+  computed: {
+    ...mapGetters("storeUser", ["getUsername", "getUserId"]),
+  },
   methods: {
-    ...mapMutations("storeUser", [
-      "setToken",
-      "setUsername",
-      "setuserId",
-      "setGrupos",
-      "setPermisos",
-      "setNombre",
-    ]),
-
     async login() {
-      try {
-        this.form.ingresar = false;
-        const { email } = this.form;
-
-        const response = await AuthenticationService.recuperarClave({
-          email: email,         
-        });      
-        if (response.data.error == true){ 
-          this.form.ingresar = true;              
-                this.registrando = false     
-                  this.$bvToast.toast(response.data.data, {
-                  title: `No se pudo recuperar la clave`,
-                  toaster: "b-toaster-top-center",
-                  solid: true,
-                  variant: "danger",
-                  });   
+      if (this.form.password == this.form.password_confirmation) {
+        try {
+          this.form.ingresar = false;
+          const response = await AuthenticationService.recuperarClave({
+            user: this.getUserId,
+            email: this.form.email,
+            password: this.form.password,
+          });
+           this.$root.$bvToast.toast(
+              "Se cambio su contraseña",
+              {
+                title: "Usted modifico la contraseña en MALAMBO",
+                toaster: "b-toaster-top-center succes",
+                solid: true,
+                variant: "success",
+              }
+            );
+            this.$router.push({ name: "login" });
+          console.log(response)
+        } catch (err) {
+           this.$root.$bvToast.toast(
+              "No se pudo cambiar la contraseña, intente nuevamente",
+              {
+                title: "ATENCION!",
+                toaster: "b-toaster-top-center succes",
+                solid: true,
+                variant: "danger",
+              }
+            );
         }
-      } catch (err) {
-        this.form.ingresar = true;
-        this.error = err.response.data.errors[0];
+      }else {
+        this.contraseñaIncorrecta = true;
+        this.registrando = false;
       }
     },
   },

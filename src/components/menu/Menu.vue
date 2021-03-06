@@ -96,9 +96,9 @@
           >
         </b-navbar-nav>
 
-        <div class="input-group">
+        <div class="input-group input-group-lg" style="    max-width: 700px;">
           <b-form-input
-            class="form-control form-text"
+            
             type="text"
             size="15"
             maxlength="128"
@@ -148,12 +148,18 @@
               <b-icon icon="person-fill"></b-icon>
             </template>
             <b-dropdown-item :to="{ name: 'login' }"
+              v-if="!hasPermisos('CAMBIAR_CLAVE')"
               >Iniciar sesion</b-dropdown-item
             >
             <b-dropdown-item :to="{ name: 'Registrarse' }"
+              v-if="!hasPermisos('CAMBIAR_CLAVE')"
               >Crear cuenta</b-dropdown-item
             >
-            <b-dropdown-item @click.prevent="logout">SALIR</b-dropdown-item>
+             <b-dropdown-item :to="{ name: 'cambiarClave' }"
+                v-if="hasPermisos('CAMBIAR_CLAVE')"
+              >Cambiar contraseña</b-dropdown-item
+            >
+            <b-dropdown-item   v-if="hasPermisos('CAMBIAR_CLAVE')" @click.prevent="logout">SALIR</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>

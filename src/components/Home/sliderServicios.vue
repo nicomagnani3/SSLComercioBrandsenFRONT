@@ -98,6 +98,7 @@ export default {
           //this.getImporte(this.productos);
         }     
       } catch (err) {
+        this.loading = true;
         this.categorias = "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS";
       }
     },    
