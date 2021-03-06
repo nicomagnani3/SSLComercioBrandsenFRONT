@@ -7,31 +7,43 @@
     </span>
     <b-spinner variant="primary" label="Text Centered"></b-spinner>
   </div>
+
+
+
   <div v-else>
-    <vueper-slides
-     autoplay
-      
-    >
-      <vueper-slide
-        v-for="imagen in imagenes"
-        :key="imagen.numero"
-        :image="`data:image/png;base64, ${imagen.imagen}`"
-        style="    width: 346px;
-    height: 369px;"
-      />
-    </vueper-slides>
+
+
+      <slider ref="slider" :options="options">
+        <slideritem
+          v-for="imagen in imagenes"
+          :key="imagen.numero"
+          
+        >
+          <b-card
+            :img-src="`data:image/png;base64, ${imagen.imagen}`"
+            img-alt="Image"
+            alt="Image"
+            img-height="400px;"
+            class="imgProd"
+          >
+
+          
+          </b-card>
+        </slideritem>
+    </slider>
+
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import PublicacionService from "@/services/PublicacionService";
-import { VueperSlides, VueperSlide } from "vueperslides";
 import "vueperslides/dist/vueperslides.css";
+import { slider, slideritem } from "vue-concise-slider";
 
 export default {
   name: "imagenesDeUnaPublicacion",
-  components: { VueperSlides, VueperSlide },
+  components: {slider, slideritem, },
   props: {
     idPublicacion: {
       type: Number,
@@ -77,6 +89,22 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 
-</style>
+
+ 
+  .imgProd img{
+
+      object-fit: contain;
+      
+
+  }
+
+  .imgProd{
+
+    width: 50%;
+  }
+ 
+
+</style>>
+

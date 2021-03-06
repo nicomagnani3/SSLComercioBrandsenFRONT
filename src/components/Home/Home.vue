@@ -6,7 +6,7 @@
       <Slider />
       <sliderPubli/>
       <b-container fluid class="subtitulo"> 
-          <P>Malambo Aporta el 10% de los ingresos a Apad brandsen</P>
+          <P>Al publicar está colaborando con entidades de Brandsen</P>
       </b-container>
       <NuevoSlide/>
       <sliderServicios/>

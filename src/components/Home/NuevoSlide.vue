@@ -27,10 +27,14 @@
             :img-src="`data:image/png;base64, ${producto.imagen}`"
             img-alt="Image"
             alt="Image"
-            img-height="300px; max-height:300px"
+            img-height="200px; max-height:300px"
             @click="verProducto(producto)"
             :sub-title="tituloAjustar(producto.titulo)"
+            class="ItemProd"
           >
+
+            
+          
             <b-button @click="verProducto(producto)" variant="primary"
               >Ver más</b-button
             >
@@ -131,10 +135,7 @@ export default {
 
 
 <style scoped>
-.container {
-  width: 50%;
-  max-width: 50%;
-}
+
 
 .texto {
   color: rgb(226, 205, 199);
@@ -144,6 +145,14 @@ export default {
   font-size: 7em;
   opacity: 0.7;
 }
+
+.ItemProd img{
+
+    object-fit: contain;
+
+}
+
+
 
 .item {
   box-shadow: 3px 3px 5px 3px rgba(0, 0, 0, 0.2);
