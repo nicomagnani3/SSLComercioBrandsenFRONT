@@ -28,7 +28,9 @@
         </ul>
     </b-col>
 
-    <b-col xs="12" md="12" lg="3" align-self="end"> 
+    <b-col xs="12" md="12" lg="3" align-self="end">
+        <p>Contáctenos:</p>
+        <p>info@malambobrandsen.com.ar</p>
         <a href=""> <img  class="icono" src="@/assets/logowsp.png" alt=""> </a>
         <a href=""> <img  class="icono" src="@/assets/logo-ig.png" alt=""> </a>
         <a href=""> <img  class="icono" src="@/assets/icono-face.png" alt=""> </a> 
@@ -86,13 +88,14 @@ export default {
 
     .logoBig{
 
-        width:150px;
+        width:250px;
         
     }
 
     .big{
 
         text-align: center;
+        background-color: #fff;
     }
     
 
