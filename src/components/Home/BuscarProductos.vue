@@ -90,6 +90,7 @@
                       Precio: {{ getImporte(producto.precio) }}
                     </h5>
                     <h5>Fecha: {{ producto.fecha | formatDate }}</h5>
+                    <a   target="_black" :href="producto.web">{{ producto.web }}</a>
                     <p v-if="producto.telefono != null && logeado">
                       Telefono: {{ producto.telefono }}
                     </p>
