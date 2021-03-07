@@ -16,7 +16,7 @@
       >
       </b-spinner>
     </div>
-    <div v-else>
+    <div v-else >
       <slider ref="slider" :options="options">
         <slideritem
           v-for="(producto, index) in productos"
@@ -32,9 +32,6 @@
             :sub-title="tituloAjustar(producto.titulo)"
             class="ItemProd"
           >
-
-            
-          
             <b-button @click="verProducto(producto)" variant="primary"
               >Ver más</b-button
             >
@@ -56,6 +53,8 @@ import axios from "axios";
 import ProductosService from "@/services/ProductosService";
 // import slider components
 import { slider, slideritem } from "vue-concise-slider";
+import { mapGetters } from "vuex";
+
 export default {
   name: "NuevoSlide",
   data() {
@@ -79,6 +78,9 @@ export default {
     slider,
     slideritem,
   },
+  computed: {
+    ...mapGetters("storeUser", ["getUserId"]),
+  },
 
   methods: {
     async getPorductos() {
@@ -88,10 +90,9 @@ export default {
           this.productos = response.data.data;
           //this.getImporte(this.productos);
         }
-        //this.productos = this.productos.filter((c) => c.destacado == true);
       } catch (err) {
-         this.loading = true;
-        this.categorias = "ATENCION NO SE PUDIERON OBTENER LAS PUBLICACIONES";
+        this.loading = true;
+        this.productos = "ATENCION NO SE PUDIERON OBTENER LAS PUBLICACIONES";
       }
     },
     getImporte(productos) {
@@ -108,7 +109,15 @@ export default {
       return string.charAt(0).toUpperCase() + string.slice(1);
     },
     verProducto(producto) {
-      if (producto != null) {
+      if (this.getUserId == null) {
+        this.$router.push({
+          name: "login",
+          params: {
+            autentificacion: false,
+          },
+        });
+      }else{
+        if (producto != null) {
         const path = `/buscarProductos/${producto.titulo}`;
         if (this.$route.path !== path)
           this.$router.push({
@@ -118,6 +127,8 @@ export default {
             },
           });
       }
+      }
+      
     },
   },
   mounted() {
@@ -135,8 +146,6 @@ export default {
 
 
 <style scoped>
-
-
 .texto {
   color: rgb(226, 205, 199);
   font-family: "Poppins", sans-serif;
@@ -146,13 +155,9 @@ export default {
   opacity: 0.7;
 }
 
-.ItemProd img{
-
-    object-fit: contain;
-
+.ItemProd img {
+  object-fit: contain;
 }
-
-
 
 .item {
   box-shadow: 3px 3px 5px 3px rgba(0, 0, 0, 0.2);

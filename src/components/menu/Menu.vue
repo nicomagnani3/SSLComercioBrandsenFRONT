@@ -41,7 +41,7 @@
                 item.nombre
               }}</a>
             </li>
-          </b-nav-item-dropdown>
+          </b-nav-item-dropdown>        
           <b-nav-item-dropdown>
             <template slot="button-content">
               <span class="light">Servicios</span>
@@ -52,6 +52,20 @@
               :key="item.id"
             >
               <a class="buscador" @click="buscarProductoporCategoria(item)">{{
+                item.nombre
+              }}</a>
+            </li>
+          </b-nav-item-dropdown>
+             <b-nav-item-dropdown>
+            <template slot="button-content">
+              <span class="light">Rubros</span>
+            </template>
+            <li
+              class="list-group-item"
+              v-for="item in rubros"
+              :key="item.id"
+            >
+              <a class="buscador" @click="buscarProductoporRubro(item)">{{
                 item.nombre
               }}</a>
             </li>
@@ -172,6 +186,7 @@ import Header from "@/components/menu/Header.vue";
 import CategoriasService from "@/services/CategoriasService";
 import EmprendimientoService from "@/services/EmprendimientoService";
 import ServiciosService from "@/services/ServiciosService";
+import PublicacionService from "@/services/PublicacionService";
 
 import axios from "axios";
 export default {
@@ -188,6 +203,7 @@ export default {
       categorias: [],
       emprendimientos: [],
       servicios: [],
+      rubros: [],
     };
   },
   created() {
@@ -247,6 +263,19 @@ export default {
         this.loading = false;
       }
     },
+     async getRubros() {
+      this.loading = true;
+      try {
+        const response = await PublicacionService.getRubros();
+        this.rubros = response.data.data;
+        this.rubros = this.ordenarDatos(this.rubros);
+      } catch (err) {
+        this.rubros = "ATENCION NO SE PUDIERON OBTENER LOS RUBROS";
+      } finally {
+        this.loading = false;
+      }
+    },
+    
     ordenarDatos(categoria) {
       return categoria.sort(function (a, b) {
         if (a.nombre > b.nombre) {
@@ -288,6 +317,7 @@ export default {
         this.getcategorias(),
         this.getEmprendimientos(),
         this.getServicios(),
+        this.getRubros()
       ])
       .then(() => {
         this.loading = false;

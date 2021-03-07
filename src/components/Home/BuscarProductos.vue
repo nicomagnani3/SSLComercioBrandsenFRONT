@@ -9,48 +9,46 @@
     </b-spinner>
   </div>
   <div v-else class="body">
-    <b-container  fluid class="bv-example-row">
+    <b-container fluid class="bv-example-row">
       <b-row class="text-center">
-     
-          <b-col  cols="3" class="d-none d-sm-none d-md-block" >
+        <b-col cols="3" class="d-none d-sm-none d-md-block">
           <br />
           <H1>{{ producto }}</H1>
           <strong>Resultados: {{ this.cantidadProductos() }}</strong>
           <br />
           <br />
-       
-            <h4>Productos</h4>
+
+          <h4>Productos</h4>
+          <ul class="list-group">
+            <li
+              class="list-group-item"
+              v-for="item in categorias"
+              :key="item.id"
+            >
+              <a class="buscador" @click="buscarPorCategoria(item.id)">{{
+                item.nombre
+              }}</a>
+            </li>
+          </ul>
+
+          <br />
+          <h4>Servicios</h4>
+          <div>
             <ul class="list-group">
               <li
                 class="list-group-item"
-                v-for="item in categorias"
+                v-for="item in servicios"
                 :key="item.id"
               >
-                <a class="buscador" @click="buscarPorCategoria(item.id)">{{
+                <a class="buscador" @click="buscarPorServicio(item)">{{
                   item.nombre
                 }}</a>
               </li>
             </ul>
-        
-            <br />
-            <h4>Servicios</h4>
-            <div>
-              <ul class="list-group">
-                <li
-                  class="list-group-item"
-                  v-for="item in servicios"
-                  :key="item.id"
-                >
-                  <a class="buscador" @click="buscarPorServicio(item)">{{
-                    item.nombre
-                  }}</a>
-                </li>
-              </ul>
-            </div>
-         
+          </div>
         </b-col>
 
-        <b-col>         
+        <b-col>
           <br />
           <transition
             v-for="producto in productos"
@@ -58,77 +56,112 @@
             :per-page="perPage"
             :current-page="currentPage"
           >
-           
-              <b-card  no-body class="overflow-hidden" style="max-width:auto;max-height:auto">
-                <br />
-                <b-row >
-                  <b-col md="6">
-                    <b-card-img
-                      :src="`data:image/png;base64, ${producto.imagen}`"
-                      alt="Image"
-                      class="rounded-0"
-                    ></b-card-img>
-                  </b-col>
-                  <b-col md="4">
-                    <b-card-body>
-                      <h3>
-                        <strong>{{ producto.titulo }} </strong
-                        ><span
-                          v-if="producto.destacado"
-                          class="badge badge-primary"
-                        >
-                          Destacado</span
-                        >
-                      </h3>
-                      <strong>{{ producto.padre }}</strong>                     
-                      <hr />
-                      <h5 v-if="Number(producto.precio) > Number(0)">
-                        Precio: {{ getImporte(producto.precio) }}
-                      </h5>
-                      <h5>
-                        Fecha: {{ producto.fecha | formatDate }}
-                      </h5>
-
-                      <p v-if="producto.telefono != null">
-                        Telefono: {{ producto.telefono }}
-                      </p>
-                      <a
-                        :href="
-                          'https://api.whatsapp.com/send?text=Hola!%20,desde%20Malambo%20observe%20la%20publicacion%20' +
-                          producto.titulo +
-                          ',queria%20obtener%20mas%20detalles' +
-                          '&phone=+54' +
-                          acomodarCelular(producto.telefono)
-                        "
-                        target="_black"
+            <b-card
+              no-body
+              class="overflow-hidden"
+              style="max-width: auto; max-height: auto"
+            >
+              <br />
+              <b-row>
+                <b-col md="6">
+                  <b-card-img
+                    thumbnail
+                    fluid
+                    alt="Responsive image"
+                    style="max-height: 450px"
+                    :src="`data:image/png;base64, ${producto.imagen}`"
+                    class="rounded-0"
+                  ></b-card-img>
+                </b-col>
+                <b-col md="4">
+                  <b-card-body>
+                    <h3>
+                      <strong>{{ producto.titulo }} </strong
+                      ><span
+                        v-if="producto.destacado"
+                        class="badge badge-primary"
                       >
-                        <img
-                          src="@/assets/wsp.png"
-                          alt=""
-                          height="auto"
-                          style="width: 65px"
-                        />
-                      </a>
+                        Destacado</span
+                      >
+                    </h3>
+                    <strong>{{ producto.padre }}</strong>
+                    <hr />
+                    <h5 v-if="Number(producto.precio) > Number(0)">
+                      Precio: {{ getImporte(producto.precio) }}
+                    </h5>
+                    <h5>Fecha: {{ producto.fecha | formatDate }}</h5>
+                    <p v-if="producto.telefono != null && logeado">
+                      Telefono: {{ producto.telefono }}
+                    </p>
+                    <p v-if="producto.email != null && logeado">
+                      {{ producto.email }}
+                    </p>
 
-                      <b-button
-                        variant="outline-primary"
-                        @click="verImagenes(producto)"
-                        ><b-icon icon="images"></b-icon
+                    <a
+                      :href="
+                        'https://api.whatsapp.com/send?text=Hola!%20,desde%20Malambo%20observe%20la%20publicacion%20' +
+                        producto.titulo +
+                        ',queria%20obtener%20mas%20detalles' +
+                        '&phone=+54' +
+                        acomodarCelular(producto.telefono)
+                      "
+                      target="_black"
+                    >
+                      <img
+                        v-if="logeado"
+                        src="@/assets/wsp.png"
+                        alt=""
+                        height="auto"
+                        style="width: 45px; margin: 7px"
+                      />
+                    </a>
+                    <a
+                      :href="
+                        'https://mail.google.com/mail/?view=cm&fs=1&to=' +
+                        producto.email +
+                        '&body=Hola!%20,desde%20Malambo%20observe%20la%20publicacion%20' +
+                        producto.titulo +
+                        ',queria%20obtener%20mas%20detalles' +
+                        '&su=Malambo consulta por ' +
+                        producto.titulo
+                      "
+                      target="_black"
+                    >
+                      <img
+                        v-if="logeado"
+                        src="@/assets/mail.png"
+                        alt=""
+                        height="auto"
+                        style="width: 45px; margin: 11px"
+                      />
+                    </a>
+                    <b-col v-if="!logeado" class="text-center">
+                      Para contactarte registrate
+                      <router-link to="/login">ACA!</router-link>
+                    </b-col>
+                    <b-col>
+                      <b-button variant="white" @click="verImagenes(producto)"
+                        ><b-icon
+                          style="width: 3rem; height: 5rem"
+                          icon="images"
+                        ></b-icon
                       ></b-button>
                       <b-button
+                        variant="white"
                         v-if="producto.descripcion != 'SN'"
-                        style="margin: 11px"
-                        variant="outline-primary"
                         @click="verdetalles(producto)"
-                        ><b-icon icon="layout-text-sidebar"></b-icon
+                        ><b-icon
+                          style="width: 3rem; height: 5rem"
+                          icon="layout-text-sidebar"
+                        ></b-icon
                       ></b-button>
-                    </b-card-body>
-                  </b-col>
-                </b-row>
-              </b-card>
-           
+                    </b-col>
+                  </b-card-body>
+                </b-col>
+              </b-row>
+            </b-card>
           </transition>
-           <div v-if="(this.productos.length == 0) && (this.loading == false)">
+          <div v-if="this.productos.length == 0 && this.loading == false">
             <br /><br />
             <b-alert show variant="success">
               <h4 class="alert-heading">
@@ -143,7 +176,7 @@
             </b-alert>
           </div>
         </b-col>
-        <b-col  cols="3" class="d-none d-sm-none d-md-block" >
+        <b-col cols="3" class="d-none d-sm-none d-md-block">
           <br />
           <h4>Emprendimientos</h4>
           <div>
@@ -164,6 +197,7 @@
 
       <div>
         <b-modal
+          title="Imagenes de la publicacion"
           centered
           id="modal-xl"
           size="xl"
@@ -173,6 +207,7 @@
           <ImagenesDeUnaPublicacion
             @okImagenesPublicacion="okImagenesPublicacion"
             :idPublicacion="this.idPublicacionImagen"
+            :tipo="this.tipoPublicacion"
           ></ImagenesDeUnaPublicacion>
         </b-modal>
       </div>
@@ -197,6 +232,7 @@ import PublicacionService from "@/services/PublicacionService";
 import CategoriasService from "@/services/CategoriasService";
 import EmprendimientoService from "@/services/EmprendimientoService";
 import ServiciosService from "@/services/ServiciosService";
+import { mapGetters } from "vuex";
 
 //import axios from "axios";
 export default {
@@ -220,6 +256,8 @@ export default {
   },
   data() {
     return {
+      tipoPublicacion: "",
+      logeado: false,
       verImagen: false,
       descripcion: "",
       perPage: 2,
@@ -233,7 +271,9 @@ export default {
     };
   },
   created() {
-    //this.getPublicacionesPorNombre();
+    if (this.getUserId != null) {
+      this.logeado = true;
+    }
     this.getcategorias();
     this.getEmprendimientos();
     this.getServicios();
@@ -244,9 +284,7 @@ export default {
     }
   },
   computed: {
-    rows() {
-      return this.productos.length;
-    },
+    ...mapGetters("storeUser", ["getUserId"]),
   },
   watch: {
     producto() {
@@ -397,6 +435,7 @@ export default {
     verImagenes(producto) {
       this.verImagen = true;
       this.idPublicacionImagen = producto.id;
+      this.tipoPublicacion = producto.tipo;
       this.$refs["modalVerImagenes"].show();
     },
     verdetalles(producto) {

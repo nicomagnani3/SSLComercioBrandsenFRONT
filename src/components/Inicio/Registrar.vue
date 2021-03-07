@@ -409,6 +409,7 @@ export default {
       }
     },
     async registrarEmpresa() {
+      console.log(this.empresa.rubro)
       this.registrando = true;
       if (this.empresa.password == this.empresa.password_confirmation) {
         try {
@@ -420,6 +421,7 @@ export default {
             celular: this.empresa.celular,
             web: this.empresa.web,
             grupo: this.value,
+            rubro:this.empresa.rubro
           });
           if (response.data.error == true) {
             this.registrando = false;

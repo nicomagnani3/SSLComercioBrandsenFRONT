@@ -8,7 +8,7 @@
         </div>
       </b-col>
     </b-row>
-     <div v-if="loading" class="text-center">
+    <div v-if="loading" class="text-center">
       <b-spinner
         style="width: 3rem; height: 3rem"
         variant="warning"
@@ -17,32 +17,34 @@
       </b-spinner>
     </div>
     <div v-else>
-    <slider ref="slider" :options="options">
-      <slideritem
-        v-for="(producto, index) in productos"
-        :key="index"
-        style="width: 20%; margin-right: 1%; max-width: 20%"
-      >
-        <b-card
-          :img-src="`data:image/png;base64, ${producto.imagen}`"
-          img-alt="Image"
-          alt="Image"
-          img-height="200px; max-height:300px"
-          @click="verProducto(producto)"
-          :sub-title="tituloAjustar(producto.titulo)"
-          class="ItemProd"
+      <slider ref="slider" :options="options">
+        <slideritem
+          v-for="(producto, index) in productos"
+          :key="index"
+          style="width: 20%; margin-right: 1%; max-width: 20%"
         >
-          <b-button  @click="verProducto(producto)" variant="primary">Ver más</b-button>
-        </b-card>
-      </slideritem>
-      <!-- Customizable loading -->
-      <div class="text-center" slot="loading">
-        <span class="text-danger">
-          <b>Cargando</b>
-        </span>
-        <b-spinner variant="primary" label="Text Centered"></b-spinner>
-      </div>
-    </slider>
+          <b-card
+            :img-src="`data:image/png;base64, ${producto.imagen}`"
+            img-alt="Image"
+            alt="Image"
+            img-height="200px; max-height:300px"
+            @click="verProducto(producto)"
+            :sub-title="tituloAjustar(producto.titulo)"
+            class="ItemProd"
+          >
+            <b-button @click="verProducto(producto)" variant="primary"
+              >Ver más</b-button
+            >
+          </b-card>
+        </slideritem>
+        <!-- Customizable loading -->
+        <div class="text-center" slot="loading">
+          <span class="text-danger">
+            <b>Cargando</b>
+          </span>
+          <b-spinner variant="primary" label="Text Centered"></b-spinner>
+        </div>
+      </slider>
     </div>
   </b-container>
 </template>
@@ -52,11 +54,13 @@
 import axios from "axios";
 import EmprendimientoService from "@/services/EmprendimientoService";
 import { slider, slideritem } from "vue-concise-slider";
+import { mapGetters } from "vuex";
+
 export default {
   name: "SlideEmprendimietnos",
   data() {
     return {
-      loading :true,
+      loading: true,
       productos: [],
       options: {
         currentPage: 0,
@@ -75,38 +79,50 @@ export default {
     slider,
     slideritem,
   },
+  computed: {
+    ...mapGetters("storeUser", ["getUserId"]),
+  },
+
   methods: {
-      verProducto(producto) {
-      if (producto != null) {
-        const path = `/buscarProductos/${producto.titulo}`;
-        if (this.$route.path !== path)
-          this.$router.push({
-            name: "buscarProductos",
-            params: {
-              producto: producto.titulo,
-            },
-          });
+    verProducto(producto) {
+      if (this.getUserId == null) {
+        this.$router.push({
+          name: "login",
+          params: {
+            autentificacion: false,
+          },
+        });
+      } else {
+        if (producto != null) {
+          const path = `/buscarProductos/${producto.titulo}`;
+          if (this.$route.path !== path)
+            this.$router.push({
+              name: "buscarProductos",
+              params: {
+                producto: producto.titulo,
+              },
+            });
+        }
       }
     },
     async getPorductos() {
       try {
-        const response = await EmprendimientoService.getPublicacionEmprendimientos();   
+        const response = await EmprendimientoService.getPublicacionEmprendimientos();
         if (response.data.error == false) {
-           this.productos = response.data.data;
-        }        
+          this.productos = response.data.data;
+        }
       } catch (err) {
         this.loading = true;
         this.productos = "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS";
       }
-    },  
+    },
     tituloAjustar(titulo) {
       titulo = this.primerMayuscula(titulo.toLowerCase());
-      return titulo
+      return titulo;
     },
     primerMayuscula(string) {
       return string.charAt(0).toUpperCase() + string.slice(1);
     },
-
   },
   mounted() {
     axios
@@ -123,8 +139,6 @@ export default {
 
 
 <style scoped>
-
-
 .titulo {
   color: rgb(109, 108, 108);
   text-align: center;
@@ -139,17 +153,13 @@ export default {
   opacity: 0.7;
 }
 
-.ItemProd img{
-
-    object-fit: contain;
-
+.ItemProd img {
+  object-fit: contain;
 }
 
-.ItemProd{
-
-   width: 300px;
+.ItemProd {
+  width: 300px;
 }
-
 </style>
 
 
