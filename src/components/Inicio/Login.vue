@@ -102,7 +102,7 @@ export default {
           title: 'Atencion!!',
           toaster: "b-toaster-top-center",
           solid: true,
-          variant: "danger",
+          variant: "info",
         }
       );
     }

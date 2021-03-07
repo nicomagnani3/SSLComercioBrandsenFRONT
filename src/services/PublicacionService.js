@@ -46,5 +46,10 @@ export default {
     getRubros(credentials) {    
         return Api().get(API_URL + API_USER + "get_rubros", credentials)        
     },
+    getProductosRubro(credentials) {   
+        console.log(credentials) 
+        return Api().get(API_URL + API_USER + "get_productos_rubro/"+ credentials.id)
+    },
+    
     
 }

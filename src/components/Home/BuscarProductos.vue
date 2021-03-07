@@ -172,7 +172,8 @@
               <p>
                 *Revisá la ortografía de la palabra.<br />
                 *Utilizá palabras más genéricas o menos palabras.<br />
-                *Navegá por las categorías para encontrar un producto similar
+                *Navegá por las categorías para encontrar un producto similar<br/>
+                *Busca en otra categoria o rubro
               </p>
             </b-alert>
           </div>
@@ -246,9 +247,10 @@ export default {
       type: String,
       required: false,
     },
-    tipoCategoria: {
-      type: String,
+    rubro: {
+      type: Number,
       required: false,
+      default: 0
     },
     categoria: {
       type: Number,
@@ -278,8 +280,9 @@ export default {
     this.getcategorias();
     this.getEmprendimientos();
     this.getServicios();
-    if (this.tipoCategoria == "PRODUCTO") {
-      this.buscarPorCategoria(this.categoria);
+    console.log(this.rubro)
+    if (Number(this.rubro) >Number(0)) {
+      this.buscarPorRubro(this.rubro);
     } else {
       this.getPublicacionesPorNombre();
     }
@@ -289,10 +292,15 @@ export default {
   },
   watch: {
     producto() {
-      this.getPublicacionesPorNombre();
+      //this.getPublicacionesPorNombre();
       this.getcategorias();
       this.getEmprendimientos();
       this.getServicios();
+          if (Number(this.rubro) >Number(0)) {
+      this.buscarPorRubro(this.rubro);
+    } else {
+      this.getPublicacionesPorNombre();
+    }
     },
   },
   methods: {
@@ -423,6 +431,23 @@ export default {
         const response = await ServiciosService.searchPublicacionesPorServicio({
           id: item.id,
         });
+        if (response.data.error == false) {
+          this.productos = response.data.data;
+          this.loading = response.data.error;
+        }
+
+        //this.getImporte(this.productos);
+      } catch (err) {
+        this.productos = "ATENCION NO SE PUDIERON OBTENER LAS NOVEDADES";
+      }
+    },
+    async buscarPorRubro (rubroId) {
+      this.loading = true;
+      try {
+        const response = await PublicacionService.getProductosRubro({
+          id: rubroId,
+        });
+        console.log("entro")
         if (response.data.error == false) {
           this.productos = response.data.data;
           this.loading = response.data.error;

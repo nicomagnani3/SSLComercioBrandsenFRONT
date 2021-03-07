@@ -302,6 +302,21 @@ export default {
           },
         });
     },
+    buscarProductoporRubro(rubro) {
+      const path = `/buscarProductos/${rubro.nombre}`;
+      if (this.$route.path !== path)
+        this.$router.push({
+          name: "buscarProductos",
+          query: {
+            q: this.searchQuery,
+            t: new Date().getTime(),
+          },
+          params: {
+            producto: rubro.nombre,
+            rubro:rubro.id
+          },
+        });
+    },
     ...mapActions("storeUser", ["LOGOUT_REQUEST"]),
     logout() {
       this.logeado = false;
