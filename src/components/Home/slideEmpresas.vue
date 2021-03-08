@@ -3,13 +3,16 @@
       <h3 class="m-5 titulo">Los mejores negocios te esperan </h3>
      <b-container class="contenedorPubli mb-5">   
         <b-row >  
-            <b-col  > 
+            <b-col  class="itemCarrusel" cols="12" md="2" > 
+
                 <b-card 
-                    img-src="https://rrhhjobs.com/wp-content/uploads/2020/03/logo-hendel.png"
+                
+                    img-src="https://ep01.epimg.net/elpais/imagenes/2019/10/30/album/1572424649_614672_1572453030_noticia_normal.jpg"
                     img-alt="Image"
                     img-top
                     tag="article"
-                    img-height="150"
+                    img-height="150px"
+                    style="max-width: 20rem;"
                     class=" itemCarrusel "
                 > 
                 <hr>
@@ -44,7 +47,7 @@
                         
                     
                     </b-col>  
-                    <b-col class="itemCarrusel   "> 
+                    <b-col cols="12" md="2" class="itemCarrusel   "> 
                         
                         <b-card 
                             img-src="https://static.wixstatic.com/media/3af348_4b5958483e564f28a460570116f93461~mv2.jpg/v1/fill/w_258,h_258,al_c,q_80,usm_0.66_1.00_0.01/logo%20brisa.webp"
@@ -64,7 +67,7 @@
                         </b-card >
 
                      </b-col> 
-                    <b-col class="itemCarrusel">
+                    <b-col cols="12" md="2" class="itemCarrusel">
 
                         <b-card 
                             img-src="https://static.wixstatic.com/media/3af348_b659f619d64c4dbd8bfb8ad274dd4214~mv2.jpg/v1/fill/w_258,h_258,al_c,q_80,usm_0.66_1.00_0.01/logo%20meissen.webp"
@@ -83,7 +86,7 @@
                            
                         </b-card >
                     </b-col> 
-                    <b-col class="itemCarrusel">
+                    <b-col cols="12" md="2" class="itemCarrusel">
 
                         <b-card 
                             img-src="https://static.wixstatic.com/media/3af348_b659f619d64c4dbd8bfb8ad274dd4214~mv2.jpg/v1/fill/w_258,h_258,al_c,q_80,usm_0.66_1.00_0.01/logo%20meissen.webp"
@@ -102,7 +105,7 @@
                            
                         </b-card >
                     </b-col> 
-                    <b-col class="itemCarrusel">
+                    <b-col cols="12" md="2" class="itemCarrusel">
 
                         <b-card 
                             img-src="https://static.wixstatic.com/media/3af348_b659f619d64c4dbd8bfb8ad274dd4214~mv2.jpg/v1/fill/w_258,h_258,al_c,q_80,usm_0.66_1.00_0.01/logo%20meissen.webp"
@@ -179,6 +182,13 @@
       width: 170px;
       height: 300px;
       text-align: center;
+      object-fit: cover;
+      
+  }
+
+  .itemCarrusel img{
+
+      object-fit: contain;
       
   }
 
