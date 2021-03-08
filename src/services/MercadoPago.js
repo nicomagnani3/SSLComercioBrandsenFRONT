@@ -7,4 +7,7 @@ export default {
     crearPreferencia(credentials) {    
         return Api().post(API_URL + API_USER + "create_preference", credentials)
     },
+    crearContrato(credentials) {    
+        return Api().post(API_URL + API_USER + "create_contrato", credentials)
+    },
 }

@@ -1,45 +1,61 @@
 <template>
   <div v-if="loading" class="text-center">
-    <br />
-    <br />
-    <span class="text-danger">
-      <b>Cargando</b>
-    </span>
-    <b-spinner variant="primary" label="Text Centered"></b-spinner>
-  </div>
-  <div v-else>
-    <vueper-slides
-     autoplay
-      
+    <b-spinner
+      style="width: 11rem; height: 11rem"
+      variant="warning"
+      label="Text Centered"
     >
-      <vueper-slide
-        v-for="imagen in imagenes"
-        :key="imagen.numero"
-        :image="`data:image/png;base64, ${imagen.imagen}`"
-        style="    width: 346px;
-    height: 369px;"
-      />
-    </vueper-slides>
+    </b-spinner>
+  </div>
+
+  <div v-else>
+    <slider ref="slider" :options="options">
+      <slideritem v-for="imagen in imagenes" :key="imagen.numero">
+        <b-card
+          :img-src="`data:image/png;base64, ${imagen.imagen}`"
+          img-alt="Image"
+          alt="Image"
+          img-height="400px;"
+          class="imgProd"
+        >
+        </b-card>
+      </slideritem>
+    </slider>
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import PublicacionService from "@/services/PublicacionService";
-import { VueperSlides, VueperSlide } from "vueperslides";
 import "vueperslides/dist/vueperslides.css";
+import { slider, slideritem } from "vue-concise-slider";
 
 export default {
   name: "imagenesDeUnaPublicacion",
-  components: { VueperSlides, VueperSlide },
+  components: { slider, slideritem },
   props: {
     idPublicacion: {
       type: Number,
     },
+    tipo: {
+      type: String,
+    },
+    
   },
   data() {
     return {
       loading: true,
+      options: {
+        currentPage: 0,
+        thresholdDistance: 100,
+        thresholdTime: 500,
+        autoplay: 4000,
+        loop: true,
+        direction: "horizontal",
+        loopedSlides: 5,
+        slidesToScroll: 1,
+        effect: "slide",
+      },
     };
   },
   directives: {
@@ -57,6 +73,7 @@ export default {
       try {
         const response = await PublicacionService.getImagenesPublicacion({
           idPublicacion: this.idPublicacion,
+          tipo:this.tipo
         });
         this.imagenes = response.data.data;
       } catch (err) {
@@ -77,6 +94,13 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.imgProd img {
+  object-fit: contain;
+}
 
-</style>
+.imgProd {
+  width: 50%;
+}
+</style>>
+

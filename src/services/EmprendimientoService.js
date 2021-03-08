@@ -11,7 +11,7 @@ export default {
         return Api().post(API_URL + API_USER + "nuevo_emprendimiento", credentials)
     },  
     getPublicacionEmprendimientos(credentials) {    
-        return Api().get(API_URL + API_USER + "get_publicaciones_emprendimientos", credentials)
+        return Api().get(API_URL + API_USER + "get_publicaciones_emprendimientos_destacados", credentials)
     },
     searchPublicacionesPorEmprendimiento(credentials) {    
         return Api().post(API_URL + API_USER + "search_publicaciones_emprendimientos", credentials)

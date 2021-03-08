@@ -1,9 +1,12 @@
 <template>
-  <div v-if="loading" class="text-center">
-    <span class="text-danger">
-      <b>Cargando</b>
-    </span>
-    <b-spinner variant="primary" label="Text Centered"></b-spinner>
+   <div v-if="loading" class="text-center">
+    <br /><br />    <br /><br />
+    <b-spinner
+      style="width: 11rem; height: 11rem"
+      variant="warning"
+      label="Text Centered"
+    >
+    </b-spinner>
   </div>
   <div v-else>
     <form-wizard
@@ -13,7 +16,9 @@
       back-button-text="Volver!"
       next-button-text="Siguiente!"
       finish-button-text="Finalizar"
-      color="#FFCE4E"
+      color="#000000"
+      step-size="lg"
+      error-color="#dc3545"
     >
       <b-col v-if="creando" class="text-center">
         <div>
@@ -78,6 +83,7 @@
           :destacada="this.publicacion.destacada"
           :imagen="this.imgPrimeraEmprendimiento"
           :finalizo="this.presionoFinalizar"
+          :contrato="this.contrato"
         >
         </PagarEmprendimiento>
       </tab-content>
@@ -95,7 +101,7 @@ import DetalleServicio from "@/components/servicios/DetalleServicio.vue";
 //import PagoPublicacion from "@/components/publicaciones/PagoPublicacion.vue";
 import ImagenesCarga from "@/components/imagenes/ImagenesCarga.vue";
 import PagarEmprendimiento from "@/components/emprendimientos/PagarEmprendimiento.vue";
-import MercadoPago from "@/services/MercadoPago";
+import Contratos from "@/services/ContratosService";
 
 export default {
   name: "nuevaPublicacion",
@@ -120,6 +126,8 @@ export default {
       publicacion: [],
       imagenes: [],
       imgPrimera: [],
+      contrato: [],
+      
       imgPrimeraEmprendimiento: [
         {
           id: 0,
@@ -147,6 +155,7 @@ export default {
           autentificacion: false,
         },
       });
+  
     }
   },
   computed: {
@@ -196,8 +205,19 @@ export default {
           servicioHijo: this.serviciosHijoSeleccionado,
           usuarioID: this.getUserId,
         });
-        if (response.data.error == false) {
-          this.validarPagoMercadoPago(response.data.data);
+         if (response.data.error == false) {
+          this.$root.$bvToast.toast(
+            "Se creo con exito el servicio, gracias por confiar en MALAMBO",
+            {
+              title: "Atencion!",
+              toaster: "b-toaster-top-center",
+              solid: true,
+              variant: "success",
+            }
+          );
+          this.$router.push({
+            name: "Home",
+          });
         }
       } catch (error) {
         this.$bvToast.toast(
@@ -211,27 +231,7 @@ export default {
         );
         this.$router.push("/");
       }
-    },
-    async validarPagoMercadoPago(idPublicacion) {
-      let precioPublicacion = this.publicacion.destacada ? 700 : 500;
-      const response = await MercadoPago.crearPreferencia({
-        titulo: this.publicacion.titulo,
-        precioPublicacion: precioPublicacion,
-        idPublicacion: idPublicacion,
-        descripcion: this.publicacion.observaciones,
-        tipo: "SERVICIO",
-      });
-      this.createCheckoutButton(response.data.id);
-    },
-     createCheckoutButton(preference) {
-      var script = document.createElement("script");
-      script.src =
-        "https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js";
-      script.type = "text/javascript";
-      script.dataset.preferenceId = preference;
-      document.getElementById("button-checkout").innerHTML = "";
-      document.querySelector("#button-checkout").appendChild(script);
-    },
+    },    
     update(servicio) {
       this.servicioSeleccionado = servicio[0].id;
       this.serviciosHijoElegido = this.serviciosHijos.filter(
@@ -271,16 +271,92 @@ export default {
         this.categorias = "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS";
       }
     },
+    async getContratosUser() {
+      try {
+        const response = await Contratos.getContratosUser({
+          user: this.getUserId,
+        });
+        this.contrato = response.data.data;
+        if (response.data.error == false && response.data.data.length > 0) {
+          this.verTipoPublicacion();
+          this.verificarContrato();
+        } else {
+          this.$root.$bvToast.toast(
+            "No tenes ningun contrato disponible para publicar, te recomendamos crear uno o renovar el anterior",
+            {
+              title: "Atencion!",
+              toaster: "b-toaster-top-center",
+              solid: true,
+              variant: "danger",
+            }
+          );
+          this.$router.push({
+            name: "renovarContrato",
+          });
+        }
+      } catch (err) {
+        this.$bvToast.toast(err.response.data.message, {
+          title: "Atencion!",
+          toaster: "b-toaster-top-center",
+          solid: true,
+          variant: "danger",
+        });
+      }
+    },
+    verTipoPublicacion() {
+      if (Number(this.contrato[0].cantnormal) > 0) {
+        this.publicacion.destacada = false;
+      } else {
+        this.publicacion.destacada = true;
+      }
+    },
+    verificarContrato() {
+      var fechaHoy = new Date();
+      fechaHoy.setHours(0, 0, 0, 0);
+      var fechaContrato = new Date(this.contrato[0].hasta);
+      fechaContrato.setHours(0, 0, 0, 0);
+      if (fechaHoy <= fechaContrato){      
+        if (this.contrato[0].cantDestacada <= 0  && this.contrato[0].cantnormal <= 0){
+          this.$root.$bvToast.toast(
+            "No dispones de publicaciones para publicar el servicio,volve a renovar el contrato aca!",
+            {
+              title: "Atencion!",
+              toaster: "b-toaster-top-center",
+              solid: true,
+              variant: "danger",
+            }
+          );
+          this.$router.push({
+            name: "renovarContrato",
+          });
+        }
+      }else{
+        this.$root.$bvToast.toast(
+            "La fecha de el contrato se vencio, volve a renovarlo para publicar en MALAMBO",
+            {
+              title: "Atencion!",
+              toaster: "b-toaster-top-center",
+              solid: true,
+              variant: "danger",
+            }
+          );
+          this.$router.push({
+            name: "renovarContrato",
+          });
+        
+      }
+    }
   },
   mounted() {
     axios
-      .all([this.getServicios(), this.getServiciosHijos()])
+      .all([this.getServicios(), this.getServiciosHijos(),  this.getContratosUser(),])
       .then(() => {
         this.loading = false;
       })
       .catch((err) => {
         console.log(err);
       });
+
   },
 };
 </script>

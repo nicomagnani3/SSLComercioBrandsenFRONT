@@ -257,7 +257,7 @@ export default {
       });
     },
     async validate() {
-      if (!this.loadingImg && !this.loading) {
+      if (!this.loadingImg && !this.loading && !this.base64) {
         let result = await this.$refs.altaImagenes.validate();
               if (result == true) {
                   if (! this.sonImagenesValidas(this.imagenes) || !this.sonImagenesValidas(this.imgPrimera)){

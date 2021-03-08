@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-//import store from './store.js'
+import store from './store.js'
 
 
 /* INICIO */
@@ -24,6 +24,7 @@ import container from '@/components/menu/Container.vue'
 import home from '@/components/Home/Home.vue'
 
 import CrearPublicacion from '@/components/publicaciones/CrearPublicacion.vue'
+import CrearContrato from '@/components/contratos/CrearContrato.vue'
 
 
 Vue.use(Router)
@@ -82,8 +83,16 @@ const router = new Router({
         props: true,    
         meta: {
           requireAuth: false
-        },        
-          
+        }, 
+      },
+        {     
+        path: '/crearContrato/publicacion:publicacion',
+        name: 'crearContrato',
+        component: CrearContrato,   
+        props: true,    
+        meta: {
+          requireAuth: false
+        },  
        },
        {
         path: '/renovarContrato',
@@ -120,8 +129,8 @@ const router = new Router({
           component: Registrarse
         },
         {
-          path: '/recuperarClave',
-          name: 'recuperarClave',
+          path: '/cambiarClave',
+          name: 'cambiarClave',
           component: RecuperarClave
         }
       ]
@@ -137,7 +146,7 @@ const router = new Router({
 })
 
 
-/* router.beforeEach((to, from, next) => {
+ router.beforeEach((to, from, next) => {
   const requireAuth = to.matched.some(record => record.meta.requireAuth)
 
   if (requireAuth && !store.getters['storeUser/isAuthenticated']) {
@@ -152,7 +161,7 @@ const router = new Router({
     }
    
   }
-}) */
+}) 
 
 
 export default router

@@ -41,8 +41,8 @@ export default {
             sessionStorage.setItem("username", payload)
         },
         setGrupos(state, payload) {
-            state.grupos = JSON.stringify(payload)
-            sessionStorage.setItem("grupos", JSON.stringify(payload))
+            state.grupos = payload
+            sessionStorage.setItem("grupos", payload)
 
         },
         setPermisos(state, payload) {
@@ -112,11 +112,15 @@ export default {
             }
             return JSON.parse(state.permisos.includes(permiso)) || JSON.parse(state.permisos.includes('ADMINISTRADOR')) ;
         },
-        getGrupos(state) {
+        getGrupos(state) {                
             return JSON.parse(state.grupos);
         },
-        getUserId(state) {
+        getUserId(state) {          
             return JSON.parse(state.userId);
+        },
+        getUsername(state) {   
+             
+            return state.username
         },
         
        

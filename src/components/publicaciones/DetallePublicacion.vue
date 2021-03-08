@@ -74,25 +74,27 @@
               </b-form-group>
             </b-col>
           </b-row>
-          <!-- <b-row>
-              <b-col lg="5" md="6">
+          <b-row>
+            <div v-if="contrato.length > 0">
+              <b-col md="12">
                 <b-form-group
-                  id="fecha-label"
-                  label="Fecha  "
-                  label-for="fecha"
+                  id="TipoPublicacion-label"
+                  label="Tipo de publicacion :"
+                  label-for="TipoPublicacion"
                 >
                   <ValidationProvider
-                    name="fecha "
+                    :name="'TipoPublicacion '"
                     :rules="'required'"
                     v-slot="{ errors, valid }"
                   >
-                    <b-form-input
-                      v-model="publicacion.fecha"
-                      :state="errors[0] ? false : valid ? true : null"
+                    <b-form-select
+                      v-model="tipoSeleccionado"
                       size="sm"
-                      type="date"
-                    >
-                    </b-form-input>
+                      required
+                      :options="fArmarPaquete"
+                      @change="verSiEsDestacada()"
+                      :state="errors[0] ? false : valid ? true : null"
+                    ></b-form-select>
                     <b-form-invalid-feedback
                       v-for="error in errors"
                       :key="error.key"
@@ -102,19 +104,39 @@
                   </ValidationProvider>
                 </b-form-group>
               </b-col>
-            </b-row> -->
-          <b-row>
-            <b-col lg="10" md="10">
-              <b-form-checkbox
-                v-model="publicacion.destacada"
-                name="checkbox-1"
-              >
-                Publicacion destacada (las publicaciones destacadas tienen un
-                costo adicional y se visualizan en el home de Malambo)
-              </b-form-checkbox>
-            </b-col>
-            <hr />
+            </div>
+            <div v-else>
+              <b-col lg="8" md="18">
+                <b-form-group
+                  id="TipoPublicacion-label"
+                  label="Tipo de publicacion :"
+                  label-for="TipoPublicacion"
+                >
+                  <ValidationProvider
+                    :name="'TipoPublicacion '"
+                    :rules="'required'"
+                    v-slot="{ errors, valid }"
+                  >
+                    <b-form-select
+                      v-model="tipoSeleccionado"
+                      size="sm"
+                      required
+                      :options="fpreciosPublicaciones"
+                      @change="verSiEsDestacada()"
+                      :state="errors[0] ? false : valid ? true : null"
+                    ></b-form-select>
+                    <b-form-invalid-feedback
+                      v-for="error in errors"
+                      :key="error.key"
+                    >
+                      {{ error }}
+                    </b-form-invalid-feedback>
+                  </ValidationProvider>
+                </b-form-group>
+              </b-col>
+            </div>
           </b-row>
+
           <b-row>
             <b-col cols="12">
               <b-form-group
@@ -146,11 +168,24 @@ export default {
     publicacion: {
       type: Array,
     },
+    preciosPublicacion: {
+      type: Array,
+    },
+
+    contrato: {
+      type: Array,
+    },
   },
   data() {
     return {
       alerts: [],
       montoEntregaInvalido: false,
+      tipoSeleccionado: null,
+      options: [
+        { value: null, text: "-- Seleccione el tipo de publicacion --" },
+        { value: 1, text: "Publicacion estandar" },
+        { value: 2, text: "Publicacion destacada (Home + redes sociales)" },
+      ],
     };
   },
   methods: {
@@ -167,6 +202,46 @@ export default {
       }
       return result;
     },
+    verSiEsDestacada() {
+      console.log(this.publicacion);
+      this.tipoSeleccionado == 1
+        ? (this.publicacion.destacada = false)
+        : (this.publicacion.destacada = true);
+    },
+        seleccionarPrimero(){
+      this.tipoSeleccionado=1
+    }
+    
+  },
+  computed: {
+    fpreciosPublicaciones() {
+      let mc = this.preciosPublicacion.map((e) => ({
+        value: e.id,
+        text: e.nombre + ":  $" + " " + e.precio,
+      }));
+      mc.push({
+        value: null,
+        text: "-- Seleccione el tipo de publicacion --",
+        disabled: true,
+      });
+
+      return mc;
+    },
+    fArmarPaquete(){
+      if (Number(this.contrato[0].cantDestacada) >Number(0)){
+         return [
+                { value: null, text: "-- Seleccione el tipo de publicacion --" },
+                { value: 1, text: "Publicacion estandar" },
+                { value: 2, text: "Publicacion destacada (Home + redes sociales)" },
+              ]
+      }else{
+          this.seleccionarPrimero()
+          return [
+                { value: null, text: "-- Seleccione el tipo de publicacion --" },
+                { value: 1, text: "Publicacion estandar" },
+              ]
+      }
+    }
   },
 };
 </script>

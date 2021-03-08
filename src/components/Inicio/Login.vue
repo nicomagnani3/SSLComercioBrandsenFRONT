@@ -97,12 +97,12 @@ export default {
     
     if ( this.$route.params.autentificacion == false) {
       this.$bvToast.toast(
-        `Usted tiene que iniciar sesion para poder publicar en Malambo`,
+        `Antes inicia sesion o registrate en unos simples pasos ;)`,
         {
           title: 'Atencion!!',
           toaster: "b-toaster-top-center",
           solid: true,
-          variant: "danger",
+          variant: "info",
         }
       );
     }

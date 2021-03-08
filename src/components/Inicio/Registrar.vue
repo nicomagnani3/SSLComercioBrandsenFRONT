@@ -1,5 +1,5 @@
 <template>
-  <div class="registrar">
+  <div v-if="loading" class="text-center">
     <img
       @click="home()"
       src="@/assets/MalamboLogo.png"
@@ -7,7 +7,23 @@
       class="rounded"
       alt="..."
     />
-
+    <br /><br />
+    <br /><br />
+    <b-spinner
+      style="width: 11rem; height: 11rem"
+      variant="info"
+      label="Text Centered"
+    >
+    </b-spinner>
+  </div>
+  <div v-else>
+    <img
+      @click="home()"
+      src="@/assets/MalamboLogo.png"
+      style="width: 100%; max-width: 600px"
+      class="rounded"
+      alt="..."
+    />
     <b-form action class="form" @submit.prevent="registrarse">
       <hr />
       <p class="title h2 mt-2 text-center">
@@ -25,19 +41,6 @@
         ></b-form-select>
       </b-input-group>
       <br />
-      <!-- 
-      <div class="title h5 mt-2 text-center">
-        <b-form-radio-group
-          v-model="value"
-          :options="options"
-          :state="state"
-          name="radio-validation"
-        >
-          <b-form-invalid-feedback :state="state"
-            >Por favor seleccione una opcion</b-form-invalid-feedback
-          >
-        </b-form-radio-group>
-      </div> -->
       <div v-if="this.value == 1 || this.value == 5 || this.value == 4">
         <b-input-group size="lg">
           <b-input-group-prepend is-text>
@@ -154,7 +157,18 @@
         </b-input-group>
         <br />
       </div>
-      <div v-if="this.value == 3 || this.value == 2">
+      <div v-if="this.value == 3 || this.value == 2">        
+        <b-input-group size="lg">
+          <b-form-select
+            size="lg"
+            id="rubro"
+            data-checkout="Rubro"
+            v-model="empresa.rubro"
+            :options="fRubros"
+            required
+          ></b-form-select>
+        </b-input-group>
+        <br />
         <b-input-group size="lg">
           <b-input-group-prepend is-text>
             <b-icon icon="person-fill"></b-icon>
@@ -176,7 +190,7 @@
             <b-icon icon="envelope"></b-icon>
           </b-input-group-prepend>
           <b-form-input
-            id="email"
+            id="emailEmpresa"
             size="lg"
             v-model="empresa.emailEmpresa"
             type="email"
@@ -198,6 +212,20 @@
             type="number"
             required
             placeholder="Celular,con la caracteristica y sin el 15, ejemplo 2223461957"
+            class="line"
+          ></b-form-input>
+        </b-input-group>
+        <br />
+
+        <b-input-group size="lg">
+          <b-input-group-prepend is-text>
+            <b-icon icon="link"></b-icon>
+          </b-input-group-prepend>
+          <b-form-input
+            id="web"
+            size="lg"
+            v-model="empresa.web"
+            placeholder="URL de tu web"
             class="line"
           ></b-form-input>
         </b-input-group>
@@ -262,6 +290,8 @@
   </div>
 </template>
 <script>
+import axios from "axios";
+import PublicacionService from "@/services/PublicacionService";
 import AuthenticationService from "@/services/AuthenticationService";
 export default {
   data() {
@@ -281,20 +311,24 @@ export default {
         password: "",
         password_confirmation: "",
         celular: null,
+        web: "",
+        rubro:null
       },
       contraseñaIncorrecta: false,
       registrando: false,
       mensaje: "",
+      loading: true,
       value: null,
+      rubros:[],
       options: [
         {
           value: null,
-          text: "Seleccione el tipo de usuario para registrarse",
+          text: "-Seleccione el tipo de usuario para registrarse-",
           selected: true,
           disabled: true,
         },
         { text: "Usuario", value: 1 },
-        { text: "Profesional", value: 5 },
+        { text: "Servicio/ Profesional", value: 5 },
         { text: "Emprendedor", value: 4 },
         { text: "Comercio", value: 3 },
         { text: "Empresa", value: 2 },
@@ -302,8 +336,18 @@ export default {
     };
   },
   computed: {
-    state() {
-      return Boolean(this.value);
+    fRubros() {
+      let mc = this.rubros.map((e) => ({
+        value: e.id,
+        text: e.nombre,
+      }));
+      mc.push({
+        value: null,
+        text: "-Seleccione el rubro-",
+        disabled: true,
+      });
+
+      return mc;
     },
   },
   methods: {
@@ -365,6 +409,7 @@ export default {
       }
     },
     async registrarEmpresa() {
+      console.log(this.empresa.rubro)
       this.registrando = true;
       if (this.empresa.password == this.empresa.password_confirmation) {
         try {
@@ -374,8 +419,9 @@ export default {
             email: this.empresa.emailEmpresa,
             password: this.empresa.password,
             celular: this.empresa.celular,
-
+            web: this.empresa.web,
             grupo: this.value,
+            rubro:this.empresa.rubro
           });
           if (response.data.error == true) {
             this.registrando = false;
@@ -389,7 +435,7 @@ export default {
             this.$root.$bvToast.toast(
               "Su email para ingresar es " + response.data.data,
               {
-                title: "Usted se a registrado en el sistema de Mercado Local",
+                title: "Usted se a registrado en el sistema de MALAMBO",
                 toaster: "b-toaster-top-center succes",
                 solid: true,
                 variant: "success",
@@ -422,9 +468,33 @@ export default {
       }
       return "comercio";
     },
+    async getRubros() {
+      try {
+        const response = await PublicacionService.getRubros();
+        if (response.data.error == false) {
+          this.rubros = response.data.data;
+        }
+      } catch (err) {
+        this.rubros =
+          "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS DE RUBROS";
+      }
+    },
+  },
+  
+  mounted() {
+    axios
+      .all([this.getRubros()])
+      .then(() => {
+        this.loading = false;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
 };
 </script>
 
 <style>
+
+  
 </style>

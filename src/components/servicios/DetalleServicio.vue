@@ -70,14 +70,14 @@
             </b-form-group>
           </b-col> -->
         </b-row>
-        <b-row>
+     <!--    <b-row>
           <b-col lg="10" md="10">
             <b-form-checkbox v-model="publicacion.destacada" name="checkbox-1">
               Publicacion destacada (las publicaciones destacadas tienen un costo adicional y se visualizan en el home de Malambo)
             </b-form-checkbox>
           </b-col>
           <hr />
-        </b-row>
+        </b-row> -->
         <b-row>
           <b-col cols="12">
             <b-form-group
@@ -91,7 +91,7 @@
                 size="sm"
                 rows="8"
                 v-model="publicacion.observaciones"
-                placeholder="Descripción del servicio que vas a publicar"
+                placeholder="Descripción del servicio que vas a publicar, te sugerimos poner detallado tu ubicacion,horarios,dias de atencion, redes sociales y demas.."
               ></b-form-textarea>
             </b-form-group>
           </b-col>

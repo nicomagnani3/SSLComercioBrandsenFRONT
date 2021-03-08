@@ -1,7 +1,11 @@
 <template>
-  <div class="text-center" v-if="loading">
-    <span class="text-danger"> <b> Cargando</b></span>
-    <b-spinner variant="primary" label="Text Centered"></b-spinner>
+  <div v-if="loading" class="text-center">
+    <b-spinner
+      style="width: 3rem; height: 3rem"
+      variant="warning"
+      label="Text Centered"
+    >
+    </b-spinner>
   </div>
   <div v-else>
     <b-navbar toggleable="lg" type="light" class="nav">
@@ -37,7 +41,7 @@
                 item.nombre
               }}</a>
             </li>
-          </b-nav-item-dropdown>
+          </b-nav-item-dropdown>        
           <b-nav-item-dropdown>
             <template slot="button-content">
               <span class="light">Servicios</span>
@@ -48,6 +52,20 @@
               :key="item.id"
             >
               <a class="buscador" @click="buscarProductoporCategoria(item)">{{
+                item.nombre
+              }}</a>
+            </li>
+          </b-nav-item-dropdown>
+             <b-nav-item-dropdown>
+            <template slot="button-content">
+              <span class="light">Rubros</span>
+            </template>
+            <li
+              class="list-group-item"
+              v-for="item in rubros"
+              :key="item.id"
+            >
+              <a class="buscador" @click="buscarProductoporRubro(item)">{{
                 item.nombre
               }}</a>
             </li>
@@ -72,7 +90,19 @@
               >Servicio</b-dropdown-item
             >
           </b-nav-item-dropdown>
-          <b-nav-item :to="{ name: 'renovarContrato' }">Contratos</b-nav-item>
+          <b-nav-item-dropdown
+            v-if="hasPermisos('MIS_CONTRATOS')"
+            :to="{ name: 'renovarContrato' }"
+          >
+            <template slot="button-content">
+              <span class="light">Contrato</span>
+            </template>
+            <b-dropdown-item
+              :to="{ name: 'renovarContrato' }"
+              v-if="hasPermisos('VER_CONTRATO')"
+              >Ver</b-dropdown-item
+            >
+          </b-nav-item-dropdown>
           <b-nav-item
             :to="{ name: 'misproductos' }"
             v-if="hasPermisos('MIS_PRODUCTOS')"
@@ -80,7 +110,23 @@
           >
         </b-navbar-nav>
 
-        <b-navbar-nav>
+        <div class="input-group input-group-lg" style="    max-width: 700px;">
+          <b-form-input
+            
+            type="text"
+            size="15"
+            maxlength="128"
+            @keyup.enter="buscarProducto(filterPrev)"
+            v-model="filterPrev"
+            placeholder="Buscar "
+          ></b-form-input>
+
+          <b-button size="sm" @click="buscarProducto(filterPrev)"
+            ><b-icon icon="search"></b-icon
+          ></b-button>
+        </div>
+
+        <!--     
           <b-col class="buscarPs">
             <b-form-group class="mb-0">
               <b-input-group>
@@ -97,8 +143,7 @@
                 </b-input-group-append>
               </b-input-group>
             </b-form-group>
-          </b-col>
-        </b-navbar-nav>
+          </b-col> -->
 
         <!-- Right aligned nav items -->
         <b-navbar-nav class="">
@@ -117,12 +162,18 @@
               <b-icon icon="person-fill"></b-icon>
             </template>
             <b-dropdown-item :to="{ name: 'login' }"
+              v-if="!hasPermisos('CAMBIAR_CLAVE')"
               >Iniciar sesion</b-dropdown-item
             >
             <b-dropdown-item :to="{ name: 'Registrarse' }"
+              v-if="!hasPermisos('CAMBIAR_CLAVE')"
               >Crear cuenta</b-dropdown-item
             >
-            <b-dropdown-item @click.prevent="logout">SALIR</b-dropdown-item>
+             <b-dropdown-item :to="{ name: 'cambiarClave' }"
+                v-if="hasPermisos('CAMBIAR_CLAVE')"
+              >Cambiar contraseña</b-dropdown-item
+            >
+            <b-dropdown-item   v-if="hasPermisos('CAMBIAR_CLAVE')" @click.prevent="logout">SALIR</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
@@ -135,6 +186,7 @@ import Header from "@/components/menu/Header.vue";
 import CategoriasService from "@/services/CategoriasService";
 import EmprendimientoService from "@/services/EmprendimientoService";
 import ServiciosService from "@/services/ServiciosService";
+import PublicacionService from "@/services/PublicacionService";
 
 import axios from "axios";
 export default {
@@ -151,6 +203,7 @@ export default {
       categorias: [],
       emprendimientos: [],
       servicios: [],
+      rubros: [],
     };
   },
   created() {
@@ -163,11 +216,8 @@ export default {
     ...mapGetters("storeUser", ["hasPermisos", "getGrupos", "getUserId"]),
   },
   methods: {
-  
-
     buscarProducto(producto) {
       const path = `/buscarProductos/${producto}`;
-      console.log(this.$route.path);
       if (this.$route.path !== path)
         this.$router.push({
           name: "buscarProductos",
@@ -213,6 +263,19 @@ export default {
         this.loading = false;
       }
     },
+     async getRubros() {
+      this.loading = true;
+      try {
+        const response = await PublicacionService.getRubros();
+        this.rubros = response.data.data;
+        this.rubros = this.ordenarDatos(this.rubros);
+      } catch (err) {
+        this.rubros = "ATENCION NO SE PUDIERON OBTENER LOS RUBROS";
+      } finally {
+        this.loading = false;
+      }
+    },
+    
     ordenarDatos(categoria) {
       return categoria.sort(function (a, b) {
         if (a.nombre > b.nombre) {
@@ -226,7 +289,6 @@ export default {
     },
 
     buscarProductoporCategoria(categoria) {
-
       const path = `/buscarProductos/${categoria.nombre}`;
       if (this.$route.path !== path)
         this.$router.push({
@@ -237,6 +299,21 @@ export default {
           },
           params: {
             producto: categoria.nombre,
+          },
+        });
+    },
+    buscarProductoporRubro(rubro) {
+      const path = `/buscarProductos/${rubro.nombre}`;
+      if (this.$route.path !== path)
+        this.$router.push({
+          name: "buscarProductos",
+          query: {
+            q: this.searchQuery,
+            t: new Date().getTime(),
+          },
+          params: {
+            producto: rubro.nombre,
+            rubro:rubro.id
           },
         });
     },
@@ -255,6 +332,7 @@ export default {
         this.getcategorias(),
         this.getEmprendimientos(),
         this.getServicios(),
+        this.getRubros()
       ])
       .then(() => {
         this.loading = false;
@@ -267,21 +345,9 @@ export default {
 </script>
 
 <style scoped>
-.buscarPs {
-  padding: 10px;
-  width: 450px;
-}
 .Buscador {
   color: rgb(255, 206, 78);
   cursor: pointer;
-}
-
-.buscar {
-  width: 39%;
-  height: 64%;
-  border: 1px solid rgb(212, 40, 40);
-  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
-  margin: 5px;
 }
 
 .nav {

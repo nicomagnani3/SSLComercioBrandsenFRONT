@@ -1,11 +1,12 @@
 <template>
-  <div v-if="loading" class="text-center">
-    <br />
-    <br />
-    <span class="text-danger">
-      <b>Cargando</b>
-    </span>
-    <b-spinner variant="primary" label="Text Centered"></b-spinner>
+ <div v-if="loading" class="text-center">
+    <br /><br />
+    <b-spinner
+      style="width: 11rem; height: 11rem"
+      variant="warning"
+      label="Text Centered"
+    >
+    </b-spinner>
   </div>
   <div v-else class="body">
     <b-row class="pb-3">
@@ -85,8 +86,8 @@
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
 import PublicacionService from "@/services/PublicacionService";
+import { mapGetters, mapState } from "vuex";
 
 export default {
   components: {},
@@ -107,6 +108,7 @@ export default {
     };
   },
   computed: {
+      ...mapState("storeUser", ["grupos"]),
     ...mapGetters("storeUser", ["getUserId", "getGrupos"]),
   },
   mounted() {
@@ -143,8 +145,11 @@ export default {
         this.loading=true
         try {
         const response = await PublicacionService.eliminarPublicacion({
+          grupo:this.grupos,
+           idUsuario: this.getUserId,
           idPublicacion: publicacion.id,
-          tipo:publicacion.tipo
+          tipo:publicacion.tipo,
+          destacada:publicacion.destacada
         });
         if ( response.data.error == false){
            this.misPublicaciones()
