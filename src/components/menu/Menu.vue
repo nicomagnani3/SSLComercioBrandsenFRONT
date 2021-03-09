@@ -109,7 +109,7 @@
             <b-dropdown-item
               :to="{ name: 'asignarContrato' }"
               v-if="hasPermisos('ASIGNAR_CONTRATO')"
-              >Crear</b-dropdown-item
+              >Nuevo</b-dropdown-item
             >
           </b-nav-item-dropdown>
           

@@ -17,7 +17,7 @@
           <p class="h1 text-center">Contratos</p>
         </b-col>
       </b-row>
-      <b-card no-body class="mb-3 p-0" header="Asignar usuario">
+      <b-card no-body class="mb-3 p-0" header="Elegir el  usuario o empresa">
         <b-container class="pb-3">
           <b-input-group size="lg">
             <b-form-select
@@ -38,7 +38,7 @@
       <b-card
         no-body
         class="mb-3 p-0"
-        header="Asignar el paquete a la empresa o comercio"
+        header="Elegir el paquete a la empresa o comercio"
       >
         <b-container class="pb-3">
           <b-table

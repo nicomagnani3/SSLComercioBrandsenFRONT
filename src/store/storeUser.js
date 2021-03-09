@@ -118,8 +118,7 @@ export default {
         getUserId(state) {          
             return JSON.parse(state.userId);
         },
-        getUsername(state) {   
-             
+        getUsername(state) {                            
             return state.username
         },
         

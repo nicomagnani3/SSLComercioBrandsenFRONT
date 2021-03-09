@@ -345,7 +345,7 @@ export default {
       }));
       mc.push({
         value: null,
-        text: "-Seleccione el tipo de usuario para registrarse-",
+        text: "-Seleccione un tipo de usuario para registrarte-",
         disabled: true,
       });
 

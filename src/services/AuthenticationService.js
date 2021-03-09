@@ -21,6 +21,7 @@ export default {
     tiposUsuarios(credentials) {    
         return Api().get(API_URL + API_USER + "tipos_usuarios",credentials)
     },
+    
     getNombreUsuariosParaContrato(credentials) {    
         return Api().get(API_URL + API_USER + "get_nombres_users",credentials)
     },

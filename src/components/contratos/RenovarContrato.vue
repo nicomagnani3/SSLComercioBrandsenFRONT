@@ -75,7 +75,7 @@
           <b-row class="pb-2">
             <b-col class="text-center pt-3">
               <b-button variant="success" @click="pagarPaquete()"
-                >Confirmar Eleccion</b-button
+                >Confirmar mi Eleccion</b-button
               >
             </b-col>
           </b-row>
