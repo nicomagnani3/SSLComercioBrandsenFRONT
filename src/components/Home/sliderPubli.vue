@@ -13,8 +13,8 @@
       
         <b-carousel-slide class="carrousel">
             <b-container>   
-                <b-row >  
-                    <b-col  > 
+                <b-row>  
+                    <b-col> 
                         <b-card 
                             img-src="https://directoriopampeano.com/fotos/2017/01/be99bc9b9154c4a37d7466fca4656bb5_62468-1.png"
                             img-alt="Image"
