@@ -15,8 +15,10 @@ import NuevaPublicacion from '@/components/publicaciones/NuevaPublicacion.vue'
 import NuevoEmprendimiento from '@/components/emprendimientos/NuevoEmprendimiento.vue'
 /* Servicio */
 import NuevoServicio from '@/components/servicios/NuevoServicio.vue'
-/* Contratos */
+/* Contratos  admin y empresas o comercios*/
 import RenovarContrato from '@/components/contratos/RenovarContrato.vue'
+import asignarContrato from '@/components/contratos/asignarContrato.vue'
+
 /* misProductos */
 import MisProductos from '@/components/usuarios/MisProductos.vue'
 /* Menu */
@@ -102,6 +104,14 @@ const router = new Router({
           requireAuth: true
         },  
         },
+        {
+          path: '/asignarContrato',
+           name: 'asignarContrato',
+           component: asignarContrato,
+           meta: {
+            requireAuth: true
+          },  
+          },
         {
           path: '/misproductos',
            name: 'misproductos',

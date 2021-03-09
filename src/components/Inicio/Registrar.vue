@@ -36,7 +36,7 @@
           id="plan"
           data-checkout="Plan"
           v-model="value"
-          :options="options"
+          :options="foptions"
           required
         ></b-form-select>
       </b-input-group>
@@ -293,6 +293,7 @@
 import axios from "axios";
 import PublicacionService from "@/services/PublicacionService";
 import AuthenticationService from "@/services/AuthenticationService";
+
 export default {
   data() {
     return {
@@ -320,19 +321,7 @@ export default {
       loading: true,
       value: null,
       rubros:[],
-      options: [
-        {
-          value: null,
-          text: "-Seleccione el tipo de usuario para registrarse-",
-          selected: true,
-          disabled: true,
-        },
-        { text: "Usuario", value: 1 },
-        { text: "Servicio/ Profesional", value: 5 },
-        { text: "Emprendedor", value: 4 },
-        { text: "Comercio", value: 3 },
-        { text: "Empresa", value: 2 },
-      ],
+      tiposUsuarios:[], 
     };
   },
   computed: {
@@ -349,7 +338,22 @@ export default {
 
       return mc;
     },
+     foptions() {
+      let mc = this.tiposUsuarios.map((e) => ({
+        value: e.id,
+        text: e.nombre,
+      }));
+      mc.push({
+        value: null,
+        text: "-Seleccione un tipo de usuario para registrarte-",
+        disabled: true,
+      });
+
+      return mc;
+    },
+
   },
+  
   methods: {
     home() {
       this.$router.push("/");
@@ -479,11 +483,23 @@ export default {
           "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS DE RUBROS";
       }
     },
+       async getTipoUsuarios() {
+      try {
+        const response = await AuthenticationService.tiposUsuarios();
+        if (response.data.error == false) {
+          this.tiposUsuarios = response.data.data;
+        }
+      } catch (err) {
+        this.rubros =
+          "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS DE RUBROS";
+      }
+    },
+    
   },
   
   mounted() {
     axios
-      .all([this.getRubros()])
+      .all([this.getRubros(),this.getTipoUsuarios()])
       .then(() => {
         this.loading = false;
       })

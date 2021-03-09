@@ -1,14 +1,15 @@
 <template>
   <b-container>
     <div v-if="loading" class="text-center">
-    <br /><br />    <br /><br />
-    <b-spinner
-      style="width: 11rem; height: 11rem"
-      variant="warning"
-      label="Text Centered"
-    >
-    </b-spinner>
-  </div>
+      <br /><br />
+      <br /><br />
+      <b-spinner
+        style="width: 11rem; height: 11rem"
+        variant="warning"
+        label="Text Centered"
+      >
+      </b-spinner>
+    </div>
     <div v-else>
       <b-row class="pb-2">
         <b-col class="text-center pt-3">
@@ -74,7 +75,7 @@
           <b-row class="pb-2">
             <b-col class="text-center pt-3">
               <b-button variant="success" @click="pagarPaquete()"
-                >Confirmar Eleccion</b-button
+                >Confirmar mi Eleccion</b-button
               >
             </b-col>
           </b-row>
@@ -103,6 +104,13 @@
                         }}<span class="price" id="summary-total"></span>
                       </div>
                     </div>
+                    <b-spinner
+                      style="width: 5rem; height: 5rem"
+                      variant="warning"
+                      v-if="esperarBotonMercadoPago"
+                      label="Text Centered"
+                    >
+                    </b-spinner>
                     <div class="payment-details">
                       <div class="form-group col-sm-12">
                         <br />
@@ -110,6 +118,7 @@
                         <br />
                       </div>
                     </div>
+                    <div></div>
                   </div>
                 </div>
               </section>
@@ -131,6 +140,7 @@ export default {
   props: {},
   data() {
     return {
+      esperarBotonMercadoPago: false,
       presionoCrear: false,
       loading: true,
       selectedpaquete: null,
@@ -202,14 +212,13 @@ export default {
           desde: new Date(),
           hasta: this.sumarDias(new Date(), +30),
           paquete: this.selectedpaquete[0].id,
-          cantpublicaciones:
-            Number(this.selectedpaquete[0].cantNormal) ,            
-          cantdestacadas:
-            Number(this.selectedpaquete[0].cantDestacada)           
+          cantpublicaciones: Number(this.selectedpaquete[0].cantNormal),
+          cantdestacadas: Number(this.selectedpaquete[0].cantDestacada),
         });
-         if (response.data.error == false) {
-          this.validarPagoMercadoPago(response.data.data)
-        } 
+        if (response.data.error == false) {
+          this.validarPagoMercadoPago(response.data.data);
+          this.esperarBotonMercadoPago = true;
+        }
       } catch (error) {
         this.$bvToast.toast(`No se pudo crear el contrato`, {
           title: error.data,
@@ -222,16 +231,15 @@ export default {
         });
       }
     },
-     async validarPagoMercadoPago(idPublicacion){   
-        const response = await MercadoPago.crearContrato({
-          titulo:this.selectedpaquete[0].nombre,
-          precioPublicacion:Math.trunc( this.selectedpaquete[0].precio),
-          idPublicacion:idPublicacion,
-             
-        });      
-        this.createCheckoutButton(response.data.id);
+    async validarPagoMercadoPago(idPublicacion) {
+      const response = await MercadoPago.crearContrato({
+        titulo: this.selectedpaquete[0].nombre,
+        precioPublicacion: Math.trunc(this.selectedpaquete[0].precio),
+        idPublicacion: idPublicacion,
+      });
+      this.createCheckoutButton(response.data.id);
     },
-     createCheckoutButton(preference) {
+    createCheckoutButton(preference) {
       var script = document.createElement("script");
       script.src =
         "https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js";
@@ -239,6 +247,7 @@ export default {
       script.dataset.preferenceId = preference;
       document.getElementById("button-checkout").innerHTML = "";
       document.querySelector("#button-checkout").appendChild(script);
+      this.esperarBotonMercadoPago = false;
     },
     sumarDias(fecha, dias) {
       fecha.setDate(fecha.getDate() + dias);

@@ -17,5 +17,13 @@ export default {
     },
     recuperarClave(credentials) {
         return Api().post(API_URL + API_USER + "recuperarClave", credentials)
-    }
+    },
+    tiposUsuarios(credentials) {    
+        return Api().get(API_URL + API_USER + "tipos_usuarios",credentials)
+    },
+    
+    getNombreUsuariosParaContrato(credentials) {    
+        return Api().get(API_URL + API_USER + "get_nombres_users",credentials)
+    },
+    
 }
