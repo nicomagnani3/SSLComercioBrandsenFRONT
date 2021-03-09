@@ -7,12 +7,15 @@
     >
     </b-spinner>
   </div>
-  <div v-else>
-    <b-navbar toggleable="lg" type="light" class="nav">
+  <b-container class="nav" fluid v-else >
+   
+    <b-navbar toggleable="lg" type="light" class="">
       <b-navbar-brand :to="'/'"><Header /> </b-navbar-brand>
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse class="navbar-collapse" id="nav-collapse" is-nav>
-        <b-navbar-nav>
+    <b-navbar-nav>
+
+      
           <b-nav-item-dropdown>
             <template slot="button-content">
               <span class="light">Productos</span>
@@ -110,21 +113,7 @@
           >
         </b-navbar-nav>
 
-        <div class="input-group input-group-lg" style="    max-width: 700px;">
-          <b-form-input
-            
-            type="text"
-            size="15"
-            maxlength="128"
-            @keyup.enter="buscarProducto(filterPrev)"
-            v-model="filterPrev"
-            placeholder="Buscar "
-          ></b-form-input>
-
-          <b-button size="sm" @click="buscarProducto(filterPrev)"
-            ><b-icon icon="search"></b-icon
-          ></b-button>
-        </div>
+        
 
         <!--     
           <b-col class="buscarPs">
@@ -178,7 +167,25 @@
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
-  </div>
+
+    <div class="contenedorBuscador">
+      <div class="Bus input-group input-group-lg" style="    max-width: 700px;">
+          <b-form-input
+            type="text"
+            size="15"
+            maxlength="128"
+            @keyup.enter="buscarProducto(filterPrev)"
+            v-model="filterPrev"
+            placeholder="Buscar "
+          ></b-form-input>
+
+          <b-button size="sm" @click="buscarProducto(filterPrev)"
+            ><b-icon icon="search"></b-icon
+          ></b-button>
+    </div>
+    </div>
+    
+  </b-container>
 </template>
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
@@ -351,6 +358,24 @@ export default {
 }
 
 .nav {
+
   background-color: #ffce4e;
+  display: flex;
+  flex-direction: column;
+
 }
+
+.Bus{
+  margin: 10px;
+}
+
+
+.contenedorBuscador{
+
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+}
+
 </style>

@@ -4,6 +4,7 @@
       <Menu/>
         <router-view class="content"/>
       </div>
+      <Publicidad/>
       <Footer class="footer" />
   </div>
 </template>
@@ -14,12 +15,14 @@
 
 import Footer from '@/components/menu/Footer.vue'
 import Menu from '@/components/menu/Menu.vue'
+import Publicidad from "@/components/Home/EspacioPublicidad.vue";
 
 export default {
   name: 'Dashboard',
   components: {
    Menu,      
-    Footer 
+    Footer, 
+    Publicidad
   },
   props: {
    
@@ -72,6 +75,7 @@ export default {
   .contenedor{
 
     height: auto;
+    background-color: #ececec;
   }
 
   html {

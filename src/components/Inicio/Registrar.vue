@@ -16,7 +16,7 @@
     >
     </b-spinner>
   </div>
-  <div v-else>
+  <div v-else class="containerR">
     <img
       @click="home()"
       src="@/assets/MalamboLogo.png"
@@ -497,4 +497,5 @@ export default {
 <style>
 
   
+    
 </style>

@@ -1,6 +1,6 @@
 <template>
     
-    <b-container fluid class="bv-example-row">
+    <b-container fluid class=" containpubli bv-example-row">
         <b-row>
             <b-col class="publicidad"><img Class="imgPubliF" src="@/assets/publicitario.png" alt=""></b-col>
             <b-col class="publicidad"><img Class="imgPubliF" src="@/assets/publicitario.png" alt=""></b-col>
@@ -31,6 +31,8 @@ export default {
         width: 100%;
     }
 
+    
+
     .publicidad{
 
         
@@ -38,6 +40,8 @@ export default {
         
         
     }
+
+   
 
     .imgPubliF{
         width: 400px;

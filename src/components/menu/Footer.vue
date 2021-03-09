@@ -1,5 +1,7 @@
 <template>
+    
  <b-container fluid class="contenedor">
+    
   <b-row class="fila">
     <b-col xs="12" md="6" lg="3" align-self="center">
         
@@ -51,8 +53,15 @@
 
 
 <script>
+
+
+
 export default {
     name: "Footer",
+    components: {
+    
+    
+  },
     data () {
        return {
             
@@ -76,6 +85,9 @@ export default {
         border: 1px solid black;
         
     }
+    .containPubli{
+        margin:10px;
+    }
 
     .logo{
         width: 300px;
@@ -95,7 +107,7 @@ export default {
     .big{
 
         text-align: center;
-        background-color: #fff;
+        
     }
     
 

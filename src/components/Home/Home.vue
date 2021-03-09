@@ -12,7 +12,7 @@
       <sliderServicios/>
       <sliderEmprendimientos/>
       <Sliderempresa />
-      <Publicidad />
+   
       
      
      
@@ -25,7 +25,7 @@
 import Slider from "@/components/Home/Slider.vue";
  import NuevoSlide from "@/components/Home/NuevoSlide.vue";
 import Sliderempresa from "@/components/Home/slideEmpresas.vue";
-import Publicidad from "@/components/Home/EspacioPublicidad.vue";
+
 import sliderServicios from "@/components/Home/sliderServicios.vue";
 import sliderEmprendimientos from "@/components/Home/sliderEmprendimientos.vue";
 import sliderPubli from "@/components/Home/sliderPubli.vue";
@@ -41,7 +41,7 @@ export default {
   NuevoSlide,
     sliderServicios,
     Sliderempresa,
-    Publicidad,
+    
     sliderEmprendimientos,
     sliderPubli,
     
