@@ -41,7 +41,7 @@
                 item.nombre
               }}</a>
             </li>
-          </b-nav-item-dropdown>        
+          </b-nav-item-dropdown>
           <b-nav-item-dropdown>
             <template slot="button-content">
               <span class="light">Servicios</span>
@@ -56,15 +56,11 @@
               }}</a>
             </li>
           </b-nav-item-dropdown>
-             <b-nav-item-dropdown>
+          <b-nav-item-dropdown>
             <template slot="button-content">
               <span class="light">Rubros</span>
             </template>
-            <li
-              class="list-group-item"
-              v-for="item in rubros"
-              :key="item.id"
-            >
+            <li class="list-group-item" v-for="item in rubros" :key="item.id">
               <a class="buscador" @click="buscarProductoporRubro(item)">{{
                 item.nombre
               }}</a>
@@ -103,6 +99,20 @@
               >Ver</b-dropdown-item
             >
           </b-nav-item-dropdown>
+              <b-nav-item-dropdown
+            v-if="hasPermisos('ASIGNAR_CONTRATO')"
+            :to="{ name: 'asignarContrato' }"
+          >
+            <template slot="button-content">
+              <span class="light">Contrato</span>
+            </template>
+            <b-dropdown-item
+              :to="{ name: 'asignarContrato' }"
+              v-if="hasPermisos('ASIGNAR_CONTRATO')"
+              >Crear</b-dropdown-item
+            >
+          </b-nav-item-dropdown>
+          
           <b-nav-item
             :to="{ name: 'misproductos' }"
             v-if="hasPermisos('MIS_PRODUCTOS')"
@@ -110,9 +120,8 @@
           >
         </b-navbar-nav>
 
-        <div class="input-group input-group-lg" style="    max-width: 700px;">
+        <div class="input-group input-group-lg" style="max-width: 700px">
           <b-form-input
-            
             type="text"
             size="15"
             maxlength="128"
@@ -161,19 +170,26 @@
             <template #button-content>
               <b-icon icon="person-fill"></b-icon>
             </template>
-            <b-dropdown-item :to="{ name: 'login' }"
+            <b-dropdown-item
+              :to="{ name: 'login' }"
               v-if="!hasPermisos('CAMBIAR_CLAVE')"
               >Iniciar sesion</b-dropdown-item
             >
-            <b-dropdown-item :to="{ name: 'Registrarse' }"
+            <b-dropdown-item
+              :to="{ name: 'Registrarse' }"
               v-if="!hasPermisos('CAMBIAR_CLAVE')"
               >Crear cuenta</b-dropdown-item
             >
-             <b-dropdown-item :to="{ name: 'cambiarClave' }"
-                v-if="hasPermisos('CAMBIAR_CLAVE')"
+            <b-dropdown-item
+              :to="{ name: 'cambiarClave' }"
+              v-if="hasPermisos('CAMBIAR_CLAVE')"
               >Cambiar contraseña</b-dropdown-item
             >
-            <b-dropdown-item   v-if="hasPermisos('CAMBIAR_CLAVE')" @click.prevent="logout">SALIR</b-dropdown-item>
+            <b-dropdown-item
+              v-if="hasPermisos('CAMBIAR_CLAVE')"
+              @click.prevent="logout"
+              >SALIR</b-dropdown-item
+            >
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
@@ -263,7 +279,7 @@ export default {
         this.loading = false;
       }
     },
-     async getRubros() {
+    async getRubros() {
       this.loading = true;
       try {
         const response = await PublicacionService.getRubros();
@@ -275,7 +291,7 @@ export default {
         this.loading = false;
       }
     },
-    
+
     ordenarDatos(categoria) {
       return categoria.sort(function (a, b) {
         if (a.nombre > b.nombre) {
@@ -313,7 +329,7 @@ export default {
           },
           params: {
             producto: rubro.nombre,
-            rubro:rubro.id
+            rubro: rubro.id,
           },
         });
     },
@@ -332,7 +348,7 @@ export default {
         this.getcategorias(),
         this.getEmprendimientos(),
         this.getServicios(),
-        this.getRubros()
+        this.getRubros(),
       ])
       .then(() => {
         this.loading = false;

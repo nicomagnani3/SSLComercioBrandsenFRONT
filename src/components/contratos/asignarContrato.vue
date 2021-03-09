@@ -17,29 +17,28 @@
           <p class="h1 text-center">Contratos</p>
         </b-col>
       </b-row>
-      <b-card no-body class="mb-3 p-0" header="Detalles de tu contrato">
+      <b-card no-body class="mb-3 p-0" header="Asignar usuario">
         <b-container class="pb-3">
-          <b-table
-            show-empty
-            small
-            responsive
-            :items="contrato"
-            :fields="fields"
-            empty-text="Usted todavia no pose ningun contrato,abajo tiene la posibilidad de realizar uno"
-          >
-            <template v-slot:cell(desde)="row">{{
-              row.item.desde | formatDate
-            }}</template>
-            <template v-slot:cell(hasta)="row">{{
-              row.item.hasta | formatDate
-            }}</template>
-          </b-table>
+          <b-input-group size="lg">
+            <b-form-select
+              size="lg"
+              id="plan"
+              data-checkout="Plan"
+              v-model="value"
+              :options="foptions"
+              required
+              @change="userSeleccionado()"
+            ></b-form-select>
+          </b-input-group>
         </b-container>
+        <b-col class="text-center pt-3">
+          <strong> Email: {{ value["email"] }}</strong>
+        </b-col>
       </b-card>
       <b-card
         no-body
         class="mb-3 p-0"
-        header="Comprar o renovar paquete para realizar publicaciones"
+        header="Asignar el paquete a la empresa o comercio"
       >
         <b-container class="pb-3">
           <b-table
@@ -47,7 +46,7 @@
             ref="selectableTable"
             small
             responsive
-            :items="planes"
+            :items="planesUser"
             :fields="fieldsContrato"
             selectable
             :select-mode="selectMode"
@@ -75,53 +74,14 @@
           <b-row class="pb-2">
             <b-col class="text-center pt-3">
               <b-button variant="success" @click="pagarPaquete()"
-                >Confirmar Eleccion</b-button
+                >Confirmar Eleccion
+                 <b-icon
+              icon="arrow-counterclockwise"
+              v-if="this.presionoCrear"
+              animation="spin-reverse-pulse"
+              font-scale="1"
+            ></b-icon></b-button
               >
-            </b-col>
-          </b-row>
-          <b-row
-            v-if="this.presionoBtnPagar && this.selectedpaquete != null"
-            class="pb-2"
-          >
-            <b-col class="text-center pt-3">
-              <section class="payment-form dark">
-                <div class="container_payment">
-                  <div class="form-payment">
-                    <div class="products">
-                      <h3 class="title">Pagar paquete</h3>
-                      <div class="item">
-                        <span class="price" id="summary-price"></span>
-                        <p class="item-name">
-                          Presiona el boton "pagar" para pagar el paquete
-                          <strong> {{ this.selectedpaquete[0].nombre }}</strong
-                          >, cuando finalizes el pago tu paquete se cargara en
-                          Malambo<span id="summary-quantity"></span>
-                        </p>
-                      </div>
-                      <br />
-                      <div class="total">
-                        Total :${{ this.selectedpaquete[0].precio
-                        }}<span class="price" id="summary-total"></span>
-                      </div>
-                    </div>
-                    <b-spinner
-                      style="width: 5rem; height: 5rem"
-                      variant="warning"
-                      v-if="esperarBotonMercadoPago"
-                      label="Text Centered"
-                    >
-                    </b-spinner>
-                    <div class="payment-details">
-                      <div class="form-group col-sm-12">
-                        <br />
-                        <div id="button-checkout"></div>
-                        <br />
-                      </div>
-                    </div>
-                    <div></div>
-                  </div>
-                </div>
-              </section>
             </b-col>
           </b-row>
         </b-container>
@@ -133,24 +93,22 @@
 import Contratos from "@/services/ContratosService";
 import axios from "axios";
 import { mapGetters, mapState } from "vuex";
-import MercadoPago from "@/services/MercadoPago";
+import AuthenticationService from "@/services/AuthenticationService";
 
 export default {
   name: "RenovarContrato",
   props: {},
   data() {
     return {
-      esperarBotonMercadoPago: false,
       presionoCrear: false,
       loading: true,
       selectedpaquete: null,
       presionoBtnPagar: false,
       planes: [],
+      usuarios: [],
+      value: { email: null },
       selectMode: "single",
-      optionsPlan: [
-        { value: "E", text: "Plan Estandar" },
-        { value: "P", text: "Plan Premium" },
-      ],
+      planesUser: [],
       contrato: [],
       fields: [
         { key: "desde", label: "Fecha Inicio", class: "text-center p2" },
@@ -186,38 +144,55 @@ export default {
   computed: {
     ...mapState("storeUser", ["username", "nombre", "grupos"]),
     ...mapGetters("storeUser", ["getUserId"], ["getGrupos"]),
+    foptions() {
+      let mc = this.usuarios.map((e) => ({
+        value: e,
+        text: e.nombre,
+      }));
+      mc.push({
+        value: { email: null },
+        text: "-Seleccione el usuario o empresa-",
+        disabled: true,
+      });
+
+      return mc;
+    },
   },
   created() {},
   methods: {
+    userSeleccionado() {    
+      this.planesUser = this.planes.filter(
+        (c) => c.tipo == this.value.tipoPaquete
+      );
+    },
     pagarPaquete() {
-      this.presionoBtnPagar = true;
-      if (this.getUserId == null) {
-        this.$router.push({
-          name: "login",
-          params: {
-            autentificacion: false,
-          },
-        });
-      } else {
-        if (!this.presionoCrear && this.selectedpaquete != null) {
-          this.crearPaquete();
-        }
+      if (!this.presionoCrear && this.selectedpaquete != null) {
+        this.crearPaquete();
       }
     },
     async crearPaquete() {
       this.presionoCrear = true;
       try {
         const response = await Contratos.addContrato({
-          usuario: this.getUserId,
+          usuario: this.value.usuario,
           desde: new Date(),
           hasta: this.sumarDias(new Date(), +30),
           paquete: this.selectedpaquete[0].id,
           cantpublicaciones: Number(this.selectedpaquete[0].cantNormal),
           cantdestacadas: Number(this.selectedpaquete[0].cantDestacada),
+          pago: 1,
         });
         if (response.data.error == false) {
-          this.validarPagoMercadoPago(response.data.data);
-          this.esperarBotonMercadoPago = true;
+          this.$bvToast.toast(
+            `Se creo el contrato! al usuario` + this.value.nombre,
+            {
+              title: "Atencion!",
+              toaster: "b-toaster-top-center",
+              solid: true,
+              variant: "success",
+            }
+          );
+                this.presionoCrear = false;
         }
       } catch (error) {
         this.$bvToast.toast(`No se pudo crear el contrato`, {
@@ -230,24 +205,6 @@ export default {
           name: "Home",
         });
       }
-    },
-    async validarPagoMercadoPago(idPublicacion) {
-      const response = await MercadoPago.crearContrato({
-        titulo: this.selectedpaquete[0].nombre,
-        precioPublicacion: Math.trunc(this.selectedpaquete[0].precio),
-        idPublicacion: idPublicacion,
-      });
-      this.createCheckoutButton(response.data.id);
-    },
-    createCheckoutButton(preference) {
-      var script = document.createElement("script");
-      script.src =
-        "https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js";
-      script.type = "text/javascript";
-      script.dataset.preferenceId = preference;
-      document.getElementById("button-checkout").innerHTML = "";
-      document.querySelector("#button-checkout").appendChild(script);
-      this.esperarBotonMercadoPago = false;
     },
     sumarDias(fecha, dias) {
       fecha.setDate(fecha.getDate() + dias);
@@ -268,13 +225,9 @@ export default {
     async getPaquetes() {
       try {
         const response = await Contratos.getPaquetes({});
-        this.planes = response.data.data;
+
         if (response.data.error == false) {
-          if (this.grupos == "COMERCIO" || this.grupos == "EMPRESA") {
-            this.planes = this.planes.filter((c) => c.tipo == 1);
-          } else {
-            this.planes = this.planes.filter((c) => c.tipo == 2);
-          }
+          this.planes = response.data.data;
         }
       } catch (err) {
         this.$bvToast.toast(err.response.data.message, {
@@ -286,12 +239,12 @@ export default {
       }
     },
 
-    async getContratosUser() {
+    async getNombreUsuariosParaContrato() {
       try {
-        const response = await Contratos.getContratosUser({
-          user: this.getUserId,
-        });
-        this.contrato = response.data.data;
+        const response = await AuthenticationService.getNombreUsuariosParaContrato(
+          {}
+        );
+        this.usuarios = response.data.data;
       } catch (err) {
         this.$bvToast.toast(err.response.data.message, {
           title: "Atencion!",
@@ -306,7 +259,7 @@ export default {
     axios
       .all([
         this.getPaquetes(),
-        this.getContratosUser(),
+        this.getNombreUsuariosParaContrato(),
         //this.getServicios(),
       ])
       .then(() => {

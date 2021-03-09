@@ -110,7 +110,7 @@ export default {
             if(state.permisos == null){
                 return false
             }
-            return JSON.parse(state.permisos.includes(permiso)) || JSON.parse(state.permisos.includes('ADMINISTRADOR')) ;
+            return JSON.parse(state.permisos.includes(permiso)) ;
         },
         getGrupos(state) {                
             return JSON.parse(state.grupos);
