@@ -142,6 +142,13 @@
                     }}<span class="price" id="summary-total"></span>
                   </div>
                 </div>
+                <b-spinner
+                      style="width: 5rem; height: 5rem"
+                      variant="warning"
+                      v-if="esperarBotonMercadoPago"
+                      label="Text Centered"
+                    >
+                    </b-spinner>
                 <div class="payment-details">
                   <div class="form-group col-sm-12">
                     <br />
@@ -182,10 +189,13 @@ export default {
     preciosPublicacion: {
       type: Array,
     },
+    esperarBotonMercadoPago: {
+      type: Boolean,
+    },
   },
   data() {
     return {
-      
+  
       fields: [
         { key: "desde", label: "Fecha Inicio", class: "text-center p2" },
         { key: "hasta", label: "Fecha Vencimiento", class: "text-left p2" },

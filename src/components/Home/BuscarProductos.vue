@@ -90,73 +90,79 @@
                       Precio: {{ getImporte(producto.precio) }}
                     </h5>
                     <h5>Fecha: {{ producto.fecha | formatDate }}</h5>
-                    <a   target="_black" :href="producto.web">{{ producto.web }}</a>
+                    <a target="_black" :href="producto.web">{{
+                      producto.web
+                    }}</a>
                     <p v-if="producto.telefono != null && logeado">
                       Telefono: {{ producto.telefono }}
                     </p>
                     <p v-if="producto.email != null && logeado">
                       {{ producto.email }}
                     </p>
+                    <div>
+                      <a
+                        :href="
+                          'https://api.whatsapp.com/send?text=Hola!%20,desde%20Malambo%20observe%20la%20publicacion%20' +
+                          producto.titulo +
+                          ',queria%20obtener%20mas%20detalles' +
+                          '&phone=+54' +
+                          acomodarCelular(producto.telefono)
+                        "
+                        target="_black"
+                      >
+                        <img
+                          v-if="logeado"
+                          src="@/assets/wsp.png"
+                          alt=""
+                          height="auto"
+                          style="width: 45px; margin: 7px"
+                        />&nbsp;&nbsp;
+                      </a>
+                      <a
+                        :href="
+                          'https://mail.google.com/mail/?view=cm&fs=1&to=' +
+                          producto.email +
+                          '&body=Hola!%20,desde%20Malambo%20observe%20la%20publicacion%20' +
+                          producto.titulo +
+                          ',queria%20obtener%20mas%20detalles' +
+                          '&su=Malambo consulta por ' +
+                          producto.titulo
+                        "
+                        target="_black"
+                        >&nbsp;&nbsp;
+                        <img
+                          v-if="logeado"
+                          src="@/assets/mail.png"
+                          alt=""
+                          height="auto"
+                          style="width: 45px; margin: 7px"
+                        />
+                      </a>
+                    </div>
 
-                    <a
-                      :href="
-                        'https://api.whatsapp.com/send?text=Hola!%20,desde%20Malambo%20observe%20la%20publicacion%20' +
-                        producto.titulo +
-                        ',queria%20obtener%20mas%20detalles' +
-                        '&phone=+54' +
-                        acomodarCelular(producto.telefono)
-                      "
-                      target="_black"
-                    >
-                      <img
-                        v-if="logeado"
-                        src="@/assets/wsp.png"
-                        alt=""
-                        height="auto"
-                        style="width: 45px; margin: 7px"
-                      />
-                    </a>
-                    <a
-                      :href="
-                        'https://mail.google.com/mail/?view=cm&fs=1&to=' +
-                        producto.email +
-                        '&body=Hola!%20,desde%20Malambo%20observe%20la%20publicacion%20' +
-                        producto.titulo +
-                        ',queria%20obtener%20mas%20detalles' +
-                        '&su=Malambo consulta por ' +
-                        producto.titulo
-                      "
-                      target="_black"
-                    >
-                      <img
-                        v-if="logeado"
-                        src="@/assets/mail.png"
-                        alt=""
-                        height="auto"
-                        style="width: 45px; margin: 11px"
-                      />
-                    </a>
                     <b-col v-if="!logeado" class="text-center">
                       Para contactarte registrate
                       <router-link to="/login">ACA!</router-link>
                     </b-col>
-                    <b-col>
-                      <b-button variant="white" @click="verImagenes(producto)"
-                        ><b-icon
-                          style="width: 3rem; height: 5rem"
-                          icon="images"
-                        ></b-icon
-                      ></b-button>
-                      <b-button
-                        variant="white"
-                        v-if="producto.descripcion != 'SN'"
-                        @click="verdetalles(producto)"
-                        ><b-icon
-                          style="width: 3rem; height: 5rem"
-                          icon="layout-text-sidebar"
-                        ></b-icon
-                      ></b-button>
-                    </b-col>
+                    <div>
+                      <b-col>
+                        <b-button variant="white" @click="verImagenes(producto)"
+                          ><b-icon
+                            style="width: 3rem; height: 5rem"
+                            icon="images"
+                          ></b-icon
+                        ></b-button>
+                        <b-button
+                          variant="white"
+                          v-if="producto.descripcion != 'SN'"
+                          @click="verdetalles(producto)"
+                          ><b-icon
+                            style="width: 3rem; height: 5rem"
+                            icon="layout-text-sidebar"
+                          ></b-icon
+                        ></b-button>
+                      </b-col>
+                    </div>
                   </b-card-body>
                 </b-col>
               </b-row>
@@ -172,7 +178,7 @@
               <p>
                 *Revisá la ortografía de la palabra.<br />
                 *Utilizá palabras más genéricas o menos palabras.<br />
-                *Navegá por las categorías para encontrar un producto similar<br/>
+                *Navegá por las categorías para encontrar un producto similar<br />
                 *Busca en otra categoria o rubro
               </p>
             </b-alert>
@@ -250,7 +256,7 @@ export default {
     rubro: {
       type: Number,
       required: false,
-      default: 0
+      default: 0,
     },
     categoria: {
       type: Number,
@@ -280,8 +286,8 @@ export default {
     this.getcategorias();
     this.getEmprendimientos();
     this.getServicios();
-    console.log(this.rubro)
-    if (Number(this.rubro) >Number(0)) {
+    console.log(this.rubro);
+    if (Number(this.rubro) > Number(0)) {
       this.buscarPorRubro(this.rubro);
     } else {
       this.getPublicacionesPorNombre();
@@ -296,11 +302,11 @@ export default {
       this.getcategorias();
       this.getEmprendimientos();
       this.getServicios();
-          if (Number(this.rubro) >Number(0)) {
-      this.buscarPorRubro(this.rubro);
-    } else {
-      this.getPublicacionesPorNombre();
-    }
+      if (Number(this.rubro) > Number(0)) {
+        this.buscarPorRubro(this.rubro);
+      } else {
+        this.getPublicacionesPorNombre();
+      }
     },
   },
   methods: {
@@ -441,13 +447,13 @@ export default {
         this.productos = "ATENCION NO SE PUDIERON OBTENER LAS NOVEDADES";
       }
     },
-    async buscarPorRubro (rubroId) {
+    async buscarPorRubro(rubroId) {
       this.loading = true;
       try {
         const response = await PublicacionService.getProductosRubro({
           id: rubroId,
         });
-        console.log("entro")
+        console.log("entro");
         if (response.data.error == false) {
           this.productos = response.data.data;
           this.loading = response.data.error;

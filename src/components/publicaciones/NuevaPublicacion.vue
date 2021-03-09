@@ -87,6 +87,7 @@
           :finalizo="this.presionoFinalizar"
           :contrato="this.contrato"
           :preciosPublicacion="this.preciosPublicacion"
+          :esperarBotonMercadoPago="this.esperarBotonMercadoPago"
         >
         </PagarPublicacion>
       </tab-content>
@@ -118,6 +119,7 @@ export default {
   },
   data() {
     return {
+      esperarBotonMercadoPago:false,
       presionoFinalizar: false,
       presionoCrear: false,
       categorias: [],
@@ -226,6 +228,7 @@ export default {
               name: "Home",
             });
           } else {
+            this.esperarBotonMercadoPago=true
             this.validarPagoMercadoPago(response.data.data);
           }
         }
@@ -261,6 +264,7 @@ export default {
       script.dataset.preferenceId = preference;
       document.getElementById("button-checkout").innerHTML = "";
       document.querySelector("#button-checkout").appendChild(script);
+      this.esperarBotonMercadoPago=false
     },
     updateCategoriaHija(categoriaHija) {
       this.categoriaHijaSeleccionada = categoriaHija[0].id;

@@ -9,7 +9,7 @@
   </div>
   <div v-else>
     <b-navbar toggleable="lg" type="light" class="nav">
-      <b-navbar-brand :to="'/'"><Header /> </b-navbar-brand>
+      <b-navbar-brand><Header /> </b-navbar-brand>
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse class="navbar-collapse" id="nav-collapse" is-nav>
         <b-navbar-nav>
@@ -93,13 +93,14 @@
             <template slot="button-content">
               <span class="light">Contrato</span>
             </template>
+
             <b-dropdown-item
               :to="{ name: 'renovarContrato' }"
               v-if="hasPermisos('VER_CONTRATO')"
               >Ver</b-dropdown-item
             >
           </b-nav-item-dropdown>
-              <b-nav-item-dropdown
+          <b-nav-item-dropdown
             v-if="hasPermisos('ASIGNAR_CONTRATO')"
             :to="{ name: 'asignarContrato' }"
           >
@@ -112,15 +113,9 @@
               >Nuevo</b-dropdown-item
             >
           </b-nav-item-dropdown>
-          
-          <b-nav-item
-            :to="{ name: 'misproductos' }"
-            v-if="hasPermisos('MIS_PRODUCTOS')"
-            >Mis Productos</b-nav-item
-          >
         </b-navbar-nav>
 
-        <div class="input-group input-group-lg" style="max-width: 700px">
+        <div class="input-group input-group-lg" style="max-width: 700px;    min-width: 33%;">
           <b-form-input
             type="text"
             size="15"
@@ -134,29 +129,8 @@
             ><b-icon icon="search"></b-icon
           ></b-button>
         </div>
-
-        <!--     
-          <b-col class="buscarPs">
-            <b-form-group class="mb-0">
-              <b-input-group>
-                <b-form-input
-                  style="height: 30px"
-                  @keyup.enter="buscarProducto(filterPrev)"
-                  v-model="filterPrev"
-                  placeholder="Buscar "
-                ></b-form-input>
-                <b-input-group-append>
-                  <b-button size="sm" @click="buscarProducto(filterPrev)"
-                    ><b-icon icon="search"></b-icon
-                  ></b-button>
-                </b-input-group-append>
-              </b-input-group>
-            </b-form-group>
-          </b-col> -->
-
-        <!-- Right aligned nav items -->
-        <b-navbar-nav class="">
-          <b-navbar-nav v-if="logeado" class="ml-auto">
+        <b-navbar-nav class="ml-auto">
+          <b-navbar-nav   v-if="logeado"  class="ml-auto d-none d-sm-none d-md-block">
             <b-nav-item class="light mx-4 my-0 py-0">
               <b-icon icon="user" />Bienvenido,
               <b>{{ username }}</b>
@@ -170,6 +144,11 @@
             <template #button-content>
               <b-icon icon="person-fill"></b-icon>
             </template>
+            <b-dropdown-item
+              :to="{ name: 'misproductos' }"
+              v-if="hasPermisos('MIS_PRODUCTOS')"
+              >Mis Productos</b-dropdown-item
+            >
             <b-dropdown-item
               :to="{ name: 'login' }"
               v-if="!hasPermisos('CAMBIAR_CLAVE')"
