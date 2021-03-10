@@ -24,6 +24,9 @@ import MisProductos from '@/components/usuarios/MisProductos.vue'
 /* Menu */
 import container from '@/components/menu/Container.vue'
 import home from '@/components/Home/Home.vue'
+/* Empreas - comcercios */
+import VerEmpresas from '@/components/empresas/VerEmpresas.vue'
+
 
 import CrearPublicacion from '@/components/publicaciones/CrearPublicacion.vue'
 import CrearContrato from '@/components/contratos/CrearContrato.vue'
@@ -78,6 +81,15 @@ const router = new Router({
           requireAuth: false
         }, 
       }, 
+      {
+        path: '/verEmpresas',
+         name: 'verEmpresas',
+         component: VerEmpresas,   
+         meta: {
+           requireAuth: false
+         }, 
+       }, 
+      
       { 
       path: '/crearPublicacion/publicacion:publicacion/tipo:tipo',
         name: 'crearPublicacion',

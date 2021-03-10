@@ -98,7 +98,6 @@ export default {
     };
   },
   created() {
-    console.log(this.getUsername);
   },
   computed: {
     ...mapGetters("storeUser", ["getUsername", "getUserId"]),

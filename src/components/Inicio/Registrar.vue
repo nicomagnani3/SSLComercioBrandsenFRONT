@@ -210,7 +210,7 @@
             size="lg"
             v-model="empresa.celular"
             type="number"
-            required
+            
             placeholder="Celular,con la caracteristica y sin el 15, ejemplo 2223461957"
             class="line"
           ></b-form-input>
@@ -413,7 +413,6 @@ export default {
       }
     },
     async registrarEmpresa() {
-      console.log(this.empresa.rubro)
       this.registrando = true;
       if (this.empresa.password == this.empresa.password_confirmation) {
         try {

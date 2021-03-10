@@ -25,5 +25,8 @@ export default {
     getNombreUsuariosParaContrato(credentials) {    
         return Api().get(API_URL + API_USER + "get_nombres_users",credentials)
     },
+    getEmpresas(credentials) {    
+        return Api().get(API_URL + API_USER + "get_empresas",credentials)
+    },
     
 }
