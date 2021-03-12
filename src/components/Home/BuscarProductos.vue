@@ -101,6 +101,7 @@
                     </p>
                     <div>
                       <a
+                       v-if="producto.telefono != null && logeado"
                         :href="
                           'https://api.whatsapp.com/send?text=Hola!%20,desde%20Malambo%20observe%20la%20publicacion%20' +
                           producto.titulo +
@@ -111,7 +112,7 @@
                         target="_black"
                       >
                         <img
-                          v-if="logeado"
+                          v-if="logeado && producto.telefono != null "
                           src="@/assets/wsp.png"
                           alt=""
                           height="auto"
@@ -262,6 +263,11 @@ export default {
       type: Number,
       required: false,
     },
+    empresa: {
+      type: Number,
+      required: false,
+      default: 0,
+    },
   },
   data() {
     return {
@@ -286,11 +292,14 @@ export default {
     this.getcategorias();
     this.getEmprendimientos();
     this.getServicios();
-    console.log(this.rubro);
     if (Number(this.rubro) > Number(0)) {
       this.buscarPorRubro(this.rubro);
     } else {
-      this.getPublicacionesPorNombre();
+      if (Number(this.empresa > Number(0))) {
+        this.buscarPorEmpresa(this.empresa);
+      } else {
+        this.getPublicacionesPorNombre();
+      }
     }
   },
   computed: {
@@ -302,11 +311,15 @@ export default {
       this.getcategorias();
       this.getEmprendimientos();
       this.getServicios();
-      if (Number(this.rubro) > Number(0)) {
-        this.buscarPorRubro(this.rubro);
+     if (Number(this.rubro) > Number(0)) {
+      this.buscarPorRubro(this.rubro);
+    } else {
+      if (Number(this.empresa > Number(0))) {
+        this.buscarPorEmpresa(this.empresa);
       } else {
         this.getPublicacionesPorNombre();
       }
+    }
     },
   },
   methods: {
@@ -453,7 +466,22 @@ export default {
         const response = await PublicacionService.getProductosRubro({
           id: rubroId,
         });
-        console.log("entro");
+        if (response.data.error == false) {
+          this.productos = response.data.data;
+          this.loading = response.data.error;
+        }
+
+        //this.getImporte(this.productos);
+      } catch (err) {
+        this.productos = "ATENCION NO SE PUDIERON OBTENER LAS NOVEDADES";
+      }
+    },
+    async buscarPorEmpresa(userEmpresaID) {
+      this.loading = true;
+      try {
+        const response = await PublicacionService.getPublicacionEmpresa({
+          id: userEmpresaID,
+        });
         if (response.data.error == false) {
           this.productos = response.data.data;
           this.loading = response.data.error;

@@ -69,6 +69,8 @@
               }}</a>
             </li>
           </b-nav-item-dropdown>
+                  <b-nav-item   :to="{ name: 'verEmpresas' }">Comercios adheridos</b-nav-item>
+
           <b-nav-item-dropdown v-if="hasPermisos('CREAR')">
             <template slot="button-content">
               <span class="light">Publicar</span>
