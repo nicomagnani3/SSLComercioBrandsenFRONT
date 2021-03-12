@@ -34,16 +34,15 @@
         <p>Contáctenos:</p>
         <p>info@malambobrandsen.com.ar</p>
         <a href=""> <img  class="icono" src="@/assets/logowsp.png" alt=""> </a>
-        <a href=""> <img  class="icono" src="@/assets/logo-ig.png" alt=""> </a>
-        <a href=""> <img  class="icono" src="@/assets/icono-face.png" alt=""> </a> 
+        <a href="https://www.instagram.com/malambobrandsen/"> <img  class="icono" src="@/assets/logo-ig.png" alt=""> </a>
+        <a href="https://www.facebook.com/MalamboBrandsen"> <img  class="icono" src="@/assets/icono-face.png" alt=""> </a> 
     </b-col>
  
   </b-row>
 
   <b-row class="big">
       <b-col>
-          <p>Desarrollado por</p>
-          <a href=""> <img  class="logoBig" src="@/assets/bigdata.png" alt=""> </a> 
+          <a href=""> <img  class="logoBig" src="@/assets/bigdatapng.png" alt=""> </a> 
       </b-col>
 
   </b-row>
@@ -100,7 +99,7 @@ export default {
 
     .logoBig{
 
-        width:250px;
+        width:40%;
         
     }
 

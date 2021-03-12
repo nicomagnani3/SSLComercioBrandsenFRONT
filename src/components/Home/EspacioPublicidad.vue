@@ -2,9 +2,9 @@
     
     <b-container fluid class=" containpubli bv-example-row">
         <b-row>
-            <b-col class="publicidad"><img Class="imgPubliF" src="@/assets/publicitario.png" alt=""></b-col>
-            <b-col class="publicidad"><img Class="imgPubliF" src="@/assets/publicitario.png" alt=""></b-col>
-            <b-col class="publicidad"><img Class="imgPubliF" src="@/assets/publicitario.png" alt=""></b-col>
+            <b-col class="publicidad"><img Class="imgPubliF" src="@/assets/Malambo-footer.png" alt=""></b-col>
+            <b-col class="publicidad"><img Class="imgPubliF" src="@/assets/Malambo-footer2.png" alt=""></b-col>
+            <b-col class="publicidad"><img Class="imgPubliF" src="@/assets/Malambo-footer3.png" alt=""></b-col>
         </b-row>
 
 </b-container>

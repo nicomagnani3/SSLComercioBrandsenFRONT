@@ -3,11 +3,11 @@
       <h3 class="m-5 titulo text-center">Los mejores negocios te esperan </h3>
      <b-container class="contenedorPubli mb-5">   
         <b-row >  
-            <b-col  class="itemCarrusel" cols="12" md="2" > 
+            <b-col  class="itemCarrusel" > 
 
                 <b-card 
                 
-                    img-src="https://ep01.epimg.net/elpais/imagenes/2019/10/30/album/1572424649_614672_1572453030_noticia_normal.jpg"
+                    img-src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
                     img-alt="Image"
                     img-top
                     tag="article"
@@ -17,7 +17,7 @@
                 > 
                 <hr>
                 <b-card-text class="texto">
-                    Hendel
+                    Malambo
                                
                 </b-card-text >
                 <b-button href="#" variant="primary">Ver más</b-button>
@@ -29,7 +29,7 @@
             <b-col class="itemCarrusel "> 
                         
                 <b-card 
-                    img-src="https://directoriopampeano.com/fotos/2017/01/be99bc9b9154c4a37d7466fca4656bb5_62468-1.png"
+                    img-src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
                     img-alt="Image"
                     img-top
                     tag="article"
@@ -38,7 +38,7 @@
                 > 
                 <hr>
                 <b-card-text class="texto">
-                    Grupo Marquez
+                    Malambo
                 </b-card-text >
                  <b-button href="#" variant="primary">Ver más</b-button>
 
@@ -47,10 +47,10 @@
                         
                     
                     </b-col>  
-                    <b-col cols="12" md="2" class="itemCarrusel   "> 
+                    <b-col  class="itemCarrusel   "> 
                         
                         <b-card 
-                            img-src="https://static.wixstatic.com/media/3af348_4b5958483e564f28a460570116f93461~mv2.jpg/v1/fill/w_258,h_258,al_c,q_80,usm_0.66_1.00_0.01/logo%20brisa.webp"
+                            img-src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
                             img-alt="Image"
                             img-top
                             tag="article"
@@ -59,7 +59,7 @@
                         > 
                         <hr>
                             <b-card-text class="texto">
-                                Carniceria Brisa
+                                Malambo
                             </b-card-text >
                             <b-button href="#" variant="primary">Ver más</b-button>
 
@@ -67,10 +67,10 @@
                         </b-card >
 
                      </b-col> 
-                    <b-col cols="12" md="2" class="itemCarrusel">
+                    <b-col  class="itemCarrusel">
 
                         <b-card 
-                            img-src="https://static.wixstatic.com/media/3af348_b659f619d64c4dbd8bfb8ad274dd4214~mv2.jpg/v1/fill/w_258,h_258,al_c,q_80,usm_0.66_1.00_0.01/logo%20meissen.webp"
+                            img-src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
                             img-alt="Image"
                             img-top
                             tag="article"
@@ -79,17 +79,17 @@
                         > 
                         <hr>
                            <b-card-text class="texto">
-                                Cerveceria Meissen
+                                Malambo
                             </b-card-text >
                             <b-button href="#" variant="primary">Ver más</b-button>
 
                            
                         </b-card >
                     </b-col> 
-                    <b-col cols="12" md="2" class="itemCarrusel">
+                    <b-col  class="itemCarrusel">
 
                         <b-card 
-                            img-src="https://static.wixstatic.com/media/3af348_b659f619d64c4dbd8bfb8ad274dd4214~mv2.jpg/v1/fill/w_258,h_258,al_c,q_80,usm_0.66_1.00_0.01/logo%20meissen.webp"
+                            img-src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
                             img-alt="Image"
                             img-top
                             tag="article"
@@ -98,17 +98,17 @@
                         > 
                         <hr>
                            <b-card-text class="texto">
-                                Cerveceria Meissen
+                                Malambo
                             </b-card-text >
                             <b-button href="#" variant="primary">Ver más</b-button>
 
                            
                         </b-card >
                     </b-col> 
-                    <b-col cols="12" md="2" class="itemCarrusel">
+                    <b-col  class="itemCarrusel">
 
                         <b-card 
-                            img-src="https://static.wixstatic.com/media/3af348_b659f619d64c4dbd8bfb8ad274dd4214~mv2.jpg/v1/fill/w_258,h_258,al_c,q_80,usm_0.66_1.00_0.01/logo%20meissen.webp"
+                            img-src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
                             img-alt="Image"
                             img-top
                             tag="article"
@@ -117,7 +117,7 @@
                         > 
                         <hr>
                            <b-card-text class="texto">
-                                Cerveceria Meissen
+                               Malambo
                             </b-card-text >
                             <b-button href="#" variant="primary">Ver más</b-button>
 
@@ -183,6 +183,9 @@
       height: 300px;
       text-align: center;
       object-fit: cover;
+      margin-right: 5px;
+      margin-bottom: 5px;
+      
       
   }
 
@@ -206,6 +209,11 @@
       
   }
  
+ .contenedorPubli{
+     display: flex;
+     align-items: center;
+     justify-content: center;
+ }
 
 </style>>
 
