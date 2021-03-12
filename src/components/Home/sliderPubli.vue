@@ -16,7 +16,7 @@
                 <b-row>  
                     <b-col> 
                         <b-card 
-                            img-src="https://directoriopampeano.com/fotos/2017/01/be99bc9b9154c4a37d7466fca4656bb5_62468-1.png"
+                            img-src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
                             img-alt="Image"
                             img-top
                             tag="article"
@@ -29,7 +29,7 @@
                     <b-col class="itemCarrusel "> 
                         
                         <b-card 
-                            img-src="https://directoriopampeano.com/fotos/2017/01/be99bc9b9154c4a37d7466fca4656bb5_62468-1.png"
+                            img-src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
                             img-alt="Image"
                             img-top
                             tag="article"
@@ -46,7 +46,7 @@
                     <b-col class="itemCarrusel "> 
                         
                         <b-card 
-                            img-src="https://static.wixstatic.com/media/3af348_4b5958483e564f28a460570116f93461~mv2.jpg/v1/fill/w_258,h_258,al_c,q_80,usm_0.66_1.00_0.01/logo%20brisa.webp"
+                            img-src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
                             img-alt="Image"
                             img-top
                             tag="article"
@@ -63,7 +63,7 @@
                     <b-col class="itemCarrusel">
 
                         <b-card 
-                            img-src="https://static.wixstatic.com/media/3af348_b659f619d64c4dbd8bfb8ad274dd4214~mv2.jpg/v1/fill/w_258,h_258,al_c,q_80,usm_0.66_1.00_0.01/logo%20meissen.webp"
+                            img-src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
                             img-alt="Image"
                             img-top
                             tag="article"
@@ -75,7 +75,7 @@
                      <b-col class="itemCarrusel">
 
                         <b-card 
-                            img-src="https://static.wixstatic.com/media/3af348_b659f619d64c4dbd8bfb8ad274dd4214~mv2.jpg/v1/fill/w_258,h_258,al_c,q_80,usm_0.66_1.00_0.01/logo%20meissen.webp"
+                            img-src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
                             img-alt="Image"
                             img-top
                             tag="article"
@@ -87,7 +87,7 @@
                      <b-col class="itemCarrusel">
 
                         <b-card 
-                            img-src="https://static.wixstatic.com/media/3af348_b659f619d64c4dbd8bfb8ad274dd4214~mv2.jpg/v1/fill/w_258,h_258,al_c,q_80,usm_0.66_1.00_0.01/logo%20meissen.webp"
+                            img-src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
                             img-alt="Image"
                             img-top
                             tag="article"
@@ -105,7 +105,7 @@
                 <b-row >  
                     <b-col  > 
                         <b-card 
-                            img-src="https://rrhhjobs.com/wp-content/uploads/2020/03/logo-hendel.png"
+                            img-src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
                             img-alt="Image"
                             img-top
                             tag="article"
@@ -118,7 +118,7 @@
                     <b-col class="itemCarrusel "> 
                         
                         <b-card 
-                            img-src="https://directoriopampeano.com/fotos/2017/01/be99bc9b9154c4a37d7466fca4656bb5_62468-1.png"
+                            img-src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
                             img-alt="Image"
                             img-top
                             tag="article"
@@ -135,7 +135,7 @@
                     <b-col class="itemCarrusel "> 
                         
                         <b-card 
-                            img-src="https://static.wixstatic.com/media/3af348_4b5958483e564f28a460570116f93461~mv2.jpg/v1/fill/w_258,h_258,al_c,q_80,usm_0.66_1.00_0.01/logo%20brisa.webp"
+                            img-src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
                             img-alt="Image"
                             img-top
                             tag="article"
@@ -152,7 +152,7 @@
                     <b-col class="itemCarrusel">
 
                         <b-card 
-                            img-src="https://static.wixstatic.com/media/3af348_b659f619d64c4dbd8bfb8ad274dd4214~mv2.jpg/v1/fill/w_258,h_258,al_c,q_80,usm_0.66_1.00_0.01/logo%20meissen.webp"
+                            img-src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
                             img-alt="Image"
                             img-top
                             tag="article"
@@ -164,7 +164,7 @@
                      <b-col class="itemCarrusel">
 
                         <b-card 
-                            img-src="https://static.wixstatic.com/media/3af348_b659f619d64c4dbd8bfb8ad274dd4214~mv2.jpg/v1/fill/w_258,h_258,al_c,q_80,usm_0.66_1.00_0.01/logo%20meissen.webp"
+                            img-src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
                             img-alt="Image"
                             img-top
                             tag="article"
@@ -176,7 +176,7 @@
                      <b-col class="itemCarrusel">
 
                         <b-card 
-                            img-src="https://static.wixstatic.com/media/3af348_b659f619d64c4dbd8bfb8ad274dd4214~mv2.jpg/v1/fill/w_258,h_258,al_c,q_80,usm_0.66_1.00_0.01/logo%20meissen.webp"
+                            img-src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
                             img-alt="Image"
                             img-top
                             tag="article"
@@ -249,7 +249,7 @@
   .itemCarrusel{
       
       width: 120px;
-      height: 100px;
+      height: 130px;
       
       
   }
