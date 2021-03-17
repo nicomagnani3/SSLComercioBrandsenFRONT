@@ -14,7 +14,7 @@
         <b-col class="text-center pt-3">
           <br />
           <p class="h1 font-italic text-warning">
-            Empresas - Comercios adheridos
+           Emprendimientos disponibles
           </p>
         </b-col>
       </b-row>
@@ -36,7 +36,7 @@
   </b-container>
 </template>
 <script>
-import AuthenticationService from "@/services/AuthenticationService";
+import EmprendimientoService from "@/services/EmprendimientoService";
 
 import axios from "axios";
 export default {
@@ -61,10 +61,10 @@ export default {
           },
         });
     },
-    async getEmpresas() {
+    async getcategorias() {
       this.loading = true;
       try {
-        const response = await AuthenticationService.getEmpresas();
+        const response = await EmprendimientoService.getEmprendimientos();
         this.empresas = response.data.data;
         this.empresas = this.ordenarDatos(this.empresas);
       } catch (err) {
@@ -103,7 +103,7 @@ export default {
   },
   mounted() {
     axios
-      .all([this.getEmpresas()])
+      .all([this.getcategorias()])
       .then(() => {
         this.loading = false;
       })

@@ -19,33 +19,9 @@
       color="#000000"
       step-size="lg"
       error-color="#dc3545"
-    >
-      <b-col v-if="creando" class="text-center">
-        <div>
-          <b-spinner
-            style="width: 5rem; height: 5rem"
-            variant="warning"
-            label="Text Centered"
-            type="grow"
-          ></b-spinner>
-          <span style="font-size: 24px" class="text-warning">
-            <b>Creando publicacion,aguarde un instante....</b>
-          </span>
-          <b-spinner
-            style="width: 3rem; height: 3rem"
-            variant="warning"
-            label="Text Centered"
-          ></b-spinner>
-          <b-spinner
-            style="width: 3rem; height: 3rem"
-            variant="warning"
-            label="Text Centered"
-            type="variant"
-          ></b-spinner>
-        </div>
-      </b-col>
+    >    
       <tab-content
-        title="¿Que tipo de categoria es el producto que necesitas publicar?"
+        title="¿Qué tipo de categoría necesitas publicar? "
       >
         <ListarCategorias
           :categorias="this.categorias"
@@ -62,7 +38,7 @@
         ></ListarCategoriasHijas>
       </tab-content>
       <tab-content
-        title="Detalles del producto"
+        title="Detalles de la publicacion"
         :before-change="validarDetalleProducto"
       >
         <DetallePublicacion
@@ -80,7 +56,7 @@
         >
         </ImagenesCarga>
       </tab-content>
-      <tab-content title="Pagar la publicacion">
+      <tab-content :title="this.valorUltimoPaso">
         <PagarPublicacion
           :publicacion="this.publicacion"
           :imagen="this.imgPrimera"
@@ -131,6 +107,7 @@ export default {
       publicacion: [],
       alerts: [],
       valorBotonFinalizar: "Obtener boton de pago!",
+      valorUltimoPaso:"Pagar la publicacion",
       contrato: [],
       montoEntregaInvalido: false,
       imagenes: [],
@@ -335,6 +312,7 @@ export default {
             this.tieneContrato = true;
             //this.verTipoPublicacion();
             this.valorBotonFinalizar = "Finalizar";
+            this.valorUltimoPaso= "Finalizar"
             this.verificarContrato();
           } else {
             this.$root.$bvToast.toast(

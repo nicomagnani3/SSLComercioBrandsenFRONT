@@ -52,7 +52,6 @@
               >
                 <ValidationProvider
                   :name="'precio '"
-                  :rules="'required'"
                   v-slot="{ errors, valid }"
                 >
                   <vue-numeric
@@ -60,16 +59,17 @@
                     v-model="publicacion.precio"
                     separator="."
                     :min="0"
+                    placeholder="Sin precio"
                     :precision="2"
                     v-on:input="actualizarMontoEntrega"
                     :state="errors[0] ? false : valid ? true : null"
                   ></vue-numeric>
-                  <p
+                <!--   <p
                     v-if="montoEntregaInvalido"
                     style="color: red; font-size: 10px"
                   >
                     el monto debe ser mayor
-                  </p>
+                  </p> -->
                 </ValidationProvider>
               </b-form-group>
             </b-col>
@@ -142,7 +142,7 @@
               <b-form-group
                 class="mb-0"
                 id="observaciones-label"
-                label="Descripción(opcional)"
+                label="Descripción(podes ingresar todo los datos que necesites mostrar)"
                 label-for="observaciones"
               >
                 <b-form-textarea
@@ -150,7 +150,7 @@
                   size="sm"
                   rows="8"
                   v-model="publicacion.observaciones"
-                  placeholder="Descripcion del producto que vas a publicar"
+                  placeholder="Descripcion del producto que vas a publicar,se recomienda en forma de listado y no todo junto para una mejor visualizacion"
                 ></b-form-textarea>
               </b-form-group>
             </b-col>
@@ -167,6 +167,9 @@ export default {
   props: {
     publicacion: {
       type: Array,
+      default: () => ({
+      }),
+      
     },
     preciosPublicacion: {
       type: Array,
@@ -194,12 +197,12 @@ export default {
     },
     async validate() {
       let result = await this.$refs.detallePublicacion.validate();
-      if (result == true) {
+     /*  if (result == true) {
         if (Number(this.publicacion.precio) <= 10) {
           this.montoEntregaInvalido = true;
           return false;
         }
-      }
+      } */
       return result;
     },
     verSiEsDestacada() {

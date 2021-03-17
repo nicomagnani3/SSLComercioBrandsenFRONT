@@ -83,7 +83,7 @@
             <b-form-group
               class="mb-0"
               id="observaciones-label"
-              label="Descripción(opcional)"
+              label="Descripción(podes ingresar todo los datos que necesites mostrar)"
               label-for="observaciones"
             >
               <b-form-textarea
@@ -91,7 +91,7 @@
                 size="sm"
                 rows="8"
                 v-model="publicacion.observaciones"
-                placeholder="Descripción del servicio que vas a publicar, te sugerimos poner detallado tu ubicacion,horarios,dias de atencion, redes sociales y demas.."
+                placeholder="Descripción del servicio que vas a publicar,se recomienda en forma de listado y no todo junto para una mejor visualizacion, te sugerimos poner detallado tu ubicacion,horarios,dias de atencion, redes sociales y demas.."
               ></b-form-textarea>
             </b-form-group>
           </b-col>

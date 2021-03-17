@@ -168,7 +168,7 @@
         <b-button
           pill
           left
-          v-if="this.cantImagenesAsubir <= 2"
+          v-if="this.cantImagenesAsubir <= 3"
           @click="agregarImagen"
           variant="primary"
           >Nueva

@@ -7,16 +7,21 @@
     >
     </b-spinner>
   </div>
-  <b-container class="nav" fluid v-else >
-   
+  <b-container class="nav" fluid v-else>
     <b-navbar toggleable="lg" type="light" class="">
       <b-navbar-brand :to="'/'"><Header /> </b-navbar-brand>
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse class="navbar-collapse" id="nav-collapse" is-nav>
-    <b-navbar-nav>
+        <b-navbar-nav>
+          <b-nav-item :to="{ name: 'verCategorias' }">Productos</b-nav-item>
+          <b-nav-item :to="{ name: 'verEmprendimiento' }"
+            >Emprendimientos</b-nav-item
+          >
+          <b-nav-item :to="{ name: 'verServicio' }"
+            >Servicios</b-nav-item
+          >
 
-      
-          <b-nav-item-dropdown>
+          <!--   <b-nav-item-dropdown>
             <template slot="button-content">
               <span class="light">Productos</span>
             </template>
@@ -30,8 +35,9 @@
                 item.nombre
               }}</a>
             </li>
-          </b-nav-item-dropdown>
-          <b-nav-item-dropdown>
+          </b-nav-item-dropdown> -->
+
+          <!--   <b-nav-item-dropdown>
             <template slot="button-content">
               <span class="light">Emprendimientos</span>
             </template>
@@ -44,8 +50,8 @@
                 item.nombre
               }}</a>
             </li>
-          </b-nav-item-dropdown>
-          <b-nav-item-dropdown>
+          </b-nav-item-dropdown> -->
+          <!-- <b-nav-item-dropdown>
             <template slot="button-content">
               <span class="light">Servicios</span>
             </template>
@@ -58,7 +64,7 @@
                 item.nombre
               }}</a>
             </li>
-          </b-nav-item-dropdown>
+          </b-nav-item-dropdown> -->
           <b-nav-item-dropdown>
             <template slot="button-content">
               <span class="light">Rubros</span>
@@ -69,7 +75,9 @@
               }}</a>
             </li>
           </b-nav-item-dropdown>
-                  <b-nav-item   :to="{ name: 'verEmpresas' }">Comercios adheridos</b-nav-item>
+          <b-nav-item :to="{ name: 'verEmpresas' }"
+            >Empresas–Comercios</b-nav-item
+          >
 
           <b-nav-item-dropdown v-if="hasPermisos('CREAR')">
             <template slot="button-content">
@@ -124,8 +132,6 @@
             >
           </b-nav-item-dropdown>
         </b-navbar-nav>
-
-        
 
         <!--     
           <b-col class="buscarPs">
@@ -193,22 +199,21 @@
     </b-navbar>
 
     <div class="contenedorBuscador">
-      <div class="Bus input-group input-group-lg" style="    max-width: 700px;">
-          <b-form-input
-            type="text"
-            size="15"
-            maxlength="128"
-            @keyup.enter="buscarProducto(filterPrev)"
-            v-model="filterPrev"
-            placeholder="Buscar "
-          ></b-form-input>
+      <div class="Bus input-group input-group-lg" style="max-width: 700px">
+        <b-form-input
+          type="text"
+          size="15"
+          maxlength="128"
+          @keyup.enter="buscarProducto(filterPrev)"
+          v-model="filterPrev"
+          placeholder="Buscar "
+        ></b-form-input>
 
-          <b-button size="sm" @click="buscarProducto(filterPrev)"
-            ><b-icon icon="search"></b-icon
-          ></b-button>
+        <b-button size="sm" @click="buscarProducto(filterPrev)"
+          ><b-icon icon="search"></b-icon
+        ></b-button>
+      </div>
     </div>
-    </div>
-    
   </b-container>
 </template>
 <script>
@@ -360,9 +365,8 @@ export default {
   mounted() {
     axios
       .all([
-        this.getcategorias(),
-        this.getEmprendimientos(),
-        this.getServicios(),
+        //this.getEmprendimientos(),
+        //this.getServicios(),
         this.getRubros(),
       ])
       .then(() => {
@@ -382,24 +386,19 @@ export default {
 }
 
 .nav {
-
   background-color: #ffce4e;
   display: flex;
   flex-direction: column;
-
 }
 
-.Bus{
+.Bus {
   margin: 10px;
 }
 
-
-.contenedorBuscador{
-
+.contenedorBuscador {
   display: flex;
   align-items: center;
   width: 100%;
   justify-content: center;
 }
-
 </style>

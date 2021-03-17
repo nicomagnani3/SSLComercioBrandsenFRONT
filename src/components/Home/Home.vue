@@ -1,66 +1,45 @@
 <template>
   <div class="body">
+    <Slider />
+    <sliderPubli />
+    <div fluid class="subtitulo">
+      <P>Al publicar está colaborando con entidades de Brandsen</P>
+    </div>
 
-      
-
-      <Slider />
-      <sliderPubli/>
-      <b-container fluid class="subtitulo"> 
-          <P>Al publicar está colaborando con entidades de Brandsen</P>
-      </b-container>
-      <NuevoSlide/>
-      <sliderServicios/>
-      <sliderEmprendimientos/>
-      <Sliderempresa />
-   
-      
-     
-     
-     </div>
-
+    <NuevoSlide />
+    <sliderServicios />
+    <sliderEmprendimientos />
+    <Sliderempresa />
+  </div>
 </template>
 
 
 <script>
 import Slider from "@/components/Home/Slider.vue";
- import NuevoSlide from "@/components/Home/NuevoSlide.vue";
+import NuevoSlide from "@/components/Home/NuevoSlide.vue";
 import Sliderempresa from "@/components/Home/slideEmpresas.vue";
-
 import sliderServicios from "@/components/Home/sliderServicios.vue";
 import sliderEmprendimientos from "@/components/Home/sliderEmprendimientos.vue";
 import sliderPubli from "@/components/Home/sliderPubli.vue";
-
-
-
 
 export default {
   name: "Home",
 
   components: {
     Slider,
-  NuevoSlide,
+    NuevoSlide,
     sliderServicios,
     Sliderempresa,
-    
+
     sliderEmprendimientos,
     sliderPubli,
-    
-  
-    
-    
-    
-    
-  },
-  
-  data() {
-    return {        
-      
-    };
   },
 
-  methods: {
-      
-  }
+  data() {
+    return {};
+  },
+
+  methods: {},
 };
 </script>
 
@@ -71,16 +50,12 @@ export default {
   height: auto;
 }
 
-.subtitulo{
-
+.subtitulo {
   text-align: center;
   margin: 10px;
   background-color: rgb(66, 129, 248);
   padding: 20px;
   font-size: 20px;
   color: white;
-
 }
-
-
 </style>

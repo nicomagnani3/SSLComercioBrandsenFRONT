@@ -11,10 +11,18 @@ import RecuperarClave from '@/components/Inicio/RecuperarClave.vue'
 /* Productos */
 import BuscarProductos from "@/components/Home/BuscarProductos.vue"; 
 import NuevaPublicacion from '@/components/publicaciones/NuevaPublicacion.vue'
+import VerCategorias from '@/components/categorias/VerCategorias.vue'
+
+
 /* Emprendimiento */
 import NuevoEmprendimiento from '@/components/emprendimientos/NuevoEmprendimiento.vue'
+import VerEmprendimiento from '@/components/emprendimientos/VerEmprendimiento.vue'
+
 /* Servicio */
 import NuevoServicio from '@/components/servicios/NuevoServicio.vue'
+import VerServicio from '@/components/servicios/VerServicio.vue'
+
+
 /* Contratos  admin y empresas o comercios*/
 import RenovarContrato from '@/components/contratos/RenovarContrato.vue'
 import asignarContrato from '@/components/contratos/asignarContrato.vue'
@@ -90,7 +98,30 @@ const router = new Router({
            requireAuth: false
          }, 
        }, 
-      
+       {
+        path: '/verCategorias',
+         name: 'verCategorias',
+         component: VerCategorias,   
+         meta: {
+           requireAuth: false
+         }, 
+       },
+       {
+        path: '/verEmprendimiento',
+         name: 'verEmprendimiento',
+         component: VerEmprendimiento,   
+         meta: {
+           requireAuth: false
+         }, 
+       },
+       {
+        path: '/verServicio',
+         name: 'verServicio',
+         component: VerServicio,   
+         meta: {
+           requireAuth: false
+         }, 
+       },
       { 
       path: '/crearPublicacion/publicacion:publicacion/tipo:tipo',
         name: 'crearPublicacion',

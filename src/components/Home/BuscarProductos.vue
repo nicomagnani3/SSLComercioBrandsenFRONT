@@ -1,15 +1,15 @@
 <template>
-  <div v-if="loading" class="text-center">
-    <br /><br />
-    <b-spinner
-      style="width: 11rem; height: 11rem"
-      variant="warning"
-      label="Text Centered"
-    >
-    </b-spinner>
-  </div>
-  <div v-else class="body">
-    <b-container fluid class="bv-example-row">
+  <div>
+    <div v-if="loading" class="text-center">
+      <br /><br />
+      <b-spinner
+        style="width: 11rem; height: 11rem"
+        variant="warning"
+        label="Text Centered"
+      >
+      </b-spinner>
+    </div>
+    <div v-else class="animated fadeIn">
       <b-row class="text-center">
         <b-col cols="3" class="d-none d-sm-none d-md-block">
           <br />
@@ -19,33 +19,39 @@
           <br />
 
           <h4>Productos</h4>
-          <ul class="list-group">
-            <li
+          <b-list-group>
+            <b-list-group-item
+              style="max-height: 50px"
+              button
               class="list-group-item"
               v-for="item in categorias"
               :key="item.id"
+              @click="buscarPorCategoria(item.id)"
             >
+              <br />
               <a class="buscador" @click="buscarPorCategoria(item.id)">{{
                 item.nombre
               }}</a>
-            </li>
-          </ul>
+            </b-list-group-item>
+          </b-list-group>
 
           <br />
           <h4>Servicios</h4>
-          <div>
-            <ul class="list-group">
-              <li
-                class="list-group-item"
-                v-for="item in servicios"
-                :key="item.id"
-              >
-                <a class="buscador" @click="buscarPorServicio(item)">{{
-                  item.nombre
-                }}</a>
-              </li>
-            </ul>
-          </div>
+          <b-list-group>
+            <b-list-group-item
+              style="max-height: 50px"
+              button
+              class="list-group-item"
+              v-for="item in servicios"
+              :key="item.id"
+              @click="buscarPorServicio(item)"
+            >
+              <br />
+              <a class="buscador" @click="buscarPorServicio(item)">{{
+                item.nombre
+              }}</a>
+            </b-list-group-item>
+          </b-list-group>
         </b-col>
 
         <b-col>
@@ -90,79 +96,90 @@
                       Precio: {{ getImporte(producto.precio) }}
                     </h5>
                     <h5>Fecha: {{ producto.fecha | formatDate }}</h5>
+
                     <a target="_black" :href="producto.web">{{
                       producto.web
                     }}</a>
                     <p v-if="producto.telefono != null && logeado">
-                      Telefono: {{ producto.telefono }}
+                      Telefono: <strong>{{ producto.telefono }}</strong>
                     </p>
-                    <p v-if="producto.email != null && logeado">
-                      {{ producto.email }}
+                    <p
+                      style="white-space: nowrap"
+                      v-if="producto.email != null && logeado"
+                    >
+                      <strong>{{ producto.email }}</strong>
                     </p>
-                    <div>
-                      <a
-                       v-if="producto.telefono != null && logeado"
-                        :href="
-                          'https://api.whatsapp.com/send?text=Hola!%20,desde%20Malambo%20observe%20la%20publicacion%20' +
-                          producto.titulo +
-                          ',queria%20obtener%20mas%20detalles' +
-                          '&phone=+54' +
-                          acomodarCelular(producto.telefono)
-                        "
-                        target="_black"
-                      >
-                        <img
-                          v-if="logeado && producto.telefono != null "
-                          src="@/assets/wsp.png"
-                          alt=""
-                          height="auto"
-                          style="width: 45px; margin: 7px"
-                        />&nbsp;&nbsp;
-                      </a>
-                      <a
-                        :href="
-                          'https://mail.google.com/mail/?view=cm&fs=1&to=' +
-                          producto.email +
-                          '&body=Hola!%20,desde%20Malambo%20observe%20la%20publicacion%20' +
-                          producto.titulo +
-                          ',queria%20obtener%20mas%20detalles' +
-                          '&su=Malambo consulta por ' +
-                          producto.titulo
-                        "
-                        target="_black"
-                        >&nbsp;&nbsp;
-                        <img
-                          v-if="logeado"
-                          src="@/assets/mail.png"
-                          alt=""
-                          height="auto"
-                          style="width: 45px; margin: 7px"
-                        />
-                      </a>
-                    </div>
-
-                    <b-col v-if="!logeado" class="text-center">
+                    <div v-if="!logeado" class="text-center">
                       Para contactarte registrate
                       <router-link to="/login">ACA!</router-link>
-                    </b-col>
-                    <div>
-                      <b-col>
-                        <b-button variant="white" @click="verImagenes(producto)"
-                          ><b-icon
-                            style="width: 3rem; height: 5rem"
-                            icon="images"
-                          ></b-icon
-                        ></b-button>
-                        <b-button
-                          variant="white"
-                          v-if="producto.descripcion != 'SN'"
-                          @click="verdetalles(producto)"
-                          ><b-icon
-                            style="width: 3rem; height: 5rem"
-                            icon="layout-text-sidebar"
-                          ></b-icon
-                        ></b-button>
-                      </b-col>
+                    </div>
+                    <div v-else>
+                          <a
+                            v-if="producto.telefono != null && logeado"
+                            :href="
+                              'https://api.whatsapp.com/send?text=Hola!%20,desde%20Malambo%20observe%20la%20publicacion%20' +
+                              producto.titulo +
+                              ',queria%20obtener%20mas%20detalles' +
+                              '&phone=+54' +
+                              acomodarCelular(producto.telefono)
+                            "
+                            target="_black"
+                          >
+                            <img
+                              v-if="logeado && producto.telefono != null"
+                              src="@/assets/wsp.png"
+                              alt=""
+                              height="auto"
+                              style="width: 45px; margin: 4px"
+                            />&nbsp;&nbsp;
+                          </a>
+                          <a
+                            :href="
+                              'https://mail.google.com/mail/?view=cm&fs=1&to=' +
+                              producto.email +
+                              '&body=Hola!%20,desde%20Malambo%20observe%20la%20publicacion%20' +
+                              producto.titulo +
+                              ',queria%20obtener%20mas%20detalles' +
+                              '&su=Malambo consulta por ' +
+                              producto.titulo
+                            "
+                            target="_black"
+                            >&nbsp;&nbsp;
+                            <img
+                              v-if="logeado"
+                              src="@/assets/mail.png"
+                              alt=""
+                              height="auto"
+                              style="width: 45px; margin: 4px"
+                            />
+                          </a>
+
+                          <a
+                            variant="white"
+                            @click="verImagenes(producto)"
+                            style="cursor: pointer;"
+                            >
+                            <img
+                              src="@/assets/galeria.png"
+                              alt=""
+                              height="auto"
+                              style="width: 45px; margin: 4px"
+                            />&nbsp;&nbsp;
+                          </a>
+                          
+                          <a
+                            variant="white"
+                            v-if="producto.descripcion != 'SN'"
+                            @click="verdetalles(producto)"
+                            style="cursor: pointer;"
+                            >
+                           <img
+                              src="@/assets/descripcion.png"
+                              alt=""
+                              height="auto"
+                              style="width: 45px; margin: 4px"
+                            />&nbsp;&nbsp;
+                          </a>
                     </div>
                   </b-card-body>
                 </b-col>
@@ -188,19 +205,21 @@
         <b-col cols="3" class="d-none d-sm-none d-md-block">
           <br />
           <h4>Emprendimientos</h4>
-          <div>
-            <ul class="list-group">
-              <li
-                class="list-group-item"
-                v-for="item in emprendimientos"
-                :key="item.id"
-              >
-                <a class="buscador" @click="buscarPorEmprendimiento(item)">{{
-                  item.nombre
-                }}</a>
-              </li>
-            </ul>
-          </div>
+          <b-list-group>
+            <b-list-group-item
+              style="max-height: 50px"
+              button
+              class="list-group-item"
+              v-for="item in emprendimientos"
+              :key="item.id"
+              @click="buscarPorEmprendimiento(item)"
+            >
+              <br />
+              <a class="buscador" @click="buscarPorEmprendimiento(item)">{{
+                item.nombre
+              }}</a>
+            </b-list-group-item>
+          </b-list-group>
         </b-col>
       </b-row>
 
@@ -231,7 +250,7 @@
           <p>{{ descripcion }}</p>
         </b-modal>
       </div>
-    </b-container>
+    </div>
   </div>
 </template>
 
@@ -311,15 +330,15 @@ export default {
       this.getcategorias();
       this.getEmprendimientos();
       this.getServicios();
-     if (Number(this.rubro) > Number(0)) {
-      this.buscarPorRubro(this.rubro);
-    } else {
-      if (Number(this.empresa > Number(0))) {
-        this.buscarPorEmpresa(this.empresa);
+      if (Number(this.rubro) > Number(0)) {
+        this.buscarPorRubro(this.rubro);
       } else {
-        this.getPublicacionesPorNombre();
+        if (Number(this.empresa > Number(0))) {
+          this.buscarPorEmpresa(this.empresa);
+        } else {
+          this.getPublicacionesPorNombre();
+        }
       }
-    }
     },
   },
   methods: {
@@ -499,6 +518,7 @@ export default {
       this.$refs["modalVerImagenes"].show();
     },
     verdetalles(producto) {
+      console.log(producto)
       this.descripcion = producto.descripcion;
       this.$refs["modalVerProductos"].show();
     },

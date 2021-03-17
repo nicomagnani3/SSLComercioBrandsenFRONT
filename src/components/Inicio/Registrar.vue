@@ -100,8 +100,8 @@
             id="celular"
             v-model="persona.celular"
             type="number"
-            required
-            placeholder="Celular,con la caracteristica y sin el 15, ejemplo 2223461957"
+            
+            placeholder="Celular ingresar sin 0 y sin 15"
             class="line"
           ></b-form-input>
         </b-input-group>
@@ -211,7 +211,7 @@
             v-model="empresa.celular"
             type="number"
             
-            placeholder="Celular,con la caracteristica y sin el 15, ejemplo 2223461957"
+            placeholder="Celular ingresar sin 0 y sin 15"
             class="line"
           ></b-form-input>
         </b-input-group>
@@ -301,7 +301,7 @@ export default {
         nombre: "",
         apellido: "",
         DNI: null,
-        celular: null,
+        celular:null,
         email: "",
         password: "",
         password_confirmation: "",
@@ -366,6 +366,7 @@ export default {
       }
     },
     async registrarCliente() {
+      console.log(this.persona.celular)
       this.registrando = true;
       if (this.persona.password == this.persona.password_confirmation) {
         try {

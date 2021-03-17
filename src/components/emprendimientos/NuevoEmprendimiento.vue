@@ -51,7 +51,7 @@
             >
             </ImagenesCarga>
           </tab-content>
-          <tab-content title="Pagar el emprendimiento">
+          <tab-content title="Finalizar">
             <PagarEmprendimiento
               :publicacion="this.publicacionEmprendimiento"
               :destacada="this.publicacionEmprendimiento.destacada"

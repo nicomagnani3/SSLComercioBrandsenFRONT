@@ -77,7 +77,7 @@
         >
         </ImagenesCarga>
       </tab-content>
-      <tab-content title="Pagar el Servicio">
+      <tab-content title="Finalizar">
         <PagarEmprendimiento
           :publicacion="this.publicacion"
           :destacada="this.publicacion.destacada"
