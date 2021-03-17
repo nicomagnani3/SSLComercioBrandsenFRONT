@@ -17,6 +17,10 @@ export default {
     setPagoContrato(credentials) {    
         return Api().get(API_URL + API_USER + "set_pago_contrato/"+ credentials.publicacion)
     },
+    getContratos(credentials) {    
+        return Api().get(API_URL + API_USER + "get_contratos/", credentials)
+    },
+    
     
   
 }

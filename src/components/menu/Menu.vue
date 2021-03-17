@@ -117,6 +117,11 @@
               v-if="hasPermisos('ASIGNAR_CONTRATO')"
               >Nuevo</b-dropdown-item
             >
+            <b-dropdown-item
+              :to="{ name: 'vencimientoContrato' }"
+              v-if="hasPermisos('VENCIMIENTO_CONTRATO')"
+              >Vencimientos</b-dropdown-item
+            >
           </b-nav-item-dropdown>
         </b-navbar-nav>
 

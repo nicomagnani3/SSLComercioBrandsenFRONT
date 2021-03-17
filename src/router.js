@@ -18,6 +18,7 @@ import NuevoServicio from '@/components/servicios/NuevoServicio.vue'
 /* Contratos  admin y empresas o comercios*/
 import RenovarContrato from '@/components/contratos/RenovarContrato.vue'
 import asignarContrato from '@/components/contratos/asignarContrato.vue'
+import VencimientoContrato from '@/components/contratos/VencimientoContrato.vue'
 
 /* misProductos */
 import MisProductos from '@/components/usuarios/MisProductos.vue'
@@ -123,7 +124,15 @@ const router = new Router({
            meta: {
             requireAuth: true
           },  
-          },
+        },          
+        {
+            path: '/vencimientoContrato',
+             name: 'vencimientoContrato',
+             component: VencimientoContrato,
+             meta: {
+              requireAuth: true
+            },  
+        }  ,
         {
           path: '/misproductos',
            name: 'misproductos',

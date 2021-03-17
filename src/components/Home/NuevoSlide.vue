@@ -16,35 +16,40 @@
       >
       </b-spinner>
     </div>
-    <div v-else >
-      <slider ref="slider" :options="options">
-        <slideritem
-          v-for="(producto, index) in productos"
+    <div v-else class="animated fadeIn">
+      <b-card-group deck>
+        <b-card
+          v-for="(producto, index) in currentPageClubs"
           :key="index"
-          style="width: 20%; margin-right: 1%; max-width: 20%"
+          :img-src="`data:image/png;base64, ${producto.imagen}`"
+          img-alt="Img"
+          img-height="200px; max-height:300px"
+          img-top
+           @click="verProducto(producto)"
         >
-          <b-card
-            :img-src="`data:image/png;base64, ${producto.imagen}`"
-            img-alt="Image"
-            alt="Image"
-            img-height="200px; max-height:300px"
-            @click="verProducto(producto)"
-            :sub-title="tituloAjustar(producto.titulo)"
-            class="ItemProd"
-          >
-            <b-button @click="verProducto(producto)" variant="primary"
-              >Ver más</b-button
+          <h2 class="card-title">
+            <strong> {{ tituloAjustar(producto.titulo) }} </strong>
+          </h2>
+          <p class="card-text">
+            {{ getImporte(producto.precio) }}
+          </p>
+          <div slot="footer">
+            <b-btn @click="verProducto(producto)" variant="primary" block
+              >Ver mas</b-btn
             >
-          </b-card>
-        </slideritem>
-        <!-- Customizable loading -->
-        <div class="text-center" slot="loading">
-          <span class="text-danger">
-            <b>Cargando</b>
-          </span>
-          <b-spinner variant="primary" label="Text Centered"></b-spinner>
-        </div>
-      </slider>
+          </div>
+        </b-card>
+      </b-card-group>
+
+      <div class="card-pagination">
+        <div
+          class="page-index"
+          v-for="i in nbPages"
+          :key="i"
+          @click="goto(i)"
+          :class="{ active: currentPage(i) }"
+        ></div>
+      </div>
     </div>
   </b-container>
 </template>
@@ -52,13 +57,16 @@
 import axios from "axios";
 import ProductosService from "@/services/ProductosService";
 // import slider components
-import { slider, slideritem } from "vue-concise-slider";
 import { mapGetters } from "vuex";
 
 export default {
   name: "NuevoSlide",
   data() {
     return {
+      paginatedClubs: [],
+      nbPages: 0,
+      nbRowPerPage: 4,
+      currentPageIndex: 0,
       productos: [],
       loading: true,
       options: {
@@ -74,20 +82,47 @@ export default {
       },
     };
   },
-  components: {
-    slider,
-    slideritem,
-  },
+  components: {},
   computed: {
     ...mapGetters("storeUser", ["getUserId"]),
+    formattedClubs() {
+      return this.productos.reduce((c, n, i) => {
+        if (i % 4 === 0) c.push([]);
+        c[c.length - 1].push(n);
+        return c;
+      }, []);
+    },
+    currentPageClubs() {
+      this.createPages();
+
+      return this.paginatedClubs[this.currentPageIndex];
+    },
   },
 
   methods: {
+    goto(i) {
+      this.currentPageIndex = i - 1;
+    },
+    currentPage(i) {
+      return i - 1 === this.currentPageIndex;
+    },
+    createPages() {
+      let lengthAll = Object.keys(this.productos).length;
+      this.nbPages = 0;
+      for (let i = 0; i < lengthAll; i = i + this.nbRowPerPage) {
+        this.paginatedClubs[this.nbPages] = this.productos.slice(
+          i,
+          i + this.nbRowPerPage
+        );
+        this.nbPages++;
+      }
+    },
     async getPorductos() {
       try {
         const response = await ProductosService.getProductosDestacados();
         if (response.data.error == false) {
           this.productos = response.data.data;
+          console.log(this.productos);
           //this.getImporte(this.productos);
         }
       } catch (err) {
@@ -95,12 +130,10 @@ export default {
         this.productos = "ATENCION NO SE PUDIERON OBTENER LAS PUBLICACIONES";
       }
     },
-    getImporte(productos) {
-      productos.forEach((producto) => {
-        const options2 = { style: "currency", currency: "USD" };
-        const numberFormat2 = new Intl.NumberFormat("en-US", options2);
-        producto.precio = numberFormat2.format(producto.precio);
-      });
+    getImporte(precio) {
+      const options2 = { style: "currency", currency: "USD" };
+      const numberFormat2 = new Intl.NumberFormat("en-US", options2);
+      return numberFormat2.format(precio);
     },
     tituloAjustar(titulo) {
       return this.primerMayuscula(titulo.toLowerCase());
@@ -116,19 +149,18 @@ export default {
             autentificacion: false,
           },
         });
-      }else{
+      } else {
         if (producto != null) {
-        const path = `/buscarProductos/${producto.titulo}`;
-        if (this.$route.path !== path)
-          this.$router.push({
-            name: "buscarProductos",
-            params: {
-              producto: producto.titulo,
-            },
-          });
+          const path = `/buscarProductos/${producto.titulo}`;
+          if (this.$route.path !== path)
+            this.$router.push({
+              name: "buscarProductos",
+              params: {
+                producto: producto.titulo,
+              },
+            });
+        }
       }
-      }
-      
     },
   },
   mounted() {
@@ -161,6 +193,24 @@ export default {
 
 .item {
   box-shadow: 3px 3px 5px 3px rgba(0, 0, 0, 0.2);
+}
+.card-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.page-index {
+  margin-left: 10px;
+  width: 15px;
+  height: 15px;
+  border-radius: 15px;
+  background: #007bff;
+}
+.active {
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
 }
 </style>
 
