@@ -75,7 +75,11 @@
             </b-col>
           </b-row>
           <b-row>
-            <div v-if="contrato.length > 0">
+            <div v-if="!yapublico">
+               <b-alert variant="success" show>Tu primera publicacion es gratis! De parte de malambo te queremos agradecer por confiar en nosotros</b-alert>
+
+            </div>
+            <div v-else-if="contrato.length > 0">
               <b-col md="12">
                 <b-form-group
                   id="TipoPublicacion-label"
@@ -178,6 +182,9 @@ export default {
     contrato: {
       type: Array,
     },
+    yapublico: {
+      type: Boolean,
+    },
   },
   data() {
     return {
@@ -226,8 +233,7 @@ export default {
         value: null,
         text: "-- Seleccione el tipo de publicacion --",
         disabled: true,
-      });
-
+      });     
       return mc;
     },
     fArmarPaquete(){

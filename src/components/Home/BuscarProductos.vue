@@ -153,7 +153,7 @@
                               style="width: 45px; margin: 4px"
                             />
                           </a>
-
+                      </div>
                           <a
                             variant="white"
                             @click="verImagenes(producto)"
@@ -180,7 +180,7 @@
                               style="width: 45px; margin: 4px"
                             />&nbsp;&nbsp;
                           </a>
-                    </div>
+                   
                   </b-card-body>
                 </b-col>
               </b-row>
@@ -241,13 +241,18 @@
       </div>
       <div>
         <b-modal
-          title="Descripcion del producto"
+          :title="this.productoSeleccionado.titulo"
           id="modal-xl"
           centered
           ref="modalVerProductos"
-          hide-footer
+          ok-only
+          size="xl"
         >
-          <p>{{ descripcion }}</p>
+         <DetallesDeUnaPublicacion
+            @okDetalles="okDetalles"          
+            :publicacion="this.productoSeleccionado"
+            :logeado="this.logeado"
+          ></DetallesDeUnaPublicacion>
         </b-modal>
       </div>
     </div>
@@ -256,6 +261,8 @@
 
 <script>
 import ImagenesDeUnaPublicacion from "@/components/imagenes/ImagenesDeUnaPublicacion.vue";
+import DetallesDeUnaPublicacion from "@/components/publicaciones/DetallesDeUnaPublicacion.vue";
+
 import PublicacionService from "@/services/PublicacionService";
 import CategoriasService from "@/services/CategoriasService";
 import EmprendimientoService from "@/services/EmprendimientoService";
@@ -267,6 +274,7 @@ export default {
   name: "BuscarProductos",
   components: {
     ImagenesDeUnaPublicacion,
+    DetallesDeUnaPublicacion
   },
   props: {
     producto: {
@@ -293,7 +301,7 @@ export default {
       tipoPublicacion: "",
       logeado: false,
       verImagen: false,
-      descripcion: "",
+      productoSeleccionado: [],
       perPage: 2,
       currentPage: 1,
       productos: [],
@@ -519,11 +527,14 @@ export default {
     },
     verdetalles(producto) {
       console.log(producto)
-      this.descripcion = producto.descripcion;
+      this.productoSeleccionado = producto;
       this.$refs["modalVerProductos"].show();
     },
     okImagenesPublicacion() {
       this.$refs["modalVerImagenes"].hide();
+    },
+    okDetalles() {
+      this.$refs["modalVerProductos"].hide();
     },
   },
   mounted() {},

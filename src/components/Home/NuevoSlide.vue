@@ -20,46 +20,49 @@
       <b-row class="text-center">
         <b-col>
           <div class="card-pagination">
-             <div
-            id="flecha-right"
+            <div
+              id="flecha-right"
               v-for="i in nbPages"
               :key="i"
               @click="goto(i)"
               :class="{ active: currentPage(i) }"
-              
             ></div>
           </div>
         </b-col>
         <b-col cols="10">
-          <b-card-group deck>
-            <b-card
-              v-for="(producto, index) in currentPageClubs"
-              :key="index"
-              :img-src="`data:image/png;base64, ${producto.imagen}`"
-              img-alt="Img"
-              img-height="200px; max-height:300px"
-              img-top
-              style="max-width: 417px"
-              @click="verProducto(producto)"
-            >
-            <strong>
-              <B><I>
-                <h3> {{ tituloAjustar(producto.titulo) }} </h3>
-              </I></B>
-            </strong>
-              <p class="card-text">
-               <strong> {{ getImporte(producto.precio) }}</strong>
-              </p>
-              <p>{{ producto.padre }}</p>
+       
+            <b-card-group autoplay deck>
+            
+              <b-card
+                v-for="(producto, index) in currentPageClubs"
+                :key="index"
+                :img-src="`data:image/png;base64, ${producto.imagen}`"
+                img-alt="Img"
+                img-height="200px; max-height:300px"
+                img-top
+                style="max-width: 417px"
+                @click="verProducto(producto)"
+              >
+                <strong>
+                  <B
+                    ><I>
+                      <h3>{{ tituloAjustar(producto.titulo) }}</h3>
+                    </I></B
+                  >
+                </strong>
+                <p class="card-text">
+                  <strong> {{ getImporte(producto.precio) }}</strong>
+                </p>
+                <p>{{ producto.padre }}</p>
 
-              <div slot="footer">
-                <b-btn @click="verProducto(producto)" variant="primary" block
-                  >Ver mas</b-btn
-                >
-              </div>
-            </b-card>
-          </b-card-group>
-
+                <div slot="footer">
+                  <b-btn @click="verProducto(producto)" variant="primary" block
+                    >Ver mas</b-btn
+                  >
+                </div>
+              </b-card>
+            </b-card-group>
+ 
           <div class="card-pagination">
             <div
               class="page-index"
@@ -79,6 +82,7 @@
 import axios from "axios";
 import ProductosService from "@/services/ProductosService";
 // import slider components
+
 import { mapGetters } from "vuex";
 
 export default {
@@ -122,6 +126,7 @@ export default {
   },
 
   methods: {
+    
     goto(i) {
       this.currentPageIndex = i - 1;
     },
@@ -139,9 +144,11 @@ export default {
         this.nbPages++;
       }
     },
+
     async getPorductos() {
       try {
         const response = await ProductosService.getProductosDestacados();
+        console.log(response)
         if (response.data.error == false) {
           this.productos = response.data.data;
           console.log(this.productos);
@@ -149,17 +156,17 @@ export default {
         }
       } catch (err) {
         this.loading = true;
+        this.getPorductos()
         this.productos = "ATENCION NO SE PUDIERON OBTENER LAS PUBLICACIONES";
       }
     },
     getImporte(precio) {
-      if (precio == null || precio <= 1){
-       return 
+      if (precio == null || precio <= 1) {
+        return;
       }
-       const options2 = { style: "currency", currency: "USD" };
+      const options2 = { style: "currency", currency: "USD" };
       const numberFormat2 = new Intl.NumberFormat("en-US", options2);
-      return 'Precio: ' +numberFormat2.format(precio);
-      
+      return "Precio: " + numberFormat2.format(precio);
     },
     tituloAjustar(titulo) {
       return this.primerMayuscula(titulo.toLowerCase());
@@ -225,7 +232,6 @@ export default {
   align-items: center;
   justify-content: center;
   padding: 20px;
-
 }
 .page-index {
   margin-left: 10px;
@@ -233,15 +239,11 @@ export default {
   height: 15px;
   border-radius: 15px;
   background: #007bff;
-  
 }
 .active {
   width: 20px;
   height: 20px;
   border-radius: 20px;
 }
-
 </style>
-
-
 

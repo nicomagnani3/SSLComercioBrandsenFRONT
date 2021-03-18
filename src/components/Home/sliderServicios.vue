@@ -110,10 +110,12 @@ export default {
         const response = await ServiciosService.getPublicacionServicios();
         if (response.data.error == false) {
           this.productos = response.data.data;
+          console.log(this.productos)
           //this.getImporte(this.productos);
         }
       } catch (err) {
         this.loading = true;
+        this.getPorductos()
         this.categorias = "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS";
       }
     },

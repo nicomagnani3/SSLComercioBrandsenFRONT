@@ -46,6 +46,7 @@
           :contrato="this.contrato"
           :publicacion="this.publicacion"
           :preciosPublicacion="this.preciosPublicacion"
+          :yapublico="this.yapublico"
         ></DetallePublicacion>
       </tab-content>
       <tab-content title="Imagenes" :before-change="validarImagenes">
@@ -95,6 +96,7 @@ export default {
   },
   data() {
     return {
+      yapublico:false,
       esperarBotonMercadoPago:false,
       presionoFinalizar: false,
       presionoCrear: false,
@@ -393,14 +395,36 @@ export default {
         this.$router.push("/");
       }
     },
+    async misPublicaciones() {
+      try {
+        const response = await PublicacionService.getPublicoUsuario({
+          idUsuario: this.getUserId,
+        });       
+        console.log(response)
+        if (response.data.error == false){
+          this.yapublico=response.data.data   
+          if (!this.yapublico){
+             this.valorBotonFinalizar = "Finalizar";
+            this.valorUltimoPaso= "Finalizar"
+          }
+           
+        }
+   
+        
+      } catch (err) {
+        console.lo(err)
+      }
+    },
   },
   mounted() {
     axios
       .all([
+         this.misPublicaciones(),
         this.getcategorias(),
         this.getcategoriasHijas(),
         this.getContratosUser(),
         this.getPreciosPublicaciones(),
+       
       ])
       .then(() => {
         this.loading = false;

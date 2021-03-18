@@ -113,6 +113,7 @@ export default {
         }
       } catch (err) {
         this.loading = true;
+        this.getPorductos()
         this.productos = "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS";
       }
     },
