@@ -18,20 +18,38 @@
           </p>
         </b-col>
       </b-row>
-      <b-list-group>
-        <b-list-group-item
-          button
-          class="list-group-item"
-          v-for="item in this.empresas"
-          :key="item.id"
-          @click="verEmpresa(item)"
-          
-        >
-        
-          <br />
-          <a class="buscador">{{ item.nombre }}</a>
-        </b-list-group-item>
-      </b-list-group>
+     <b-container class="bv-example-row">
+        <b-row>
+          <b-col>
+            <b-list-group>
+              <b-list-group-item
+                button
+                class="list-group-item"
+                v-for="item in this.empresas"
+                :key="item.id"
+                @click="verHijos(item)"
+              >
+                <br />
+                <a class="buscador">{{ item.nombre }}</a>
+              </b-list-group-item>
+            </b-list-group>
+          </b-col>
+          <b-col>
+            <b-list-group>
+              <b-list-group-item
+                button
+                class="list-group-item"
+                v-for="item in this.categoriaHijaElegida"
+                :key="item.id"
+                @click="verEmpresa(item)"
+              >
+                <br />
+                <a class="buscador">{{ item.nombre }}</a>
+              </b-list-group-item>
+            </b-list-group>
+          </b-col>
+        </b-row>
+      </b-container>
     </div>
   </b-container>
 </template>
@@ -46,11 +64,19 @@ export default {
     return {
       loading: false,
       empresas: [],
+     categoriasHijas:[],
+      categoriaHijaElegida:[],
     };
   },
   created() {},
   computed: {},
   methods: {
+    verHijos(categoria){
+        this.categoriaHijaElegida = this.categoriasHijas.filter(
+        (c) => c.idPadre == categoria.id
+      );
+      this.categoriaHijaElegida = this.ordenarDatos(this.categoriaHijaElegida);
+    },
     buscarProducto(producto) {
       const path = `/buscarProductos/${producto}`;
       if (this.$route.path !== path)
@@ -72,6 +98,15 @@ export default {
         this.loading = true;
       } finally {
         this.loading = false;
+      }
+    },
+      async getServiciosHijos() {
+      try {
+        const response = await ServiciosService.getserviciossHijos();
+        this.categoriasHijas = response.data.data;
+        this.categoriasHijas = this.ordenarDatos(this.categoriasHijas);
+      } catch (err) {
+        this.categorias = "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS";
       }
     },
     ordenarDatos(categoria) {
@@ -103,7 +138,8 @@ export default {
   },
   mounted() {
     axios
-      .all([this.getcategorias()])
+      .all([this.getcategorias(),
+      this.getServiciosHijos(),])
       .then(() => {
         this.loading = false;
       })

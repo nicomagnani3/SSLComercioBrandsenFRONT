@@ -13,25 +13,41 @@
       <b-row class="pb-2">
         <b-col class="text-center pt-3">
           <br />
-          <p class="h1 font-italic text-warning">
-           Categorias disponibles
-          </p>
+          <p class="h1 font-italic text-warning">Categorias disponibles</p>
         </b-col>
       </b-row>
-      <b-list-group>
-        <b-list-group-item
-          button
-          class="list-group-item"
-          v-for="item in this.empresas"
-          :key="item.id"
-          @click="verEmpresa(item)"
-          
-        >
-        
-          <br />
-          <a class="buscador">{{ item.nombre }}</a>
-        </b-list-group-item>
-      </b-list-group>
+      <b-container class="bv-example-row">
+        <b-row>
+          <b-col>
+            <b-list-group>
+              <b-list-group-item
+                button
+                class="list-group-item"
+                v-for="item in this.empresas"
+                :key="item.id"
+                @click="verHijos(item)"
+              >
+                <br />
+                <a class="buscador">{{ item.nombre }}</a>
+              </b-list-group-item>
+            </b-list-group>
+          </b-col>
+          <b-col>
+            <b-list-group>
+              <b-list-group-item
+                button
+                class="list-group-item"
+                v-for="item in this.categoriaHijaElegida"
+                :key="item.id"
+                @click="verEmpresa(item)"
+              >
+                <br />
+                <a class="buscador">{{ item.nombre }}</a>
+              </b-list-group-item>
+            </b-list-group>
+          </b-col>
+        </b-row>
+      </b-container>
     </div>
   </b-container>
 </template>
@@ -46,11 +62,19 @@ export default {
     return {
       loading: false,
       empresas: [],
+      categoriasHijas:[],
+      categoriaHijaElegida:[],
     };
   },
   created() {},
   computed: {},
   methods: {
+    verHijos(categoria){
+        this.categoriaHijaElegida = this.categoriasHijas.filter(
+        (c) => c.idPadre == categoria.id
+      );
+      this.categoriaHijaElegida = this.ordenarDatos(this.categoriaHijaElegida);
+    },
     buscarProducto(producto) {
       const path = `/buscarProductos/${producto}`;
       if (this.$route.path !== path)
@@ -74,6 +98,14 @@ export default {
         this.loading = false;
       }
     },
+     async getcategoriasHijas() {
+      try {
+        const response = await CategoriasService.getcategoriasHijas();
+        this.categoriasHijas = response.data.data;
+      } catch (err) {
+        this.categorias = "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS";
+      }
+    },
     ordenarDatos(categoria) {
       return categoria.sort(function (a, b) {
         if (a.nombre > b.nombre) {
@@ -86,7 +118,6 @@ export default {
       });
     },
     verEmpresa(empresa) {
-      console.log(empresa)
       const path = `/buscarProductos/${empresa.nombre}`;
       if (this.$route.path !== path)
         this.$router.push({
@@ -104,7 +135,8 @@ export default {
   },
   mounted() {
     axios
-      .all([this.getcategorias()])
+      .all([this.getcategorias(),
+      this.getcategoriasHijas(),])
       .then(() => {
         this.loading = false;
       })

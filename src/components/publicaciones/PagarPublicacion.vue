@@ -24,12 +24,15 @@
                           <div class="row justify-content-md-center">
                             <b-col md="6">
                               <b-card-img
+                                thumbnail
+                                fluid
+                                alt="Responsive image"
+                                style="max-height: 350px"
                                 :src="
                                   this.imagen[0] == null
                                     ? 'https://picsum.photos/400/400/?image=20'
                                     : this.imagen[0].base64
                                 "
-                                alt="Image"
                                 class="rounded-0"
                               ></b-card-img>
                             </b-col>
@@ -55,10 +58,12 @@
                                   ><br /> -->
                                   <b>Autor: </b>{{ username }}<br />
                                   <b>Publicacion destacada: </b
-                                  >{{ this.esDestacada(this.publicacion.destacada) }}<br />
-                                 
+                                  >{{
+                                    this.esDestacada(
+                                      this.publicacion.destacada
+                                    )
+                                  }}<br />
                                 </div>
-                             
                               </div>
                             </div>
                           </div>
@@ -112,7 +117,7 @@
           </b-container>
         </b-card>
       </div>
-      <div v-else>
+      <div v-else-if="yapublico">
         <!--payment-->
         <b-card
           v-if="finalizo"
@@ -143,12 +148,12 @@
                   </div>
                 </div>
                 <b-spinner
-                      style="width: 5rem; height: 5rem"
-                      variant="warning"
-                      v-if="esperarBotonMercadoPago"
-                      label="Text Centered"
-                    >
-                    </b-spinner>
+                  style="width: 5rem; height: 5rem"
+                  variant="warning"
+                  v-if="esperarBotonMercadoPago"
+                  label="Text Centered"
+                >
+                </b-spinner>
                 <div class="payment-details">
                   <div class="form-group col-sm-12">
                     <br />
@@ -170,7 +175,7 @@ import { mapState } from "vuex";
 
 export default {
   name: "PagarEmprendimiento",
-  props: {  
+  props: {
     imagen: {
       type: Array,
     },
@@ -192,10 +197,12 @@ export default {
     esperarBotonMercadoPago: {
       type: Boolean,
     },
+    yapublico: {
+      type: Boolean,
+    },
   },
   data() {
     return {
-  
       fields: [
         { key: "desde", label: "Fecha Inicio", class: "text-center p2" },
         { key: "hasta", label: "Fecha Vencimiento", class: "text-left p2" },
@@ -221,7 +228,9 @@ export default {
       return destacada == true ? "SI" : "NO";
     },
     ponerPrecio(destacada) {
-      return destacada ?  this.preciosPublicacion[1].precio : this.preciosPublicacion[0].precio;
+      return destacada
+        ? this.preciosPublicacion[1].precio
+        : this.preciosPublicacion[0].precio;
     },
     getImporte(precio) {
       const options2 = { style: "currency", currency: "USD" };

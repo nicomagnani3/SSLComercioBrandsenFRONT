@@ -65,6 +65,7 @@
           :contrato="this.contrato"
           :preciosPublicacion="this.preciosPublicacion"
           :esperarBotonMercadoPago="this.esperarBotonMercadoPago"
+          :yapublico="this.yapublico"
         >
         </PagarPublicacion>
       </tab-content>
@@ -191,9 +192,10 @@ export default {
           categoriasHija: this.categoriaHijaSeleccionada,
           usuarioID: this.getUserId,
           destacada: this.publicacion.destacada,
+          yapublico:this.yapublico
         });
         if (response.data.error == false) {
-          if (this.tieneContrato) {
+          if (this.tieneContrato || !this.yapublico) {
             this.$root.$bvToast.toast(
               "Se creo con exito la publicacion, gracias por confiar en MALAMBO",
               {

@@ -17,7 +17,10 @@
             >{{ alert.message }}</b-alert
           >
         </b-form-group>
-        <b-card class="mb-3" header="Publicacion">
+        <b-card class="mb-3" header="Publicacion"
+        align="center" border-variant="success"  
+            header-border-variant= "success"
+        header-bg-variant="transparent"       >
           <b-row>
             <b-col lg="5" md="6">
               <b-form-group

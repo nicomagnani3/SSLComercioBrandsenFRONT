@@ -17,7 +17,10 @@
             >{{ alert.message }}</b-alert
           >
         </b-form-group>
-        <!--    <b-card class="mb-3" header="Publicacion"> -->
+            <b-card class="mb-3" header="Servicio-Profesional"
+            align="center" border-variant="success"  
+            header-border-variant= "success"
+        header-bg-variant="transparent"       > 
         <b-row>
           <b-col lg="5" md="6">
             <b-form-group
@@ -44,7 +47,7 @@
               </ValidationProvider>
             </b-form-group>
           </b-col>
-       <!--    <b-col lg="5" md="6">
+          <!--    <b-col lg="5" md="6">
             <b-form-group id="precio-label" label="Precio:" label-for="precio">
               <ValidationProvider
                 :name="'precio '"
@@ -70,7 +73,7 @@
             </b-form-group>
           </b-col> -->
         </b-row>
-     <!--    <b-row>
+        <!--    <b-row>
           <b-col lg="10" md="10">
             <b-form-checkbox v-model="publicacion.destacada" name="checkbox-1">
               Publicacion destacada (las publicaciones destacadas tienen un costo adicional y se visualizan en el home de Malambo)
@@ -96,6 +99,7 @@
             </b-form-group>
           </b-col>
         </b-row>
+            </b-card>
       </b-container>
     </ValidationObserver>
   </div>
