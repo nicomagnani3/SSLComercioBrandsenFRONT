@@ -94,7 +94,7 @@
                         <p class="item-name">
                           Presiona el boton "pagar" para pagar el paquete
                           <strong> {{ this.selectedpaquete[0].nombre }}</strong
-                          >, cuando finalizes el pago tu paquete se cargara en
+                          >, cuando finalices el pago tu paquete se cargara en
                           Malambo<span id="summary-quantity"></span>
                         </p>
                       </div>

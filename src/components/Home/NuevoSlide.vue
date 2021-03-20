@@ -30,39 +30,38 @@
           </div>
         </b-col>
         <b-col cols="10">
-       
-            <b-card-group autoplay deck>
-            
-              <b-card
-                v-for="(producto, index) in currentPageClubs"
-                :key="index"
-                :img-src="`data:image/png;base64, ${producto.imagen}`"
-                img-alt="Img"
-                img-height="200px; max-height:300px"
-                img-top
-                style="max-width: 417px"
-                @click="verProducto(producto)"
-              >
-                <strong>
-                  <B
-                    ><I>
-                      <h3>{{ tituloAjustar(producto.titulo) }}</h3>
-                    </I></B
-                  >
-                </strong>
-                <p class="card-text">
-                  <strong> {{ getImporte(producto.precio) }}</strong>
-                </p>
-                <p>{{ producto.padre }}</p>
+          <b-card-group autoplay deck>
+            <b-card
+              v-for="(producto, index) in currentPageClubs"
+              :key="index"
+              :img-src="`data:image/png;base64, ${producto.imagen}`"
+              img-alt="Img"
+              img-height="200px; max-height:100px"
+              img-top
+              style="max-width: 200px"
+              @click="verProducto(producto)"
+            >            
+              <strong>
+                <B
+                  ><I>
+                    <strong>{{ tituloAjustar(producto.titulo) }}</strong>
+                  </I></B
+                >
+              </strong>
+              <p class="card-text">
+                {{ getImporte(producto.precio) }}
+              </p>
+              
+              <small>{{ producto.padre }}</small>
 
-                <div slot="footer">
-                  <b-btn @click="verProducto(producto)" variant="primary" block
-                    >Ver mas</b-btn
-                  >
-                </div>
-              </b-card>
-            </b-card-group>
- 
+              <div slot="footer">
+                <b-btn @click="verProducto(producto)" variant="primary" block
+                  >Ver mas</b-btn
+                >
+              </div>
+            </b-card>
+          </b-card-group>
+
           <div class="card-pagination">
             <div
               class="page-index"
@@ -91,7 +90,7 @@ export default {
     return {
       paginatedClubs: [],
       nbPages: 0,
-      nbRowPerPage: 5,
+      nbRowPerPage: 8,
       currentPageIndex: 0,
       productos: [],
       loading: true,
@@ -126,7 +125,6 @@ export default {
   },
 
   methods: {
-    
     goto(i) {
       this.currentPageIndex = i - 1;
     },
@@ -148,7 +146,7 @@ export default {
     async getPorductos() {
       try {
         const response = await ProductosService.getProductosDestacados();
-        console.log(response)
+        console.log(response);
         if (response.data.error == false) {
           this.productos = response.data.data;
           console.log(this.productos);
@@ -156,7 +154,7 @@ export default {
         }
       } catch (err) {
         this.loading = true;
-        this.getPorductos()
+        this.getPorductos();
         this.productos = "ATENCION NO SE PUDIERON OBTENER LAS PUBLICACIONES";
       }
     },
@@ -166,10 +164,10 @@ export default {
       }
       const options2 = { style: "currency", currency: "USD" };
       const numberFormat2 = new Intl.NumberFormat("en-US", options2);
-      return "Precio: " + numberFormat2.format(precio);
+      return numberFormat2.format(precio);
     },
     tituloAjustar(titulo) {
-      return this.primerMayuscula(titulo.toLowerCase());
+      return this.primerMayuscula(titulo);
     },
     primerMayuscula(string) {
       return string.charAt(0).toUpperCase() + string.slice(1);

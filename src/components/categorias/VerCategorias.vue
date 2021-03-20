@@ -62,18 +62,23 @@ export default {
     return {
       loading: false,
       empresas: [],
-      categoriasHijas:[],
-      categoriaHijaElegida:[],
+      categoriasHijas: [],
+      categoriaHijaElegida: [],
     };
   },
   created() {},
   computed: {},
   methods: {
-    verHijos(categoria){
-        this.categoriaHijaElegida = this.categoriasHijas.filter(
+    verHijos(categoria) {
+      this.anchorHashCheck()
+      this.categoriaHijaElegida = this.categoriasHijas.filter(
         (c) => c.idPadre == categoria.id
       );
       this.categoriaHijaElegida = this.ordenarDatos(this.categoriaHijaElegida);
+    },
+    anchorHashCheck() {
+       window.scrollTo(0, 0)
+  
     },
     buscarProducto(producto) {
       const path = `/buscarProductos/${producto}`;
@@ -98,7 +103,7 @@ export default {
         this.loading = false;
       }
     },
-     async getcategoriasHijas() {
+    async getcategoriasHijas() {
       try {
         const response = await CategoriasService.getcategoriasHijas();
         this.categoriasHijas = response.data.data;
@@ -135,8 +140,7 @@ export default {
   },
   mounted() {
     axios
-      .all([this.getcategorias(),
-      this.getcategoriasHijas(),])
+      .all([this.getcategorias(), this.getcategoriasHijas()])
       .then(() => {
         this.loading = false;
       })

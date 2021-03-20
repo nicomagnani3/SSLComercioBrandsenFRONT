@@ -204,7 +204,12 @@ const router = new Router({
       path: '*',
       redirect: '/'
     }
-  ]
+  ],
+  scrollBehavior () {
+
+    return { x: 0, y: 0 }
+
+  }
 })
 
 

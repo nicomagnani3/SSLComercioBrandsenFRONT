@@ -3,8 +3,8 @@
     <Slider />
     <sliderPubli />
     <div fluid class="subtitulo">
-      <P>Al publicar está colaborando con entidades de Brandsen</P>
-      <P>Registrate y publica tu primer producto gratis!</P>
+      <strong>Registrate y publica tu primer producto gratis!</strong>
+      <P>Al publicar está colaborando con Apaa de Brandsen</P>
     </div>
 
     <NuevoSlide />
@@ -53,10 +53,10 @@ export default {
 
 .subtitulo {
   text-align: center;
-    /* margin: 10px; */
-    background-color: rgb(66, 129, 248);
-    padding: 2px;
-    font-size: 22px;
-    color: white;
+  /* margin: 10px; */
+  background-color: rgb(66, 129, 248);
+  padding: 2px;
+  font-size: 22px;
+  color: white;
 }
 </style>
