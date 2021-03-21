@@ -12,6 +12,7 @@ import RecuperarClave from '@/components/Inicio/RecuperarClave.vue'
 import BuscarProductos from "@/components/Home/BuscarProductos.vue"; 
 import NuevaPublicacion from '@/components/publicaciones/NuevaPublicacion.vue'
 import VerCategorias from '@/components/categorias/VerCategorias.vue'
+import VerDestacados from '@/components/Home/VerDestacados.vue'
 
 
 /* Emprendimiento */
@@ -135,6 +136,15 @@ const router = new Router({
         path: '/crearContrato/publicacion:publicacion',
         name: 'crearContrato',
         component: CrearContrato,   
+        props: true,    
+        meta: {
+          requireAuth: false
+        },  
+       },
+       {     
+        path: '/verDestacados',
+        name: 'verDestacados',
+        component: VerDestacados,   
         props: true,    
         meta: {
           requireAuth: false

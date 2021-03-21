@@ -3,8 +3,12 @@
     <b-row class="pb-3">
       <b-col lg="2" sm="4" class="text-center"></b-col>
       <b-col md="8" sm="6" class="text-left pt-3">
-        <div>
-          <p class="h1 text-center">Productos y Comercios destacados</p>
+        <div class="widget-title destacados">
+          <strong class="h3">Productos y Comercios destacados</strong>&nbsp;
+
+          <a @click="verDestacados()" class="verMas">
+            + ver mas</a
+          >
         </div>
       </b-col>
     </b-row>
@@ -18,15 +22,15 @@
     </div>
     <div v-else class="animated fadeIn">
       <b-row class="text-center">
-        <b-col>
-          <div class="card-pagination">
-            <div
-              id="flecha-right"
-              v-for="i in nbPages"
-              :key="i"
-              @click="goto(i)"
-              :class="{ active: currentPage(i) }"
-            ></div>
+        <b-col class="d-none d-sm-none d-md-block">
+          <div class="d-none d-sm-none d-md-block">
+            <b-icon
+              @click="backPage()"
+              :class="{ active: pagina() }"
+              icon="arrow-left-circle-fill"
+              id="iconright"
+            >
+            </b-icon>
           </div>
         </b-col>
         <b-col cols="10">
@@ -36,11 +40,11 @@
               :key="index"
               :img-src="`data:image/png;base64, ${producto.imagen}`"
               img-alt="Img"
-              img-height="200px; max-height:100px"
+              img-height="200px; max-height:300px"
               img-top
-              style="max-width: 200px"
+              style="max-width: 350px "
               @click="verProducto(producto)"
-            >            
+            >
               <strong>
                 <B
                   ><I>
@@ -51,11 +55,15 @@
               <p class="card-text">
                 {{ getImporte(producto.precio) }}
               </p>
-              
+
               <small>{{ producto.padre }}</small>
 
               <div slot="footer">
-                <b-btn @click="verProducto(producto)" variant="primary" block
+                <b-btn
+                  @click="verProducto(producto)"
+                  variant="warning"
+                  block
+                  class="btnMas"
                   >Ver mas</b-btn
                 >
               </div>
@@ -72,7 +80,17 @@
             ></div>
           </div>
         </b-col>
-        <b-col></b-col>
+        <b-col class="d-none d-sm-none d-md-block">
+          <div class="d-none d-sm-none d-md-block">
+            <b-icon
+              @click="nexPage()"
+              :class="{ active: pagina() }"
+              icon="arrow-right-circle-fill"
+              id="iconright"
+            >
+            </b-icon>
+          </div>
+        </b-col>
       </b-row>
     </div>
   </div>
@@ -90,8 +108,10 @@ export default {
     return {
       paginatedClubs: [],
       nbPages: 0,
-      nbRowPerPage: 8,
+      ubicaicon: 0,
+      nbRowPerPage: 5,
       currentPageIndex: 0,
+      indice: 1,
       productos: [],
       loading: true,
       options: {
@@ -125,15 +145,52 @@ export default {
   },
 
   methods: {
+    verDestacados() {
+      this.$router.push({
+        name: "verDestacados",
+        query: {
+          q: this.searchQuery,
+          t: new Date().getTime(),
+        },
+        params: {
+          productos: this.productos,
+         
+        },
+      });
+    },
+    nexPage() {
+      this.currentPageIndex = this.ubicaicon + 1;
+      this.indice = this.ubicaicon + 1;
+      if (++this.indice <= this.nbPages) {
+        this.ubicaicon++;
+      } else {
+        this.currentPageIndex = 0;
+        this.ubicaicon = 0;
+      }
+    },
+    backPage() {
+      if (this.ubicaicon == 0) {
+        this.currentPageIndex = this.nbPages - 1;
+        this.ubicaicon = this.nbPages - 1;
+      } else {
+        this.currentPageIndex = this.ubicaicon - 1;
+        this.ubicaicon = this.ubicaicon - 1;
+      }
+    },
+    pagina() {
+      return this.ubicaicon - 1 === this.currentPageIndex;
+    },
     goto(i) {
       this.currentPageIndex = i - 1;
     },
     currentPage(i) {
+      this.ubicaicon = this.currentPageIndex;
       return i - 1 === this.currentPageIndex;
     },
     createPages() {
       let lengthAll = Object.keys(this.productos).length;
       this.nbPages = 0;
+
       for (let i = 0; i < lengthAll; i = i + this.nbRowPerPage) {
         this.paginatedClubs[this.nbPages] = this.productos.slice(
           i,
@@ -146,10 +203,8 @@ export default {
     async getPorductos() {
       try {
         const response = await ProductosService.getProductosDestacados();
-        console.log(response);
         if (response.data.error == false) {
           this.productos = response.data.data;
-          console.log(this.productos);
           //this.getImporte(this.productos);
         }
       } catch (err) {
@@ -236,12 +291,50 @@ export default {
   width: 15px;
   height: 15px;
   border-radius: 15px;
-  background: #007bff;
+  background: #7d7d7d;
 }
 .active {
   width: 20px;
   height: 20px;
   border-radius: 20px;
+}
+.verMas {
+  margin-left: 50px;
+  color: #676767;
+    cursor: pointer;
+
+}
+.btnMas {
+  white-space: normal;
+  background: #ffce4e;
+  background: -moz-linear-gradient(
+    45deg,
+    #00ddf5 0%,
+    #00d9d7 32%,
+    #00d6ba 100%
+  );
+  background: -webkit-linear-gradient(
+    45deg #00ddf5 0%,
+    #00d9d7 32%,
+    #ffce4e 100%
+  );
+  background: linear-gradient(45deg #00ddf5 0%, #00d9d7 32%, #ffce4e 100%);
+  -moz-border-radius: 20px;
+  -webkit-border-radius: 20px;
+  border-radius: 20px;
+  margin: -3px 0 0 0;
+  padding: 9px 7px 16px 8px;
+  width: 88%;
+  text-transform: none;
+  font-size: 14px;
+  line-height: 11px;
+  color: #fff;
+}
+#iconright {
+  height: 29rem;
+  width: 30px;
+    cursor: pointer;
+
 }
 </style>
 
