@@ -47,8 +47,11 @@
                 <b-row no-gutters>
                   <b-col md="6">
                     <b-card-img
+                    thumbnail
+                    fluid
+                    alt="Responsive image"
+                    style="max-height: 450px"
                       :src="`data:image/png;base64, ${producto.imagen}`"
-                      alt="Image"
                       class="rounded-0"
                     ></b-card-img>
                   </b-col>
@@ -63,6 +66,9 @@
                           Destacado</span
                         >
                       </h3>
+                      <b-button variant="danger" @click="eliminar(producto)"
+                        ><b-icon icon="x"></b-icon
+                      ></b-button>
                       <h4 v-if="producto.precio > 0">
                         Precio $: {{ producto.precio }}
                       </h4>
@@ -70,10 +76,7 @@
                         Fecha de publicacion: {{ producto.fecha | formatDate }}
                       </h5>
                       <p>{{ producto.padre }}</p>
-
-                      <b-button variant="danger" @click="eliminar(producto)"
-                        ><b-icon icon="x"></b-icon
-                      ></b-button>
+                      <p> {{producto.tipo}}</p>
                     </b-card-body>
                   </b-col>
                 </b-row>
@@ -142,6 +145,7 @@ export default {
       }
     },
     async eliminarPublicacion(publicacion){
+      console.log(publicacion)
         this.loading=true
         try {
         const response = await PublicacionService.eliminarPublicacion({
@@ -149,7 +153,7 @@ export default {
            idUsuario: this.getUserId,
           idPublicacion: publicacion.id,
           tipo:publicacion.tipo,
-          destacada:publicacion.destacada
+          destacada:publicacion.destacado
         });
         if ( response.data.error == false){
            this.misPublicaciones()

@@ -3,7 +3,7 @@
     <div class="text-center">
       <img
         src="@/assets/MalamboLogo.png"
-              style="width: 100%; max-width: 600px"
+              style="width: 100%; max-width: 600px;cursor: pointer"
 
         class="rounded"
         alt="..."

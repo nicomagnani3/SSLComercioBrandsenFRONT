@@ -114,73 +114,72 @@
                       <router-link to="/login">ACA!</router-link>
                     </div>
                     <div v-else>
-                          <a
-                            v-if="producto.telefono != null && logeado"
-                            :href="
-                              'https://api.whatsapp.com/send?text=Hola!%20,desde%20Malambo%20observe%20la%20publicacion%20' +
-                              producto.titulo +
-                              ',queria%20obtener%20mas%20detalles' +
-                              '&phone=+54' +
-                              acomodarCelular(producto.telefono)
-                            "
-                            target="_black"
-                          >
-                            <img
-                              v-if="logeado && producto.telefono != null"
-                              src="@/assets/wsp.png"
-                              alt=""
-                              height="auto"
-                              style="width: 45px; margin: 4px"
-                            />&nbsp;&nbsp;
-                          </a>
-                          <a
-                            :href="
-                              'https://mail.google.com/mail/?view=cm&fs=1&to=' +
-                              producto.email +
-                              '&body=Hola!%20,desde%20Malambo%20observe%20la%20publicacion%20' +
-                              producto.titulo +
-                              ',queria%20obtener%20mas%20detalles' +
-                              '&su=Malambo consulta por ' +
-                              producto.titulo
-                            "
-                            target="_black"
-                            >&nbsp;&nbsp;
-                            <img
-                              v-if="logeado"
-                              src="@/assets/mail.png"
-                              alt=""
-                              height="auto"
-                              style="width: 45px; margin: 4px"
-                            />
-                          </a>
-                      </div>
-                          <a
-                            variant="white"
-                            @click="verImagenes(producto)"
-                            style="cursor: pointer;"
-                            >
-                            <img
-                              src="@/assets/galeria.png"
-                              alt=""
-                              height="auto"
-                              style="width: 45px; margin: 4px"
-                            />&nbsp;&nbsp;
-                          </a>
-                          
-                          <a
-                            variant="white"
-                            v-if="producto.descripcion != 'SN'"
-                            @click="verdetalles(producto)"
-                            style="cursor: pointer;"
-                            >
-                           <img
-                              src="@/assets/descripcion.png"
-                              alt=""
-                              height="auto"
-                              style="width: 45px; margin: 4px"
-                            />&nbsp;&nbsp;
-                          </a>
-                   
+                      <a
+                        v-if="producto.telefono != null && logeado"
+                        :href="
+                          'https://api.whatsapp.com/send?text=Hola!%20,desde%20Malambo%20observe%20la%20publicacion%20' +
+                          producto.titulo +
+                          ',queria%20obtener%20mas%20detalles' +
+                          '&phone=+54' +
+                          acomodarCelular(producto.telefono)
+                        "
+                        target="_black"
+                      >
+                        <img
+                          v-if="logeado && producto.telefono != null"
+                          src="@/assets/wsp.png"
+                          alt=""
+                          height="auto"
+                          style="width: 45px; margin: 4px"
+                        />&nbsp;&nbsp;
+                      </a>
+                      <a
+                        :href="
+                          'https://mail.google.com/mail/?view=cm&fs=1&to=' +
+                          producto.email +
+                          '&body=Hola!%20,desde%20Malambo%20observe%20la%20publicacion%20' +
+                          producto.titulo +
+                          ',queria%20obtener%20mas%20detalles' +
+                          '&su=Malambo consulta por ' +
+                          producto.titulo
+                        "
+                        target="_black"
+                        >&nbsp;&nbsp;
+                        <img
+                          v-if="logeado"
+                          src="@/assets/mail.png"
+                          alt=""
+                          height="auto"
+                          style="width: 45px; margin: 4px"
+                        />
+                      </a>
+                    </div>
+                    <a
+                      variant="white"
+                      @click="verImagenes(producto)"
+                      style="cursor: pointer"
+                    >
+                      <img
+                        src="@/assets/galeria.png"
+                        alt=""
+                        height="auto"
+                        style="width: 45px; margin: 4px"
+                      />&nbsp;&nbsp;
+                    </a>
+
+                    <a
+                      variant="white"
+                      v-if="producto.descripcion != 'SN'"
+                      @click="verdetalles(producto)"
+                      style="cursor: pointer"
+                    >
+                      <img
+                        src="@/assets/descripcion.png"
+                        alt=""
+                        height="auto"
+                        style="width: 45px; margin: 4px"
+                      />&nbsp;&nbsp;
+                    </a>
                   </b-card-body>
                 </b-col>
               </b-row>
@@ -231,6 +230,7 @@
           size="xl"
           ref="modalVerImagenes"
           hide-footer
+          ok-only
         >
           <ImagenesDeUnaPublicacion
             @okImagenesPublicacion="okImagenesPublicacion"
@@ -248,14 +248,13 @@
           ok-only
           size="xl"
         >
-         <DetallesDeUnaPublicacion
-            @okDetalles="okDetalles"          
+          <DetallesDeUnaPublicacion
+            @okDetalles="okDetalles"
             :publicacion="this.productoSeleccionado"
             :logeado="this.logeado"
           ></DetallesDeUnaPublicacion>
         </b-modal>
       </div>
-      
     </div>
   </div>
 </template>
@@ -275,7 +274,7 @@ export default {
   name: "BuscarProductos",
   components: {
     ImagenesDeUnaPublicacion,
-    DetallesDeUnaPublicacion
+    DetallesDeUnaPublicacion,
   },
   props: {
     producto: {
@@ -527,7 +526,7 @@ export default {
       this.$refs["modalVerImagenes"].show();
     },
     verdetalles(producto) {
-      console.log(producto)
+      console.log(producto);
       this.productoSeleccionado = producto;
       this.$refs["modalVerProductos"].show();
     },

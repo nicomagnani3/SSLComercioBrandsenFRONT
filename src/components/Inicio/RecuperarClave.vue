@@ -3,7 +3,7 @@
     <img
       @click="home()"
       src="@/assets/MalamboLogo.png"
-      style="width: 100%; max-width: 600px"
+      style="width: 100%; max-width: 600px;cursor: pointer"
       class="rounded"
       alt="..."
     />
@@ -103,6 +103,9 @@ export default {
     ...mapGetters("storeUser", ["getUsername", "getUserId"]),
   },
   methods: {
+    home(){
+      this.$router.push("/");
+    },
     async login() {
       if (this.form.password == this.form.password_confirmation) {
         try {

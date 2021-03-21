@@ -18,13 +18,11 @@
           </p>
         </b-col>
       </b-row>
-     <b-container class="bv-example-row">
-        <b-row>
+        <b-row class="text-center">
           <b-col>
             <b-list-group>
               <b-list-group-item
                 button
-                class="list-group-item"
                 v-for="item in this.empresas"
                 :key="item.id"
                 @click="verHijos(item)"
@@ -38,7 +36,6 @@
             <b-list-group>
               <b-list-group-item
                 button
-                class="list-group-item"
                 v-for="item in this.categoriaHijaElegida"
                 :key="item.id"
                 @click="verEmpresa(item)"
@@ -49,7 +46,6 @@
             </b-list-group>
           </b-col>
         </b-row>
-      </b-container>
     </div>
   </b-container>
 </template>
@@ -72,10 +68,15 @@ export default {
   computed: {},
   methods: {
     verHijos(categoria){
+      this.anchorHashCheck()
         this.categoriaHijaElegida = this.categoriasHijas.filter(
         (c) => c.idPadre == categoria.id
       );
       this.categoriaHijaElegida = this.ordenarDatos(this.categoriaHijaElegida);
+    },
+     anchorHashCheck() {
+       window.scrollTo(0, 0)
+  
     },
     buscarProducto(producto) {
       const path = `/buscarProductos/${producto}`;

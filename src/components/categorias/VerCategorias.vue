@@ -16,13 +16,11 @@
           <p class="h1 font-italic text-warning">Categorias disponibles</p>
         </b-col>
       </b-row>
-      <b-container class="bv-example-row">
-        <b-row>
+        <b-row class="text-center"> 
           <b-col>
             <b-list-group>
               <b-list-group-item
                 button
-                class="list-group-item"
                 v-for="item in this.empresas"
                 :key="item.id"
                 @click="verHijos(item)"
@@ -36,7 +34,6 @@
             <b-list-group>
               <b-list-group-item
                 button
-                class="list-group-item"
                 v-for="item in this.categoriaHijaElegida"
                 :key="item.id"
                 @click="verEmpresa(item)"
@@ -47,7 +44,6 @@
             </b-list-group>
           </b-col>
         </b-row>
-      </b-container>
     </div>
   </b-container>
 </template>
@@ -155,5 +151,11 @@ export default {
 .buscador:hover {
   color: rgb(255, 206, 78);
   cursor: pointer;
+}
+@media screen and (min-width: 768px) {
+
+.custom-collapse {
+            display:block;
+      }  
 }
 </style>

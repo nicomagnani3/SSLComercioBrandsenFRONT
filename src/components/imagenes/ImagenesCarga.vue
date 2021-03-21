@@ -25,6 +25,10 @@
                 <b-col cols="12" sm="6" md="4" lg="2">
                   <div v-if="value.loadingImg" class="py-5 text-center"></div>
                   <b-card-img
+                   thumbnail
+                    fluid
+                    alt="Responsive image"
+                    style="max-height: 225px"
                     :src="
                       value.url == null
                         ? 'https://i.pinimg.com/originals/ad/53/64/ad53643d33b99130bc99e04d19857e39.png'
@@ -99,6 +103,10 @@
                 <b-col cols="12" sm="6" md="4" lg="2">
                   <div v-if="value.loadingImg" class="py-5 text-center"></div>
                   <b-card-img
+                   thumbnail
+                    fluid
+                    alt="Responsive image"
+                    style="max-height: 225px"
                     :src="
                       value.url == null
                         ? 'https://i.pinimg.com/originals/ad/53/64/ad53643d33b99130bc99e04d19857e39.png'

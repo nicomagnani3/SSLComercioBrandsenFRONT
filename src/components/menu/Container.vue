@@ -101,20 +101,7 @@ export default {
 
   }
 
-  .label-padding-sm {
-      display: inline-block;
-      width: 80px;
-  }
 
-  .label-padding {
-      display: inline-block;
-      width: 160px;
-  }
-
-  .label-padding-tab {
-      display: inline-block;
-      width: 250px;
-  }
 
   .footer {
       /*display: block;*/

@@ -55,7 +55,6 @@ export default {
   text-align: center;
   /* margin: 10px; */
   background-color: rgb(66, 129, 248);
-  padding: 2px;
   font-size: 22px;
   color: white;
 }

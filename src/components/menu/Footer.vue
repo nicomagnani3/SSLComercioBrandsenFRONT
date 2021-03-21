@@ -11,9 +11,9 @@
     <b-col xs="12" md="12" lg="3" align-self="center">
         
         <ul>
-            <li>Buscá articulos en brandsen</li>
-            <li>Buscá servicios en brandsen</li>
-            <li>Buscá profesionales en brandsen</li>
+            <li>Buscá articulos en Brandsen</li>
+            <li>Buscá servicios en Brandsen</li>
+            <li>Buscá profesionales en Brandsen</li>
 
         </ul>
     

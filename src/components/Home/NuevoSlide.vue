@@ -6,9 +6,7 @@
         <div class="widget-title destacados">
           <strong class="h3">Productos y Comercios destacados</strong>&nbsp;
 
-          <a @click="verDestacados()" class="verMas">
-            + ver mas</a
-          >
+          <a @click="verDestacados()" class="verMas"> + ver mas</a>
         </div>
       </b-col>
     </b-row>
@@ -22,7 +20,7 @@
     </div>
     <div v-else class="animated fadeIn">
       <b-row class="text-center">
-        <b-col class="d-none d-sm-none d-md-block">
+        <b-col>
           <div class="d-none d-sm-none d-md-block">
             <b-icon
               @click="backPage()"
@@ -36,13 +34,13 @@
         <b-col cols="10">
           <b-card-group autoplay deck>
             <b-card
+              thumbnail
               v-for="(producto, index) in currentPageClubs"
               :key="index"
               :img-src="`data:image/png;base64, ${producto.imagen}`"
-              img-alt="Img"
-              img-height="200px; max-height:300px"
-              img-top
-              style="max-width: 350px "
+              img-height="300px; max-height:100%;"
+              alt="Responsive image"
+              style="    max-width: 350px;"
               @click="verProducto(producto)"
             >
               <strong>
@@ -80,7 +78,7 @@
             ></div>
           </div>
         </b-col>
-        <b-col class="d-none d-sm-none d-md-block">
+        <b-col>
           <div class="d-none d-sm-none d-md-block">
             <b-icon
               @click="nexPage()"
@@ -114,29 +112,12 @@ export default {
       indice: 1,
       productos: [],
       loading: true,
-      options: {
-        currentPage: 0,
-        thresholdDistance: 100,
-        thresholdTime: 500,
-        autoplay: 4000,
-        loop: true,
-        direction: "horizontal",
-        loopedSlides: 5,
-        slidesToScroll: 1,
-        effect: "slide",
-      },
     };
   },
   components: {},
   computed: {
     ...mapGetters("storeUser", ["getUserId"]),
-    formattedClubs() {
-      return this.productos.reduce((c, n, i) => {
-        if (i % 4 === 0) c.push([]);
-        c[c.length - 1].push(n);
-        return c;
-      }, []);
-    },
+
     currentPageClubs() {
       this.createPages();
 
@@ -154,7 +135,6 @@ export default {
         },
         params: {
           productos: this.productos,
-         
         },
       });
     },
@@ -249,8 +229,8 @@ export default {
       }
     },
   },
-  mounted() {
-    axios
+  created (){
+  axios
       .all([this.getPorductos()])
       .then(() => {
         this.loading = false;
@@ -258,6 +238,9 @@ export default {
       .catch((err) => {
         console.log(err);
       });
+  },
+  mounted() {
+  
   },
 };
 </script>
@@ -301,8 +284,7 @@ export default {
 .verMas {
   margin-left: 50px;
   color: #676767;
-    cursor: pointer;
-
+  cursor: pointer;
 }
 .btnMas {
   white-space: normal;
@@ -333,8 +315,7 @@ export default {
 #iconright {
   height: 29rem;
   width: 30px;
-    cursor: pointer;
-
+  cursor: pointer;
 }
 </style>
 
