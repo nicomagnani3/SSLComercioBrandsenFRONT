@@ -9,9 +9,9 @@
       >
       </b-spinner>
     </div>
-    <div v-else class="animated fadeIn">
-      <b-row class="text-center">
-        <b-col cols="3" class="d-none d-sm-none d-md-block">
+    <div v-else class="body">
+      <b-row class="pb-2">
+        <b-col cols="3" class="text-center d-none d-sm-none d-md-block">
           <br />
           <H1>{{ producto }}</H1>
           <strong>Resultados: {{ this.cantidadProductos() }}</strong>
@@ -21,9 +21,7 @@
           <h4>Productos</h4>
           <b-list-group>
             <b-list-group-item
-              style="max-height: 50px"
               button
-              class="list-group-item"
               v-for="item in categorias"
               :key="item.id"
               @click="buscarPorCategoria(item.id)"
@@ -39,9 +37,7 @@
           <h4>Servicios</h4>
           <b-list-group>
             <b-list-group-item
-              style="max-height: 50px"
               button
-              class="list-group-item"
               v-for="item in servicios"
               :key="item.id"
               @click="buscarPorServicio(item)"
@@ -206,9 +202,7 @@
           <h4>Emprendimientos</h4>
           <b-list-group>
             <b-list-group-item
-              style="max-height: 50px"
               button
-              class="list-group-item"
               v-for="item in emprendimientos"
               :key="item.id"
               @click="buscarPorEmprendimiento(item)"
@@ -445,13 +439,16 @@ export default {
         if (response.data.error == false) {
           this.productos = response.data.data;
         }
-
         //this.getImporte(this.productos);
       } catch (err) {
         this.productos = "ATENCION NO SE PUDIERON OBTENER LAS NOVEDADES";
       } finally {
+        this.anchorHashCheck();
         this.loading = false;
       }
+    },
+    anchorHashCheck() {
+      window.scrollTo(0, 0);
     },
     async buscarPorEmprendimiento(item) {
       this.loading = true;
@@ -469,6 +466,9 @@ export default {
         //this.getImporte(this.productos);
       } catch (err) {
         this.productos = "ATENCION NO SE PUDIERON OBTENER LAS NOVEDADES";
+      } finally {
+        this.anchorHashCheck();
+        this.loading = false;
       }
     },
     async buscarPorServicio(item) {
@@ -485,6 +485,10 @@ export default {
         //this.getImporte(this.productos);
       } catch (err) {
         this.productos = "ATENCION NO SE PUDIERON OBTENER LAS NOVEDADES";
+      } finally {
+        this.anchorHashCheck();
+
+        this.loading = false;
       }
     },
     async buscarPorRubro(rubroId) {
@@ -540,9 +544,21 @@ export default {
   mounted() {},
 };
 </script>
-<style >
+<style scoped >
 .buscador:hover {
   color: rgb(255, 206, 78);
   cursor: pointer;
+  
+}
+.buscador {
+  
+    width: 366px;
+   
+
+}
+@media screen and (min-width: 768px) {
+  .custom-collapse {
+    display: block;
+  }
 }
 </style>

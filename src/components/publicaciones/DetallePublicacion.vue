@@ -17,10 +17,14 @@
             >{{ alert.message }}</b-alert
           >
         </b-form-group>
-        <b-card class="mb-3" header="Publicacion"
-        align="center" border-variant="success"  
-            header-border-variant= "success"
-        header-bg-variant="transparent"       >
+        <b-card
+          class="mb-3"
+          header="Publicacion"
+          align="center"
+          border-variant="success"
+          header-border-variant="success"
+          header-bg-variant="transparent"
+        >
           <b-row>
             <b-col lg="5" md="6">
               <b-form-group
@@ -67,7 +71,7 @@
                     v-on:input="actualizarMontoEntrega"
                     :state="errors[0] ? false : valid ? true : null"
                   ></vue-numeric>
-                <!--   <p
+                  <!--   <p
                     v-if="montoEntregaInvalido"
                     style="color: red; font-size: 10px"
                   >
@@ -79,8 +83,10 @@
           </b-row>
           <b-row>
             <div v-if="!yapublico">
-               <b-alert variant="success" show>Tu primera publicacion es gratis! De parte de malambo te queremos agradecer por confiar en nosotros</b-alert>
-
+              <b-alert variant="success" show
+                >Tu primera publicacion es gratis! De parte de malambo te
+                queremos agradecer por confiar en nosotros</b-alert
+              >
             </div>
             <div v-else-if="contrato.length > 0">
               <b-col md="12">
@@ -96,7 +102,7 @@
                   >
                     <b-form-select
                       v-model="tipoSeleccionado"
-                      responsive='sm'
+                      responsive="sm"
                       size="sm"
                       required
                       :options="fArmarPaquete"
@@ -127,7 +133,7 @@
                   >
                     <b-form-select
                       v-model="tipoSeleccionado"
-                      responsive='sm'
+                      responsive="sm"
                       size="sm"
                       required
                       :options="fpreciosPublicaciones"
@@ -154,13 +160,26 @@
                 label="Descripción(podes ingresar todo los datos que necesites mostrar)"
                 label-for="observaciones"
               >
-                <b-form-textarea
-                  id="observaciones"
-                  size="sm"
-                  rows="8"
-                  v-model="publicacion.observaciones"
-                  placeholder="Descripcion del producto que vas a publicar,se recomienda en forma de listado y no todo junto para una mejor visualizacion"
-                ></b-form-textarea>
+                <ValidationProvider
+                  :name="'TipoPublicacion '"                  
+                  v-slot="{ errors, valid }"
+                >
+                  <b-form-textarea
+                    id="observaciones"
+                    maxlength="230"
+                    :state="errors[0] ? false : valid ? true : null"
+                    size="sm"
+                    rows="8"
+                    v-model="publicacion.observaciones"
+                    placeholder="Descripcion del producto que vas a publicar,se recomienda en forma de listado y no todo junto para una mejor visualizacion"
+                  ></b-form-textarea>
+                  <b-form-invalid-feedback
+                    v-for="error in errors"
+                    :key="error.key"
+                  >
+                    {{ error }}
+                  </b-form-invalid-feedback>
+                </ValidationProvider>
               </b-form-group>
             </b-col>
           </b-row>
@@ -176,9 +195,7 @@ export default {
   props: {
     publicacion: {
       type: Array,
-      default: () => ({
-      }),
-      
+      default: () => ({}),
     },
     preciosPublicacion: {
       type: Array,
@@ -209,7 +226,7 @@ export default {
     },
     async validate() {
       let result = await this.$refs.detallePublicacion.validate();
-     /*  if (result == true) {
+      /*  if (result == true) {
         if (Number(this.publicacion.precio) <= 10) {
           this.montoEntregaInvalido = true;
           return false;
@@ -223,10 +240,9 @@ export default {
         ? (this.publicacion.destacada = false)
         : (this.publicacion.destacada = true);
     },
-        seleccionarPrimero(){
-      this.tipoSeleccionado=1
-    }
-    
+    seleccionarPrimero() {
+      this.tipoSeleccionado = 1;
+    },
   },
   computed: {
     fpreciosPublicaciones() {
@@ -238,24 +254,24 @@ export default {
         value: null,
         text: "-- Seleccione el tipo de publicacion --",
         disabled: true,
-      });     
+      });
       return mc;
     },
-    fArmarPaquete(){
-      if (Number(this.contrato[0].cantDestacada) >Number(0)){
-         return [
-                { value: null, text: "-- Seleccione el tipo de publicacion --" },
-                { value: 1, text: "Publicacion estandar" },
-                { value: 2, text: "Publicacion destacada (Home + redes sociales)" },
-              ]
-      }else{
-          this.seleccionarPrimero()
-          return [
-                { value: null, text: "-- Seleccione el tipo de publicacion --" },
-                { value: 1, text: "Publicacion estandar" },
-              ]
+    fArmarPaquete() {
+      if (Number(this.contrato[0].cantDestacada) > Number(0)) {
+        return [
+          { value: null, text: "-- Seleccione el tipo de publicacion --" },
+          { value: 1, text: "Publicacion estandar" },
+          { value: 2, text: "Publicacion destacada (Home + redes sociales)" },
+        ];
+      } else {
+        this.seleccionarPrimero();
+        return [
+          { value: null, text: "-- Seleccione el tipo de publicacion --" },
+          { value: 1, text: "Publicacion estandar" },
+        ];
       }
-    }
+    },
   },
 };
 </script>

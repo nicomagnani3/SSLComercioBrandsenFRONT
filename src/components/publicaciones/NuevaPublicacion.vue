@@ -16,12 +16,12 @@
       back-button-text="Volver!"
       next-button-text="Siguiente!"
       :finish-button-text="this.valorBotonFinalizar"
-      color="#000000"
-      step-size="lg"
+      color="#000000"    
       error-color="#dc3545"
     >    
       <tab-content
         title="¿Qué tipo de categoría necesitas publicar? "
+         :before-change="validarCategoria"
       >
         <ListarCategorias
           :categorias="this.categorias"
@@ -135,6 +135,7 @@ export default {
     };
   },
   created() {
+     window.scrollTo(0, 200)
     if (this.getUserId == null) {
       this.$router.push({
         name: "login",
@@ -149,17 +150,26 @@ export default {
     ...mapGetters("storeUser", ["getUserId"]),
   },
   methods: {
+    validarCategoria(){
+      window.scrollTo(0, 140)
+      return true
+
+    },
     async validarImagenes() {
+     window.scrollTo(0, 140)
       let result = await this.$refs.altaImagenes.validate();
       return result;
     },
     async validarCategoriaHija() {
+      window.scrollTo(0, 140)
       if (this.categoriaHijaSeleccionada == null) {
         return false;
       }
       return true;
+
     },
     async validarDetalleProducto() {
+      window.scrollTo(0, 140)
       let result = await this.$refs.detallePublicacion.validate();
       return result;
     },

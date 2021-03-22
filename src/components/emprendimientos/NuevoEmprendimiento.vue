@@ -19,7 +19,6 @@
           next-button-text="Siguiente!"
           finish-button-text="Finalizar"
           color="#000000"
-          step-size="lg"
           error-color="#dc3545"
         >
           <tab-content
