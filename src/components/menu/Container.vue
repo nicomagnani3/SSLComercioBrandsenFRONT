@@ -65,6 +65,10 @@ export default {
 </script>
 
 <style>
+html, body {
+  width: auto !important;
+  overflow-x: hidden !important;
+}
   @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
   body {
     font-family: 'Montserrat', sans-serif !important;
@@ -78,12 +82,7 @@ export default {
     background-color: #ececec;
   }
 
-  html {
-    position: relative;
-    height: 100%;
-    
 
-  }
  
   .box-shadow {
       border-radius: 15px 15px 15px 15px;

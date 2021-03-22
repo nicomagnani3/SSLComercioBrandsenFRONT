@@ -6,7 +6,7 @@
         <div class="widget-title destacados">
           <strong class="h3">Productos y Comercios destacados</strong>&nbsp;
 
-          <a @click="verDestacados()" class="verMas"> + ver mas</a>
+          <a @click="verDestacados()" class="verMas"><strong> + ver mas</strong></a>
         </div>
       </b-col>
     </b-row>

@@ -96,6 +96,7 @@
                   >
                     <b-form-select
                       v-model="tipoSeleccionado"
+                      responsive='sm'
                       size="sm"
                       required
                       :options="fArmarPaquete"
@@ -126,6 +127,7 @@
                   >
                     <b-form-select
                       v-model="tipoSeleccionado"
+                      responsive='sm'
                       size="sm"
                       required
                       :options="fpreciosPublicaciones"

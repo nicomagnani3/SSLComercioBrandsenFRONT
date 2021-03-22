@@ -61,11 +61,9 @@
     </b-row>
     <hr />
     <div class="text-center">
-      <b-img
-        thumbnail
-        fluid
-        alt="Responsive image"
-        style="max-height: 600px; width: 450px; max-width: 500px"
+      <b-img   
+      fluid alt="Responsive image"
+        style="max-height: 600px; width: 450px;"
         class="rounded-0"
         :src="`data:image/png;base64,${this.imgSlider()}`"
       ></b-img>
