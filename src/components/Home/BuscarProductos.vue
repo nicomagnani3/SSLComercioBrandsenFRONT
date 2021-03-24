@@ -317,14 +317,11 @@ export default {
     this.getServicios();
     if (Number(this.rubro) > Number(0)) {
       this.buscarPorRubro(this.rubro);
-      console.log("entra rubro");
     } else {
       if (Number(this.empresa > Number(0))) {
         this.buscarPorEmpresa(this.empresa);
-        console.log("entra empresa");
       } else {
         this.getPublicacionesPorNombre();
-        console.log("entra nombre");
       }
     }
     this.mostrarCartelSinPublicaicones();
@@ -352,12 +349,10 @@ export default {
   },
   methods: {
     mostrarCartelSinPublicaicones() {
-      console.log("mostrarCartelSinPublicaicones");
       this.mostrarNoHayPublicaciones;
       if (this.productos.length == 0) {
         this.mostrarNoHayPublicaciones = true;
       } else this.mostrarNoHayPublicaciones = false;
-      console.log(this.mostrarNoHayPublicaciones);
     },
     acomodarCelular(telefono) {
       if (telefono[0] == 0) {
@@ -389,12 +384,12 @@ export default {
         if (response.data.error == false) {
           this.categorias = response.data.data;
           this.categorias = this.ordenarDatos(this.categorias);
+          this.loading = false;
         }
       } catch (err) {
+        this.loading = true;
         this.categorias = "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS";
-      } finally {
-        this.loading = false;
-      }
+      } 
     },
     async getEmprendimientos() {
       this.loading = true;
@@ -403,13 +398,13 @@ export default {
         if (response.data.error == false) {
           this.emprendimientos = response.data.data;
           this.emprendimientos = this.ordenarDatos(this.emprendimientos);
+          this.loading = false;
         }
       } catch (err) {
         this.emprendimientos =
           "ATENCION NO SE PUDIERON OBTENER LOS emprendimientos";
-      } finally {
-        this.loading = false;
-      }
+          this.loading = true;
+      } 
     },
     async getServicios() {
       this.loading = true;
@@ -418,11 +413,11 @@ export default {
         if (response.data.error == false) {
           this.servicios = response.data.data;
           this.servicios = this.ordenarDatos(this.servicios);
+          this.loading = false;
         }
       } catch (err) {
         this.servicios = "ATENCION NO SE PUDIERON OBTENER LOS servicios";
-      } finally {
-        this.loading = false;
+        this.loading = true;
       }
     },
     getImporte(precio) {
@@ -453,13 +448,12 @@ export default {
         if (response.data.error == false) {
           this.productos = response.data.data;
           this.mostrarCartelSinPublicaicones();
+          this.loading = false;
         }
         //this.getImporte(this.productos);
       } catch (err) {
         this.productos = "ATENCION NO SE PUDIERON OBTENER LAS NOVEDADES";
-      } finally {
-        this.anchorHashCheck();
-        this.loading = false;
+        this.loading = true;
       }
     },
     anchorHashCheck() {
@@ -476,14 +470,15 @@ export default {
         if (response.data.error == false) {
           this.productos = response.data.data;
           this.mostrarCartelSinPublicaicones();
+          this.loading = false;
         }
 
         //this.getImporte(this.productos);
       } catch (err) {
         this.productos = "ATENCION NO SE PUDIERON OBTENER LAS NOVEDADES";
+        this.loading = true;
       } finally {
         this.anchorHashCheck();
-        this.loading = false;
       }
     },
     async buscarPorServicio(item) {
@@ -495,14 +490,15 @@ export default {
         if (response.data.error == false) {
           this.productos = response.data.data;
           this.mostrarCartelSinPublicaicones();
+          this.loading = false;
         }
 
         //this.getImporte(this.productos);
       } catch (err) {
+        this.loading = true;
         this.productos = "ATENCION NO SE PUDIERON OBTENER LAS NOVEDADES";
       } finally {
         this.anchorHashCheck();
-        this.loading = false;
       }
     },
     async buscarPorRubro(rubroId) {
@@ -514,11 +510,11 @@ export default {
         if (response.data.error == false) {
           this.productos = response.data.data;
           this.mostrarCartelSinPublicaicones();
+          this.loading = false;
         }
       } catch (err) {
         this.productos = "ATENCION NO SE PUDIERON OBTENER LAS NOVEDADES";
-      } finally {
-        this.loading = false;
+        this.loading = true;
       }
     },
     async buscarPorEmpresa(userEmpresaID) {
@@ -530,12 +526,12 @@ export default {
         if (response.data.error == false) {
           this.productos = response.data.data;
           this.mostrarCartelSinPublicaicones();
+            this.loading = false;
         }
       } catch (err) {
         this.productos = "ATENCION NO SE PUDIERON OBTENER LAS NOVEDADES";
-      } finally {
-        this.loading = false;
-      }
+        this.loading = true;
+      } 
     },
     verImagenes(producto) {
       this.verImagen = true;
