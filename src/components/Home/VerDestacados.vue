@@ -206,7 +206,6 @@ export default {
     };
   },
   created() {
-      console.log(this.productos)
     if (this.getUserId != null) {
       this.logeado = true;
     }  
@@ -255,7 +254,6 @@ export default {
       this.$refs["modalVerImagenes"].show();
     },
     verdetalles(producto) {
-      console.log(producto)
       this.productoSeleccionado = producto;
       this.$refs["modalVerProductos"].show();
     },

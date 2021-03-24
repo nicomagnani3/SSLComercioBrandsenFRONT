@@ -6,7 +6,9 @@
         <div class="widget-title destacados">
           <strong class="h3">Productos y Comercios destacados</strong>&nbsp;
 
-          <a @click="verDestacados()" class="verMas"><strong> + ver mas</strong></a>
+          <a v-if="!loading" @click="verDestacados()" class="verMas"
+            ><strong> + ver mas</strong></a
+          >
         </div>
       </b-col>
     </b-row>
@@ -32,16 +34,15 @@
           </div>
         </b-col>
         <b-col cols="10">
-          <b-card-group autoplay deck>
+          <b-card-group deck>
             <b-card
-              thumbnail
               v-for="(producto, index) in currentPageClubs"
               :key="index"
-              :img-src="`data:image/png;base64, ${producto.imagen}`"
+              @click="verProducto(producto)"
               img-height="300px; max-height:100%;"
               alt="Responsive image"
-              style="    max-width: 350px;"
-              @click="verProducto(producto)"
+              style="image-rendering: pixelated; max-width: 350px"
+              :img-src="`data:image/png;base64, ${producto.imagen}`"
             >
               <strong>
                 <B
@@ -161,6 +162,7 @@ export default {
       return this.ubicaicon - 1 === this.currentPageIndex;
     },
     goto(i) {
+      window.scrollTo(0, 800);
       this.currentPageIndex = i - 1;
     },
     currentPage(i) {
@@ -229,8 +231,8 @@ export default {
       }
     },
   },
-  created (){
-  axios
+  created() {
+    axios
       .all([this.getPorductos()])
       .then(() => {
         this.loading = false;
@@ -239,9 +241,7 @@ export default {
         console.log(err);
       });
   },
-  mounted() {
-  
-  },
+  mounted() {},
 };
 </script>
 

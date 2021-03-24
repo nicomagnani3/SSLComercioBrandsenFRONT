@@ -366,7 +366,6 @@ export default {
       }
     },
     async registrarCliente() {
-      console.log(this.persona.celular)
       this.registrando = true;
       if (this.persona.password == this.persona.password_confirmation) {
         try {

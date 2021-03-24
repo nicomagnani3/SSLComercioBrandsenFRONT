@@ -124,7 +124,7 @@ const router = new Router({
          }, 
        },
       { 
-      path: '/crearPublicacion/publicacion:publicacion/tipo:tipo',
+      path: '/crearPublicacion/publicacion:publicacion',
         name: 'crearPublicacion',
         component: CrearPublicacion,   
         props: true,    
@@ -223,11 +223,11 @@ const router = new Router({
 })
 
 
- router.beforeEach((to, from, next) => {
+router.beforeEach((to, from, next) => {
   const requireAuth = to.matched.some(record => record.meta.requireAuth)
 
   if (requireAuth && !store.getters['storeUser/isAuthenticated']) {
-    next('/')
+    next('/login')
   } else if (store.getters['storeUser/isAuthenticated'] && to.name == 'Login') {   
     next('/')
   } else {
@@ -238,7 +238,7 @@ const router = new Router({
     }
    
   }
-}) 
+})
 
 
 export default router

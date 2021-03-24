@@ -181,7 +181,7 @@
               </b-row>
             </b-card>
           </transition>
-          <div v-if="this.productos.length == 0 && this.loading == false">
+          <div v-if="this.mostrarNoHayPublicaciones">
             <br /><br />
             <b-alert show variant="success">
               <h4 class="alert-heading">
@@ -292,6 +292,7 @@ export default {
   },
   data() {
     return {
+      mostrarNoHayPublicaciones: false,
       tipoPublicacion: "",
       logeado: false,
       verImagen: false,
@@ -307,6 +308,7 @@ export default {
     };
   },
   created() {
+    console.log(this.productos);
     if (this.getUserId != null) {
       this.logeado = true;
     }
@@ -315,13 +317,17 @@ export default {
     this.getServicios();
     if (Number(this.rubro) > Number(0)) {
       this.buscarPorRubro(this.rubro);
+      console.log("entra rubro");
     } else {
       if (Number(this.empresa > Number(0))) {
         this.buscarPorEmpresa(this.empresa);
+        console.log("entra empresa");
       } else {
         this.getPublicacionesPorNombre();
+        console.log("entra nombre");
       }
     }
+    this.mostrarCartelSinPublicaicones();
   },
   computed: {
     ...mapGetters("storeUser", ["getUserId"]),
@@ -341,9 +347,18 @@ export default {
           this.getPublicacionesPorNombre();
         }
       }
+      this.mostrarCartelSinPublicaicones();
     },
   },
   methods: {
+    mostrarCartelSinPublicaicones() {
+      console.log("mostrarCartelSinPublicaicones");
+      this.mostrarNoHayPublicaciones;
+      if (this.productos.length == 0) {
+        this.mostrarNoHayPublicaciones = true;
+      } else this.mostrarNoHayPublicaciones = false;
+      console.log(this.mostrarNoHayPublicaciones);
+    },
     acomodarCelular(telefono) {
       if (telefono[0] == 0) {
         return telefono.substr(1);
@@ -358,9 +373,8 @@ export default {
         });
         if (response.data.error == false) {
           this.productos = response.data.data;
+          this.mostrarCartelSinPublicaicones();
         }
-
-        //this.getImporte(this.productos);
       } catch (err) {
         this.productos = "ATENCION NO SE PUDIERON OBTENER LAS NOVEDADES";
       } finally {
@@ -438,6 +452,7 @@ export default {
         });
         if (response.data.error == false) {
           this.productos = response.data.data;
+          this.mostrarCartelSinPublicaicones();
         }
         //this.getImporte(this.productos);
       } catch (err) {
@@ -460,7 +475,7 @@ export default {
         );
         if (response.data.error == false) {
           this.productos = response.data.data;
-          this.loading = response.data.error;
+          this.mostrarCartelSinPublicaicones();
         }
 
         //this.getImporte(this.productos);
@@ -479,7 +494,7 @@ export default {
         });
         if (response.data.error == false) {
           this.productos = response.data.data;
-          this.loading = response.data.error;
+          this.mostrarCartelSinPublicaicones();
         }
 
         //this.getImporte(this.productos);
@@ -487,7 +502,6 @@ export default {
         this.productos = "ATENCION NO SE PUDIERON OBTENER LAS NOVEDADES";
       } finally {
         this.anchorHashCheck();
-
         this.loading = false;
       }
     },
@@ -499,12 +513,12 @@ export default {
         });
         if (response.data.error == false) {
           this.productos = response.data.data;
-          this.loading = response.data.error;
+          this.mostrarCartelSinPublicaicones();
         }
-
-        //this.getImporte(this.productos);
       } catch (err) {
         this.productos = "ATENCION NO SE PUDIERON OBTENER LAS NOVEDADES";
+      } finally {
+        this.loading = false;
       }
     },
     async buscarPorEmpresa(userEmpresaID) {
@@ -515,12 +529,12 @@ export default {
         });
         if (response.data.error == false) {
           this.productos = response.data.data;
-          this.loading = response.data.error;
+          this.mostrarCartelSinPublicaicones();
         }
-
-        //this.getImporte(this.productos);
       } catch (err) {
         this.productos = "ATENCION NO SE PUDIERON OBTENER LAS NOVEDADES";
+      } finally {
+        this.loading = false;
       }
     },
     verImagenes(producto) {
@@ -530,7 +544,6 @@ export default {
       this.$refs["modalVerImagenes"].show();
     },
     verdetalles(producto) {
-      console.log(producto);
       this.productoSeleccionado = producto;
       this.$refs["modalVerProductos"].show();
     },
@@ -548,13 +561,9 @@ export default {
 .buscador:hover {
   color: rgb(255, 206, 78);
   cursor: pointer;
-  
 }
 .buscador {
-  
-    width: 366px;
-   
-
+  width: 366px;
 }
 @media screen and (min-width: 768px) {
   .custom-collapse {

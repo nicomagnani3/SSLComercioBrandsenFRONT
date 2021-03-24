@@ -412,7 +412,6 @@ export default {
         const response = await PublicacionService.getPublicoUsuario({
           idUsuario: this.getUserId,
         });       
-        console.log(response)
         if (response.data.error == false){
           this.yapublico=response.data.data   
           if (!this.yapublico){

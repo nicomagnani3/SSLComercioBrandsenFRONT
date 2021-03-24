@@ -1,12 +1,14 @@
 <template>
   <div>
- <b-row class="pb-3">
+    <b-row class="pb-3">
       <b-col lg="2" sm="4" class="text-center"></b-col>
       <b-col md="8" sm="6" class="text-left pt-3">
         <div class="widget-title destacados">
           <strong class="h3">Emprendimientos destacados</strong>&nbsp;
 
-          <a @click="verDestacados()" class="verMas"><strong> + ver mas</strong></a>
+          <a v-if="!loading" @click="verDestacados()" class="verMas"
+            ><strong> + ver mas</strong></a
+          >
         </div>
       </b-col>
     </b-row>
@@ -40,7 +42,7 @@
               :img-src="`data:image/png;base64, ${producto.imagen}`"
               img-height="300px; max-height:100%;"
               alt="Responsive image"
-              style="max-width: 350px"
+              style="image-rendering: pixelated; max-width: 350px"
               @click="verProducto(producto)"
             >
               <strong>

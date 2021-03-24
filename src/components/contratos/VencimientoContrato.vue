@@ -114,7 +114,6 @@ export default {
       return telefono;
     },
     acomodarFecha(fecha){
-        console.log(fecha )
         return fecha 
     },
 
@@ -122,7 +121,6 @@ export default {
       try {
         const response = await Contratos.getContratos({});
         this.contratos = response.data.data;
-        console.log(this.contratos);
       } catch (err) {
         this.$bvToast.toast(err.response.data.message, {
           title: "Atencion!",

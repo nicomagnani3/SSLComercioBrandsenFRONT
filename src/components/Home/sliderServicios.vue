@@ -6,7 +6,7 @@
         <div class="widget-title destacados">
           <strong class="h3">Servicios destacados</strong>&nbsp;
 
-          <a @click="verDestacados()" class="verMas"
+          <a v-if="!loading" @click="verDestacados()" class="verMas"
             ><strong> + ver mas</strong></a
           >
         </div>
@@ -40,9 +40,10 @@
               v-for="(producto, index) in currentPageClubs"
               :key="index"
               :img-src="`data:image/png;base64, ${producto.imagen}`"
-              img-height="300px; max-height:100%;"
+               img-height="300px; max-height:100%;"
               alt="Responsive image"
-              style="max-width: 350px"
+              style="image-rendering: pixelated; max-width: 350px"
+              
               @click="verProducto(producto)"
             >
               <strong>
@@ -186,7 +187,6 @@ export default {
         const response = await ServiciosService.getPublicacionServicios();
         if (response.data.error == false) {
           this.productos = response.data.data;
-          console.log(this.productos);
           //this.getImporte(this.productos);
         }
       } catch (err) {

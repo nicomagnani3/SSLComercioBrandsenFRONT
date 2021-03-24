@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <div>
     <div v-if="loading" class="text-center">
       <br /><br />
       <b-spinner
@@ -10,42 +10,49 @@
       </b-spinner>
     </div>
     <div v-else class="body">
-      <b-row class="pb-2">
-        <b-col class="text-center pt-3">
-          <br />
-          <p class="h1 font-italic text-warning">Categorias disponibles</p>
-        </b-col>
-      </b-row>
-        <b-row class="text-center"> 
-          <b-col>
-            <b-list-group>
-              <b-list-group-item
-                button
-                v-for="item in this.empresas"
-                :key="item.id"
-                @click="verHijos(item)"
-              >
-                <br />
-                <a class="buscador">{{ item.nombre }}</a>
-              </b-list-group-item>
-            </b-list-group>
-          </b-col>
-          <b-col>
-            <b-list-group>
-              <b-list-group-item
-                button
-                v-for="item in this.categoriaHijaElegida"
-                :key="item.id"
-                @click="verEmpresa(item)"
-              >
-                <br />
-                <a class="buscador">{{ item.nombre }}</a>
-              </b-list-group-item>
-            </b-list-group>
+      <div fluid class="categoria">
+        <b-row class="pb-2">
+          <b-col class="text-center pt-3">
+            <br />
+            <p class="h1 font-britannic text">
+              <strong>Categorias disponibles</strong>
+            </p>
           </b-col>
         </b-row>
+      </div>
+      <br />
+      <b-row class="text-center">
+                <b-col cols="3" class="text-center d-none d-sm-none d-md-block">
+                </b-col>
+        <b-col>
+          <b-list-group >
+            <b-list-group-item
+              button
+              v-for="item in this.empresas"
+              :key="item.id"
+              @click="verHijos(item)"
+            >
+              <br />
+              <a class="buscador">{{ item.nombre }}</a>
+            </b-list-group-item>
+          </b-list-group>
+        </b-col>
+        <b-col>
+          <b-list-group>
+            <b-list-group-item
+              button
+              v-for="item in this.categoriaHijaElegida"
+              :key="item.id"
+              @click="verEmpresa(item)"
+            >
+              <br />
+              <a class="buscador">{{ item.nombre }}</a>
+            </b-list-group-item>
+          </b-list-group>
+        </b-col>
+      </b-row>
     </div>
-  </b-container>
+  </div>
 </template>
 <script>
 import CategoriasService from "@/services/CategoriasService";
@@ -66,15 +73,14 @@ export default {
   computed: {},
   methods: {
     verHijos(categoria) {
-      this.anchorHashCheck()
+      this.anchorHashCheck();
       this.categoriaHijaElegida = this.categoriasHijas.filter(
         (c) => c.idPadre == categoria.id
       );
       this.categoriaHijaElegida = this.ordenarDatos(this.categoriaHijaElegida);
     },
     anchorHashCheck() {
-       window.scrollTo(0, 0)
-  
+      window.scrollTo(0, 0);
     },
     buscarProducto(producto) {
       const path = `/buscarProductos/${producto}`;
@@ -153,9 +159,15 @@ export default {
   cursor: pointer;
 }
 @media screen and (min-width: 768px) {
-
-.custom-collapse {
-            display:block;
-      }  
+  .custom-collapse {
+    display: block;
+  }
+}
+.categoria {
+  text-align: center;
+  /* margin: 10px; */
+  background-color: rgb(70 70 70);
+  font-size: 22px;
+  color: white;
 }
 </style>

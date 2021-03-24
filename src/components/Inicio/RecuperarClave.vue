@@ -110,7 +110,7 @@ export default {
       if (this.form.password == this.form.password_confirmation) {
         try {
           this.form.ingresar = false;
-          const response = await AuthenticationService.recuperarClave({
+           await AuthenticationService.recuperarClave({
             user: this.getUserId,
             email: this.form.email,
             password: this.form.password,
@@ -125,7 +125,7 @@ export default {
               }
             );
             this.$router.push({ name: "login" });
-          console.log(response)
+         
         } catch (err) {
            this.$root.$bvToast.toast(
               "No se pudo cambiar la contraseña, intente nuevamente",

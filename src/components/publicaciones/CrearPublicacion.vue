@@ -33,9 +33,7 @@
 </template>
 
 <script>
-import EmprendimientoService from "@/services/EmprendimientoService";
 import PublicacionService from "@/services/PublicacionService";
-import ServiciosService from "@/services/ServiciosService";
 
 //import axios from "axios";
 export default {
@@ -46,24 +44,14 @@ export default {
       type: String,
       required: true,
     },
-    tipo: {
-      type: String,
-      required: true,
-    },
   },
   data() {
     return {};
   },
   created() {
-    if (this.tipo == "PUBLICACION") {
+   
       this.setearPagoPublicacion();
-    }
-    if (this.tipo == "EMPRENDIMIENTO") {
-      this.setearPago();
-    }
-    if (this.tipo == "SERVICIO") {
-      this.setearPagoservicio();
-    }
+   
   },
   computed: {},
   watch: {
@@ -73,21 +61,13 @@ export default {
     volver() {
       this.$router.push("/");
     },
-    async setearPago() {
-      await EmprendimientoService.setPagoPublicacion({
-        publicacion: this.publicacion,
-      });
-    },
+   
     async setearPagoPublicacion() {
       await PublicacionService.setPagoPublicacion({
         publicacion: this.publicacion,
       });
     },
-    async setearPagoservicio() {
-      await ServiciosService.setPagoPublicacion({
-        publicacion: this.publicacion,
-      });
-    },
+   
   },
   mounted() {},
 };

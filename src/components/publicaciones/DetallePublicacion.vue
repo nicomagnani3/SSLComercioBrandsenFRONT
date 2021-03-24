@@ -235,7 +235,6 @@ export default {
       return result;
     },
     verSiEsDestacada() {
-      console.log(this.publicacion);
       this.tipoSeleccionado == 1
         ? (this.publicacion.destacada = false)
         : (this.publicacion.destacada = true);

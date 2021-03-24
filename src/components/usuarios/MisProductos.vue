@@ -145,7 +145,6 @@ export default {
       }
     },
     async eliminarPublicacion(publicacion){
-      console.log(publicacion)
         this.loading=true
         try {
         const response = await PublicacionService.eliminarPublicacion({
