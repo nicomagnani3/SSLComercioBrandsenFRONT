@@ -14,7 +14,7 @@
     <br />
     <div v-if="loading" class="text-center">
       <b-spinner
-        style="width: 3rem; height: 3rem"
+        style="width: 6rem; height: 6rem"
         variant="warning"
         label="Text Centered"
       >
@@ -257,6 +257,7 @@ export default {
 
 .ItemProd img {
   object-fit: contain;
+  cursor: pointer;
 }
 
 .item {
@@ -318,8 +319,8 @@ export default {
   width: 30px;
   cursor: pointer;
 }
-.destacados{
-   color: rgb(109, 108, 108);
+.destacados {
+  color: rgb(109, 108, 108);
 }
 </style>
 
