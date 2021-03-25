@@ -1,4 +1,5 @@
 <template>
+<div class="contenedorRegistro">
   <div v-if="loading" class="text-center">
     <img
       @click="home()"
@@ -16,11 +17,11 @@
     >
     </b-spinner>
   </div>
-  <div v-else class="containerR">
+  <div v-else class="container">
     <img
       @click="home()"
       src="@/assets/MalamboLogo.png"
-      style="width: 100%; max-width: 600px"
+      style="width: 100%; max-width: 600px;cursor: pointer"
       class="rounded"
       alt="..."
     />
@@ -288,6 +289,7 @@
       </b-col>
     </b-form>
   </div>
+</div>
 </template>
 <script>
 import axios from "axios";
@@ -510,7 +512,12 @@ export default {
 </script>
 
 <style>
-
+.container{
+  color:#ffce4e
+}
+.contenedorRegistro{
+  color:#ffce4e
+}
   
     
 </style>

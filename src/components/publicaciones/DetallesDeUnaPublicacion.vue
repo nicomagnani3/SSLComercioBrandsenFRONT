@@ -9,7 +9,7 @@
     </p>   
     <div>
     <br>
-      <h4>Detalles :</h4> <strong>{{ publicacion.descripcion }}</strong>
+      <h4>Detalles :</h4><p style="  white-space: pre-wrap;"> <strong>{{ publicacion.descripcion }}</strong></p>
     </div>
      <div v-if="logeado">
          <br><br>

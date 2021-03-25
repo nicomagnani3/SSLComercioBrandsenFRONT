@@ -1,17 +1,17 @@
 <template>
   <div>
-    <b-row class="pb-3">
-      <b-col lg="2" sm="4" class="text-center"></b-col>
-      <b-col md="8" sm="6" class="text-left pt-3">
-        <div class="widget-title destacados">
-          <strong class="h3">Productos y Comercios destacados</strong>&nbsp;
-
+    <b-row class="text-left">
+      <b-col cols="1"></b-col>
+      <b-col cols="8">
+        <div class="h3 font-britannic text widget-title destacados">
+          <strong>Productos y comercios destacados</strong>
           <a v-if="!loading" @click="verDestacados()" class="verMas"
-            ><strong> + ver mas</strong></a
+         ><strong>+ ver mas</strong></a
           >
         </div>
       </b-col>
     </b-row>
+    <br />
     <div v-if="loading" class="text-center">
       <b-spinner
         style="width: 3rem; height: 3rem"
@@ -40,9 +40,10 @@
               :key="index"
               @click="verProducto(producto)"
               img-height="300px; max-height:100%;"
+            
               class="ItemProd"
+              style="max-width: 350px"
               alt="Responsive image"
-              
               :img-src="`data:image/png;base64, ${producto.imagen}`"
             >
               <strong>
@@ -259,6 +260,7 @@ export default {
 
 .ItemProd img {
   object-fit: contain;
+  
 }
 
 .item {
@@ -283,9 +285,11 @@ export default {
   border-radius: 20px;
 }
 .verMas {
-  margin-left: 50px;
+  margin-left: 12px;
   color: #676767;
   cursor: pointer;
+      font-size: 15px;
+        white-space: nowrap;
 }
 .btnMas {
   white-space: normal;
@@ -317,6 +321,9 @@ export default {
   height: 29rem;
   width: 30px;
   cursor: pointer;
+}
+.destacados{
+   color: rgb(109, 108, 108);
 }
 </style>
 

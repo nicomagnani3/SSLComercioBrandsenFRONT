@@ -58,6 +58,7 @@ export default {
   height: 100vh;
   /*background-color: #1a1a1a; */
   background-color: #FFCE4E;
+  
 }
 
 .base-box {
