@@ -40,8 +40,9 @@
               :key="index"
               @click="verProducto(producto)"
               img-height="300px; max-height:100%;"
+              class="ItemProd"
               alt="Responsive image"
-              style="image-rendering: pixelated; max-width: 350px"
+              
               :img-src="`data:image/png;base64, ${producto.imagen}`"
             >
               <strong>

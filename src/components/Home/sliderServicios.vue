@@ -39,10 +39,11 @@
               thumbnail
               v-for="(producto, index) in currentPageClubs"
               :key="index"
+              class="ItemProd"
               :img-src="`data:image/png;base64, ${producto.imagen}`"
                img-height="300px; max-height:100%;"
               alt="Responsive image"
-              style="image-rendering: pixelated; max-width: 350px"
+              
               
               @click="verProducto(producto)"
             >
