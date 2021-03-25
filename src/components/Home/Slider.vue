@@ -1,9 +1,6 @@
 <template>
 <div  >
-<<<<<<< HEAD
   
-=======
->>>>>>> d0603a25bfeb84819884092f448c5accb5579298
   <b-carousel
     v-model="slide"
     :interval="4000"
@@ -22,10 +19,7 @@
       class="d-block w-100" alt="image"
     ></b-carousel-slide>
   </b-carousel>
-<<<<<<< HEAD
   
-=======
->>>>>>> d0603a25bfeb84819884092f448c5accb5579298
 </div>
 </template>
 
