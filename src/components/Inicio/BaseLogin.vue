@@ -1,14 +1,26 @@
 <template>
-
-  <b-container fluid class="base-user">
-    
-    <b-row class="h-100 justify-content-center align-items-center">
-      <b-col sm="8" md="6" xl="3" >
-        <router-view />
-      </b-col>
-    </b-row>
-    
-  </b-container>
+  <div class="contenedor1">
+    <div class="wrapper1">
+      <b-row class="h-100 justify-content-center align-items-center">
+        <b-col sm="10" md="8" xl="4" class="base-box m-2">
+          <router-view class="content1" />
+        </b-col>
+      </b-row>
+    </div>
+    <div class="footer">
+      <b-row class="big">
+        <b-col>
+          <a href="">
+            <img
+              class="logoBig"
+              src="@/assets/bigdatapng.png"
+            
+            />
+          </a>
+        </b-col>
+      </b-row>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -16,6 +28,7 @@ import { mapState } from "vuex";
 
 export default {
   name: "BaseLogin",
+  components: {},
   computed: {
     ...mapState("storeUser", ["toast"]),
   },
@@ -51,23 +64,56 @@ export default {
 </script>
 
 <style scoped>
+html,
+body {
+  width: auto !important;
+  overflow-x: hidden !important;
+  background-color: #ffce4e;
+}
+.logoBig {
+  width: 30%;
+}
+.big {
+  background-color: #ffce4e;
+  text-align: center;
+}
 @import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
-
-.base-user {
-  font-family: "Montserrat", sans-serif;
-  height: 100vh;
-  /*background-color: #1a1a1a; */
-  background-color: #FFCE4E;
+body {
+  font-family: "Montserrat", sans-serif !important;
+  background-color: #ffce4e;
+}
+.contenedor1 {
   
+  background-color: #ffce4e;
 }
 
-.base-box {
-  border-radius: 5px;
-  background-color: white;
+.box-shadow {
+  border-radius: 15px 15px 15px 15px;
+  box-shadow: 2px 2px 6px 0px rgba(0, 0, 0, 0.75);
 }
 
-.base-box > .title {
-  color: #1f1f1f;
+.box-shadow-min {
+  border-radius: 15px 15px 15px 15px;
+  box-shadow: 2px 2px 6px 0px rgba(0, 0, 0, 0.75);
 }
+
+.wrapper1 {
+  min-height: calc(100vh - 70px);
+
+}
+
+.content1 {
+  background-color: #ffce4e;
+}
+.footer {
+  /*display: block;*/
+
+  /*
+      */
+  color: black;
+  font-weight: bold;
+  background-color: #ffce4e;
+}
+
 /* <b-col sm="8" md="6" xl="5" class="base-box m-1"> para que se vea el cuadrado en el formulario */
 </style>

@@ -1,5 +1,5 @@
 <template>
-<div class="contenedorRegistro">
+<div >
   <div v-if="loading" class="text-center">
     <img
       @click="home()"
@@ -8,7 +8,7 @@
       class="rounded"
       alt="..."
     />
-    <br /><br />
+   
     <br /><br />
     <b-spinner
       style="width: 11rem; height: 11rem"
@@ -18,6 +18,7 @@
     </b-spinner>
   </div>
   <div v-else class="container">
+    <b-container>
     <img
       @click="home()"
       src="@/assets/MalamboLogo.png"
@@ -288,6 +289,7 @@
         <router-link to="/login">¿Ya tenes una cuenta?Ingresa aca</router-link>
       </b-col>
     </b-form>
+    </b-container>
   </div>
 </div>
 </template>
@@ -512,8 +514,8 @@ export default {
 </script>
 
 <style>
-.container{
-  color:#ffce4e
+body{
+    color:#ffce4e
 }
 .contenedorRegistro{
   color:#ffce4e

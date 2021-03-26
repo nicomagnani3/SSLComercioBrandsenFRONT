@@ -12,7 +12,7 @@
       <h4>Detalles :</h4><p style="  white-space: pre-wrap;"> <strong>{{ publicacion.descripcion }}</strong></p>
     </div>
      <div v-if="logeado">
-         <br><br>
+         <br>
       <p>Datos de contacto:</p>
       <a
         v-if="publicacion.telefono != null && logeado"
@@ -54,8 +54,7 @@
         />
       </a>
     </div>
-    <div v-else>
-        <br><br>
+    <div v-else>  
         <h5>
       Para contactarte registrate
       <router-link to="/login">ACA!</router-link></h5>
