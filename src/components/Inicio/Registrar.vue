@@ -345,7 +345,7 @@ export default {
      foptions() {
       let mc = this.tiposUsuarios.map((e) => ({
         value: e.id,
-        text: e.nombre,
+        text: e.nombreMuestra,
       }));
       mc.push({
         value: null,
@@ -484,6 +484,7 @@ export default {
       } catch (err) {
         this.rubros =
           "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS DE RUBROS";
+          this.loading=true
       }
     },
        async getTipoUsuarios() {
@@ -495,6 +496,7 @@ export default {
       } catch (err) {
         this.rubros =
           "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS DE RUBROS";
+          this.loading=true
       }
     },
     

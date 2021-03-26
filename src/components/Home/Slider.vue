@@ -15,7 +15,7 @@
     >
     <div>
       <b-carousel-slide
-        img-src="https://i.pinimg.com/originals/15/e1/aa/15e1aa808c9d7e1fb78e2654362ada4d.jpg"
+        img-src="https://i.pinimg.com/originals/1c/42/7e/1c427ee01e792e3f3c614e0d447a479e.jpg"
         fluid
         alt="Responsive image"
       ></b-carousel-slide>
