@@ -4,12 +4,11 @@
     <b-container deck class="contenedorPubli mb-5">
       <b-row>
         <b-col class="itemCarrusel">
-          <b-img
-            src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
+          <img
+            src="@/assets/Logo.jpg"
             class="img-fluid"
             alt="Responsive image"
-          >
-          </b-img>
+          />
         </b-col>
         <b-col class="itemCarrusel">
           <b-img

@@ -66,19 +66,11 @@ export default {
 
 
 <style scoped>
-<<<<<<< HEAD
-@media (max-width: 1023px){
-.exhibitor-holder img, .exhibitor .slick-list {
-    
-        height: 134px;
-}
-=======
 @media (max-width: 1023px) {
   .exhibitor-holder img,
   .exhibitor .slick-list {
     height: 134px;
   }
->>>>>>> 4164ba75c029ec68da9afd9e9c203dd470a36f1a
 }
 </style>
 
