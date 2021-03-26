@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h3 class="m-5 titulo text-center">Los mejores negocios te esperan</h3>
+    <h3 class="m-5 titulo text-center">
+      <strong>Los mejores negocios te esperan</strong>
+    </h3>
     <b-container class="contenedorPubli mb-5">
       <b-row>
         <b-col class="itemCarrusel">
@@ -15,9 +17,11 @@
           >
             <hr />
             <b-card-text class="texto"> Malambo </b-card-text>
-             <div slot="footer">
-            <b-button href="#" variant="primary">Ver más</b-button>
-             </div>
+            <div slot="footer">
+              <b-button href="#" variant="warning" block class="btnMas"
+                >Ver más</b-button
+              >
+            </div>
           </b-card>
         </b-col>
         <b-col class="itemCarrusel">
@@ -31,9 +35,11 @@
           >
             <hr />
             <b-card-text class="texto"> Malambo </b-card-text>
-             <div slot="footer">
-            <b-button href="#" variant="primary">Ver más</b-button>
-             </div>
+            <div slot="footer">
+              <b-button href="#" variant="warning" block class="btnMas"
+                >Ver más</b-button
+              >
+            </div>
           </b-card>
         </b-col>
         <b-col class="itemCarrusel">
@@ -47,8 +53,11 @@
           >
             <hr />
             <b-card-text class="texto"> Malambo </b-card-text>
-             <div slot="footer">
-            <b-button href="#" variant="primary">Ver más</b-button></div>
+            <div slot="footer">
+              <b-button href="#" variant="warning" block class="btnMas"
+                >Ver más</b-button
+              >
+            </div>
           </b-card>
         </b-col>
         <b-col class="itemCarrusel">
@@ -62,8 +71,11 @@
           >
             <hr />
             <b-card-text class="texto"> Malambo </b-card-text>
-             <div slot="footer">
-            <b-button href="#" variant="primary">Ver más</b-button></div>
+            <div slot="footer">
+              <b-button href="#" variant="warning" block class="btnMas"
+                >Ver más</b-button
+              >
+            </div>
           </b-card>
         </b-col>
         <b-col class="itemCarrusel">
@@ -77,8 +89,11 @@
           >
             <hr />
             <b-card-text class="texto"> Malambo </b-card-text>
-             <div slot="footer">
-            <b-button href="#" variant="primary">Ver más</b-button></div>
+            <div slot="footer">
+              <b-button href="#" variant="warning" block class="btnMas"
+                >Ver más</b-button
+              >
+            </div>
           </b-card>
         </b-col>
         <b-col class="itemCarrusel">
@@ -92,8 +107,11 @@
           >
             <hr />
             <b-card-text class="texto"> Malambo </b-card-text>
-             <div slot="footer">
-            <b-button href="#" variant="primary">Ver más</b-button></div>
+            <div slot="footer">
+              <b-button href="#" variant="warning" block class="btnMas"
+                >Ver más</b-button
+              >
+            </div>
           </b-card>
         </b-col>
       </b-row>
@@ -125,10 +143,6 @@ export default {
 
 
 <style scoped>
-.carrousel {
-  height: 350px;
-}
-
 .itemCarrusel {
   text-align: center;
   object-fit: cover;
@@ -149,6 +163,19 @@ export default {
   font-family: "Poppins", sans-serif;
 }
 
+.btnMas {
+  white-space: initial;
+  background: #ffce4e;
+  background: linear-gradient(45deg #00ddf5 0%, #00d9d7 32%, #ffce4e 100%);
+  border-radius: 22px;
+  /* margin: -3px 0 0 0; */
+  padding: 7px 6px 14px 6px;
+  /* width: 88%; */
+  /* text-transform: none; */
+  font-size: 12px;
+  line-height: 11px;
+  color: #fff;
+}
 .contenedorPubli {
   display: flex;
   align-items: center;

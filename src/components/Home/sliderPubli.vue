@@ -1,158 +1,58 @@
 <template>
-  <div class="contenedorSliderP">
-    <b-carousel
-      class=" "
-      id="carousel-1"
-      v-model="slide"
-      :interval="3000"
-      @sliding-start="onSlideStart"
-      @sliding-end="onSlideEnd"
-    >
-      <b-carousel-slide class="carrousel">
-        <b-container>
-          <b-row>
-            <b-col>
-              <b-card
-                img-src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
-                img-alt="Image"
-                img-top
-                tag="article"
-                img-height="150"
-                class="itemCarrusel"
-              >
-              </b-card>
-            </b-col>
-            <b-col class="itemCarrusel">
-              <b-card
-                img-src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
-                img-alt="Image"
-                img-top
-                tag="article"
-                img-height="150"
-                class="itemCarrusel"
-              >
-              </b-card>
-            </b-col>
-            <b-col class="itemCarrusel">
-              <b-card
-                img-src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
-                img-alt="Image"
-                img-top
-                tag="article"
-                img-height="150"
-                class="itemCarrusel"
-              >
-              </b-card>
-            </b-col>
-            <b-col class="itemCarrusel">
-              <b-card
-                img-src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
-                img-alt="Image"
-                img-top
-                tag="article"
-                img-height="150"
-                class="itemCarrusel"
-              >
-              </b-card>
-            </b-col>
-            <b-col class="itemCarrusel">
-              <b-card
-                img-src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
-                img-alt="Image"
-                img-top
-                tag="article"
-                img-height="150"
-                class="itemCarrusel"
-              >
-              </b-card>
-            </b-col>
-            <b-col class="itemCarrusel">
-              <b-card
-                img-src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
-                img-alt="Image"
-                img-top
-                tag="article"
-                img-height="150"
-                class="itemCarrusel"
-              >
-              </b-card>
-            </b-col>
-          </b-row>
-        </b-container>
-      </b-carousel-slide>
-      <b-carousel-slide class="carrousel">
-        <b-container>
-          <b-row>
-            <b-col>
-              <b-card
-                img-src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
-                img-alt="Image"
-                img-top
-                tag="article"
-                img-height="150"
-                class="itemCarrusel"
-              >
-              </b-card>
-            </b-col>
-            <b-col class="itemCarrusel">
-              <b-card
-                img-src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
-                img-alt="Image"
-                img-top
-                tag="article"
-                img-height="150"
-                class="itemCarrusel"
-              >
-              </b-card>
-            </b-col>
-            <b-col class="itemCarrusel">
-              <b-card
-                img-src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
-                img-alt="Image"
-                img-top
-                tag="article"
-                img-height="150"
-                class="itemCarrusel"
-              >
-              </b-card>
-            </b-col>
-            <b-col class="itemCarrusel">
-              <b-card
-                img-src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
-                img-alt="Image"
-                img-top
-                tag="article"
-                img-height="150"
-                class="itemCarrusel"
-              >
-              </b-card>
-            </b-col>
-            <b-col class="itemCarrusel">
-              <b-card
-                img-src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
-                img-alt="Image"
-                img-top
-                tag="article"
-                img-height="150"
-                class="itemCarrusel"
-              >
-              </b-card>
-            </b-col>
-            <b-col class="itemCarrusel">
-              <b-card
-                img-src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
-                img-alt="Image"
-                img-top
-                tag="article"
-                img-height="150"
-                class="itemCarrusel"
-              >
-              </b-card>
-            </b-col>
-          </b-row>
-        </b-container>
-      </b-carousel-slide>
-    </b-carousel>
+  <div>
+    <br />
+    <b-container deck class="contenedorPubli mb-5">
+      <b-row>
+        <b-col class="itemCarrusel">
+          <b-img
+            src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
+            class="img-fluid"
+            alt="Responsive image"
+          >
+          </b-img>
+        </b-col>
+        <b-col class="itemCarrusel">
+          <b-img
+            src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
+            class="img-fluid"
+            alt="Responsive image"
+          >
+          </b-img>
+        </b-col>
+        <b-col class="itemCarrusel">
+          <b-img
+            src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
+            class="img-fluid"
+            alt="Responsive image"
+          >
+          </b-img>
+        </b-col>
+        <b-col class="itemCarrusel">
+          <b-img
+            src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
+            class="img-fluid"
+            alt="Responsive image"
+          >
+          </b-img>
+        </b-col>
+        <b-col class="itemCarrusel">
+          <b-img
+            src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
+            class="img-fluid"
+            alt="Responsive image"
+          >
+          </b-img>
+        </b-col>
+        <b-col class="itemCarrusel">
+          <b-img
+            src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
+            class="img-fluid"
+            alt="Responsive image"
+          >
+          </b-img>
+        </b-col>
+      </b-row>
+    </b-container>
   </div>
 </template>
 
@@ -163,7 +63,6 @@ export default {
   name: "slider",
   data() {
     return {
-      img: "logo.png",
       slide: 0,
       sliding: null,
     };
@@ -181,16 +80,11 @@ export default {
 
 
 <style scoped>
-.contenedorSliderP {
-  margin: 30px;
+.publicidad {
+  margin-bottom: 5px;
 }
-.carrousel {
-  height: 200px;
-}
-
-.itemCarrusel {
-  width: 120px;
-  height: 130px;
+.itemCarrusel img {
+  object-fit: contain;
 }
 
 .titulo {
@@ -201,4 +95,13 @@ export default {
   color: gray;
   font-family: "Poppins", sans-serif;
 }
+
+.contenedorPubli {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 </style>>
+
+
+

@@ -27,12 +27,11 @@
             v-for="(producto, index) in imagenes"
             :key="index"
             :img-src="`data:image/png;base64, ${producto.imagen}`"
-            img-alt="Img"
-            img-height="150px; max-height:100px"
-            img-top
-            style="height: auto; max-height: 100%; display: inline-block; max-width: 350px;"
+            img-height="300px; max-height:100%;"
+            class="ItemProd"
+            style="max-width: 350px;cursor: pointer"
+            alt="Responsive image"
             @click="verImagen(producto.imagen)"
-            
           >
           </b-card>
         </b-card-group>
@@ -60,10 +59,11 @@
       </b-col>
     </b-row>
     <hr />
-    <div class="text-center">
-      <b-img   
-      fluid alt="Responsive image"
-        style="max-height: 600px; width: 450px;"
+    <div class="text-center d-none d-sm-none d-md-block">
+      <b-img
+        fluid
+        alt="Responsive image"
+        style="max-height: 600px; width: 450px"
         class="rounded-0"
         :src="`data:image/png;base64,${this.imgSlider()}`"
       ></b-img>
@@ -92,19 +92,8 @@ export default {
       loading: true,
       nbPages: 0,
       ubicaicon: 0,
-      nbRowPerPage: 1,
       currentPageIndex: 0,
       imagenseleccionada: null,
-      options: {
-        currentPage: 0,
-        thresholdDistance: 100,
-        thresholdTime: 500,
-        loop: true,
-        direction: "horizontal",
-        loopedSlides: 5,
-        slidesToScroll: 1,
-        effect: "slide",
-      },
     };
   },
   directives: {
@@ -182,7 +171,7 @@ export default {
 </script>
 
 <style scoped>
-.imgProd img {
+.ItemProd img {
   object-fit: contain;
 }
 </style>>

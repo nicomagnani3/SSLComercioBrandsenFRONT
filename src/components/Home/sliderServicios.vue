@@ -1,20 +1,20 @@
 <template>
   <div>
-    <b-row class="pb-3">
-      <b-col lg="2" sm="4" class="text-center"></b-col>
-      <b-col md="8" sm="6" class="text-left pt-3">
-        <div class="widget-title destacados">
-          <strong class="h3">Servicios destacados</strong>&nbsp;
-
+    <b-row class="text-left">
+      <b-col cols="1"></b-col>
+      <b-col cols="8">
+        <div class="h3 font-britannic text widget-title destacados">
+          <strong>Servicios destacados</strong>
           <a v-if="!loading" @click="verDestacados()" class="verMas"
-            ><strong> + ver mas</strong></a
+            ><strong>+ ver mas</strong></a
           >
         </div>
       </b-col>
     </b-row>
+    <br />
     <div v-if="loading" class="text-center">
       <b-spinner
-        style="width: 3rem; height: 3rem"
+        style="width: 6rem; height: 6rem"
         variant="warning"
         label="Text Centered"
       >
@@ -39,11 +39,11 @@
               thumbnail
               v-for="(producto, index) in currentPageClubs"
               :key="index"
+              class="ItemProd"
+              style="max-width: 350px"
               :img-src="`data:image/png;base64, ${producto.imagen}`"
-               img-height="300px; max-height:100%;"
+              img-height="300px; max-height:100%;"
               alt="Responsive image"
-              style="image-rendering: pixelated; max-width: 350px"
-              
               @click="verProducto(producto)"
             >
               <strong>
@@ -257,6 +257,7 @@ export default {
 
 .ItemProd img {
   object-fit: contain;
+  cursor: pointer;
 }
 
 .item {
@@ -281,9 +282,11 @@ export default {
   border-radius: 20px;
 }
 .verMas {
-  margin-left: 50px;
+  margin-left: 12px;
   color: #676767;
   cursor: pointer;
+  font-size: 15px;
+  white-space: nowrap;
 }
 .btnMas {
   white-space: normal;
@@ -315,6 +318,9 @@ export default {
   height: 29rem;
   width: 30px;
   cursor: pointer;
+}
+.destacados {
+  color: rgb(109, 108, 108);
 }
 </style>
 

@@ -67,10 +67,11 @@
               <b-row>
                 <b-col md="6">
                   <b-card-img
+                   @click="verImagenes(producto)"
                     thumbnail
                     fluid
                     alt="Responsive image"
-                    style="max-height: 450px"
+                    style="max-height: 450px;cursor: pointer;"
                     :src="`data:image/png;base64, ${producto.imagen}`"
                     class="rounded-0"
                   ></b-card-img>

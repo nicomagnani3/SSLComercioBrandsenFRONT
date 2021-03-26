@@ -1,4 +1,5 @@
 <template>
+<div >
   <div v-if="loading" class="text-center">
     <img
       @click="home()"
@@ -7,7 +8,7 @@
       class="rounded"
       alt="..."
     />
-    <br /><br />
+   
     <br /><br />
     <b-spinner
       style="width: 11rem; height: 11rem"
@@ -16,11 +17,12 @@
     >
     </b-spinner>
   </div>
-  <div v-else class="containerR">
+  <div v-else class="container">
+    <b-container>
     <img
       @click="home()"
       src="@/assets/MalamboLogo.png"
-      style="width: 100%; max-width: 600px"
+      style="width: 100%; max-width: 600px;cursor: pointer"
       class="rounded"
       alt="..."
     />
@@ -287,7 +289,9 @@
         <router-link to="/login">¿Ya tenes una cuenta?Ingresa aca</router-link>
       </b-col>
     </b-form>
+    </b-container>
   </div>
+</div>
 </template>
 <script>
 import axios from "axios";
@@ -341,7 +345,7 @@ export default {
      foptions() {
       let mc = this.tiposUsuarios.map((e) => ({
         value: e.id,
-        text: e.nombre,
+        text: e.nombreMuestra,
       }));
       mc.push({
         value: null,
@@ -480,6 +484,7 @@ export default {
       } catch (err) {
         this.rubros =
           "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS DE RUBROS";
+          this.loading=true
       }
     },
        async getTipoUsuarios() {
@@ -491,6 +496,7 @@ export default {
       } catch (err) {
         this.rubros =
           "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS DE RUBROS";
+          this.loading=true
       }
     },
     
@@ -510,7 +516,12 @@ export default {
 </script>
 
 <style>
-
+body{
+    color:#ffce4e
+}
+.contenedorRegistro{
+  color:#ffce4e
+}
   
     
 </style>

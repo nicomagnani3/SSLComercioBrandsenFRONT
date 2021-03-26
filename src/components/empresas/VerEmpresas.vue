@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+<div>
     <div v-if="loading" class="text-center">
       <br /><br />
       <b-spinner
@@ -10,30 +10,38 @@
       </b-spinner>
     </div>
     <div v-else class="body">
-      <b-row class="pb-2">
-        <b-col class="text-center pt-3">
-          <br />
-          <p class="h1 font-italic text-warning">
-            Empresas - Comercios adheridos
-          </p>
+      <div fluid class="categoria">
+        <b-row class="pb-2">
+          <b-col class="text-center pt-3">
+            <br />
+            <p class="h1 font-britannic text">
+              <strong>Empresas-Comercios adheridos</strong>
+            </p>
+          </b-col>
+        </b-row>
+      </div>
+      <br />
+      <b-row class="text-center">
+        <b-col cols="3" class="text-center d-none d-sm-none d-md-block">
         </b-col>
+        <b-col>
+          <b-list-group>
+            <b-list-group-item
+              button
+              class="list-group-item"
+              v-for="item in this.empresas"
+              :key="item.id"
+              @click="verEmpresa(item)"
+            >
+              <br />
+              <a class="buscador">{{ item.nombre }}</a>
+            </b-list-group-item>
+          </b-list-group>
+        </b-col>
+        <b-col></b-col>
       </b-row>
-      <b-list-group>
-        <b-list-group-item
-          button
-          class="list-group-item"
-          v-for="item in this.empresas"
-          :key="item.id"
-          @click="verEmpresa(item)"
-          
-        >
-        
-          <br />
-          <a class="buscador">{{ item.nombre }}</a>
-        </b-list-group-item>
-      </b-list-group>
     </div>
-  </b-container>
+</div>
 </template>
 <script>
 import AuthenticationService from "@/services/AuthenticationService";

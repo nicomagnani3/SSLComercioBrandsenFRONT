@@ -153,6 +153,7 @@
           </b-col> -->
 
         <!-- Right aligned nav items -->
+        
         <b-navbar-nav class="">
           <b-navbar-nav v-if="logeado" class="ml-auto">
             <b-nav-item class="light mx-4 my-0 py-0">
