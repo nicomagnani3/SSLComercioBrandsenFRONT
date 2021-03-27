@@ -19,7 +19,9 @@
       </b-row>
       <b-card no-body class="mb-3 p-0" header="Elegir el  usuario o empresa">
         <b-container class="pb-3">
+            <br>
           <b-input-group size="lg">
+          
             <b-form-select
               size="lg"
               id="plan"
@@ -176,7 +178,6 @@ export default {
         const response = await Contratos.addContrato({
           usuario: this.value.usuario,
           desde: new Date(),
-          hasta: this.sumarDias(new Date(), +30),
           paquete: this.selectedpaquete[0].id,
           cantpublicaciones: Number(this.selectedpaquete[0].cantNormal),
           cantdestacadas: Number(this.selectedpaquete[0].cantDestacada),
@@ -245,6 +246,7 @@ export default {
           {}
         );
         this.usuarios = response.data.data;
+        console.log(this.usuarios)
       } catch (err) {
         this.$bvToast.toast(err.response.data.message, {
           title: "Atencion!",

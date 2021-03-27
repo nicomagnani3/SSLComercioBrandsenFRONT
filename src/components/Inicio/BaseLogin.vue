@@ -67,8 +67,9 @@ export default {
 html,
 body {
   width: auto !important;
-  overflow-x: hidden !important;
+  overflow-x: hidden ;
   background-color: #ffce4e;
+  
 }
 .logoBig {
   width: 30%;

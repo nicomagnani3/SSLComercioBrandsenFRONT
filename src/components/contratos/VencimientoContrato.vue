@@ -1,5 +1,6 @@
 <template>
   <b-container>
+    <br />
     <div v-if="loading" class="text-center">
       <br /><br />
       <br /><br />
@@ -26,23 +27,51 @@
             >
               <b-card-body>
                 <h3>
-                 Usuario: <strong> {{ contrato.userMail }} </strong>
+                  Usuario: <strong> {{ contrato.userMail }} </strong>
                 </h3>
-                <h4>Tipo de usuario: <strong> {{ contrato.userTipo }}</strong></h4>
+                <h4>
+                  Tipo de usuario: <strong> {{ contrato.userTipo }}</strong>
+                </h4>
                 <p>
-                  Vencimiento: <strong>{{ contrato.hasta | formatDate }}</strong>
+                  Vencimiento:
+                  <strong>{{ contrato.hasta | formatDate }}</strong>
                 </p>
-               <p> Paquete utilizado: <strong>{{ contrato.paquete }}</strong></p>
-               <p> Cantidad publicaciones comunes disponibles:  <strong>{{contrato.cantnormal}}</strong></p>
-               <p> Cantidad publicaciones destacadas disponibles: <strong>{{contrato.cantDestacada}}</strong></p>
-               
+
+                <b-alert
+                  variant="danger"
+                  show
+                  v-if="canttdias(contrato.hasta) <= 15"
+                  >El contrato finalizara en
+                  {{ canttdias(contrato.hasta) }} Dias</b-alert
+                >
+                <b-alert
+                  variant="success"
+                  show
+                  v-if="canttdias(contrato.hasta) > 15"
+                  >El contrato finalizara en
+                  {{ canttdias(contrato.hasta) }} Dias</b-alert
+                >
+
+                <p>
+                  Paquete utilizado: <strong>{{ contrato.paquete }}</strong>
+                </p>
+                <p>
+                  Cantidad publicaciones comunes disponibles:
+                  <strong>{{ contrato.cantnormal }}</strong>
+                </p>
+                <p>
+                  Cantidad publicaciones destacadas disponibles:
+                  <strong>{{ contrato.cantDestacada }}</strong>
+                </p>
+                <p>Notificiarlo por:</p>
                 <div>
                   <a
                     v-if="contrato.userCel != null"
                     :href="
                       'https://api.whatsapp.com/send?text=Hola!%20,desde%20Malambo%20queriamos%20notificarle%20que%20se%20vence%20el%20contrato ' +
-                      contrato.paquete +                    
-                      ',el%20dia%20' + acomodarFecha( contrato.hasta) +
+                      contrato.paquete +
+                      ',el%20dia%20' +
+                      acomodarFecha(contrato.hasta) +
                       '&phone=+54' +
                       acomodarCelular(contrato.userCel)
                     "
@@ -57,15 +86,15 @@
                     />&nbsp;&nbsp;
                   </a>
                   <a
-                     :href="
-                          'https://mail.google.com/mail/?view=cm&fs=1&to=' +
-                          contrato.userMail +
-                          '&body=Hola!%20,desde%20Malambo%20queriamos%20notificarle%20que%20se%20vence%20el%20contrato%20' +
-                          contrato.paquete +
-                          ',el%20dia%20' + contrato.hasta+
-                          '&su=Atencion!Malambo Vencimiento de contrato' 
-                        
-                        "
+                    :href="
+                      'https://mail.google.com/mail/?view=cm&fs=1&to=' +
+                      contrato.userMail +
+                      '&body=Hola!%20,desde%20Malambo%20queriamos%20notificarle%20que%20se%20vence%20el%20contrato%20' +
+                      contrato.paquete +
+                      ',el%20dia%20' +
+                      acomodarFecha(contrato.hasta) +
+                      '&su=Atencion!Malambo Vencimiento de contrato'
+                    "
                     target="_black"
                     >&nbsp;&nbsp;
                     <img
@@ -88,7 +117,7 @@
 import Contratos from "@/services/ContratosService";
 import axios from "axios";
 import { mapGetters, mapState } from "vuex";
-
+import moment from 'moment'
 export default {
   name: "vencimientoContrato",
   props: {},
@@ -113,8 +142,15 @@ export default {
       }
       return telefono;
     },
-    acomodarFecha(fecha){
-        return fecha 
+    acomodarFecha(fecha) {
+  return moment.utc(String(fecha)).format('DD-MM-YYYY')
+    },
+    canttdias(fecha) {
+      let fechaHoy = new Date();
+      let fechaContrato = new Date(fecha);
+      var difference = Math.abs(fechaContrato - fechaHoy);
+
+      return Math.trunc(difference / (1000 * 3600 * 24));
     },
 
     async getContratos() {

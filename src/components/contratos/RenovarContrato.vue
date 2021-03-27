@@ -210,7 +210,6 @@ export default {
         const response = await Contratos.addContrato({
           usuario: this.getUserId,
           desde: new Date(),
-          hasta: this.sumarDias(new Date(), +30),
           paquete: this.selectedpaquete[0].id,
           cantpublicaciones: Number(this.selectedpaquete[0].cantNormal),
           cantdestacadas: Number(this.selectedpaquete[0].cantDestacada),
