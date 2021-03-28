@@ -165,8 +165,7 @@
                   v-slot="{ errors, valid }"
                 >
                   <b-form-textarea
-                    id="observaciones"
-                    maxlength="230"
+                    id="observaciones"                  
                     :state="errors[0] ? false : valid ? true : null"
                     size="sm"
                     rows="8"
