@@ -67,11 +67,11 @@
               <b-row>
                 <b-col md="6">
                   <b-card-img
-                   @click="verImagenes(producto)"
+                    @click="verImagenes(producto)"
                     thumbnail
                     fluid
                     alt="Responsive image"
-                    style="max-height: 450px;cursor: pointer;"
+                    style="max-height: 450px; cursor: pointer"
                     :src="`data:image/png;base64, ${producto.imagen}`"
                     class="rounded-0"
                   ></b-card-img>
@@ -325,7 +325,6 @@ export default {
         this.getPublicacionesPorNombre();
       }
     }
-    this.mostrarCartelSinPublicaicones();
   },
   computed: {
     ...mapGetters("storeUser", ["getUserId"]),
@@ -345,12 +344,10 @@ export default {
           this.getPublicacionesPorNombre();
         }
       }
-      this.mostrarCartelSinPublicaicones();
     },
   },
   methods: {
     mostrarCartelSinPublicaicones() {
-      this.mostrarNoHayPublicaciones;
       if (this.productos.length == 0) {
         this.mostrarNoHayPublicaciones = true;
       } else this.mostrarNoHayPublicaciones = false;
@@ -362,6 +359,7 @@ export default {
       return telefono;
     },
     async getPublicacionesPorNombre() {
+      console.log("entraF");
       this.loading = true;
       try {
         const response = await PublicacionService.getPublicacionesPorNombre({
@@ -370,11 +368,11 @@ export default {
         if (response.data.error == false) {
           this.productos = response.data.data;
           this.mostrarCartelSinPublicaicones();
+          this.loading = false;
         }
       } catch (err) {
         this.productos = "ATENCION NO SE PUDIERON OBTENER LAS NOVEDADES";
-      } finally {
-        this.loading = false;
+        this.loading = true;
       }
     },
 
@@ -390,7 +388,7 @@ export default {
       } catch (err) {
         this.loading = true;
         this.categorias = "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS";
-      } 
+      }
     },
     async getEmprendimientos() {
       this.loading = true;
@@ -404,8 +402,8 @@ export default {
       } catch (err) {
         this.emprendimientos =
           "ATENCION NO SE PUDIERON OBTENER LOS emprendimientos";
-          this.loading = true;
-      } 
+        this.loading = true;
+      }
     },
     async getServicios() {
       this.loading = true;
@@ -527,12 +525,12 @@ export default {
         if (response.data.error == false) {
           this.productos = response.data.data;
           this.mostrarCartelSinPublicaicones();
-            this.loading = false;
+          this.loading = false;
         }
       } catch (err) {
         this.productos = "ATENCION NO SE PUDIERON OBTENER LAS NOVEDADES";
         this.loading = true;
-      } 
+      }
     },
     verImagenes(producto) {
       this.verImagen = true;
