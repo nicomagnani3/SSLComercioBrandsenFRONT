@@ -139,7 +139,7 @@
           <a
             :href="
               'https://api.whatsapp.com/send?text=Hola!%20,me%20comunico' +
-              '&phone=+54'
+              '&phone=+542223431948'
             "
             target="_black"
           >
