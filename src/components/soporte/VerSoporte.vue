@@ -122,48 +122,77 @@
       </b-row>
     </div>
     <b-container>
-    <b-col >
-      <div class="card" style="width: 18rem">
-        <img src="@/assets/consultas.png" class="card-img-top" alt="..." />
-        <div class="card-body">
-          <h5 class="card-title">
-            <strong>Nosotros te ayudamos con cualquier consulta</strong>
-          </h5>
-          <p class="card-text" style="white-space: pre-wrap">
-            -En tu publicacion no encontras la categoria? <br />
-            -Queres averiguar los precios de las publicidades ?<br />
-            -No encontras tu publicacion?<br />
-            -Tuviste problemas con Mercado pago?<br>
-           <strong> -Mandanos un mail o un wsp y te contestamos enseguida!</strong>
-          </p>
-          <a
-            :href="
-              'https://api.whatsapp.com/send?text=Hola!%20,me%20comunico' +
-              '&phone=+542223431948'
-            "
-            target="_black"
-          >
-            <img
-              src="@/assets/wsp.png"
-              alt=""
-              height="auto"
-              style="width: 45px; margin: 4px"
-            />&nbsp;&nbsp;
-          </a>
-          <a
-            :href="'https://mail.google.com/mail/?view=cm&fs=1&to=info@malambobrandsen.com.ar&body=Hola!%20,me%20comunico&su=Malambo%20consulta%20soporte'"
-            target="_black"
-            >&nbsp;&nbsp;
-            <img
-              src="@/assets/mail.png"
-              alt=""
-              height="auto"
-              style="width: 45px; margin: 4px"
-            />
-          </a>
+      <b-col>
+        <div class="card" style="width: 18rem">
+          <img src="@/assets/consultas.png" class="card-img-top" alt="..." />
+          <div class="card-body">
+            <h5 class="card-title">
+              <strong>Nosotros te ayudamos con cualquier consulta</strong>
+            </h5>
+            <p class="card-text" style="white-space: pre-wrap">
+              -En tu publicacion no encontras la categoria? <br />
+              -Queres averiguar los precios de las publicidades ?<br />
+              -No encontras tu publicacion?<br />
+              -Tuviste problemas con Mercado pago?<br />
+              <strong>
+                -Mandanos un mail o un wsp y te contestamos enseguida!</strong
+              >
+            </p>
+            <div class="text-center">
+            <a
+              :href="
+                'https://api.whatsapp.com/send?text=Hola!%20,me%20comunico' +
+                '&phone=+542223431948'
+              "
+              target="_black"
+            >
+              <img
+                src="@/assets/wsp.png"
+                alt=""
+                height="auto"
+                style="width: 45px; margin: 4px"
+              />&nbsp;&nbsp;
+            </a>
+            <a
+              :href="'https://mail.google.com/mail/?view=cm&fs=1&to=info@malambobrandsen.com.ar&body=Hola!%20,me%20comunico&su=Malambo%20consulta%20soporte'"
+              target="_black"
+              >&nbsp;&nbsp;
+              <img
+                src="@/assets/mail.png"
+                alt=""
+                height="auto"
+                style="width: 45px; margin: 4px"
+              />
+            </a>
+            <br>
+              <a
+              href="https://www.facebook.com/MalamboBrandsen"         
+              
+              target="_black"
+            >
+              <img
+                src="@/assets/icono-face.png"
+                alt=""
+                height="auto"
+                style="width: 45px; margin: 4px"
+              />&nbsp;&nbsp;
+            </a>
+                <a
+              href="https://www.instagram.com/malambobrandsen/"         
+              
+              target="_black"
+            >
+              <img
+                src="@/assets/logo-instagram.png"
+                alt=""
+                height="auto"
+                style="width: 55px; margin: 4px"
+              />&nbsp;&nbsp;
+            </a>
+            </div>
+          </div>
         </div>
-      </div>
-    </b-col>
+      </b-col>
     </b-container>
   </div>
 </template>

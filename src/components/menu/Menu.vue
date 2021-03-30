@@ -13,58 +13,30 @@
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse class="navbar-collapse" id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-item :to="{ name: 'verCategorias' }">Productos</b-nav-item>
-          <b-nav-item :to="{ name: 'verEmprendimiento' }"
+          <b-nav-item v-if="!this.logeado" :to="{ name: 'verCategorias' }"
+            >Productos</b-nav-item
+          >
+          <b-nav-item v-if="!this.logeado" :to="{ name: 'verEmprendimiento' }"
             >Emprendimientos</b-nav-item
           >
-          <b-nav-item :to="{ name: 'verServicio' }"
+          <b-nav-item v-if="!this.logeado" :to="{ name: 'verServicio' }"
             >Servicios</b-nav-item
           >
-
-          <!--   <b-nav-item-dropdown>
+          <b-nav-item-dropdown v-if="this.logeado">
             <template slot="button-content">
-              <span class="light">Productos</span>
+              <span class="light">Categorias</span>
             </template>
+            <b-dropdown-item :to="{ name: 'verCategorias' }"
+              >Productos</b-dropdown-item
+            >
+            <b-dropdown-item :to="{ name: 'verEmprendimiento' }"
+              >Emprendimientos</b-dropdown-item
+            >
+            <b-dropdown-item :to="{ name: 'verServicio' }"
+              >Servicios</b-dropdown-item
+            >
+          </b-nav-item-dropdown>
 
-            <li
-              class="list-group-item"
-              v-for="item in categorias"
-              :key="item.id"
-            >
-              <a class="buscador" @click="buscarProductoporCategoria(item)">{{
-                item.nombre
-              }}</a>
-            </li>
-          </b-nav-item-dropdown> -->
-
-          <!--   <b-nav-item-dropdown>
-            <template slot="button-content">
-              <span class="light">Emprendimientos</span>
-            </template>
-            <li
-              class="list-group-item"
-              v-for="item in emprendimientos"
-              :key="item.id"
-            >
-              <a class="buscador" @click="buscarProductoporCategoria(item)">{{
-                item.nombre
-              }}</a>
-            </li>
-          </b-nav-item-dropdown> -->
-          <!-- <b-nav-item-dropdown>
-            <template slot="button-content">
-              <span class="light">Servicios</span>
-            </template>
-            <li
-              class="list-group-item"
-              v-for="item in servicios"
-              :key="item.id"
-            >
-              <a class="buscador" @click="buscarProductoporCategoria(item)">{{
-                item.nombre
-              }}</a>
-            </li>
-          </b-nav-item-dropdown> -->
           <b-nav-item-dropdown>
             <template slot="button-content">
               <span class="light">Rubros</span>
@@ -131,32 +103,9 @@
               >Vencimientos</b-dropdown-item
             >
           </b-nav-item-dropdown>
-           <b-nav-item :to="{ name: 'verSoporte' }"
-            >Soporte</b-nav-item
-          >
+          <b-nav-item :to="{ name: 'verSoporte' }">Soporte</b-nav-item>
         </b-navbar-nav>
 
-        <!--     
-          <b-col class="buscarPs">
-            <b-form-group class="mb-0">
-              <b-input-group>
-                <b-form-input
-                  style="height: 30px"
-                  @keyup.enter="buscarProducto(filterPrev)"
-                  v-model="filterPrev"
-                  placeholder="Buscar "
-                ></b-form-input>
-                <b-input-group-append>
-                  <b-button size="sm" @click="buscarProducto(filterPrev)"
-                    ><b-icon icon="search"></b-icon
-                  ></b-button>
-                </b-input-group-append>
-              </b-input-group>
-            </b-form-group>
-          </b-col> -->
-
-        <!-- Right aligned nav items -->
-        
         <b-navbar-nav class="">
           <b-navbar-nav v-if="logeado" class="ml-auto">
             <b-nav-item class="light mx-4 my-0 py-0">
