@@ -127,12 +127,14 @@
         <img src="@/assets/consultas.png" class="card-img-top" alt="..." />
         <div class="card-body">
           <h5 class="card-title">
-            <strong>Nosotros te ayudamos con cualquier duda</strong>
+            <strong>Nosotros te ayudamos con cualquier consulta</strong>
           </h5>
           <p class="card-text" style="white-space: pre-wrap">
             -En tu publicacion no encontras la categoria? <br />
             -Queres averiguar los precios de las publicidades ?<br />
             -No encontras tu publicacion?<br />
+            -Tuviste problemas con Mercado pago?<br>
+           <strong> -Mandanos un mail o un wsp y te contestamos enseguida!</strong>
           </p>
           <a
             :href="
