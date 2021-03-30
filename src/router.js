@@ -36,6 +36,8 @@ import container from '@/components/menu/Container.vue'
 import home from '@/components/Home/Home.vue'
 /* Empreas - comcercios */
 import VerEmpresas from '@/components/empresas/VerEmpresas.vue'
+import verSoporte from '@/components/soporte/VerSoporte.vue'
+
 
 
 import CrearPublicacion from '@/components/publicaciones/CrearPublicacion.vue'
@@ -98,7 +100,15 @@ const router = new Router({
          meta: {
            requireAuth: false
          }, 
-       }, 
+       },
+       {
+        path: '/verSoporte',
+         name: 'verSoporte',
+         component: verSoporte,   
+         meta: {
+           requireAuth: false
+         }, 
+       },        
        {
         path: '/verCategorias',
          name: 'verCategorias',

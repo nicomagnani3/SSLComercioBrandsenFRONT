@@ -131,6 +131,9 @@
               >Vencimientos</b-dropdown-item
             >
           </b-nav-item-dropdown>
+           <b-nav-item :to="{ name: 'verSoporte' }"
+            >Soporte</b-nav-item
+          >
         </b-navbar-nav>
 
         <!--     
