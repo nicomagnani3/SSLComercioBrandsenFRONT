@@ -309,7 +309,6 @@ export default {
     };
   },
   created() {
-    console.log(this.productos);
     if (this.getUserId != null) {
       this.logeado = true;
     }
@@ -319,9 +318,12 @@ export default {
     if (Number(this.rubro) > Number(0)) {
       this.buscarPorRubro(this.rubro);
     } else {
+      console.log(this.empresa)
       if (Number(this.empresa > Number(0))) {
+        console.log("busca por empresa")
         this.buscarPorEmpresa(this.empresa);
       } else {
+          console.log("busca por nombre")
         this.getPublicacionesPorNombre();
       }
     }
@@ -331,7 +333,6 @@ export default {
   },
   watch: {
     producto() {
-      //this.getPublicacionesPorNombre();
       this.getcategorias();
       this.getEmprendimientos();
       this.getServicios();
@@ -339,8 +340,10 @@ export default {
         this.buscarPorRubro(this.rubro);
       } else {
         if (Number(this.empresa > Number(0))) {
+                 console.log("busca por empresa wacthc")
           this.buscarPorEmpresa(this.empresa);
         } else {
+                console.log("busca por nombre wacthc")
           this.getPublicacionesPorNombre();
         }
       }
@@ -359,7 +362,7 @@ export default {
       return telefono;
     },
     async getPublicacionesPorNombre() {
-      console.log("entraF");
+
       this.loading = true;
       try {
         const response = await PublicacionService.getPublicacionesPorNombre({

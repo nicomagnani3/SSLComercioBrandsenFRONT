@@ -1,31 +1,23 @@
 <template>
   <b-container>
-
-
-       <h3 class="m-5 titulo">Productos en oferta</h3>
-        <vueper-slides
-          class="no-shadow"
-          :visible-slides="5"
-          slide-multiple
-          :gap="1"
-          :slide-ratio="1 / 4"     
-          :dragging-distance="60"
-          :breakpoints="{ 800: {visibleSlides: 2, slideMultiple: 2} }"
-        >
-         <vueper-slide
-            v-for="producto in productos"
-            :key="producto.id"
-            :image="`data:image/png;base64, ${producto.imagen}`"
-            class="item"
-          />  
-
-          
-       
-        </vueper-slides>
-
-
+    <h3 class="m-5 titulo">Productos en oferta</h3>
+    <vueper-slides
+      class="no-shadow"
+      :visible-slides="5"
+      slide-multiple
+      :gap="1"
+      :slide-ratio="1 / 4"
+      :dragging-distance="60"
+      :breakpoints="{ 800: { visibleSlides: 2, slideMultiple: 2 } }"
+    >
+      <vueper-slide
+        v-for="producto in productos"
+        :key="producto.id"
+        :image="`data:image/png;base64, ${producto.imagen}`"
+        class="item"
+      />
+    </vueper-slides>
   </b-container>
-
 </template>
 
 
@@ -42,7 +34,6 @@ export default {
   data() {
     return {
       productos: [],
-     
     };
   },
   methods: {
@@ -50,11 +41,8 @@ export default {
       try {
         const response = await ProductosService.getProductos();
         this.productos = response.data.data;
-          this.productos = this.productos.filter(
-        (c) => c.destacado == true
-      );
+        this.productos = this.productos.filter((c) => c.destacado == true);
         this.getImporte(this.productos);
-        
       } catch (err) {
         this.categorias = "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS";
       }
@@ -73,7 +61,6 @@ export default {
     primerMayuscula(string) {
       return string.charAt(0).toUpperCase() + string.slice(1);
     },
-  
   },
   mounted() {
     axios
@@ -103,8 +90,7 @@ export default {
   opacity: 0.7;
 }
 
-.item{
-
-  box-shadow: 3px 3px 5px 3px rgba(0, 0, 0, 0.2);;
+.item {
+  box-shadow: 3px 3px 5px 3px rgba(0, 0, 0, 0.2);
 }
 </style>

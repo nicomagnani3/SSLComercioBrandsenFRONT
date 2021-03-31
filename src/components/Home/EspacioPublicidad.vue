@@ -3,11 +3,11 @@
     <br />
     <b-row class="text-center">
       <b-col class="publicidad"
-        ><img class="img-fluid" alt="Responsive image" src="@/assets/Malambo-footer.png" />
+        ><img class="img-fluid" alt="Responsive image" src="@/assets/ecomunicacion1.png" />
       </b-col>
       <br />
       <b-col class="publicidad"
-        ><img  src="@/assets/Malambo-footer2.png" class="img-fluid" alt="Responsive image"
+        ><img  src="@/assets/ecomunicacion2.png" class="img-fluid" alt="Responsive image"
       /></b-col>
       <br />
       <b-col class="publicidad"

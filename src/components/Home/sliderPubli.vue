@@ -12,7 +12,7 @@
         </b-col>
         <b-col class="itemCarrusel">
           <b-img
-            src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
+            src="https://res.cloudinary.com/malambo/image/upload/v1617138779/Malambo/publicidad1.jpg"
             class="img-fluid"
             alt="Responsive image"
           >
@@ -20,7 +20,7 @@
         </b-col>
         <b-col class="itemCarrusel">
           <b-img
-            src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
+            src="https://res.cloudinary.com/malambo/image/upload/v1617139861/Malambo/publicidad3.png"
             class="img-fluid"
             alt="Responsive image"
           >

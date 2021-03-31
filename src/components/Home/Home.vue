@@ -1,7 +1,16 @@
 <template>
-  <div class="body">
-    <Slider />
-    <sliderPubli />
+  <div v-if="loading" class="text-center">
+    <br /><br />
+    <b-spinner
+      style="width: 11rem; height: 11rem"
+      variant="warning"
+      label="Text Centered"
+    >
+    </b-spinner>
+  </div>
+  <div v-else class="body">
+    <Slider :publicidades="this.publicidades" />
+    <!-- <sliderPubli /> -->
     <div fluid class="subtitulo">
       <strong>Registrate y publica tu primer producto gratis!</strong>
       <P>Al publicar está colaborando con Apaa de Brandsen</P>
@@ -21,8 +30,9 @@ import NuevoSlide from "@/components/Home/NuevoSlide.vue";
 import Sliderempresa from "@/components/Home/slideEmpresas.vue";
 import sliderServicios from "@/components/Home/sliderServicios.vue";
 import sliderEmprendimientos from "@/components/Home/sliderEmprendimientos.vue";
-import sliderPubli from "@/components/Home/sliderPubli.vue";
-
+/* import sliderPubli from "@/components/Home/sliderPubli.vue";
+ */ import axios from "axios";
+import PublicidadService from "@/services/PublicidadService";
 export default {
   name: "Home",
 
@@ -31,16 +41,39 @@ export default {
     NuevoSlide,
     sliderServicios,
     Sliderempresa,
-
-    sliderEmprendimientos,
-    sliderPubli,
+    sliderEmprendimientos
   },
 
   data() {
-    return {};
+    return {
+      loading: true,
+      publicidades: [],
+    };
   },
 
-  methods: {},
+  methods: {
+    async getPublicidades() {
+      try {
+        const response = await PublicidadService.getPublicidades();
+        if (response.data.error == false) {
+          this.publicidades = response.data.data;
+        }
+      } catch (err) {
+        this.getPublicidades();
+        this.publicidades = "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS";
+      }
+    },
+  },
+  mounted() {
+    axios
+      .all([this.getPublicidades()])
+      .then(() => {
+        this.loading = false;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
 };
 </script>
 

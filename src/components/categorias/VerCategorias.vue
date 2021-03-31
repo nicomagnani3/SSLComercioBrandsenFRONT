@@ -125,6 +125,7 @@ export default {
       });
     },
     verEmpresa(empresa) {
+      console.log(empresa)
       const path = `/buscarProductos/${empresa.nombre}`;
       if (this.$route.path !== path)
         this.$router.push({
