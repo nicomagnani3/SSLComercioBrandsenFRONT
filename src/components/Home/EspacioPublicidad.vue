@@ -7,7 +7,7 @@
       </b-col>
       <br />
       <b-col class="publicidad"
-        ><img  src="@/assets/ecomunicacion2.png" class="img-fluid" alt="Responsive image"
+        ><img  src="@/assets/ecomunicacion1.png" class="img-fluid" alt="Responsive image"
       /></b-col>
       <br />
       <b-col class="publicidad"
