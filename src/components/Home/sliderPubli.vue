@@ -1,57 +1,34 @@
 <template>
   <div>
     <br />
-    <b-container deck class="contenedorPubli mb-5">
-      <b-row>
-        <b-col class="itemCarrusel">
-          <img
-            src="@/assets/Logo.jpg"
-            class="img-fluid"
-            alt="Responsive image"
-          />
-        </b-col>
-        <b-col class="itemCarrusel">
-          <b-img
-            src="https://res.cloudinary.com/malambo/image/upload/v1617138779/Malambo/publicidad1.jpg"
-            class="img-fluid"
-            alt="Responsive image"
+    
+    <b-container class="contenedorPubli mb-5">
+      <div class="card-deck-wrapper">
+        <div class="card-deck">
+          <b-row
+            v-for="publicidad in publicidades"
+            v-bind:key="publicidad.id"
+            class="text-center"
           >
-          </b-img>
-        </b-col>
-        <b-col class="itemCarrusel">
-          <b-img
-            src="https://res.cloudinary.com/malambo/image/upload/v1617139861/Malambo/publicidad3.png"
-            class="img-fluid"
-            alt="Responsive image"
-          >
-          </b-img>
-        </b-col>
-        <b-col class="itemCarrusel">
-          <b-img
-            src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
-            class="img-fluid"
-            alt="Responsive image"
-          >
-          </b-img>
-        </b-col>
-        <b-col class="itemCarrusel">
-          <b-img
-            src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
-            class="img-fluid"
-            alt="Responsive image"
-          >
-          </b-img>
-        </b-col>
-        <b-col class="itemCarrusel">
-          <b-img
-            src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
-            class="img-fluid"
-            alt="Responsive image"
-          >
-          </b-img>
-        </b-col>
-      </b-row>
+            <b-col class="itemCarrusel">
+              <b-card
+                style="cursor: pointer"
+                overlay
+                :img-src="publicidad.imagen"
+                img-alt="Responsive image"
+                img-top
+                class="img-fluid"
+                alt="Responsive image"
+                @click="irUrl(publicidad.url)"
+              >
+              </b-card>
+            </b-col>
+          </b-row>
+        </div>
+      </div>
     </b-container>
+     
+  
   </div>
 </template>
 
@@ -60,18 +37,23 @@
 <script>
 export default {
   name: "slider",
+    components: {
+
+  
+  },
+  props: {
+    publicidades: {
+      type: Array,
+    },
+  },
   data() {
-    return {
-      slide: 0,
-      sliding: null,
-    };
+    return {};
   },
   methods: {
-    onSlideStart() {
-      this.sliding = true;
-    },
-    onSlideEnd() {
-      this.sliding = false;
+    irUrl(url) {
+      if (url != null) {
+        window.open(url, "_blank");
+      }
     },
   },
 };
@@ -79,26 +61,30 @@ export default {
 
 
 <style scoped>
-.publicidad {
-  margin-bottom: 5px;
+@media (max-width: 1023px) {
+  .exhibitor-holder img,
+  .exhibitor .slick-list {
+    height: 134px;
+  }
 }
-.itemCarrusel img {
-  object-fit: contain;
-}
-
-.titulo {
-  color: rgb(109, 108, 108);
-}
-
-.texto {
-  color: gray;
-  font-family: "Poppins", sans-serif;
-}
-
 .contenedorPubli {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.itemCarrusel img {
+  object-fit: contain;
+}
+.card-deck {
+  display: flex;
+  justify-content: flex-start;
+  flex-flow: row wrap;
+  align-items: stretch;
+}
+.card-deck .card {
+  display: block;
+  flex-basis: 33.3%; /* change this value for each breakpoint*/
 }
 </style>>
 

@@ -9,8 +9,8 @@
     </b-spinner>
   </div>
   <div v-else class="body">
-    <Slider :publicidades="this.publicidades" />
-    <!-- <sliderPubli /> -->
+    <Slider :publicidades="this.publicidadesSlider1" />
+    <sliderPubli :publicidades="this.publicidadesSlider2" />
     <div fluid class="subtitulo">
       <strong>Registrate y publica tu primer producto gratis!</strong>
       <P>Al publicar está colaborando con Apaa de Brandsen</P>
@@ -30,8 +30,8 @@ import NuevoSlide from "@/components/Home/NuevoSlide.vue";
 import Sliderempresa from "@/components/Home/slideEmpresas.vue";
 import sliderServicios from "@/components/Home/sliderServicios.vue";
 import sliderEmprendimientos from "@/components/Home/sliderEmprendimientos.vue";
-/* import sliderPubli from "@/components/Home/sliderPubli.vue";
- */ import axios from "axios";
+import sliderPubli from "@/components/Home/sliderPubli.vue";
+import axios from "axios";
 import PublicidadService from "@/services/PublicidadService";
 export default {
   name: "Home",
@@ -41,13 +41,16 @@ export default {
     NuevoSlide,
     sliderServicios,
     Sliderempresa,
-    sliderEmprendimientos
+    sliderEmprendimientos,
+    sliderPubli,
   },
 
   data() {
     return {
       loading: true,
       publicidades: [],
+      publicidadesSlider1: [],
+      publicidadesSlider2: [],
     };
   },
 
@@ -57,11 +60,19 @@ export default {
         const response = await PublicidadService.getPublicidades();
         if (response.data.error == false) {
           this.publicidades = response.data.data;
+          this.asignarPublicidades1(this.publicidades);
+          this.asignarPublicidades2(this.publicidades);
         }
       } catch (err) {
         this.getPublicidades();
         this.publicidades = "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS";
       }
+    },
+    asignarPublicidades1(publicidades) {
+      this.publicidadesSlider1 = publicidades.filter((c) => c.ubicacion == 1);
+    },
+      asignarPublicidades2(publicidades) {
+      this.publicidadesSlider2 = publicidades.filter((c) => c.ubicacion == 2);
     },
   },
   mounted() {

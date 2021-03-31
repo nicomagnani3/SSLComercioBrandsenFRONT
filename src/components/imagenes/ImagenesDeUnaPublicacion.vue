@@ -74,7 +74,7 @@
 <script>
 import axios from "axios";
 import PublicacionService from "@/services/PublicacionService";
-import "vueperslides/dist/vueperslides.css";
+
 
 export default {
   name: "imagenesDeUnaPublicacion",
