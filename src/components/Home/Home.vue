@@ -117,6 +117,9 @@ export default {
      margin-left: auto;
     margin-right: auto;
   }
+  #valorDestacado{
+      font-size: 10px;
+  }
 }
 
 .body {

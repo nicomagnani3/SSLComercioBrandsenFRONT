@@ -31,15 +31,10 @@
                   <b-col md="4">
                     <b-card-body>
                       <h3>
-                        <strong>{{ producto.titulo }} </strong
-                        ><span
-                          v-if="producto.destacado"
-                          class="badge badge-primary"
-                        >
-                          Destacado</span
+                        <strong class="parrafor">{{ producto.titulo }} </strong
                         >
                       </h3>
-                      <strong>{{ producto.padre }}</strong>
+                      <strong class="parrafor">{{ producto.padre }}</strong>
                       <hr />
                       <h5 v-if="Number(producto.precio) > Number(0)">
                         Precio: {{ getImporte(producto.precio) }}
