@@ -288,6 +288,10 @@
       <b-col class="text-center">
         <router-link to="/login">¿Ya tenes una cuenta?Ingresa aca</router-link>
       </b-col>
+      <br>
+       <b-col class="text-center">
+        <router-link to="/verSoporte">¿Necesitas ayuda?</router-link>
+      </b-col>
     </b-form>
     </b-container>
   </div>

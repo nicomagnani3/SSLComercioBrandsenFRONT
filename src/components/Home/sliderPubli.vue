@@ -12,7 +12,12 @@
           >
             <b-col class="itemCarrusel">
               <b-card
-                style="cursor: pointer"
+              style="
+                cursor: pointer;
+                border-width: 1px;
+                border-style: solid;
+                border-color: black;
+              "
                 overlay
                 :img-src="publicidad.imagen"
                 img-alt="Responsive image"
@@ -62,11 +67,13 @@ export default {
     height: auto;
     margin-left: 5px;
     margin-right: 5px;
+    justify-content: center;
   }
   .contenedorPubli {
     display: flex;
     justify-content: center;
     align-items: center;
+    
   }
 }
 

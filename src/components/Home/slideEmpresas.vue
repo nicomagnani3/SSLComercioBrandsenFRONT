@@ -13,7 +13,12 @@
           >
             <b-col class="itemCarrusel">
               <b-card
-                style="cursor: pointer"
+                style="
+                cursor: pointer;
+                border-width: 1px;
+                border-style: solid;
+                border-color: black;
+              "
                 overlay
                 :img-src="publicidad.imagen"
                 img-alt="Responsive image"

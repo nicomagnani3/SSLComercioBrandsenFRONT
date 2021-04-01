@@ -1,33 +1,34 @@
 <template>
   <div>
     <br />
-
-    <b-row class="text-center">
-      <b-col class="publicidad"
-        ><img
-          class="img-fluid"
-          @click="irUrl(publicidades[0].url)"
-          alt="Responsive image"
-          :src="publicidades[0].imagen"
-        />
-      </b-col>
-      <b-col class="publicidad"
-        ><img
-          :src="publicidades[1].imagen"
-          @click="irUrl(publicidades[1].url)"
-          class="img-fluid"
-          alt="Responsive image"
-          style="cursor: pointer"
-      /></b-col>
-      <b-col class="publicidad"
-        ><img
-          :src="publicidades[2].imagen"
-          @click="irUrl(publicidades[2].url)"
-          class="img-fluid"
-          style="cursor: pointer"
-          alt="Responsive image"
-      /></b-col>
-    </b-row>
+    <div class="card-deck-wrapper">
+      <div class="card-deck">
+        <b-row
+          v-for="publicidad in publicidades"
+          v-bind:key="publicidad.id"
+          class="text-center"
+        >
+          <b-col sm class="itemCarrusel">
+            <b-card
+              style="
+                cursor: pointer;
+                border-width: 1px;
+                border-style: solid;
+                border-color: black;
+              "
+              overlay
+              :img-src="publicidad.imagen"
+              img-alt="Responsive image"
+              img-top
+              class="img-fluid"
+              alt="Responsive image"
+              @click="irUrl(publicidad.url)"
+            >
+            </b-card>
+          </b-col>
+        </b-row>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -47,10 +48,7 @@ export default {
       img: "publi.jpg",
     };
   },
-  created (){
-    console.log(this.publicidades)
-
-  },
+  created() {},
   methods: {
     irUrl(url) {
       if (url != null) {
@@ -62,6 +60,27 @@ export default {
 </script>
 
 <style  scoped>
+@media only screen and (max-width: 480px) {
+  .itemCarrusel {
+    width: 190px;
+    height: auto;
+    justify-content: center;
+  }
+  .card-deck {
+    justify-content: center;
+  }
+}
+@media only screen and (max-width: 880px) {
+  .itemCarrusel {
+    width: 190px;
+    height: auto;
+
+    justify-content: center;
+  }
+  .card-deck {
+    justify-content: center;
+  }
+}
 .contenedorPubli {
   display: flex;
   align-items: center;
@@ -70,12 +89,17 @@ export default {
 
 .card-deck {
   display: flex;
-  justify-content: flex-start;
+
   flex-flow: row wrap;
   align-items: stretch;
+  justify-content: center;
 }
 .card-deck .card {
   display: block;
   flex-basis: 33.3%; /* change this value for each breakpoint*/
+}
+
+.itemCarrusel img {
+  object-fit: contain;
 }
 </style>

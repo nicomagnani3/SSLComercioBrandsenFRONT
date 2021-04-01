@@ -4,8 +4,10 @@
       <b-row class="pb-2">
         <b-col class="text-center pt-3">
           <br />
-          <p class="h1 font-britannic text">
-            <strong class="parrafoCategorias">Guias de ayuda para los usuarios</strong>
+          <p class="h4 font-britannic text">
+            <strong class="parrafoCategorias">Guias de ayuda para los usuarios | 2223 431948 | info@malambobrandsen.com.ar
+
+</strong>
           </p>
         </b-col>
       </b-row>
@@ -15,7 +17,7 @@
     <div class="card-deck-wrapper">
       <div class="card-deck">
         <b-row class="pb-2">
-          <div class="card" style="width: 18rem;    margin: auto;">
+          <div class="card" style="width: 18rem;   ">
             <img
               src="@/assets/registrarse.png"
               class="card-img-top"
@@ -40,7 +42,7 @@
               >
             </div>
           </div>
-          <div class="card" style="width: 18rem;margin: auto;">
+          <div class="card" style="width: 18rem">
             <img
               src="@/assets/publicacion.png"
               class="card-img-top"
@@ -65,7 +67,7 @@
               >
             </div>
           </div>
-          <div class="card" style="width: 18rem;margin: auto;">
+          <div class="card" style="width: 18rem;">
             <img
               src="@/assets/publicidades.png"
               class="card-img-top"
@@ -94,7 +96,7 @@
             </div>
           </div>
 
-          <div class="card" style="width: 18rem;margin: auto;">
+          <div class="card" style="width: 18rem;">
             <img src="@/assets/contrato.png" class="card-img-top" alt="..." />
             <div class="card-body">
               <h5 class="card-title">
@@ -117,7 +119,7 @@
             </div>
           </div>
 
-          <div class="card" style="width: 18rem;margin: auto;">
+          <div class="card" style="width: 18rem">
             <img src="@/assets/acuerdo.png" class="card-img-top" alt="..." />
             <div class="card-body">
               <h5 class="card-title">
@@ -127,17 +129,15 @@
                 Para cada tipo de usuario contamos con varias opciones.
                 Descargate + información con las características y valores de
                 los distintos servicios.<br />
-                Empresas y Comercios<br />
-                Profesionales y Servicios<br />
-                Emprendedores<br />
-                Usuarios Generales
+               <a      class="linkusers"    target="_black" href="https://drive.google.com/file/d/1dkYOq_s5VOEaHAuYi8KidElz7N3drGYd/view"> Empresas y Comercios</a><br />
+             <br>
+               <a     class="linkusers"    target="_black" href="https://drive.google.com/file/d/1rfbOtbYFYx5zoc-JOcIYocj5KBZlnmUj/view" >Profesionales y Servicios</a><br />
+                    <br>
+               <a    class="linkusers"     target="_black" href="https://drive.google.com/file/d/1yX-x52dC1EqGVyCxCltPPuNTXEsCucT-/view" > Emprendedores</a><br />
+                   <br> 
+              <a    class="linkusers"     target="_black" href="https://drive.google.com/file/d/1LxCtjroLmkiR7Vtg6LxL7h7zq4BPxs_k/view" >  Usuarios Generales</a><br>
               </p>
-              <a
-                href="https://www.infobrandsen.com.ar/2021/03/30/llega-malambo-una-nueva-plataforma-de-compra-venta-local/"
-                target="_black"
-                class="btnVideo"
-                >Ver Link</a
-              >
+            
             </div>
           </div>
         </b-row>
@@ -246,7 +246,48 @@ export default {
 </script>
 
 <style>
+@media only screen and (max-width: 480px) {
+  .itemCarrusel {
+    width: 190px;
+    height: auto;
+    justify-content: center;
+  }
+  .card-deck {
+    justify-content: center;
+  }
+}
+@media only screen and (max-width: 880px) {
+  .card-body {
+     margin-left: 10px;
 
+    justify-content: center;
+  }
+  .card-deck {
+      display: flex;
+
+  flex-flow: row wrap;
+  align-items: stretch;
+  justify-content: center;
+  }
+}
+.card-deck {
+  display: flex;
+
+  flex-flow: row wrap;
+  align-items: stretch;
+  justify-content: center;
+}
+.linkusers{
+  background: #ffce4e;
+    background: linear-gradient(45deg #00ddf5 0%, #00d9d7 32%, #ffce4e 100%);
+  color: #fff;
+      border-radius: 14px;
+    /* margin: -3px 0 0 0; */
+    padding: 2px 7px 2px 16px;
+    /* width: 88%; */
+    /* text-transform: none; */
+
+}
 .btnVideo {
  /* white-space: normal; */
   background: #ffce4e;
