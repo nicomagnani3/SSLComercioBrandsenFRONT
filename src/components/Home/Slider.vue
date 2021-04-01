@@ -2,7 +2,7 @@
   <div>
     <b-carousel
       id="carousel-1"
-      class="carrusel1"
+   
       v-model="slide"
       :interval="5000"
       controls
@@ -10,14 +10,40 @@
       background="#ababab"
       img-width="1024"
     >
-      <div v-for="publicidad in publicidades" v-bind:key="publicidad.id">
+    
         <b-carousel-slide
-          :img-src="publicidad.imagen"
+        v-for="item in publicidades"
+        :key="item.id"
+        
+        :img-src="item.imagen"
+          class="item"
+ 
           alt="image slot"
         ></b-carousel-slide>
+        </b-carousel>    
       </div>
+ <!-- 
+    <b-carousel
+      id="carousel-1"
+   
+      v-model="slide"
+      :interval="5000"
+      controls
+      indicators
+      background="#ababab"
+      img-width="1024"
+    >
+    <b-carousel-slide v-for="(slide, index) in publicidades" :key="index">
+   <template >
+      <img
+       class="d-block class-name"
+       width="1024"
+       :src="slide.imagen"
+       alt="image slot">
+    </template>
+    </b-carousel-slide>
     </b-carousel>
-  </div>
+  </div> -->
 </template>
 
 
@@ -49,5 +75,8 @@ export default {
 
 
 <style scoped>
+
+
+
 </style>
 

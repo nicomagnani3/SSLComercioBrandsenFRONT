@@ -4,10 +4,10 @@
       <b-col cols="1"></b-col>
       <b-col cols="8">
         <div class="h3 font-britannic text widget-title destacados">
-          <strong>Productos y comercios destacados</strong>
+          <strong class="parrafor">Productos y comercios destacados
           <a v-if="!loading" @click="verDestacados()" class="verMas"
-            ><strong>+ ver mas</strong></a
-          >
+            >+ ver mas</a
+          ></strong>
         </div>
       </b-col>
     </b-row>
@@ -33,7 +33,7 @@
             </b-icon>
           </div>
         </b-col>
-        <b-col cols="10">
+        <b-col  cols="10">
           <b-card-group deck>
             <b-card
               v-for="(producto, index) in currentPageClubs"
@@ -248,6 +248,8 @@ export default {
 
 
 <style scoped>
+
+
 .texto {
   color: rgb(226, 205, 199);
   font-family: "Poppins", sans-serif;

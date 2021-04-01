@@ -56,17 +56,20 @@ export default {
 
 
 <style scoped>
-@media (max-width: 1023px) {
-  .exhibitor-holder img,
-  .exhibitor .slick-list {
-    height: 134px;
+@media all and (max-width: 480px) {
+  .itemCarrusel {
+    width: 124px;
+    height: auto;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+  .contenedorPubli {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
-.contenedorPubli {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+
 
 .itemCarrusel img {
   object-fit: contain;

@@ -15,7 +15,7 @@
           <b-col class="text-center pt-3">
             <br />
             <p class="h1 font-britannic text">
-              <strong>Empresas-Comercios adheridos</strong>
+              <strong class="parrafoCategorias">Empresas-Comercios adheridos</strong>
             </p>
           </b-col>
         </b-row>
@@ -38,7 +38,7 @@
             </b-list-group-item>
           </b-list-group>
         </b-col>
-        <b-col></b-col>
+        <b-col class="text-center d-none d-sm-none d-md-block"></b-col>
       </b-row>
     </div>
 </div>

@@ -15,7 +15,7 @@
           <b-col class="text-center pt-3">
             <br />
             <p class="h1 font-britannic text">
-              <strong>Categorias disponibles</strong>
+              <strong class="parrafoCategorias">Categorias disponibles</strong>
             </p>
           </b-col>
         </b-row>
@@ -125,7 +125,6 @@ export default {
       });
     },
     verEmpresa(empresa) {
-      console.log(empresa)
       const path = `/buscarProductos/${empresa.nombre}`;
       if (this.$route.path !== path)
         this.$router.push({
@@ -159,11 +158,7 @@ export default {
   color: rgb(255, 206, 78);
   cursor: pointer;
 }
-@media screen and (min-width: 768px) {
-  .custom-collapse {
-    display: block;
-  }
-}
+
 .categoria {
   text-align: center;
   /* margin: 10px; */

@@ -68,7 +68,6 @@ html,
 body {
   width: auto !important;
   overflow-x: hidden ;
-  background-color: #ffce4e;
   
 }
 .logoBig {
@@ -81,7 +80,6 @@ body {
 @import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
 body {
   font-family: "Montserrat", sans-serif !important;
-  background-color: #ffce4e;
 }
 .contenedor1 {
   
@@ -103,9 +101,7 @@ body {
 
 }
 
-.content1 {
-  background-color: #ffce4e;
-}
+
 .footer {
   /*display: block;*/
 

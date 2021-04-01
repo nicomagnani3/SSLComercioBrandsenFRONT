@@ -516,12 +516,8 @@ export default {
 </script>
 
 <style>
-body{
-    color:#ffce4e
-}
-.contenedorRegistro{
-  color:#ffce4e
-}
+
+
   
     
 </style>

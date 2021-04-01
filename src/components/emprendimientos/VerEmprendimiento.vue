@@ -15,7 +15,7 @@
           <b-col class="text-center pt-3">
             <br />
             <p class="h1 font-britannic text">
-              <strong>Emprendimientos disponibles</strong>
+              <strong class="parrafoCategorias">Emprendimientos disponibles</strong>
             </p>
           </b-col>
         </b-row>

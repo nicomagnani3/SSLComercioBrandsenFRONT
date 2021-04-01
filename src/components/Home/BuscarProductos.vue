@@ -58,12 +58,14 @@
             :per-page="perPage"
             :current-page="currentPage"
           >
+          <div>
+
             <b-card
               no-body
               class="overflow-hidden"
               style="max-width: auto; max-height: auto"
             >
-              <br />
+             
               <b-row>
                 <b-col md="6">
                   <b-card-img
@@ -181,6 +183,8 @@
                 </b-col>
               </b-row>
             </b-card>
+            <br>
+          </div>
           </transition>
           <div v-if="this.mostrarNoHayPublicaciones">
             <br /><br />
@@ -318,12 +322,9 @@ export default {
     if (Number(this.rubro) > Number(0)) {
       this.buscarPorRubro(this.rubro);
     } else {
-      console.log(this.empresa)
       if (Number(this.empresa > Number(0))) {
-        console.log("busca por empresa")
         this.buscarPorEmpresa(this.empresa);
       } else {
-          console.log("busca por nombre")
         this.getPublicacionesPorNombre();
       }
     }
@@ -340,10 +341,8 @@ export default {
         this.buscarPorRubro(this.rubro);
       } else {
         if (Number(this.empresa > Number(0))) {
-                 console.log("busca por empresa wacthc")
           this.buscarPorEmpresa(this.empresa);
         } else {
-                console.log("busca por nombre wacthc")
           this.getPublicacionesPorNombre();
         }
       }

@@ -1,7 +1,7 @@
 <template>
   <div>
     <h3 class="m-5 titulo text-center">
-      <strong>Los mejores negocios te esperan</strong>
+      <strong class="parrafor">Los mejores negocios te esperan</strong>
     </h3>
     <b-container class="contenedorPubli mb-5">
       <div class="card-deck-wrapper">
@@ -56,10 +56,11 @@ export default {
 
 
 <style scoped>
-@media (max-width: 1023px) {
-  .exhibitor-holder img,
-  .exhibitor .slick-list {
-    height: 4px;
+@media all and (max-width: 600px) {
+  .itemCarrusel {
+    width: 124px;
+    height: auto;
+    margin-left: 10px;
   }
 }
 .contenedorPubli {
@@ -81,7 +82,7 @@ export default {
   display: block;
   flex-basis: 33.3%; /* change this value for each breakpoint*/
 }
-</style>>
+</style>
 
 
 

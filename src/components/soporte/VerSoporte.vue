@@ -5,7 +5,7 @@
         <b-col class="text-center pt-3">
           <br />
           <p class="h1 font-britannic text">
-            <strong>Guias de ayuda para los usuarios</strong>
+            <strong class="parrafoCategorias">Guias de ayuda para los usuarios</strong>
           </p>
         </b-col>
       </b-row>
@@ -15,7 +15,7 @@
     <div class="card-deck-wrapper">
       <div class="card-deck">
         <b-row class="pb-2">
-          <div class="card" style="width: 18rem">
+          <div class="card" style="width: 18rem;    margin: auto;">
             <img
               src="@/assets/registrarse.png"
               class="card-img-top"
@@ -40,7 +40,7 @@
               >
             </div>
           </div>
-          <div class="card" style="width: 18rem">
+          <div class="card" style="width: 18rem;margin: auto;">
             <img
               src="@/assets/publicacion.png"
               class="card-img-top"
@@ -65,7 +65,7 @@
               >
             </div>
           </div>
-          <div class="card" style="width: 18rem">
+          <div class="card" style="width: 18rem;margin: auto;">
             <img
               src="@/assets/publicidades.png"
               class="card-img-top"
@@ -94,7 +94,7 @@
             </div>
           </div>
 
-          <div class="card" style="width: 18rem">
+          <div class="card" style="width: 18rem;margin: auto;">
             <img src="@/assets/contrato.png" class="card-img-top" alt="..." />
             <div class="card-body">
               <h5 class="card-title">
@@ -117,7 +117,7 @@
             </div>
           </div>
 
-          <div class="card" style="width: 18rem">
+          <div class="card" style="width: 18rem;margin: auto;">
             <img src="@/assets/acuerdo.png" class="card-img-top" alt="..." />
             <div class="card-body">
               <h5 class="card-title">
@@ -140,7 +140,6 @@
               >
             </div>
           </div>
-           
         </b-row>
       </div>
     </div>
@@ -149,7 +148,7 @@
         <b-col class="text-center pt-3">
           <br />
           <p class="h1 font-britannic text">
-            <strong>Necesitas comunicarte con nosotros?</strong>
+            <strong class="parrafoCategorias">Necesitas comunicarte con nosotros?</strong>
           </p>
         </b-col>
       </b-row>
@@ -247,6 +246,7 @@ export default {
 </script>
 
 <style>
+
 .btnVideo {
  /* white-space: normal; */
   background: #ffce4e;
@@ -260,4 +260,5 @@ export default {
   /* line-height: 11px; */
   color: #fff;
 }
+
 </style>

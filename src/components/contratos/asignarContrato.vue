@@ -246,7 +246,6 @@ export default {
           {}
         );
         this.usuarios = response.data.data;
-        console.log(this.usuarios)
       } catch (err) {
         this.$bvToast.toast(err.response.data.message, {
           title: "Atencion!",

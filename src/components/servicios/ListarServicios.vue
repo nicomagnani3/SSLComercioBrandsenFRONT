@@ -3,7 +3,7 @@
     <b-row class="pb-2">
       <b-col class="text-center pt-3">
         <p class="h3 text-center">
-          ¿Que tipo de servicio vas a publicar?
+          <strong class="parrafoCategorias">     ¿Que tipo de servicio vas a publicar?</strong>
         </p>
       </b-col>
     </b-row>

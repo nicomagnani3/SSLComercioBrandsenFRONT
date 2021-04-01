@@ -3,7 +3,7 @@
     <b-row class="pb-2">
       <b-col class="text-center pt-3">
         <p class="h3 text-center">
-         Contanos un poco mas con detalle tu emprendimiento!
+           <strong class="parrafoCategorias">   Contanos un poco mas con detalle tu emprendimiento!</strong>
         </p>
       </b-col>
     </b-row>

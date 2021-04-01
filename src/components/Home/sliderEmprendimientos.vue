@@ -4,10 +4,10 @@
       <b-col cols="1"></b-col>
       <b-col cols="8">
         <div class="h3 font-britannic text widget-title destacados">
-          <strong>Emprendimientos destacados</strong>
+          <strong class="parrafor"> Emprendimientos destacados
           <a v-if="!loading" @click="verDestacados()" class="verMas"
-            ><strong>+ ver mas</strong></a
-          >
+            >+ ver mas</a
+          ></strong>
         </div>
       </b-col>
     </b-row>

@@ -9,11 +9,15 @@
     </b-spinner>
   </div>
   <div v-else class="body">
+    <br />
     <Slider :publicidades="this.publicidadesSlider1" />
+
     <sliderPubli :publicidades="this.publicidadesSlider2" />
-    <div fluid class="subtitulo">
-      <strong>Registrate y publica tu primer producto gratis!</strong>
-      <P>Al publicar está colaborando con Apaa de Brandsen</P>
+    <div class="subtitulo">
+      <strong class="parrafor"
+        >Registrate y publica tu primer producto gratis!</strong
+      >
+      <p class="parrafor">Al publicar está colaborando con Apaa de Brandsen</p>
     </div>
 
     <NuevoSlide />
@@ -63,7 +67,7 @@ export default {
           this.publicidades = response.data.data;
           this.asignarPublicidades1(this.publicidades);
           this.asignarPublicidades2(this.publicidades);
-          this.asignarPublicidades3(this.publicidades)
+          this.asignarPublicidades3(this.publicidades);
         }
       } catch (err) {
         this.getPublicidades();
@@ -73,10 +77,10 @@ export default {
     asignarPublicidades1(publicidades) {
       this.publicidadesSlider1 = publicidades.filter((c) => c.ubicacion == 1);
     },
-      asignarPublicidades2(publicidades) {
+    asignarPublicidades2(publicidades) {
       this.publicidadesSlider2 = publicidades.filter((c) => c.ubicacion == 2);
     },
-     asignarPublicidades3(publicidades) {
+    asignarPublicidades3(publicidades) {
       this.publicidadesSlider3 = publicidades.filter((c) => c.ubicacion == 3);
     },
   },
@@ -95,6 +99,26 @@ export default {
 
 
 <style>
+@media only screen and (max-width: 480px) {
+  .parrafor {
+    text-align: center;
+    /* margin: 10px; */
+    font-size: 13px;
+    white-space: pre-wrap;
+  }
+  .parrafoCategorias{
+        font-size: 16px;
+            text-align: center;
+  }
+  .categoria {
+     font-size: 0px;
+  }
+  .card-deck{
+     margin-left: auto;
+    margin-right: auto;
+  }
+}
+
 .body {
   background-color: #ebebeb;
   height: auto;

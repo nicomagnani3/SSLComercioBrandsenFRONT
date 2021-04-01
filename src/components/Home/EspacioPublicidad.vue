@@ -1,37 +1,33 @@
 <template>
   <div>
-    <div>
-      <br />
-      <b-row class="text-center">
-        <b-col class="publicidad"
-          ><img
-            class="img-fluid"
-            @click="irUrl(publicidades[0].url)"
-            alt="Responsive image"
-            :src="publicidades[0].imagen"
-          />
-        </b-col>
-        <br />
-        <b-col class="publicidad"
-          ><img
-            :src="publicidades[1].imagen"
-            @click="irUrl(publicidades[1].url)"
-            class="img-fluid"
-            alt="Responsive image"
-            style="cursor: pointer"
-        /></b-col>
-        <br />
-        <b-col class="publicidad"
-          ><img
-            :src="publicidades[2].imagen"
-            @click="irUrl(publicidades[2].url)"
-            class="img-fluid"
-            style="cursor: pointer"
-            alt="Responsive image"
-        /></b-col>
-      </b-row>
-      <br />
-    </div>
+    <br />
+
+    <b-row class="text-center">
+      <b-col class="publicidad"
+        ><img
+          class="img-fluid"
+          @click="irUrl(publicidades[0].url)"
+          alt="Responsive image"
+          :src="publicidades[0].imagen"
+        />
+      </b-col>
+      <b-col class="publicidad"
+        ><img
+          :src="publicidades[1].imagen"
+          @click="irUrl(publicidades[1].url)"
+          class="img-fluid"
+          alt="Responsive image"
+          style="cursor: pointer"
+      /></b-col>
+      <b-col class="publicidad"
+        ><img
+          :src="publicidades[2].imagen"
+          @click="irUrl(publicidades[2].url)"
+          class="img-fluid"
+          style="cursor: pointer"
+          alt="Responsive image"
+      /></b-col>
+    </b-row>
   </div>
 </template>
 
@@ -51,9 +47,12 @@ export default {
       img: "publi.jpg",
     };
   },
+  created (){
+    console.log(this.publicidades)
+
+  },
   methods: {
     irUrl(url) {
-      console.log(url);
       if (url != null) {
         window.open(url, "_blank");
       }

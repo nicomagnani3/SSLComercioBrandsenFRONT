@@ -4,10 +4,10 @@
       <b-col cols="1"></b-col>
       <b-col cols="8">
         <div class="h3 font-britannic text widget-title destacados">
-          <strong>Servicios destacados</strong>
+          <strong class="parrafor">Servicios destacados
           <a v-if="!loading" @click="verDestacados()" class="verMas"
-            ><strong>+ ver mas</strong></a
-          >
+            >+ ver mas</a
+          ></strong>
         </div>
       </b-col>
     </b-row>
@@ -192,7 +192,7 @@ export default {
       } catch (err) {
         this.loading = true;
         this.getPorductos();
-        this.categorias = "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS";
+        this.productos = "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS";
       }
     },
     getImporte(precio) {
