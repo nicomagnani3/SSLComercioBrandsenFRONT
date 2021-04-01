@@ -4,117 +4,29 @@
       <strong>Los mejores negocios te esperan</strong>
     </h3>
     <b-container class="contenedorPubli mb-5">
-      <b-row>
-        <b-col class="itemCarrusel">
-          <b-card
-            img-src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
-            img-alt="Image"
-            img-top
-            tag="article"
-            img-height="150px"
-            style="max-width: 20rem"
-            class="itemCarrusel"
+      <div class="card-deck-wrapper">
+        <div class="card-deck">
+          <b-row
+            v-for="publicidad in publicidades"
+            v-bind:key="publicidad.id"
+            class="text-center"
           >
-            <hr />
-            <b-card-text class="texto"> Malambo </b-card-text>
-            <div slot="footer">
-              <b-button href="#" variant="warning" block class="btnMas"
-                >Ver más</b-button
+            <b-col class="itemCarrusel">
+              <b-card
+                style="cursor: pointer"
+                overlay
+                :img-src="publicidad.imagen"
+                img-alt="Responsive image"
+                img-top
+                class="img-fluid"
+                alt="Responsive image"
+                @click="irUrl(publicidad.url)"
               >
-            </div>
-          </b-card>
-        </b-col>
-        <b-col class="itemCarrusel">
-          <b-card
-            img-src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
-            img-alt="Image"
-            img-top
-            tag="article"
-            img-height="150"
-            class="itemCarrusel"
-          >
-            <hr />
-            <b-card-text class="texto"> Malambo </b-card-text>
-            <div slot="footer">
-              <b-button href="#" variant="warning" block class="btnMas"
-                >Ver más</b-button
-              >
-            </div>
-          </b-card>
-        </b-col>
-        <b-col class="itemCarrusel">
-          <b-card
-            img-src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
-            img-alt="Image"
-            img-top
-            tag="article"
-            img-height="150"
-            class="itemCarrusel"
-          >
-            <hr />
-            <b-card-text class="texto"> Malambo </b-card-text>
-            <div slot="footer">
-              <b-button href="#" variant="warning" block class="btnMas"
-                >Ver más</b-button
-              >
-            </div>
-          </b-card>
-        </b-col>
-        <b-col class="itemCarrusel">
-          <b-card
-            img-src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
-            img-alt="Image"
-            img-top
-            tag="article"
-            img-height="150"
-            class="itemCarrusel"
-          >
-            <hr />
-            <b-card-text class="texto"> Malambo </b-card-text>
-            <div slot="footer">
-              <b-button href="#" variant="warning" block class="btnMas"
-                >Ver más</b-button
-              >
-            </div>
-          </b-card>
-        </b-col>
-        <b-col class="itemCarrusel">
-          <b-card
-            img-src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
-            img-alt="Image"
-            img-top
-            tag="article"
-            img-height="150"
-            class="itemCarrusel"
-          >
-            <hr />
-            <b-card-text class="texto"> Malambo </b-card-text>
-            <div slot="footer">
-              <b-button href="#" variant="warning" block class="btnMas"
-                >Ver más</b-button
-              >
-            </div>
-          </b-card>
-        </b-col>
-        <b-col class="itemCarrusel">
-          <b-card
-            img-src="https://i.pinimg.com/564x/cd/45/c6/cd45c6aaa70345daa0c619d38f7353af.jpg"
-            img-alt="Image"
-            img-top
-            tag="article"
-            img-height="150"
-            class="itemCarrusel"
-          >
-            <hr />
-            <b-card-text class="texto"> Malambo </b-card-text>
-            <div slot="footer">
-              <b-button href="#" variant="warning" block class="btnMas"
-                >Ver más</b-button
-              >
-            </div>
-          </b-card>
-        </b-col>
-      </b-row>
+              </b-card>
+            </b-col>
+          </b-row>
+        </div>
+      </div>
     </b-container>
   </div>
 </template>
@@ -124,18 +36,19 @@
 <script>
 export default {
   name: "slider",
+  props: {
+    publicidades: {
+      type: Array,
+    },
+  },
   data() {
-    return {
-      slide: 0,
-      sliding: null,
-    };
+    return {};
   },
   methods: {
-    onSlideStart() {
-      this.sliding = true;
-    },
-    onSlideEnd() {
-      this.sliding = false;
+    irUrl(url) {
+      if (url != null) {
+        window.open(url, "_blank");
+      }
     },
   },
 };
@@ -143,43 +56,30 @@ export default {
 
 
 <style scoped>
-.itemCarrusel {
-  text-align: center;
-  object-fit: cover;
-  margin-right: 5px;
-  margin-bottom: 5px;
-}
-
-.itemCarrusel img {
-  object-fit: contain;
-}
-
-.titulo {
-  color: rgb(109, 108, 108);
-}
-
-.texto {
-  color: gray;
-  font-family: "Poppins", sans-serif;
-}
-
-.btnMas {
-  white-space: initial;
-  background: #ffce4e;
-  background: linear-gradient(45deg #00ddf5 0%, #00d9d7 32%, #ffce4e 100%);
-  border-radius: 22px;
-  /* margin: -3px 0 0 0; */
-  padding: 7px 6px 14px 6px;
-  /* width: 88%; */
-  /* text-transform: none; */
-  font-size: 12px;
-  line-height: 11px;
-  color: #fff;
+@media (max-width: 1023px) {
+  .exhibitor-holder img,
+  .exhibitor .slick-list {
+    height: 4px;
+  }
 }
 .contenedorPubli {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.itemCarrusel img {
+  object-fit: contain;
+}
+.card-deck {
+  display: flex;
+  justify-content: flex-start;
+  flex-flow: row wrap;
+  align-items: stretch;
+}
+.card-deck .card {
+  display: block;
+  flex-basis: 33.3%; /* change this value for each breakpoint*/
 }
 </style>>
 

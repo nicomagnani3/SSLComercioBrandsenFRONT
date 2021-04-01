@@ -19,7 +19,7 @@
     <NuevoSlide />
     <sliderServicios />
     <sliderEmprendimientos />
-    <Sliderempresa />
+    <Sliderempresa :publicidades="this.publicidadesSlider3" />
   </div>
 </template>
 
@@ -51,6 +51,7 @@ export default {
       publicidades: [],
       publicidadesSlider1: [],
       publicidadesSlider2: [],
+      publicidadesSlider3: [],
     };
   },
 
@@ -62,6 +63,7 @@ export default {
           this.publicidades = response.data.data;
           this.asignarPublicidades1(this.publicidades);
           this.asignarPublicidades2(this.publicidades);
+          this.asignarPublicidades3(this.publicidades)
         }
       } catch (err) {
         this.getPublicidades();
@@ -73,6 +75,9 @@ export default {
     },
       asignarPublicidades2(publicidades) {
       this.publicidadesSlider2 = publicidades.filter((c) => c.ubicacion == 2);
+    },
+     asignarPublicidades3(publicidades) {
+      this.publicidadesSlider3 = publicidades.filter((c) => c.ubicacion == 3);
     },
   },
   mounted() {

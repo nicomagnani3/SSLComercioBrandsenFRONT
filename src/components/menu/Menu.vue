@@ -172,16 +172,17 @@
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
 import Header from "@/components/menu/Header.vue";
-import CategoriasService from "@/services/CategoriasService";
-import EmprendimientoService from "@/services/EmprendimientoService";
-import ServiciosService from "@/services/ServiciosService";
-import PublicacionService from "@/services/PublicacionService";
 
-import axios from "axios";
+
 export default {
   name: "Menu",
   components: {
     Header,
+  },
+  props: {
+    rubros: {
+      type: Array,
+    },
   },
   data() {
     return {
@@ -189,10 +190,6 @@ export default {
       filterPrev: null,
       filter: null,
       logeado: false,
-      categorias: [],
-      emprendimientos: [],
-      servicios: [],
-      rubros: [],
     };
   },
   created() {
@@ -215,82 +212,7 @@ export default {
           },
         });
     },
-    async getEmprendimientos() {
-      this.loading = true;
-      try {
-        const response = await EmprendimientoService.getEmprendimientos();
-        this.emprendimientos = response.data.data;
-        this.emprendimientos = this.ordenarDatos(this.emprendimientos);
-      } catch (err) {
-        this.emprendimientos =
-          "ATENCION NO SE PUDIERON OBTENER LOS emprendimientos";
-      } finally {
-        this.loading = false;
-      }
-    },
-    async getServicios() {
-      this.loading = true;
-      try {
-        const response = await ServiciosService.getServicios();
-        this.servicios = response.data.data;
-        this.servicios = this.ordenarDatos(this.servicios);
-      } catch (err) {
-        this.servicios = "ATENCION NO SE PUDIERON OBTENER LOS servicios";
-      } finally {
-        this.loading = false;
-      }
-    },
-    async getcategorias() {
-      this.loading = true;
-      try {
-        const response = await CategoriasService.getCategorias();
-        this.categorias = response.data.data;
-        this.categorias = this.ordenarDatos(this.categorias);
-      } catch (err) {
-        this.categorias = "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS";
-      } finally {
-        this.loading = false;
-      }
-    },
-    async getRubros() {
-      this.loading = true;
-      try {
-        const response = await PublicacionService.getRubros();
-        this.rubros = response.data.data;
-        this.rubros = this.ordenarDatos(this.rubros);
-      } catch (err) {
-        this.rubros = "ATENCION NO SE PUDIERON OBTENER LOS RUBROS";
-      } finally {
-        this.loading = false;
-      }
-    },
 
-    ordenarDatos(categoria) {
-      return categoria.sort(function (a, b) {
-        if (a.nombre > b.nombre) {
-          return 1;
-        }
-        if (a.nombre < b.nombre) {
-          return -1;
-        }
-        return 0;
-      });
-    },
-
-    buscarProductoporCategoria(categoria) {
-      const path = `/buscarProductos/${categoria.nombre}`;
-      if (this.$route.path !== path)
-        this.$router.push({
-          name: "buscarProductos",
-          query: {
-            q: this.searchQuery,
-            t: new Date().getTime(),
-          },
-          params: {
-            producto: categoria.nombre,
-          },
-        });
-    },
     buscarProductoporRubro(rubro) {
       const path = `/buscarProductos/${rubro.nombre}`;
       if (this.$route.path !== path)
@@ -315,20 +237,7 @@ export default {
       location.reload();
     },
   },
-  mounted() {
-    axios
-      .all([
-        //this.getEmprendimientos(),
-        //this.getServicios(),
-        this.getRubros(),
-      ])
-      .then(() => {
-        this.loading = false;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  },
+  mounted() {},
 };
 </script>
 

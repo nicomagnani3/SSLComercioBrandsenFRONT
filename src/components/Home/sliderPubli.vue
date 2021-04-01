@@ -1,7 +1,7 @@
 <template>
   <div>
     <br />
-    
+
     <b-container class="contenedorPubli mb-5">
       <div class="card-deck-wrapper">
         <div class="card-deck">
@@ -27,8 +27,6 @@
         </div>
       </div>
     </b-container>
-     
-  
   </div>
 </template>
 
@@ -37,10 +35,7 @@
 <script>
 export default {
   name: "slider",
-    components: {
-
-  
-  },
+  components: {},
   props: {
     publicidades: {
       type: Array,
