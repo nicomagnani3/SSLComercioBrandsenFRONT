@@ -65,6 +65,7 @@ export default {
     width: 190px;
     height: auto;
     justify-content: center;
+    margin-left: 4px;
   }
   .card-deck {
     justify-content: center;

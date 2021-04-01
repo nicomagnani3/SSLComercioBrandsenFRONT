@@ -2,7 +2,6 @@
   <div>
     <b-carousel
       id="carousel-1"
-   
       v-model="slide"
       :interval="5000"
       controls
@@ -10,19 +9,18 @@
       background="#ababab"
       img-width="1024"
     >
-    
-        <b-carousel-slide
-        v-for="item in publicidades"
-        :key="item.id"
-        
-        :img-src="item.imagen"
-          class="item"
- 
-          alt="image slot"
-        ></b-carousel-slide>
-        </b-carousel>    
+      <div v-for="item in publicidades" :key="item.id">
+        <a @click="irUrl(item.url)" style="cursor: pointer" target="_blank">
+          <b-carousel-slide
+            :img-src="item.imagen"
+            class="item"
+            alt="image slot"
+          ></b-carousel-slide>
+        </a>
       </div>
- <!-- 
+    </b-carousel>
+  </div>
+  <!-- 
     <b-carousel
       id="carousel-1"
    
@@ -75,8 +73,5 @@ export default {
 
 
 <style scoped>
-
-
-
 </style>
 
