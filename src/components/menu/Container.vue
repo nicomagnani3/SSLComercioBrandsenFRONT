@@ -1,8 +1,8 @@
 <template>
   <div v-if="loading" class="text-center">
-    <br /><br />  <br /><br /><br /><br />
+     <br /><br />
     <img class="logo" src="@/assets/malamboIngreso.png" alt="" height="auto" />
-    <br /><br />
+  
   </div>
   <div v-else class="contenedor">
     <div class="wrapper">

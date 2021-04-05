@@ -3,11 +3,7 @@
     <br />
     <div class="card-deck-wrapper">
       <div class="card-deck">
-        <b-row
-          v-for="publicidad in publicidades"
-          v-bind:key="publicidad.id"
-          class="text-center"
-        >
+        <b-row v-for="publicidad in publicidades" v-bind:key="publicidad.id">
           <b-col sm class="itemCarrusel">
             <b-card
               style="
@@ -69,17 +65,19 @@ export default {
   }
   .card-deck {
     justify-content: center;
+    flex-wrap: wrap !important;
   }
 }
 @media only screen and (max-width: 880px) {
   .itemCarrusel {
     width: 190px;
     height: auto;
-
     justify-content: center;
+    margin-left: 4px;
   }
   .card-deck {
     justify-content: center;
+     flex-wrap: wrap !important;;
   }
 }
 .contenedorPubli {
@@ -90,14 +88,14 @@ export default {
 
 .card-deck {
   display: flex;
-
-  flex-flow: row wrap;
+  flex-wrap: nowrap;
   align-items: stretch;
   justify-content: center;
 }
 .card-deck .card {
   display: block;
-  flex-basis: 33.3%; /* change this value for each breakpoint*/
+
+  /* change this value for each breakpoint*/
 }
 
 .itemCarrusel img {

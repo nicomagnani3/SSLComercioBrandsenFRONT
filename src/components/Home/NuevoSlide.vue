@@ -1,20 +1,22 @@
 <template>
   <div>
     <b-row class="text-left">
-      <b-col cols="1"></b-col>
-      <b-col cols="8">
+      <b-col cols="1" ></b-col>
+      <b-col cols="8" >
         <div class="h3 font-britannic text widget-title destacados">
-          <strong class="parrafor">Productos y comercios destacados
+          <strong class="parraforTitProd"
+            >Productos y comercios destacados</strong
+          >
           <a v-if="!loading" @click="verDestacados()" class="verMas"
-            >+ ver mas</a
-          ></strong>
+            >ver mas</a
+          >
         </div>
       </b-col>
     </b-row>
     <br />
     <div v-if="loading" class="text-center">
       <b-spinner
-        style="width: 6rem; height: 6rem"
+        style="width: 4em; height: 4rem"
         variant="warning"
         label="Text Centered"
       >
@@ -33,12 +35,11 @@
             </b-icon>
           </div>
         </b-col>
-        <b-col  cols="10">
+        <b-col cols="10">
           <b-card-group deck>
             <b-card
               v-for="(producto, index) in currentPageClubs"
               :key="index"
-              @click="verProducto(producto)"
               img-height="300px; max-height:100%;"
               alt="Responsive image"
               class="ItemProd"
@@ -248,8 +249,6 @@ export default {
 
 
 <style scoped>
-
-
 .texto {
   color: rgb(226, 205, 199);
   font-family: "Poppins", sans-serif;
@@ -261,7 +260,6 @@ export default {
 
 .ItemProd img {
   object-fit: contain;
-  cursor: pointer;
 }
 
 .item {
@@ -289,7 +287,8 @@ export default {
   margin-left: 12px;
   color: #676767;
   cursor: pointer;
-  font-size: 15px;
+  font-size: 14px;
+  text-decoration: underline #676767;   
   white-space: nowrap;
 }
 .btnMas {

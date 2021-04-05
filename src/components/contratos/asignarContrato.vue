@@ -4,7 +4,7 @@
       <br /><br />
       <br /><br />
       <b-spinner
-        style="width: 11rem; height: 11rem"
+        style="width: 7rem; height: 7rem"
         variant="warning"
         label="Text Centered"
       >
@@ -239,6 +239,17 @@ export default {
         });
       }
     },
+    ordenarDatos(categoria) {
+      return categoria.sort(function (a, b) {
+        if (a.nombre > b.nombre) {
+          return 1;
+        }
+        if (a.nombre < b.nombre) {
+          return -1;
+        }
+        return 0;
+      });
+    },
 
     async getNombreUsuariosParaContrato() {
       try {
@@ -246,6 +257,8 @@ export default {
           {}
         );
         this.usuarios = response.data.data;
+           this.usuarios = this.ordenarDatos(this.usuarios);
+        
       } catch (err) {
         this.$bvToast.toast(err.response.data.message, {
           title: "Atencion!",

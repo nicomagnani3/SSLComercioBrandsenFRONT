@@ -3,7 +3,7 @@
     <div v-if="loading" class="text-center">
       <br /><br />
       <b-spinner
-        style="width: 11rem; height: 11rem"
+        style="width: 7rem; height: 7rem"
         variant="warning"
         label="Text Centered"
       >

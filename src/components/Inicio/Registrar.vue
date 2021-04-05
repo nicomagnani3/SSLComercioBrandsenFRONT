@@ -11,7 +11,7 @@
    
     <br /><br />
     <b-spinner
-      style="width: 11rem; height: 11rem"
+   style="width: 7rem; height: 7rem"
       variant="info"
       label="Text Centered"
     >

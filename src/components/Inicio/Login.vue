@@ -97,7 +97,7 @@ export default {
     
     if ( this.$route.params.autentificacion == false) {
       this.$bvToast.toast(
-        `Antes inicia sesion o registrate en unos simples pasos ;)`,
+        `Para ver mas detalles, Inicia sesion o registrate en MALAMBO`,
         {
           title: 'Atencion!!',
           toaster: "b-toaster-top-center",

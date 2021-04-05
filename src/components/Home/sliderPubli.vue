@@ -51,7 +51,6 @@ export default {
   },
   methods: {
     irUrl(url) {
-      console.log("entr")
       if (url != null) {
         window.open(url, "_blank");
       }
@@ -66,16 +65,17 @@ export default {
   .itemCarrusel {
     width: 124px;
     height: auto;
-    margin-left: 5px;
+    margin-left:8px;
     margin-right: 5px;
     justify-content: center;
   }
   .contenedorPubli {
     display: flex;
     justify-content: center;
-    align-items: center;
-    
+    align-items: center;    
   }
+ 
+
 }
 
 

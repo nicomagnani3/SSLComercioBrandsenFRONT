@@ -1,7 +1,7 @@
 <template>
   <div>
     <h3 class="m-5 titulo text-center">
-      <strong class="parrafor">Los mejores negocios te esperan</strong>
+      <strong class="parraforAPA">Al publicar estas colaborando con Apaa</strong>
     </h3>
     <b-container class="contenedorPubli mb-5">
       <div class="card-deck-wrapper">
@@ -61,6 +61,18 @@ export default {
 
 
 <style scoped>
+@media only screen and (max-width: 480px) {
+  .itemCarrusel {
+    width: 190px;
+    height: auto;
+    justify-content: center;
+    margin-left: 4px;
+  }
+  .card-deck {
+    justify-content: center;
+    flex-wrap: wrap !important;
+  }
+}
 @media all and (max-width: 600px) {
   .itemCarrusel {
     width: 124px;

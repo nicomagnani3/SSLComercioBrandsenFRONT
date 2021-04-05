@@ -135,7 +135,7 @@
                   <div class="item">
                     <span class="price" id="summary-price"></span>
                     <p class="item-name">
-                      Presiona el boton "pagar" para pagar la publicacion<strong>
+                      En un instante estara listo el  boton "pagar" para pagar la publicacion<strong>
                         {{ this.publicacion.titulo }}</strong
                       >, cuando finalices el pago tu publicacion se cargara en
                       Malambo<span id="summary-quantity"></span>

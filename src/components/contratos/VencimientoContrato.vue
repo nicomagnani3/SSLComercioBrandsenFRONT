@@ -5,7 +5,7 @@
       <br /><br />
       <br /><br />
       <b-spinner
-        style="width: 11rem; height: 11rem"
+         style="width: 7rem; height: 7rem"
         variant="warning"
         label="Text Centered"
       >
@@ -40,14 +40,14 @@
                 <b-alert
                   variant="danger"
                   show
-                  v-if="canttdias(contrato.hasta) <= 15"
+                  v-if="canttdias(contrato.hasta) <= 5"
                   >El contrato finalizara en
                   {{ canttdias(contrato.hasta) }} Dias</b-alert
                 >
                 <b-alert
                   variant="success"
                   show
-                  v-if="canttdias(contrato.hasta) > 15"
+                  v-if="canttdias(contrato.hasta) > 5"
                   >El contrato finalizara en
                   {{ canttdias(contrato.hasta) }} Dias</b-alert
                 >

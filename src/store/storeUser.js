@@ -7,12 +7,12 @@ export default {
     namespaced: true,
     // -----------------------------------------------------------------
     state: {
-        username: sessionStorage.getItem('username') || null,
-        token: sessionStorage.getItem('token') || null,      
-        grupos: sessionStorage.getItem('grupos') ||  null,
-        permisos: sessionStorage.getItem('permisos') ||  null,
-        userId :sessionStorage.getItem('userId') || null,     
-        nombre:sessionStorage.getItem('nombre') ||  null,
+        username: localStorage.getItem('username') || null,
+        token: localStorage.getItem('token') || null,      
+        grupos: localStorage.getItem('grupos') ||  null,
+        permisos: localStorage.getItem('permisos') ||  null,
+        userId :localStorage.getItem('userId') || null,     
+        nombre:localStorage.getItem('nombre') ||  null,
 
 
         /***
@@ -33,41 +33,41 @@ export default {
     mutations: {
         setToken(state, payload) {
             state.token = payload
-            sessionStorage.setItem("token", payload)
+            localStorage.setItem("token", payload)
         },
 
         setUsername(state, payload) {
             state.username = payload
-            sessionStorage.setItem("username", payload)
+            localStorage.setItem("username", payload)
         },
         setGrupos(state, payload) {
             state.grupos = payload
-            sessionStorage.setItem("grupos", payload)
+            localStorage.setItem("grupos", payload)
 
         },
         setPermisos(state, payload) {
             state.permisos = payload
-            sessionStorage.setItem("permisos", JSON.stringify(payload))
+            localStorage.setItem("permisos", JSON.stringify(payload))
         },
 
         setuserId(state, payload) {
             state.userId = payload
-            sessionStorage.setItem("userId", payload)
+            localStorage.setItem("userId", payload)
         },
         setNombre(state, payload) {
             state.nombre = payload
-            sessionStorage.setItem("nombre",payload)
+            localStorage.setItem("nombre",payload)
         },
 
 
         clearToken(state) {
             state.token = null
-            sessionStorage.removeItem("token")
-            sessionStorage.removeItem("username")
-            sessionStorage.removeItem("nombre")
-            sessionStorage.removeItem("grupos")
-            sessionStorage.removeItem("permisos")
-            sessionStorage.removeItem("userId")
+            localStorage.removeItem("token")
+            localStorage.removeItem("username")
+            localStorage.removeItem("nombre")
+            localStorage.removeItem("grupos")
+            localStorage.removeItem("permisos")
+            localStorage.removeItem("userId")
         },
         addToast (state,payload) {
             state.toast.push(payload);

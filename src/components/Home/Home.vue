@@ -2,7 +2,7 @@
   <div v-if="loading" class="text-center">
     <br /><br />
     <b-spinner
-      style="width: 11rem; height: 11rem"
+      style="width: 5rem; height: 5rem"
       variant="warning"
       label="Text Centered"
     >
@@ -11,14 +11,14 @@
   <div v-else class="body">
     <br />
     <Slider :publicidades="this.publicidadesSlider1" />
-
-    <sliderPubli :publicidades="this.publicidadesSlider2" />
     <div class="subtitulo">
-      <strong class="parrafor"
-        >Registrate y publica tu primer producto gratis!</strong
-      >
-      <p class="parrafor">Al publicar está colaborando con Apaa de Brandsen</p>
+      <p class="parraforNotificacion">
+        <strong> Registrate y publicá tu primer producto gratis!</strong><br>
+       Emprendedores, profesionales, comercios y servicios obtendrán un mes gratis, solicitalo!
+      </p>
+      <!--  <p class="parrafor">Al publicar está colaborando con Apaa de Brandsen</p> -->
     </div>
+    <sliderPubli :publicidades="this.publicidadesSlider2" />
 
     <NuevoSlide />
     <sliderServicios />
@@ -100,25 +100,50 @@ export default {
 
 <style>
 @media only screen and (max-width: 480px) {
+  .parraforTitProd{
+      white-space: pre;
+       font-size: 15px;
+  }
+ 
+  .verMasServi{
+        white-space: inherit;
+  }
   .parrafor {
     text-align: center;
     /* margin: 10px; */
-    font-size: 13px;
+    font-size: 15px;
     white-space: pre-wrap;
   }
-  .parrafoCategorias{
-        font-size: 16px;
-            text-align: center;
+  .parraforNotificacion {
+    text-align: center;
+    /* margin: 10px; */
+        font-size: 8px;
+    white-space: unset !important;
+  }
+  .parrafoCategorias {
+    font-size: 16px;
+    text-align: center;
   }
   .categoria {
-     font-size: 0px;
+    font-size: 0px;
   }
-  .card-deck{
-     margin-left: auto;
+  .card-deck {
+    margin-left: auto;
     margin-right: auto;
   }
-  #valorDestacado{
-      font-size: 10px;
+  #valorDestacado {
+    font-size: 10px;
+  }
+  .subtitulo {
+    font-size: 13px !important;
+    color: white;
+    text-align: center;
+    /* margin: 10px; */
+    background-color: rgb(70 70 70);
+  }
+  .parraforAPA{
+    font-size: 15px;
+        white-space: pre;
   }
 }
 
@@ -129,9 +154,9 @@ export default {
 
 .subtitulo {
   text-align: center;
-  /* margin: 10px; */
-  background-color: rgb(66, 129, 248);
-  font-size: 22px;
+ font-size: 18px;
+  background-color: rgb(70 70 70);
+  
   color: white;
 }
 </style>
