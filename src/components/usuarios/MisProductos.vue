@@ -9,20 +9,21 @@
     </b-spinner>
   </div>
   <div v-else class="body">
-    <b-row class="pb-3">
-      <b-col lg="2" sm="4" class="text-center"></b-col>
-      <b-col md="8" sm="6" class="text-left pt-3">
-        <div>
-          <p class="h1 text-center">Mis Productos</p>
-        </div>
-      </b-col>
-    </b-row>
-    
+    <div fluid class="categoria">
+        <b-row class="pb-2">
+          <b-col class="text-center pt-3">
+            <br />
+            <p class="h1 font-britannic text">
+              <strong class="parrafoCategorias">Mis publicaciones</strong>
+            </p>
+          </b-col>
+        </b-row>
+      </div>  
     <b-container fluid class="bv-example-row">      
       <b-row align-h="start">
         <b-col md="4"></b-col>
           <div v-if="publicaciones.length == 0">
-            <br /><br /><br /><br /><br />
+           <br />
             <b-alert show variant="success">
               <h4 class="alert-heading">
                 <b-icon scale="1.5" icon="exclamation" variant="info"></b-icon>Usted no posee publicaciones

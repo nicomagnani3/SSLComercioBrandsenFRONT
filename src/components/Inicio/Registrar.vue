@@ -101,12 +101,26 @@
             size="lg"
             id="celular"
             v-model="persona.celular"
-            type="number"
-            
+            type="number"            
             placeholder="Celular ingresar sin 0 y sin 15"
             class="line"
           ></b-form-input>
         </b-input-group>
+        <div v-if="this.value == 5 || this.value == 4"> 
+         <br />         
+        <b-input-group  size="lg">
+          <b-input-group-prepend is-text>
+            <b-icon icon="link"></b-icon>
+          </b-input-group-prepend>
+          <b-form-input
+            id="web"
+            size="lg"
+            v-model="persona.web"
+            placeholder="URL de tu web o red social"
+            class="line"
+          ></b-form-input>
+        </b-input-group>
+        </div>
         <br />
         <b-input-group size="lg">
           <b-input-group-prepend is-text>
@@ -227,7 +241,7 @@
             id="web"
             size="lg"
             v-model="empresa.web"
-            placeholder="URL de tu web"
+            placeholder="URL de tu web o red social"
             class="line"
           ></b-form-input>
         </b-input-group>
@@ -313,6 +327,7 @@ export default {
         email: "",
         password: "",
         password_confirmation: "",
+        web: "",
       },
       empresa: {
         nombreEmpresa: "",
@@ -386,6 +401,7 @@ export default {
             email: this.persona.email,
             password: this.persona.password,
             grupo: this.value,
+            web: this.persona.web,
           });
           if (response.data.error == true) {
             this.registrando = false;

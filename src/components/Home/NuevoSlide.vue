@@ -1,15 +1,13 @@
 <template>
   <div>
     <b-row class="text-left">
-      <b-col cols="1" ></b-col>
-      <b-col cols="8" >
+      <b-col cols="2"></b-col>
+      <b-col cols="8">
         <div class="h3 font-britannic text widget-title destacados">
           <strong class="parraforTitProd"
             >Productos y comercios destacados</strong
           >
-          <a v-if="!loading" @click="verDestacados()" class="verMas"
-            >ver mas</a
-          >
+          <a v-if="!loading" @click="verDestacados()" class="verMas">ver mas</a>
         </div>
       </b-col>
     </b-row>
@@ -40,23 +38,20 @@
             <b-card
               v-for="(producto, index) in currentPageClubs"
               :key="index"
-              img-height="300px; max-height:100%;"
+              img-height="250px; max-height:100%;"
               alt="Responsive image"
               class="ItemProd"
-              style="max-width: 350px"
+              style="max-width: 250px"
               :img-src="`data:image/png;base64, ${producto.imagen}`"
             >
-              <strong>
-                <B
-                  ><I>
-                    <strong>{{ tituloAjustar(producto.titulo) }}</strong>
-                  </I></B
-                >
-              </strong>
-              <p class="card-text">
-                {{ getImporte(producto.precio) }}
+               <div class="cortar" @click="verProducto(producto)">
+              <strong  > {{ tituloAjustar(producto.titulo) }}</strong>
+            </div>
+              <p>
+                <small>
+                  {{ getImporte(producto.precio) }}
+                </small>
               </p>
-
               <small>{{ producto.padre }}</small>
 
               <div slot="footer">
@@ -249,6 +244,26 @@ export default {
 
 
 <style scoped>
+.cortar{
+     font-weight: 700;
+    display: block;
+    display: -webkit-box;
+    height: 46px;
+    margin: 0;
+    /* text-align: left; */
+    cursor: pointer;
+    font-size: 13px;
+    line-height: 18px;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-overflow: -o-ellipsis-lastline;
+    white-space: normal;
+    padding-top: 10px;
+    color: #2C354F;
+    max-width: 191px;
+}
 .texto {
   color: rgb(226, 205, 199);
   font-family: "Poppins", sans-serif;
@@ -288,7 +303,7 @@ export default {
   color: #676767;
   cursor: pointer;
   font-size: 14px;
-  text-decoration: underline #676767;   
+  text-decoration: underline #676767;
   white-space: nowrap;
 }
 .btnMas {

@@ -20,6 +20,12 @@ export default {
     getContratos(credentials) {    
         return Api().get(API_URL + API_USER + "get_contratos/", credentials)
     },
+    getContratosCliente(credentials) {    
+        return Api().get(API_URL + API_USER + "get_contratos_clientes/", credentials)
+    },
+    getContratosEmpresa(credentials) {    
+        return Api().get(API_URL + API_USER + "get_contratos_empresa/", credentials)
+    },
     
     
   

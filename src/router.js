@@ -19,9 +19,10 @@ import VerDestacados from '@/components/Home/VerDestacados.vue'
 import NuevoEmprendimiento from '@/components/emprendimientos/NuevoEmprendimiento.vue'
 import VerEmprendimiento from '@/components/emprendimientos/VerEmprendimiento.vue'
 
-/* Servicio */
+/* Servicio  Profesionales*/
 import NuevoServicio from '@/components/servicios/NuevoServicio.vue'
 import VerServicio from '@/components/servicios/VerServicio.vue'
+import VerProfesionales from '@/components/servicios/VerProfesionales.vue'
 
 
 /* Contratos  admin y empresas o comercios*/
@@ -34,9 +35,10 @@ import MisProductos from '@/components/usuarios/MisProductos.vue'
 /* Menu */
 import container from '@/components/menu/Container.vue'
 import home from '@/components/Home/Home.vue'
-/* Empreas - comcercios */
+/* Empreas - comcercios -rubros*/
 import VerEmpresas from '@/components/empresas/VerEmpresas.vue'
 import verSoporte from '@/components/soporte/VerSoporte.vue'
+import VerRubros from '@/components/empresas/VerRubros.vue'
 
 
 
@@ -102,6 +104,15 @@ const router = new Router({
          }, 
        },
        {
+        path: '/verRubros',
+         name: 'verRubros',
+         component: VerRubros,   
+         meta: {
+           requireAuth: false
+         }, 
+       },
+       
+       {
         path: '/verSoporte',
          name: 'verSoporte',
          component: verSoporte,   
@@ -129,6 +140,14 @@ const router = new Router({
         path: '/verServicio',
          name: 'verServicio',
          component: VerServicio,   
+         meta: {
+           requireAuth: false
+         }, 
+       },
+       {
+        path: '/verProfesionales',
+         name: 'verProfesionales',
+         component: VerProfesionales,   
          meta: {
            requireAuth: false
          }, 

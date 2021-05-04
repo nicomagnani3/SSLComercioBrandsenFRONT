@@ -6,7 +6,7 @@
   </div>
   <div v-else class="contenedor">
     <div class="wrapper">
-      <Menu :rubros="this.rubros" />
+      <Menu  />
       <router-view class="content" />
     </div>
     <Publicidad :publicidades="this.publicidadesSlider4" />
@@ -19,7 +19,6 @@ import Footer from "@/components/menu/Footer.vue";
 import Menu from "@/components/menu/Menu.vue";
 import Publicidad from "@/components/Home/EspacioPublicidad.vue";
 import PublicidadService from "@/services/PublicidadService";
-import PublicacionService from "@/services/PublicacionService";
 
 import axios from "axios";
 
@@ -35,7 +34,7 @@ export default {
       loading: true,
       publicidades: [],
       publicidadesSlider4: [],
-      rubros: [],
+    
     };
   },
   props: {},
@@ -69,19 +68,7 @@ export default {
         this.getPublicidades();
         this.publicidades = "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS";
       }
-    },
-    async getRubros() {
-      this.loading = true;
-      try {
-        const response = await PublicacionService.getRubros();
-        this.rubros = response.data.data;
-        this.rubros = this.ordenarDatos(this.rubros);
-      } catch (err) {
-        this.rubros = "ATENCION NO SE PUDIERON OBTENER LOS RUBROS";
-      } finally {
-        this.loading = false;
-      }
-    },
+    }, 
     ordenarDatos(categoria) {
       return categoria.sort(function (a, b) {
         if (a.nombre > b.nombre) {
@@ -99,7 +86,7 @@ export default {
   },
   mounted() {
     axios
-      .all([this.getPublicidades(), this.getRubros()])
+      .all([this.getPublicidades(),])
       .then(() => {
         this.loading = false;
       })

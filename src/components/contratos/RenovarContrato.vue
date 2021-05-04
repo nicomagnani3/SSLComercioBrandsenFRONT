@@ -208,11 +208,9 @@ export default {
       this.presionoCrear = true;
       try {
         const response = await Contratos.addContrato({
-          usuario: this.getUserId,
-          desde: new Date(),
-          paquete: this.selectedpaquete[0].id,
-          cantpublicaciones: Number(this.selectedpaquete[0].cantNormal),
-          cantdestacadas: Number(this.selectedpaquete[0].cantDestacada),
+          usuario: this.getUserId,          
+          paquete: this.selectedpaquete[0].id,       
+         
         });
         if (response.data.error == false) {
           this.validarPagoMercadoPago(response.data.data);
@@ -291,6 +289,7 @@ export default {
           user: this.getUserId,
         });
         this.contrato = response.data.data;
+        
       } catch (err) {
         this.$bvToast.toast(err.response.data.message, {
           title: "Atencion!",

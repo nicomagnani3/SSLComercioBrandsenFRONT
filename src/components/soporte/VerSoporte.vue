@@ -129,13 +129,13 @@
                 Para cada tipo de usuario contamos con varias opciones.
                 Descargate + información con las características y valores de
                 los distintos servicios.<br />
-               <a      class="linkusers"    target="_black" href="https://drive.google.com/file/d/1dkYOq_s5VOEaHAuYi8KidElz7N3drGYd/view"> Empresas y Comercios</a><br />
+               <a      class="linkusers"    target="_black" href="https://drive.google.com/file/d/1rOVR-LPGD9PpWhqXmZ0EU4CScgI0UsOX/view"> Empresas y Comercios</a><br />
              <br>
-               <a     class="linkusers"    target="_black" href="https://drive.google.com/file/d/1rfbOtbYFYx5zoc-JOcIYocj5KBZlnmUj/view" >Profesionales y Servicios</a><br />
+               <a     class="linkusers"    target="_black" href="https://drive.google.com/file/d/1YosGSgUTCPo5XNp6hq0W1CBEiTjVDJ2X/view?usp=sharing" >Profesionales y Servicios</a><br />
                     <br>
-               <a    class="linkusers"     target="_black" href="https://drive.google.com/file/d/1yX-x52dC1EqGVyCxCltPPuNTXEsCucT-/view" > Emprendedores</a><br />
+               <a    class="linkusers"     target="_black" href="https://drive.google.com/file/d/17uSQnQcE7kR_SG7NRDsR7FLMH-QdrWCB/view?usp=sharing" > Emprendedores</a><br />
                    <br> 
-              <a    class="linkusers"     target="_black" href="https://drive.google.com/file/d/1LxCtjroLmkiR7Vtg6LxL7h7zq4BPxs_k/view" >  Usuarios Generales</a><br>
+              <a    class="linkusers"     target="_black" href="https://drive.google.com/file/d/1cuhhsvNDK2Cbi2GNfZBEX1ftw4KTPQE9/view?usp=sharing" >  Usuarios Generales</a><br>
               </p>
             
             </div>

@@ -24,11 +24,15 @@
       <b-col xs="12" md="12" lg="3" align-self="end">
         <p>Contáctenos:</p>
         <p>info@malambobrandsen.com.ar</p>
-        <a href=""> <img class="icono" src="@/assets/logowsp.png" alt="" /> </a>
-        <a href="https://www.instagram.com/malambobrandsen/">
+        <a  :href="
+                  'https://api.whatsapp.com/send?text=Hola!%20,me%20comunico' +
+                  '&phone=+542223431948'
+                "
+                   target="_black"> <img class="icono" src="@/assets/logowsp.png" alt="" /> </a>
+        <a href="https://www.instagram.com/malambobrandsen/"    target="_black">
           <img class="icono" src="@/assets/logo-ig.png" alt="" />
         </a>
-        <a href="https://www.facebook.com/MalamboBrandsen">
+        <a href="https://www.facebook.com/MalamboBrandsen"    target="_black">
           <img class="icono" src="@/assets/icono-face.png" alt="" />
         </a>
       </b-col>

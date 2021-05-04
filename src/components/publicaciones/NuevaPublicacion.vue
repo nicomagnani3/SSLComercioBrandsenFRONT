@@ -1,8 +1,9 @@
 <template>
-    <div v-if="loading" class="text-center">
-    <br /><br />    <br /><br />
+  <div v-if="loading" class="text-center">
+    <br /><br />
+    <br /><br />
     <b-spinner
-    style="width: 7rem; height: 7rem"
+      style="width: 7rem; height: 7rem"
       variant="warning"
       label="Text Centered"
     >
@@ -16,12 +17,12 @@
       back-button-text="Volver!"
       next-button-text="Siguiente!"
       :finish-button-text="this.valorBotonFinalizar"
-      color="#000000"    
+      color="#000000"
       error-color="#dc3545"
-    >    
+    >
       <tab-content
         title="¿Qué tipo de categoría necesitas publicar? "
-         :before-change="validarCategoria"
+        :before-change="validarCategoria"
       >
         <ListarCategorias
           :categorias="this.categorias"
@@ -97,8 +98,8 @@ export default {
   },
   data() {
     return {
-      yapublico:false,
-      esperarBotonMercadoPago:false,
+      yapublico: false,
+      esperarBotonMercadoPago: false,
       presionoFinalizar: false,
       presionoCrear: false,
       categorias: [],
@@ -110,7 +111,7 @@ export default {
       publicacion: [],
       alerts: [],
       valorBotonFinalizar: "Obtener boton de pago!",
-      valorUltimoPaso:"Pagar la publicacion",
+      valorUltimoPaso: "Pagar la publicacion",
       contrato: [],
       montoEntregaInvalido: false,
       imagenes: [],
@@ -135,7 +136,7 @@ export default {
     };
   },
   created() {
-     window.scrollTo(0, 200)
+    window.scrollTo(0, 200);
     if (this.getUserId == null) {
       this.$router.push({
         name: "login",
@@ -150,26 +151,24 @@ export default {
     ...mapGetters("storeUser", ["getUserId"]),
   },
   methods: {
-    validarCategoria(){
-      window.scrollTo(0, 140)
-      return true
-
+    validarCategoria() {
+      window.scrollTo(0, 140);
+      return true;
     },
     async validarImagenes() {
-     window.scrollTo(0, 140)
+      window.scrollTo(0, 140);
       let result = await this.$refs.altaImagenes.validate();
       return result;
     },
     async validarCategoriaHija() {
-      window.scrollTo(0, 140)
+      window.scrollTo(0, 140);
       if (this.categoriaHijaSeleccionada == null) {
         return false;
       }
       return true;
-
     },
     async validarDetalleProducto() {
-      window.scrollTo(0, 140)
+      window.scrollTo(0, 140);
       let result = await this.$refs.detallePublicacion.validate();
       return result;
     },
@@ -202,7 +201,7 @@ export default {
           categoriasHija: this.categoriaHijaSeleccionada,
           usuarioID: this.getUserId,
           destacada: this.publicacion.destacada,
-          yapublico:this.yapublico
+          yapublico: this.yapublico,
         });
         if (response.data.error == false) {
           if (this.tieneContrato || !this.yapublico) {
@@ -219,7 +218,7 @@ export default {
               name: "Home",
             });
           } else {
-            this.esperarBotonMercadoPago=true
+            this.esperarBotonMercadoPago = true;
             this.validarPagoMercadoPago(response.data.data);
           }
         }
@@ -255,7 +254,7 @@ export default {
       script.dataset.preferenceId = preference;
       document.getElementById("button-checkout").innerHTML = "";
       document.querySelector("#button-checkout").appendChild(script);
-      this.esperarBotonMercadoPago=false
+      this.esperarBotonMercadoPago = false;
     },
     updateCategoriaHija(categoriaHija) {
       this.categoriaHijaSeleccionada = categoriaHija[0].id;
@@ -326,7 +325,7 @@ export default {
             this.tieneContrato = true;
             //this.verTipoPublicacion();
             this.valorBotonFinalizar = "Finalizar";
-            this.valorUltimoPaso= "Finalizar"
+            this.valorUltimoPaso = "Finalizar";
             this.verificarContrato();
           } else {
             this.$root.$bvToast.toast(
@@ -396,7 +395,7 @@ export default {
         this.preciosPublicacion = response.data.data;
       } catch (err) {
         this.$root.$bvToast.toast(
-          "No estamos encontrando los precios de la publiccaion, de mientras podes ver los productos publicados en MALAMBO ;)",
+          "Tu sesion a expirado, por favor volve a iniciar sesion",
           {
             title: "Atencion!",
             toaster: "b-toaster-top-center",
@@ -404,38 +403,39 @@ export default {
             variant: "danger",
           }
         );
-        this.$router.push("/");
+        this.$router.push({
+          name: "login",
+          params: {
+            autentificacion: false,
+          },
+        });
       }
     },
     async misPublicaciones() {
       try {
         const response = await PublicacionService.getPublicoUsuario({
           idUsuario: this.getUserId,
-        });       
-        if (response.data.error == false){
-          this.yapublico=response.data.data   
-          if (!this.yapublico){
-             this.valorBotonFinalizar = "Finalizar";
-            this.valorUltimoPaso= "Finalizar"
+        });
+        if (response.data.error == false) {
+          this.yapublico = response.data.data;
+          if (!this.yapublico) {
+            this.valorBotonFinalizar = "Finalizar";
+            this.valorUltimoPaso = "Finalizar";
           }
-           
         }
-   
-        
       } catch (err) {
-        console.lo(err)
+        console.lo(err);
       }
     },
   },
   mounted() {
     axios
       .all([
-         this.misPublicaciones(),
+        this.misPublicaciones(),
         this.getcategorias(),
         this.getcategoriasHijas(),
         this.getContratosUser(),
         this.getPreciosPublicaciones(),
-       
       ])
       .then(() => {
         this.loading = false;

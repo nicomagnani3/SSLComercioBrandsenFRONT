@@ -34,7 +34,8 @@
           </b-input-group>
         </b-container>
         <b-col class="text-center pt-3">
-          <strong> Email: {{ value["email"] }}</strong>
+          <strong> Email: {{ value["email"] }}</strong><br>
+            <strong> Tipo: {{ value["rol"] }}</strong>
         </b-col>
       </b-card>
       <b-card
@@ -256,7 +257,7 @@ export default {
         const response = await AuthenticationService.getNombreUsuariosParaContrato(
           {}
         );
-        this.usuarios = response.data.data;
+        this.usuarios = response.data.data;       
            this.usuarios = this.ordenarDatos(this.usuarios);
         
       } catch (err) {

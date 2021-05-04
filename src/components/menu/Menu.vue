@@ -13,7 +13,7 @@
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse class="navbar-collapse" id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-item v-if="!this.logeado" :to="{ name: 'verCategorias' }"
+       <!--    <b-nav-item v-if="!this.logeado" :to="{ name: 'verCategorias' }"
             >Productos</b-nav-item
           >
           <b-nav-item v-if="!this.logeado" :to="{ name: 'verEmprendimiento' }"
@@ -21,8 +21,8 @@
           >
           <b-nav-item v-if="!this.logeado" :to="{ name: 'verServicio' }"
             >Servicios</b-nav-item
-          >
-          <b-nav-item-dropdown v-if="this.logeado">
+          > -->
+          <b-nav-item-dropdown >
             <template slot="button-content">
               <span class="light">Categorias</span>
             </template>
@@ -35,22 +35,17 @@
             <b-dropdown-item :to="{ name: 'verServicio' }"
               >Servicios</b-dropdown-item
             >
+               <b-dropdown-item :to="{ name: 'verProfesionales' }"
+            >Profesionales</b-dropdown-item
+          >
           </b-nav-item-dropdown>
-
-          <b-nav-item-dropdown>
-            <template slot="button-content">
-              <span class="light">Rubros</span>
-            </template>
-            <li class="list-group-item" v-for="item in rubros" :key="item.id">
-              <a class="buscador" @click="buscarProductoporRubro(item)">{{
-                item.nombre
-              }}</a>
-            </li>
-          </b-nav-item-dropdown>
+      
+           <b-nav-item :to="{ name: 'verRubros' }"
+            >Rubros</b-nav-item
+          >
           <b-nav-item :to="{ name: 'verEmpresas' }"
             >Empresas–Comercios</b-nav-item
-          >
-
+          >           
           <b-nav-item-dropdown v-if="hasPermisos('CREAR')">
             <template slot="button-content">
               <span class="light">Publicar</span>
@@ -180,9 +175,7 @@ export default {
     Header,
   },
   props: {
-    rubros: {
-      type: Array,
-    },
+    
   },
   data() {
     return {
@@ -209,22 +202,6 @@ export default {
           name: "buscarProductos",
           params: {
             producto: producto,
-          },
-        });
-    },
-
-    buscarProductoporRubro(rubro) {
-      const path = `/buscarProductos/${rubro.nombre}`;
-      if (this.$route.path !== path)
-        this.$router.push({
-          name: "buscarProductos",
-          query: {
-            q: this.searchQuery,
-            t: new Date().getTime(),
-          },
-          params: {
-            producto: rubro.nombre,
-            rubro: rubro.id,
           },
         });
     },

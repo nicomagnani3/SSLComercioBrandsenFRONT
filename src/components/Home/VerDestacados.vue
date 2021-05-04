@@ -19,32 +19,29 @@
                 <b-row>
                   <b-col md="6">
                     <b-card-img
+                      img-height="300px; max-height:100%;"
                       @click="verImagenes(producto)"
                       thumbnail
                       fluid
                       alt="Responsive image"
-                      style="max-height: 450px; cursor: pointer"
+                      style="max-height: 350px; cursor: pointer"
                       :src="`data:image/png;base64, ${producto.imagen}`"
                       class="rounded-0"
                     ></b-card-img>
                   </b-col>
                   <b-col md="4">
                     <b-card-body>
-                      <h3>
-                        <strong class="parrafor">{{ producto.titulo }} </strong
+                      <h5>
+                        <strong style="white-space: pre-wrap"
+                          >{{ producto.titulo }} </strong
                         >
-                      </h3>
+                      </h5>
                       <strong class="parrafor">{{ producto.padre }}</strong>
                       <hr />
-                      <h5 v-if="Number(producto.precio) > Number(0)">
-                        Precio: {{ getImporte(producto.precio) }}
+                     <h5 v-if="Number(producto.precio) > Number(0)">
+                        {{ getImporte(producto.precio) }}
                       </h5>
-                      <h5>Fecha: {{ producto.fecha | formatDate }}</h5>
-
-                      <a target="_black" :href="producto.web">{{
-                        producto.web
-                      }}</a>
-                      <p v-if="producto.telefono != null && logeado">
+  <p v-if="producto.telefono != null && logeado">
                         Telefono: <strong>{{ producto.telefono }}</strong>
                       </p>
                       <p
@@ -53,9 +50,11 @@
                       >
                         <strong>{{ producto.email }}</strong>
                       </p>
-                      <div v-if="!logeado" class="text-center">
-                        Para contactarte registrate
-                        <router-link to="/login">ACA!</router-link>
+                      <div v-if="!logeado">
+                        <p style="white-space: nowrap">
+                          Para contactarte registrate
+                          <router-link to="/login">ACA!</router-link>
+                        </p>
                       </div>
                       <div v-else>
                         <a
@@ -98,7 +97,7 @@
                           />
                         </a>
                       </div>
-                      <a
+                      <!--     <a
                         variant="white"
                         @click="verImagenes(producto)"
                         style="cursor: pointer"
@@ -109,7 +108,7 @@
                           height="auto"
                           style="width: 45px; margin: 4px"
                         />&nbsp;&nbsp;
-                      </a>
+                      </a> -->
 
                       <a
                         variant="white"
@@ -119,6 +118,20 @@
                       >
                         <img
                           src="@/assets/descripcion.png"
+                          alt=""
+                          height="auto"
+                          style="width: 45px; margin: 4px"
+                        />&nbsp;&nbsp;
+                      </a>
+                      <a
+                        variant="white"
+                        v-if="producto.web != null"
+                        target="_black"
+                        :href="producto.web"
+                        style="cursor: pointer"
+                      >
+                        <img
+                          src="@/assets/web.png"
                           alt=""
                           height="auto"
                           style="width: 45px; margin: 4px"
