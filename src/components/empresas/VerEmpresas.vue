@@ -133,24 +133,8 @@ export default {
 
 <style >
 @media only screen and (max-width: 480px) {
-  .grid-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  grid-gap: 5px;
-  justify-items: center;
-  align-items: center;
-}
-.grid-item1 {
-    background: #ffffff;
-    text-align: center;
-    border: rgb(165, 165, 165) 1px solid;
-    /* width: 100px !important; */
-    min-height: 36px;
-    height: 85px;
-    font-size: 15px;
-    cursor: pointer;
-    padding-top: 22px;
-}
+
+
 }
 .buscador:hover {
   color: rgb(255, 206, 78);
@@ -161,9 +145,7 @@ export default {
     background: #ffffff;
     text-align: center;
     border: rgb(165, 165, 165) 1px solid;
-    /* width: 100px !important; */
-    min-height: 36px;
-    height: 85px;
+    /* width: 100px !important; */ 
     font-size: 20px;
     cursor: pointer;
     padding-top: 20px;
