@@ -23,7 +23,7 @@
     <div v-else class="animated fadeIn">
             <b-container fluid="sm">
 
-      <b-row class="text-center" cols="1" cols-sm="8" cols-md="8" cols-lg="5">
+      <b-row class="text-center" cols="2" cols-sm="8" cols-md="8" cols-lg="5">
         <b-col
           v-for="(producto, index) in currentPageClubs"
           :key="index"
@@ -39,9 +39,15 @@
             <div class="cortar" @click="verProducto(producto)">
               <strong> {{ tituloAjustar(producto.titulo) }}</strong>
             </div>
-            <p class="card-text">
+            <div v-if="Number(producto.precio) > Number(0)">
+                 <p  class="card-text">              
               {{ getImporte(producto.precio) }}
-            </p>
+                 </p>
+            </div>
+            <div v-else>
+              <br>
+            </div>
+         
 
             <small>{{ producto.padre }}</small>
             <div slot="footer">
@@ -58,7 +64,9 @@
       </b-row>
             </b-container>
     </div>
+  <br>  
   </div>
+  
 </template>
 
 
