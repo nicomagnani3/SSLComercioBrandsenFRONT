@@ -1,10 +1,10 @@
 <template>
   <div>
     <b-row class="text-left">
-      <b-col cols="2"></b-col>
+      <b-col cols="1"></b-col>
       <b-col cols="8">
         <div class="h3 font-britannic text widget-title destacados">
-          <strong class="parraforTitProd"> Servicios destacados</strong>
+          <strong class="parraforTitProd badge badge-primary" > Servicios destacados</strong>
           <a v-if="!loading" @click="verDestacados()" class="verMasServi"
             >ver mas</a
           >

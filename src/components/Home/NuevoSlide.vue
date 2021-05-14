@@ -1,10 +1,10 @@
 <template>
   <div>
     <b-row class="text-left">
-      <b-col cols="2"></b-col>
+      <b-col cols="1"></b-col>
       <b-col cols="8">
         <div class="h3 font-britannic text widget-title destacados">
-          <strong class="parraforTitProd"
+          <strong class="parraforTitProd badge badge-primary" 
             >Productos y comercios destacados</strong
           >
           <a v-if="!loading" @click="verDestacados()" class="verMas">ver mas</a>
@@ -338,7 +338,7 @@ export default {
   cursor: pointer;
 }
 .destacados {
-  color: rgb(109, 108, 108);
+  color: rgb(255, 254, 254);
 }
 </style>
 
