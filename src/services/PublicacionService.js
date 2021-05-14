@@ -53,9 +53,12 @@ export default {
       
         return Api().get(API_URL + API_USER + "get_publicaciones_empresa/"+ credentials.id)
     },
-    getPublicoUsuario(credentials) {   
-      
+    getPublicoUsuario(credentials) {         
         return Api().post(API_URL + API_USER + "get_publico_usuario",credentials)
+    },
+    getUltimasPublicaciones(credentials) {   
+      
+        return Api().get(API_URL + API_USER + "get_ultimas_publicaciones", credentials)
     },
     
     

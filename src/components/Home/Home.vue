@@ -13,16 +13,18 @@
     <Slider :publicidades="this.publicidadesSlider1" />
     <div class="subtitulo">
       <p class="parraforNotificacion">
-        <strong> Registrate y publicá tu primer producto gratis!</strong><br>
-       Emprendedores, profesionales, comercios y servicios obtendrán un mes gratis, solicitalo!
+        <strong> ¡Registrate y publicá tu primer producto gratis!</strong><br />
+        ¡Participá de los sorteos semanales en nuestras redes sociales!
       </p>
       <!--  <p class="parrafor">Al publicar está colaborando con Apaa de Brandsen</p> -->
     </div>
     <sliderPubli :publicidades="this.publicidadesSlider2" />
 
     <NuevoSlide />
+    <sliderUltimasPublicaciones />
     <sliderServicios />
     <sliderEmprendimientos />
+
     <Sliderempresa :publicidades="this.publicidadesSlider3" />
   </div>
 </template>
@@ -34,6 +36,8 @@ import NuevoSlide from "@/components/Home/NuevoSlide.vue";
 import Sliderempresa from "@/components/Home/slideEmpresas.vue";
 import sliderServicios from "@/components/Home/sliderServicios.vue";
 import sliderEmprendimientos from "@/components/Home/sliderEmprendimientos.vue";
+import sliderUltimasPublicaciones from "@/components/Home/sliderUltimasPublicaciones.vue";
+
 import sliderPubli from "@/components/Home/sliderPubli.vue";
 import axios from "axios";
 import PublicidadService from "@/services/PublicidadService";
@@ -47,6 +51,7 @@ export default {
     Sliderempresa,
     sliderEmprendimientos,
     sliderPubli,
+    sliderUltimasPublicaciones,
   },
 
   data() {
@@ -100,13 +105,13 @@ export default {
 
 <style>
 @media only screen and (max-width: 480px) {
-  .parraforTitProd{
-      white-space: pre;
-       font-size: 15px;
+  .parraforTitProd {
+    white-space: pre;
+    font-size: 15px;
   }
- 
-  .verMasServi{
-        white-space: inherit;
+
+  .verMasServi {
+    white-space: inherit;
   }
   .parrafor {
     text-align: center;
@@ -117,7 +122,7 @@ export default {
   .parraforNotificacion {
     text-align: center;
     /* margin: 10px; */
-        font-size: 8px;
+    font-size: 8px;
     white-space: unset !important;
   }
   .parrafoCategorias {
@@ -141,9 +146,9 @@ export default {
     /* margin: 10px; */
     background-color: rgb(70 70 70);
   }
-  .parraforAPA{
+  .parraforAPA {
     font-size: 15px;
-        white-space: pre;
+    white-space: pre;
   }
 }
 
@@ -154,9 +159,9 @@ export default {
 
 .subtitulo {
   text-align: center;
- font-size: 18px;
+  font-size: 18px;
   background-color: rgb(70 70 70);
-  
+
   color: white;
 }
 </style>

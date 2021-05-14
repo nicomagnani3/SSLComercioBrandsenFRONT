@@ -154,7 +154,7 @@
           maxlength="128"
           @keyup.enter="buscarProducto(filterPrev)"
           v-model="filterPrev"
-          placeholder="Buscar "
+          placeholder="¿Qué  estas buscando? "
         ></b-form-input>
 
         <b-button size="sm" @click="buscarProducto(filterPrev)"

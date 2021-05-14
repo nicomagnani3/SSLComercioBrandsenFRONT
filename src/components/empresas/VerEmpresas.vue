@@ -21,11 +21,20 @@
         </b-row>
       </div>
       <br />
+      <b-container class="bv-example-row">
+
       <b-row class="text-center">
-        <b-col cols="3" class="text-center d-none d-sm-none d-md-block">
-        </b-col>
-        <b-col>
-          <b-list-group>
+       
+        <b-col     
+       class="grid-item1"
+        cols="10" sm="4"
+         button
+           
+              v-for="item in this.empresas"
+              :key="item.id"
+              @click="verEmpresa(item)">
+                 <a class="buscador">{{ item.nombre }}</a>
+     <!--      <b-list-group>
             <b-list-group-item
               button
               class="list-group-item"
@@ -36,10 +45,10 @@
               <br />
               <a class="buscador">{{ item.nombre }}</a>
             </b-list-group-item>
-          </b-list-group>
+          </b-list-group> -->
         </b-col>
-        <b-col class="text-center d-none d-sm-none d-md-block"></b-col>
       </b-row>
+      </b-container>
     </div>
 </div>
 </template>
@@ -126,5 +135,23 @@ export default {
 .buscador:hover {
   color: rgb(255, 206, 78);
   cursor: pointer;
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  grid-gap: 5px;
+  justify-items: center;
+  align-items: center;
+}
+
+.grid-item1 {
+  background: #ffffff;
+  text-align: center;
+  border: rgb(165, 165, 165) 1px solid;
+  width: 50px;
+  height: 70px;
+  font-size: 19px;
+    cursor: pointer;
+
 }
 </style>
