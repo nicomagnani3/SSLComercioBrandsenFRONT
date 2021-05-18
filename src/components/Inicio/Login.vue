@@ -95,9 +95,9 @@ export default {
   },
   created() {
     
-    if ( this.$route.params.autentificacion == false) {
+     if ( this.$route.params.autentificacion == false) {
       this.$bvToast.toast(
-        `Para ver mas detalles, Inicia sesion o registrate en MALAMBO`,
+        `¡Para realizar esta acción primero debes Iniciar sesión!`,
         {
           title: 'Atencion!!',
           toaster: "b-toaster-top-center",
@@ -105,7 +105,7 @@ export default {
           variant: "info",
         }
       );
-    }
+    } 
   },
   methods: {
     home(){

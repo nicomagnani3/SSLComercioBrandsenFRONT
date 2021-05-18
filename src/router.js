@@ -39,8 +39,8 @@ import home from '@/components/Home/Home.vue'
 import VerEmpresas from '@/components/empresas/VerEmpresas.vue'
 import verSoporte from '@/components/soporte/VerSoporte.vue'
 import VerRubros from '@/components/empresas/VerRubros.vue'
-
-
+/* Publicar mobile */
+import publicarMobile from '@/components/publicacionMobile/NuevaPublicacion.vue'
 
 import CrearPublicacion from '@/components/publicaciones/CrearPublicacion.vue'
 import CrearContrato from '@/components/contratos/CrearContrato.vue'
@@ -242,6 +242,14 @@ const router = new Router({
     {
       path: '*',
       redirect: '/'
+    },
+    {
+      path: '/publicarMobile',
+      name: 'publicarMobile',
+      component: publicarMobile,
+      meta: {
+        requireAuth: false
+      },
     }
   ],
   scrollBehavior () {

@@ -21,7 +21,7 @@
       error-color="#dc3545"
     >
       <tab-content
-        title="¿Qué tipo de categoría necesitas publicar? "
+        title=""
         :before-change="validarCategoria"
       >
         <ListarCategorias
@@ -30,7 +30,7 @@
         ></ListarCategorias>
       </tab-content>
       <tab-content
-        title="¿Qué necesitas publicar?"
+        title=""
         :before-change="validarCategoriaHija"
       >
         <ListarCategoriasHijas
@@ -39,7 +39,7 @@
         ></ListarCategoriasHijas>
       </tab-content>
       <tab-content
-        title="Detalles de la publicacion"
+        title=""
         :before-change="validarDetalleProducto"
       >
         <DetallePublicacion
@@ -50,7 +50,7 @@
           :yapublico="this.yapublico"
         ></DetallePublicacion>
       </tab-content>
-      <tab-content title="Imagenes" :before-change="validarImagenes">
+      <tab-content title="" :before-change="validarImagenes">
         <ImagenesCarga
           ref="altaImagenes"
           :imagenes="this.imagenes"
@@ -58,7 +58,7 @@
         >
         </ImagenesCarga>
       </tab-content>
-      <tab-content :title="this.valorUltimoPaso">
+      <tab-content title="">
         <PagarPublicacion
           :publicacion="this.publicacion"
           :imagen="this.imgPrimera"
@@ -82,11 +82,10 @@ import CategoriasService from "@/services/CategoriasService";
 import ListarCategorias from "@/components/categorias/ListarCategorias.vue";
 import ListarCategoriasHijas from "@/components/categorias/ListarCategoriasHijas.vue";
 import ImagenesCarga from "@/components/imagenes/ImagenesCarga.vue";
-import PagarPublicacion from "@/components/publicaciones/PagarPublicacion.vue";
+import PagarPublicacion from "@/components/publicacionMobile/PagarPublicacion.vue";
 import MercadoPago from "@/services/MercadoPago";
 import Contratos from "@/services/ContratosService";
-
-import DetallePublicacion from "@/components/publicaciones/DetallePublicacion.vue";
+import DetallePublicacion from "@/components/publicacionMobile/DetallePublicacion.vue";
 export default {
   name: "nuevaPublicacion",
   components: {
@@ -393,8 +392,7 @@ export default {
       try {
         const response = await PublicacionService.getPreciosPublicaciones();
         this.preciosPublicacion = response.data.data;
-      } catch (err) {
-      
+      } catch (err) {       
         this.$router.push({
           name: "login",
           params: {
