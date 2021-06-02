@@ -289,7 +289,7 @@ export default {
           user: this.getUserId,
         });
         this.contrato = response.data.data;
-        
+        console.log(this.contrato)
       } catch (err) {
         this.$bvToast.toast(err.response.data.message, {
           title: "Atencion!",

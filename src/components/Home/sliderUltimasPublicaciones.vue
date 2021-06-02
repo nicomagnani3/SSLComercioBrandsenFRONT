@@ -157,7 +157,7 @@ export default {
     async getPorductos() {
       try {
         const response = await ProductosService.getUltimasPublicaciones();
-        console.log(response.data)
+     
         if (response.data.error == false) {
           this.productos = response.data.data;
           //this.getImporte(this.productos);

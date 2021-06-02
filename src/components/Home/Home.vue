@@ -9,7 +9,7 @@
     </b-spinner>
   </div>
   <div v-else class="body">
-    <br />
+    <br>
     <Slider :publicidades="this.publicidadesSlider1" />
     <div class="subtitulo">
       <p class="parraforNotificacion">
@@ -31,6 +31,8 @@
 
 
 <script>
+
+
 import Slider from "@/components/Home/Slider.vue";
 import NuevoSlide from "@/components/Home/NuevoSlide.vue";
 import Sliderempresa from "@/components/Home/slideEmpresas.vue";
@@ -52,6 +54,7 @@ export default {
     sliderEmprendimientos,
     sliderPubli,
     sliderUltimasPublicaciones,
+    
   },
 
   data() {
