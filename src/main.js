@@ -19,6 +19,10 @@ import 'vue-glide-js/dist/vue-glide.css'
 Vue.use(VueGlide)
 
 
+import vSelect from "vue-select";
+
+Vue.component("v-select", vSelect);
+
 
 // register globally
 

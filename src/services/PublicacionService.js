@@ -49,8 +49,7 @@ export default {
     getProductosRubro(credentials) {  
         return Api().get(API_URL + API_USER + "get_productos_rubro/"+ credentials.id)
     },
-    getPublicacionEmpresa(credentials) {   
-      
+    getPublicacionEmpresa(credentials) {         
         return Api().get(API_URL + API_USER + "get_publicaciones_empresa/"+ credentials.id)
     },
     getPublicoUsuario(credentials) {         
@@ -60,6 +59,7 @@ export default {
       
         return Api().get(API_URL + API_USER + "get_ultimas_publicaciones", credentials)
     },
+  
     
     
     

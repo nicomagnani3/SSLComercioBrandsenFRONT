@@ -13,7 +13,7 @@
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse class="navbar-collapse" id="nav-collapse" is-nav>
         <b-navbar-nav>
-       <!--    <b-nav-item v-if="!this.logeado" :to="{ name: 'verCategorias' }"
+          <!--    <b-nav-item v-if="!this.logeado" :to="{ name: 'verCategorias' }"
             >Productos</b-nav-item
           >
           <b-nav-item v-if="!this.logeado" :to="{ name: 'verEmprendimiento' }"
@@ -22,7 +22,7 @@
           <b-nav-item v-if="!this.logeado" :to="{ name: 'verServicio' }"
             >Servicios</b-nav-item
           > -->
-          <b-nav-item-dropdown >
+          <b-nav-item-dropdown>
             <template slot="button-content">
               <span class="light">Categorias</span>
             </template>
@@ -35,17 +35,24 @@
             <b-dropdown-item :to="{ name: 'verServicio' }"
               >Servicios</b-dropdown-item
             >
-               <b-dropdown-item :to="{ name: 'verProfesionales' }"
-            >Profesionales</b-dropdown-item
-          >
+            <b-dropdown-item :to="{ name: 'verProfesionales' }"
+              >Profesionales</b-dropdown-item
+            >
           </b-nav-item-dropdown>
-      
-           <b-nav-item :to="{ name: 'verRubros' }"
-            >Rubros</b-nav-item
+
+          <b-nav-item :to="{ name: 'verRubros' }">Rubros</b-nav-item>
+          <b-nav-item
+            :to="{ name: 'verEmpresas' }"
+            style="
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            "
+            ><strong>Guia Comercial</strong
+            ><span class="badge badge-pill badge-info" id="valorDestacado" style="    overflow: hidden;">
+              NEW</span
+            ></b-nav-item
           >
-          <b-nav-item :to="{ name: 'verEmpresas' }"
-            >Empresas–Comercios</b-nav-item
-          >           
           <b-nav-item-dropdown v-if="hasPermisos('CREAR')">
             <template slot="button-content">
               <span class="light">Publicar</span>
@@ -137,6 +144,11 @@
               >Cambiar contraseña</b-dropdown-item
             >
             <b-dropdown-item
+              :to="{ name: 'crearEmpresa' }"
+              v-if="hasPermisos('CREAR_GUIA')"
+              >Crear guia comercial</b-dropdown-item
+            >
+            <b-dropdown-item
               v-if="hasPermisos('CAMBIAR_CLAVE')"
               @click.prevent="logout"
               >SALIR</b-dropdown-item
@@ -168,15 +180,12 @@
 import { mapActions, mapGetters, mapState } from "vuex";
 import Header from "@/components/menu/Header.vue";
 
-
 export default {
   name: "Menu",
   components: {
     Header,
   },
-  props: {
-    
-  },
+  props: {},
   data() {
     return {
       loading: false,

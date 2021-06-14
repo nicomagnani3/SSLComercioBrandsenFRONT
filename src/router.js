@@ -37,8 +37,10 @@ import container from '@/components/menu/Container.vue'
 import home from '@/components/Home/Home.vue'
 /* Empreas - comcercios -rubros*/
 import VerEmpresas from '@/components/empresas/VerEmpresas.vue'
+import crearEmpresa from '@/components/empresas/crearEmpresa.vue'
 import verSoporte from '@/components/soporte/VerSoporte.vue'
 import VerRubros from '@/components/empresas/VerRubros.vue'
+
 /* Publicar mobile */
 import publicarMobile from '@/components/publicacionMobile/NuevaPublicacion.vue'
 
@@ -194,7 +196,15 @@ const router = new Router({
            meta: {
             requireAuth: true
           },  
-        },          
+        },    
+        {
+          path: '/crearEmpresa',
+           name: 'crearEmpresa',
+           component: crearEmpresa,
+           meta: {
+            requireAuth: true
+          },  
+        },      
         {
             path: '/vencimientoContrato',
              name: 'vencimientoContrato',
