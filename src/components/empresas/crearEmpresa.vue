@@ -172,7 +172,7 @@
             <b-col lg="8" md="6">
               <b-form-group
                 id="URL-label"
-                label="URL de la imagen (tamaño 150x200):"
+                label="URL de la imagen (tamaño 300x250):"
                 label-for="URL"
               >
                 <ValidationProvider

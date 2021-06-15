@@ -47,7 +47,9 @@
               white-space: nowrap;
               overflow: hidden;
               text-overflow: ellipsis;
+                  font-size: 18px;
             "
+            class="logo"
             ><strong>Guia Comercial</strong
             ><span class="badge badge-pill badge-info" id="valorDestacado" style="    overflow: hidden;">
               NEW</span
@@ -248,5 +250,16 @@ export default {
   align-items: center;
   width: 100%;
   justify-content: center;
+}
+.logo{
+ 
+}
+.logo{
+  -webkit-animation: tiembla 2.1s infinite;
+}
+@-webkit-keyframes tiembla{
+  0%  { -webkit-transform:rotateZ(0deg); }
+  50% { -webkit-transform:rotateZ( 0deg) scale(.7); }
+  100%{ -webkit-transform:rotateZ(0deg); }
 }
 </style>

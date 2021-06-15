@@ -37,19 +37,6 @@
       <div id="careersVue">
         <div class="container-fluid">
           <div class="row">
-            <div class="col-md-3">
-              <h3>Locations</h3>
-              <b-list-group-item
-                button
-                v-for="item in rubros"
-                :key="item.id"
-                @click="buscarPorCategoria(item.id)"
-              >
-                <a class="buscador" @click="buscarPorCategoria(item.id)">{{
-                  item.nombre
-                }}</a>
-              </b-list-group-item>
-            </div>
             <div class="col-md-9">
               <b-card-group columns>
                 <b-card
@@ -95,15 +82,34 @@
                   </div>
                 </b-card>
               </b-card-group>
-              <br />
+              <div class="d-flex justify-content-center">
+                <b-pagination
+                  v-if="empresas.length > 3"
+                  v-model="currentPage"
+                  :per-page="perPage"
+                  :total-rows="empresas.length"
+                ></b-pagination>
+              </div>
             </div>
-          </div>
-          <div class="d-flex justify-content-center">
-            <b-pagination
-              v-model="currentPage"
-              :per-page="perPage"
-              :total-rows="empresas.length"
-            ></b-pagination>
+            <div class="col-md-3">
+              <strong style="font-weight: 700; font-size: 20px">
+                Filtrar Por:
+              </strong>
+              <b-form-group>
+                <b-form-checkbox
+                  v-for="item in rubros"
+                  :key="item.id"
+                  v-model="selected"
+                  :value="item.nombre"
+                  name="flavour-3a"
+                  class="buscador"
+                  @change="buscarPorCategoria(item.id)"
+                  :indeterminate="indeterminate"
+                >
+                  {{ item.nombre }}
+                </b-form-checkbox>
+              </b-form-group>
+            </div>
           </div>
         </div>
       </div>
@@ -133,14 +139,25 @@ export default {
     return {
       loading: false,
       empresas: [],
+      empresasCompleta: [],
       rubros: [],
-
-      currentPage: 4,
-      perPage: 15,
+      noFiltro: false,
+      indeterminate: false,
+      selected: null,
+      currentPage: 1,
+      perPage: 6,
       productoSeleccionado: [],
     };
   },
   created() {},
+  watch: {
+    selected(newValue) {
+      this.noFiltro = newValue;
+      if (newValue == false) {
+        this.empresas = this.empresasCompleta;
+      }
+    },
+  },
   computed: {
     paginatedCards() {
       const { currentPage, perPage } = this;
@@ -166,7 +183,9 @@ export default {
       try {
         const response = await PublicidadService.getGuiaComercial();
         this.empresas = response.data.data;
+        this.empresasCompleta = this.empresas;
         this.empresas = this.ordenarDatos(this.empresas);
+        this.seleccionarRubros(this.empresas);
       } catch (err) {
         this.empresas = "ATENCION NO SE PUDIERON OBTENER LAS EMPRESAS";
         this.loading = true;
@@ -174,8 +193,17 @@ export default {
         this.loading = false;
       }
     },
-    ordenarDatos(categoria) {
-      return categoria.sort(function (a, b) {
+    seleccionarRubros(empresas) {
+      console.log(empresas);
+      let mc = empresas.map((e) => ({
+        id: e.rubroId,
+        nombre: e.rubroNombre,
+      }));
+      this.rubros = Array.from(new Set(mc.map(JSON.stringify))).map(JSON.parse);
+      this.ordenarRubros(this.rubros)
+    },
+       ordenarRubros(categoria) {
+       return categoria.sort(function (a, b) {
         if (a.nombre > b.nombre) {
           return 1;
         }
@@ -184,6 +212,19 @@ export default {
         }
         return 0;
       });
+    },
+
+    ordenarDatos(categoria) {
+      /* return categoria.sort((a, b) => b.id - a.id) */
+      return categoria.sort(function (a, b) {
+        if (a.id < b.id) {
+          return 1;
+        }
+        if (a.id > b.id) {
+          return -1;
+        }
+        return 0;
+      }); 
     },
     verEmpresa(empresa) {
       const path = `/buscarProductos/${empresa.nombre}`;
@@ -212,6 +253,14 @@ export default {
         this.loading = false;
       }
     },
+    buscarPorCategoria(rubrosId) {
+            window.scrollTo(0, 200);
+
+      if (this.noFiltro != false) {
+        this.empresas = this.empresasCompleta;
+        this.empresas = this.empresas.filter((c) => c.rubroId == rubrosId);
+      }
+    },
     tituloAjustar(titulo) {
       return this.primerMayuscula(titulo);
     },
@@ -228,7 +277,7 @@ export default {
   },
   mounted() {
     axios
-      .all([this.getGuiaComercial(), this.getRubros()])
+      .all([this.getGuiaComercial()/* , this.getRubros() */])
       .then(() => {
         this.loading = false;
       })
@@ -256,6 +305,9 @@ export default {
 .buscador:hover {
   color: rgb(255, 206, 78);
   cursor: pointer;
+}
+.buscador {
+  width: 366px;
 }
 
 .grid-item1 {
