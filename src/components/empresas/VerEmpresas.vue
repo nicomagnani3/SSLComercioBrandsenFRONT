@@ -84,7 +84,7 @@
               </b-card-group>
               <div class="d-flex justify-content-center">
                 <b-pagination
-                  v-if="empresas.length > 3"
+                 pills 
                   v-model="currentPage"
                   :per-page="perPage"
                   :total-rows="empresas.length"
@@ -163,7 +163,7 @@ export default {
       const { currentPage, perPage } = this;
       const start = (currentPage - 1) * perPage;
       const end = currentPage * perPage;
-
+      window.scrollTo(0, 200);
       return this.empresas.slice(start, end);
     },
   },
@@ -257,7 +257,7 @@ export default {
 
       if (this.noFiltro != false) {
         this.empresas = this.empresasCompleta;
-        this.empresas = this.empresas.filter((c) => c.rubroId == rubrosId);
+        this.empresas = this.empresasCompleta.filter((c) => c.rubroId == rubrosId);
       }
     },
     tituloAjustar(titulo) {
