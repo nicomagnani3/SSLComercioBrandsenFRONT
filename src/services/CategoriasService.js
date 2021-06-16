@@ -10,5 +10,10 @@ export default {
     getcategoriasHijas(credentials) {    
         return Api().get(API_URL + API_USER + "get_categoriasHijas",credentials)
     },
+    getBuscarCategorias(credentials) {    
+        return Api().get(API_URL + API_USER + "get_buscar_categoria",credentials)
+    },
+    
+    
   
 }

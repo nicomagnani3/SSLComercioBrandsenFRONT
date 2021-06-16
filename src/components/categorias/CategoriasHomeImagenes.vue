@@ -1,0 +1,327 @@
+<template>
+  <div>
+    <div v-if="loading" class="text-center">
+      <b-spinner
+        style="width: 4em; height: 4rem"
+        variant="warning"
+        label="Text Centered"
+      >
+      </b-spinner>
+    </div>
+    <div v-else class="animated fadeIn">
+      <b-row class="text-center">
+        <b-col>
+          <div class="d-none d-sm-none d-md-block">
+            <b-icon
+              @click="backPage()"
+              :class="{ active: pagina() }"
+              icon="arrow-left-circle-fill"
+              id="iconright"
+            >
+            </b-icon>
+          </div>
+        </b-col>
+
+        <b-col cols="10" class="d-none d-sm-none d-md-block">
+          <b-card-group deck>
+            <b-card
+              v-for="(producto, index) in currentPageClubs"
+              :key="index"
+              @click="verProducto(producto)"
+              alt="Responsive image"
+              class="ItemProd"
+              style="max-width: 150px; background-color: #ebebeb; border: 0px;"
+              :img-src="producto.imagen"
+            >
+              <div class="cortar" @click="verProducto(producto)">
+                <strong> {{ tituloAjustar(producto.nombre) }}</strong>
+              </div>
+            </b-card>
+          </b-card-group>
+
+          <div class="card-pagination">
+            <div
+              class="page-index"
+              v-for="i in nbPages"
+              :key="i"
+              @click="goto(i)"
+              :class="{ active: currentPage(i) }"
+            ></div>
+          </div>
+        </b-col>
+        <b-col>
+          <div class="d-none d-sm-none d-md-block">
+            <b-icon
+              @click="nexPage()"
+              :class="{ active: pagina() }"
+              icon="arrow-right-circle-fill"
+              id="iconright"
+            >
+            </b-icon>
+          </div>
+        </b-col>
+      </b-row>
+    </div>
+  </div>
+</template>
+<script>
+import axios from "axios";
+import CategoriasService from "@/services/CategoriasService";
+// import slider components
+
+import { mapGetters } from "vuex";
+
+export default {
+  name: "NuevoSlide",
+  data() {
+    return {
+      paginatedClubs: [],
+      nbPages: 0,
+      ubicaicon: 0,
+      nbRowPerPage: 10,
+      currentPageIndex: 0,
+      indice: 1,
+      productos: [],
+      loading: true,
+    };
+  },
+  components: {},
+  computed: {
+    ...mapGetters("storeUser", ["getUserId"]),
+
+    currentPageClubs() {
+      this.createPages();
+
+      return this.paginatedClubs[this.currentPageIndex];
+    },
+  },
+
+  methods: {
+    verDestacados() {
+      this.$router.push({
+        name: "verDestacados",
+        query: {
+          q: this.searchQuery,
+          t: new Date().getTime(),
+        },
+        params: {
+          productos: this.productos,
+        },
+      });
+    },
+    nexPage() {
+      this.currentPageIndex = this.ubicaicon + 1;
+      this.indice = this.ubicaicon + 1;
+      if (++this.indice <= this.nbPages) {
+        this.ubicaicon++;
+      } else {
+        this.currentPageIndex = 0;
+        this.ubicaicon = 0;
+      }
+    },
+    backPage() {
+      if (this.ubicaicon == 0) {
+        this.currentPageIndex = this.nbPages - 1;
+        this.ubicaicon = this.nbPages - 1;
+      } else {
+        this.currentPageIndex = this.ubicaicon - 1;
+        this.ubicaicon = this.ubicaicon - 1;
+      }
+    },
+    pagina() {
+      return this.ubicaicon - 1 === this.currentPageIndex;
+    },
+    goto(i) {
+      window.scrollTo(0, 800);
+      this.currentPageIndex = i - 1;
+    },
+    currentPage(i) {
+      this.ubicaicon = this.currentPageIndex;
+      return i - 1 === this.currentPageIndex;
+    },
+    createPages() {
+      let lengthAll = Object.keys(this.productos).length;
+      this.nbPages = 0;
+
+      for (let i = 0; i < lengthAll; i = i + this.nbRowPerPage) {
+        this.paginatedClubs[this.nbPages] = this.productos.slice(
+          i,
+          i + this.nbRowPerPage
+        );
+        this.nbPages++;
+      }
+    },
+
+    async getcategorias() {
+      try {
+        const response = await CategoriasService.getCategorias();
+        if (response.data.error == false) {
+          this.productos = response.data.data;
+          
+          //this.getImporte(this.productos);
+        }
+      } catch (err) {
+        this.loading = true;
+        this.getcategorias();
+        this.productos = "ATENCION NO SE PUDIERON OBTENER LAS PUBLICACIONES";
+      }
+    },
+    getImporte(precio) {
+      if (precio == null || precio <= 1) {
+        return;
+      }
+      const options2 = { style: "currency", currency: "USD" };
+      const numberFormat2 = new Intl.NumberFormat("en-US", options2);
+      return numberFormat2.format(precio);
+    },
+    tituloAjustar(titulo) {
+      return this.primerMayuscula(titulo);
+    },
+    primerMayuscula(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    },
+    verProducto(producto) {
+      if (this.getUserId == null) {
+        this.$router.push({
+          name: "login",
+          params: {
+            autentificacion: false,
+          },
+        });
+      } else {
+        if (producto != null) {
+          const path = `/buscarProductos/${producto.id}`;
+          if (this.$route.path !== path)
+            this.$router.push({
+              name: "buscarProductos",
+              query: {
+            q: this.searchQuery,
+            t: new Date().getTime(),
+          },
+              params: {
+                producto: producto.nombre,
+                categoria:producto.id
+              },
+            });
+        }
+      }
+    },
+  },
+  created() {
+    axios
+      .all([this.getcategorias()])
+      .then(() => {
+        this.loading = false;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
+  mounted() {},
+};
+</script>
+
+
+<style scoped>
+.cortar {
+  font-weight: 700;
+  display: block;
+  display: -webkit-box;
+  height: 46px;
+  margin: 0;
+  /* text-align: left; */
+  cursor: pointer;
+  font-size: 13px;
+  line-height: 18px;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-overflow: -o-ellipsis-lastline;
+  white-space: normal;
+  padding-top: 10px;
+  color: #2c354f;
+  max-width: 191px;
+}
+.texto {
+  color: rgb(226, 205, 199);
+  font-family: "Poppins", sans-serif;
+}
+.vueperslide__title {
+  font-size: 7em;
+  opacity: 0.7;
+}
+
+.ItemProd img {
+  object-fit: contain;
+      cursor: pointer;
+}
+
+.item {
+  box-shadow: 3px 3px 5px 3px rgba(0, 0, 0, 0.2);
+}
+.card-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.page-index {
+  margin-left: 10px;
+  width: 15px;
+  height: 15px;
+  border-radius: 15px;
+  background: #7d7d7d;
+}
+.active {
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+}
+.verMas {
+  margin-left: 12px;
+  color: #676767;
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: underline #676767;
+  white-space: nowrap;
+}
+.btnMas {
+  white-space: normal;
+  background: #ffce4e;
+  background: -moz-linear-gradient(
+    45deg,
+    #00ddf5 0%,
+    #00d9d7 32%,
+    #00d6ba 100%
+  );
+  background: -webkit-linear-gradient(
+    45deg #00ddf5 0%,
+    #00d9d7 32%,
+    #ffce4e 100%
+  );
+  background: linear-gradient(45deg #00ddf5 0%, #00d9d7 32%, #ffce4e 100%);
+  -moz-border-radius: 20px;
+  -webkit-border-radius: 20px;
+  border-radius: 20px;
+  margin: -3px 0 0 0;
+  padding: 9px 7px 16px 8px;
+  width: 88%;
+  text-transform: none;
+  font-size: 14px;
+  line-height: 11px;
+  color: #fff;
+}
+#iconright {
+  height: 10rem;
+  width: 34px;
+  cursor: pointer;
+}
+.destacados {
+  color: rgb(255, 254, 254);
+}
+.card-body {
+  padding: 2px;
+}
+</style>
+

@@ -19,6 +19,7 @@
       <!--  <p class="parrafor">Al publicar está colaborando con Apaa de Brandsen</p> -->
     </div>
     <sliderPubli :publicidades="this.publicidadesSlider2" />
+    <CategoriasHomeImagenes/>
 
     <NuevoSlide />
     <sliderUltimasPublicaciones />
@@ -32,7 +33,7 @@
 
 <script>
 
-
+import CategoriasHomeImagenes from "@/components/categorias/CategoriasHomeImagenes.vue";
 import Slider from "@/components/Home/Slider.vue";
 import NuevoSlide from "@/components/Home/NuevoSlide.vue";
 import Sliderempresa from "@/components/Home/slideEmpresas.vue";
@@ -47,6 +48,7 @@ export default {
   name: "Home",
 
   components: {
+    CategoriasHomeImagenes,
     Slider,
     NuevoSlide,
     sliderServicios,

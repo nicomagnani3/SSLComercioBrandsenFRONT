@@ -342,7 +342,12 @@ export default {
       if (Number(this.empresa > Number(0))) {
         this.buscarPorEmpresa(this.empresa);
       } else {
-        this.getPublicacionesPorNombre();
+        if (this.categoria > Number(0)) {
+          this.buscarPorCategoria(this.categoria)
+        }else{
+                  this.getPublicacionesPorNombre();
+
+        }
       }
     }
   },
@@ -362,7 +367,12 @@ export default {
           this.buscarPorEmpresa(this.empresa);
 
         } else {
-          this.getPublicacionesPorNombre();
+             if (this.categoria > Number(0)) {
+          this.buscarPorCategoria(this.categoria)
+        }else{
+                    this.getPublicacionesPorNombre();
+
+        }
 
         }
       }
