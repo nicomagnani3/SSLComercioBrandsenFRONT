@@ -1,47 +1,6 @@
 <template>
 
  <div>
-<VueSlickCarousel v-bind="settings">
-  <div  class="img-wrapper">
-         <!-- <img :src="`./${i}-200x100.jpg`" />  -->
-         <img src="@/assets/simon2.png" />
-      </div>
-        <div  class="img-wrapper">
-         <!-- <img :src="`./${i}-200x100.jpg`" />  -->
-         <img src="@/assets/marquez.png" />
-      </div>
-        <div  class="img-wrapper">
-         <!-- <img :src="`./${i}-200x100.jpg`" />  -->
-         <img src="@/assets/simon2.png" />
-      </div>
-        <div  class="img-wrapper">
-         <!-- <img :src="`./${i}-200x100.jpg`" />  -->
-         <img src="@/assets/marquez.png" />
-      </div>
-        <div  class="img-wrapper">
-         <!-- <img :src="`./${i}-200x100.jpg`" />  -->
-         <img src="@/assets/simon2.png" />
-      </div>
-        <div  class="img-wrapper">
-         <!-- <img :src="`./${i}-200x100.jpg`" />  -->
-         <img src="@/assets/marquez.png" />
-      </div>
-        <div  class="img-wrapper">
-         <!-- <img :src="`./${i}-200x100.jpg`" />  -->
-         <img src="@/assets/simon2.png" />
-      </div>
-        <div  class="img-wrapper">
-         <!-- <img :src="`./${i}-200x100.jpg`" />  -->
-         <img src="@/assets/marquez.png" />
-      </div>
-        <div  class="img-wrapper">
-         <!-- <img :src="`./${i}-200x100.jpg`" />  -->
-         <img src="@/assets/simon2.png" />
-      </div>
-</VueSlickCarousel>
- 
-<br>
-
     <b-carousel
       id="carousel-1"
       v-model="slide"
@@ -68,14 +27,10 @@
 
 
 <script>
- import VueSlickCarousel from 'vue-slick-carousel'
-  import 'vue-slick-carousel/dist/vue-slick-carousel.css'
-  // optional style for arrows & dots
-  import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
+
 export default {
   name: "slider",
    components: { 
-     VueSlickCarousel 
    },
   props: {
     publicidades: {

@@ -46,13 +46,13 @@
                   :img-src="producto.imagen"
                   img-alt="Responsive image"
                   img-top
-                  class="cardImagen"
+                 
                   alt="Responsive image"
                 >
                   <div class="cortar" @click="verProducto(producto)">
                     <strong> {{ producto.nombre }}</strong>
                   </div>
-                  <div slot="footer">
+                  <div slot="footer" class="d-flex justify-content-center">
                     <a
                       variant="white"
                       v-if="producto.empresa != null"
@@ -194,7 +194,6 @@ export default {
       }
     },
     seleccionarRubros(empresas) {
-      console.log(empresas);
       let mc = empresas.map((e) => ({
         id: e.rubroId,
         nombre: e.rubroNombre,

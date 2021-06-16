@@ -355,8 +355,6 @@ export default {
             this.limpiarCampos();
           }
         } catch (error) {
-          console.log(error);
-
           this.$bvToast.toast(`No se pudo crear la publicacion`, {
             title: error.response.data,
             toaster: "b-toaster-top-center",
@@ -379,7 +377,6 @@ export default {
       return mc;
     },
     foptionsRubro() {
-      console.log(this.rubros);
       let mc = this.rubros.map((e) => ({
         id: e.id,
         label: e.nombre,

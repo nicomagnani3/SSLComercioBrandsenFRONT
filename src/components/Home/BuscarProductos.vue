@@ -388,7 +388,6 @@ export default {
         });
         if (response.data.error == false) {
           this.productos = response.data.data;
-          console.log(this.productos)
           this.mostrarCartelSinPublicaicones();
           this.loading = false;
         }
