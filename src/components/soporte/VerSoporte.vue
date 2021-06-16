@@ -131,9 +131,9 @@
                 los distintos servicios.<br />
                <a      class="linkusers"    target="_black" href="https://drive.google.com/file/d/1rOVR-LPGD9PpWhqXmZ0EU4CScgI0UsOX/view"> Empresas y Comercios</a><br />
              <br>
-               <a     class="linkusers"    target="_black" href="https://drive.google.com/file/d/1YosGSgUTCPo5XNp6hq0W1CBEiTjVDJ2X/view?usp=sharing" >Profesionales y Servicios</a><br />
+               <a     class="linkusers"    target="_black" href="https://drive.google.com/file/d/1YOxbN7LVq9Gyl6L7irL0c_dBHUtdJ3B-/view" >Profesionales y Servicios</a><br />
                     <br>
-               <a    class="linkusers"     target="_black" href="https://drive.google.com/file/d/17uSQnQcE7kR_SG7NRDsR7FLMH-QdrWCB/view?usp=sharing" > Emprendedores</a><br />
+               <a    class="linkusers"     target="_black" href="https://drive.google.com/file/d/17uSQnQcE7kR_SG7NRDsR7FLMH-QdrWCB/view" > Emprendedores</a><br />
                    <br> 
               <a    class="linkusers"     target="_black" href="https://drive.google.com/file/d/1cuhhsvNDK2Cbi2GNfZBEX1ftw4KTPQE9/view?usp=sharing" >  Usuarios Generales</a><br>
               </p>
