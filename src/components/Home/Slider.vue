@@ -84,8 +84,8 @@ export default {
           {
             breakpoint: 480,
             settings: {
-              slidesToShow: 1,
-              slidesToScroll: 1,
+              slidesToShow: 3,
+              slidesToScroll: 2,
                infinite: true,
               speed: 6000,
               autoplaySpeed: 2000,
@@ -111,13 +111,9 @@ export default {
 
 
 <style scoped>
-@media all and (max-width: 480px) {
-  .itemCarrusel {
-    width: 124px;
-    height: auto;
-    margin-left:8px;
-    margin-right: 5px;
-    justify-content: center;
+@media only screen and (max-width: 480px) {
+  img {
+    width: 90%;
   }
 }
 .carousel-wrapper {
