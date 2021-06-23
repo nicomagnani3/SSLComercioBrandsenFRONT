@@ -1,6 +1,15 @@
 <template>
-
+  <div>
  <div>
+    <VueSlickCarousel v-bind="settings">
+      <div><img src="@/assets/correa.png" fluid alt="Responsive image"  /></div>
+      <div><img src="@/assets/ford.png" /></div>
+      <div><img src="@/assets/marquez.png" /></div>
+      <div><img src="@/assets/trivilin.png" /></div>
+      <div><img src="@/assets/viceconte.png" /></div>
+      <div><img src="@/assets/ecobolsa.png" /></div>
+    </VueSlickCarousel>
+ </div>
     <b-carousel
       id="carousel-1"
       v-model="slide"
@@ -19,19 +28,20 @@
           ></b-carousel-slide>
         </a>
       </div>
-    </b-carousel> 
-</div>
-
+    </b-carousel>
+  </div>
 </template>
 
 
 
 <script>
-
+import VueSlickCarousel from "vue-slick-carousel";
+import "vue-slick-carousel/dist/vue-slick-carousel.css";
+// optional style for arrows & dots
+import "vue-slick-carousel/dist/vue-slick-carousel-theme.css";
 export default {
   name: "slider",
-   components: { 
-   },
+  components: { VueSlickCarousel },
   props: {
     publicidades: {
       type: Array,
@@ -41,46 +51,51 @@ export default {
     return {
       slide: 0,
       sliding: null,
-      settings:{        
-  "arrows": false,
-  "dots": true,
-  "infinite": true,
-  "slidesToShow": 5,
-  "slidesToScroll": 1,
-  "autoplay": true,
-  "speed": 6000,
-  "autoplaySpeed": 2000,
-  "cssEase": "linear",
-   "responsive": [
-    {
-      "breakpoint": 1024,
-      "settings": {
-        "slidesToShow": 3,
-        "slidesToScroll": 2,
-        "infinite": true,
-         "speed": 6000,
-  "autoplaySpeed": 2000,
-        "dots": true
-      }
-    },
-    {
-      "breakpoint": 600,
-      "settings": {
-        "slidesToShow": 2,
-        "slidesToScroll": 2,
-        "initialSlide": 2
-      }
-    },
-    {
-      "breakpoint": 480,
-      "settings": {
-        "slidesToShow": 2,
-        "slidesToScroll": 2
-      }
-    }
-  ]
-
-      }
+      settings: {
+        arrows: false,
+        dots: true,
+        infinite: true,
+        slidesToShow: 4,
+        slidesToScroll: 1,
+      autoplay:true,
+        speed: 6000,
+        autoplaySpeed: 2000,
+        cssEase: "linear",
+        responsive: [
+          {
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 3,
+              slidesToScroll: 2,
+              infinite: true,
+              speed: 6000,
+              autoplaySpeed: 2000,
+              dots: true,
+            },
+          },
+          {
+            breakpoint: 600,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 2,
+              initialSlide: 2,
+            },
+          },
+          {
+            breakpoint: 480,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+               infinite: true,
+              speed: 6000,
+              autoplaySpeed: 2000,
+              dots: true,
+               centerPadding: "20px",
+              
+            },
+          },
+        ],
+      },
     };
   },
   created() {},
@@ -96,9 +111,19 @@ export default {
 
 
 <style scoped>
+@media all and (max-width: 480px) {
+  .itemCarrusel {
+    width: 124px;
+    height: auto;
+    margin-left:8px;
+    margin-right: 5px;
+    justify-content: center;
+  }
+}
 .carousel-wrapper {
   padding: 40px;
 }
+
 .img-wrapper img {
   margin: auto;
   width: 240px;
