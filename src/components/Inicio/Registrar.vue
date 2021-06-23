@@ -511,7 +511,12 @@ export default {
       try {
         const response = await AuthenticationService.tiposUsuarios();
         if (response.data.error == false) {
-          this.tiposUsuarios = response.data.data;
+          console.log(response.data.data)
+     
+      this.tiposUsuarios = response.data.data.filter(
+        (c) => c.id != 4
+      );
+    
         }
       } catch (err) {
         this.rubros =
