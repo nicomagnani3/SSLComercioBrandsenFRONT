@@ -40,13 +40,13 @@
             <div class="col-md-9">
               <b-card-group columns>
                 <b-card
-                  style="max-width: 283px"
+                  style="max-width: 283px;    "
                   v-for="producto in paginatedCards"
                   :key="producto.id"
                   :img-src="producto.imagen"
                   img-alt="Responsive image"
                   img-top
-                 
+                 class="cardGuia"
                   alt="Responsive image"
                 >
                   <div class="cortar" @click="verProducto(producto)">
@@ -145,7 +145,7 @@ export default {
       indeterminate: false,
       selected: null,
       currentPage: 1,
-      perPage: 6,
+      perPage:12,
       productoSeleccionado: [],
     };
   },
@@ -390,5 +390,9 @@ export default {
   background-color: #2980b9;
   color: white;
   transform: rotateY(180deg);
+}
+.cardGuia img {
+  max-height: 209px;
+  max-width: 280px;
 }
 </style>

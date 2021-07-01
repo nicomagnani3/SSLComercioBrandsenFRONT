@@ -172,7 +172,7 @@
             <b-col lg="8" md="6">
               <b-form-group
                 id="URL-label"
-                label="URL de la imagen (tamaño 300x250):"
+                label="URL de la imagen (tamaño 350x250):"
                 label-for="URL"
               >
                 <ValidationProvider
@@ -243,6 +243,55 @@
         </b-card>
       </b-container>
     </ValidationObserver>
+    <b-container class="pb-3">
+      <b-card
+        class="mb-3"
+        header="Agregar un rubro"
+        border-variant="success"
+        header-border-variant="success"
+        header-bg-variant="transparent"
+      >
+        <b-row>
+          <b-col lg="8" md="6">
+            <b-form-group
+              id="NombreRubro"
+              label="Nombre del rubro:"
+              label-for="NombreRubro"
+            >
+              <ValidationProvider
+                :name="'NombreRubro '"
+                v-slot="{ errors, valid }"
+              >
+                <b-form-input
+                  size="sm"
+                  v-model="nombreRubro"
+                  :state="errors[0] ? false : valid ? true : null"
+                ></b-form-input>
+                <b-form-invalid-feedback
+                  v-for="error in errors"
+                  :key="error.key"
+                >
+                  {{ error }}
+                </b-form-invalid-feedback>
+              </ValidationProvider>
+            </b-form-group>
+          </b-col>
+        </b-row>
+        <b-row>
+          <b-col class="text-center">
+            <br />
+            <b-button
+              @click="crearRubro()"
+              type="primary"
+              style="width: 274px"
+              variant="success"
+              :required="!nombreRubro"
+              >Agregar Rubro
+            </b-button>
+          </b-col>
+        </b-row>
+      </b-card>
+    </b-container>
   </div>
 </template>
 
@@ -250,6 +299,8 @@
 <script>
 import AuthenticationService from "@/services/AuthenticationService";
 import PublicidadService from "@/services/PublicidadService";
+import RubroService from "@/services/RubroService";
+
 import "vue-select/dist/vue-select.css";
 import PublicacionService from "@/services/PublicacionService";
 import axios from "axios";
@@ -267,7 +318,8 @@ export default {
       tipoSeleccionado: 1,
       empresaSelected: null,
       mostrarAlertEmpresa: false,
-      mostrarAlertrubro:false,
+      mostrarAlertrubro: false,
+      nombreRubro: null,
       result2: "",
       options: [
         { value: null, text: "-- Seleccione tipo publicidad--" },
@@ -305,8 +357,8 @@ export default {
       this.mostrarAlertEmpresa = false;
       this.empresaNueva.nombre = this.empresaSelected.nombre;
     },
-    cambiarSeleccionRubro(){
-        this.mostrarAlertrubro = false;
+    cambiarSeleccionRubro() {
+      this.mostrarAlertrubro = false;
       this.rubroNuevo.nombre = this.rubroSelected.nombre;
     },
     limpiarCampos() {
@@ -315,7 +367,7 @@ export default {
       this.empresaNueva.observaciones = "";
       this.empresaNueva.id = "";
       this.empresaSelected = null;
-      this.rubroSelected=null;
+      this.rubroSelected = null;
     },
     async getRubros() {
       this.loading = true;
@@ -329,6 +381,35 @@ export default {
         this.loading = false;
       }
     },
+    async crearRubro() {
+      if (this.nombreRubro != null) {
+        try {
+          const response = await RubroService.addRubro({
+            nombre: this.nombreRubro,
+         
+          });
+          if (response.data.error == false) {
+            this.$root.$bvToast.toast(
+              "Se creo con exito el rubro",
+              {
+                title: "Atencion!",
+                toaster: "b-toaster-top-center",
+                solid: true,
+                variant: "success",
+              }
+            );
+            this.getRubros();
+          }
+        } catch (error) {
+          this.$bvToast.toast(`No se pudo crear el rubro`, {
+            title: error.response.data,
+            toaster: "b-toaster-top-center",
+            solid: true,
+            variant: "danger",
+          });
+        }
+      }
+    },
     async crearPublicidad() {
       let result = await this.$refs.crearPublicidad.validate();
       if (result) {
@@ -340,11 +421,11 @@ export default {
             observaciones: this.empresaNueva.observaciones,
             idEmpresa:
               this.empresaSelected == null ? null : this.empresaSelected.id,
-            idRubro:  this.rubroSelected == null ? null : this.rubroSelected.id,
+            idRubro: this.rubroSelected == null ? null : this.rubroSelected.id,
           });
           if (response.data.error == false) {
             this.$root.$bvToast.toast(
-              "Se creo con exito la publicacion, gracias por confiar en MALAMBO",
+              "Se creo con exito la publicacion en la guia comercial",
               {
                 title: "Atencion!",
                 toaster: "b-toaster-top-center",
@@ -364,7 +445,7 @@ export default {
         }
       } else {
         this.mostrarAlertEmpresa = true;
-          this.mostrarAlertrubro = true;
+        this.mostrarAlertrubro = true;
       }
     },
   },

@@ -47,9 +47,6 @@
             <div v-else>
               <br>
             </div>
-         
-
-            <small>{{ producto.padre }}</small>
             <div slot="footer">
               <b-btn
                 @click="verProducto(producto)"
