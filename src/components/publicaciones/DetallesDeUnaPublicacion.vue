@@ -1,21 +1,22 @@
 <template>
   <div>
-    <p>Se publico el dia : {{ publicacion.fecha | formatDate }}</p>
+   <!--  <p>Se publico el dia : {{ publicacion.fecha | formatDate }}</p>
     <p>Tipo de publicacion: {{ publicacion.tipo }}</p>
     Categoria :<span class="buscador" style="color: #ffc107" @click="buscarCategoria(publicacion.padre)"> {{ publicacion.padre }}</span>
     
     <p v-if="Number(publicacion.precio) > Number(0)">
       Precio: {{ getImporte(publicacion.precio) }}
-    </p>   
-    <div>
-    <br>
-      <h4>Detalles :</h4><p style="  white-space: pre-wrap;"> <strong>{{ publicacion.descripcion }}</strong></p>
+    </p>    -->
+    <div>   
+      <p style="  white-space: pre-wrap;"> {{ publicacion.descripcion }}</p>
+      <p v-if="Number(publicacion.precio) > Number(0)">
+     <strong> Precio:</strong> {{ getImporte(publicacion.precio) }}
+    </p> 
     </div>
-     <div v-if="logeado">
-         <br>
-      <p>Datos de contacto:</p>
+     <div>   
+      <p> <strong>Contacto:</strong></p>
       <a
-        v-if="publicacion.telefono != null && logeado"
+        v-if="publicacion.telefono != null "
         :href="
           'https://api.whatsapp.com/send?text=Hola!%20,desde%20Malambo%20observe%20la%20publicacion%20' +
           publicacion.titulo +
@@ -26,11 +27,11 @@
         target="_black"
       >
         <img
-          v-if="logeado && publicacion.telefono != null"
+          v-if=" publicacion.telefono != null"
           src="@/assets/wsp.png"
           alt=""
           height="auto"
-          style="width: 45px; margin: 4px"
+          style="width: 40px; margin: 4px"
         />&nbsp;&nbsp;
       </a>
       <a
@@ -46,19 +47,15 @@
         target="_black"
         >&nbsp;&nbsp;
         <img
-          v-if="logeado"
+          v-if="publicacion.email != null"
           src="@/assets/mail.png"
           alt=""
           height="auto"
-          style="width: 45px; margin: 4px"
+          style="width: 40px; margin: 4px"
         />
       </a>
     </div>
-    <div v-else>  
-        <h5>
-      Para contactarte registrate
-      <router-link to="/login">ACA!</router-link></h5>
-    </div>
+    
   </div>
 </template>
 
@@ -70,10 +67,7 @@ export default {
     publicacion: {
       type: Object,
     },
-    logeado: {
-      type: Boolean,
     },
-  },
   data() {
     return {
       loading: true,

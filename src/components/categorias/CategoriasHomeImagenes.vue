@@ -30,7 +30,7 @@
               @click="verProducto(producto)"
               alt="Responsive image"
               class="ItemProd"
-              style="max-width: 150px; background-color: #ebebeb; border: 0px;"
+              style="max-width: 150px; background-color: #ebebeb; border: 0px"
               :img-src="producto.imagen"
             >
               <div class="cortar" @click="verProducto(producto)">
@@ -157,7 +157,7 @@ export default {
         const response = await CategoriasService.getCategorias();
         if (response.data.error == false) {
           this.productos = response.data.data;
-          
+
           //this.getImporte(this.productos);
         }
       } catch (err) {
@@ -181,29 +181,20 @@ export default {
       return string.charAt(0).toUpperCase() + string.slice(1);
     },
     verProducto(producto) {
-      if (this.getUserId == null) {
-        this.$router.push({
-          name: "login",
-          params: {
-            autentificacion: false,
-          },
-        });
-      } else {
-        if (producto != null) {
-          const path = `/buscarProductos/${producto.id}`;
-          if (this.$route.path !== path)
-            this.$router.push({
-              name: "buscarProductos",
-              query: {
-            q: this.searchQuery,
-            t: new Date().getTime(),
-          },
-              params: {
-                producto: producto.nombre,
-                categoria:producto.id
-              },
-            });
-        }
+      if (producto != null) {
+        const path = `/buscarProductos/${producto.id}`;
+        if (this.$route.path !== path)
+          this.$router.push({
+            name: "buscarProductos",
+            query: {
+              q: this.searchQuery,
+              t: new Date().getTime(),
+            },
+            params: {
+              producto: producto.nombre,
+              categoria: producto.id,
+            },
+          });
       }
     },
   },
@@ -254,7 +245,7 @@ export default {
 
 .ItemProd img {
   object-fit: contain;
-      cursor: pointer;
+  cursor: pointer;
 }
 
 .item {

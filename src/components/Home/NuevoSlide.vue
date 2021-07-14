@@ -4,7 +4,7 @@
       <b-col cols="1"></b-col>
       <b-col cols="8">
         <div class="h3 font-britannic text widget-title destacados">
-          <strong class="parraforTitProd badge badge-primary" 
+          <strong class="parraforTitProd badge badge-primary"
             >Productos y comercios destacados</strong
           >
           <a v-if="!loading" @click="verDestacados()" class="verMas">ver mas</a>
@@ -44,9 +44,9 @@
               style="max-width: 250px"
               :img-src="`data:image/png;base64, ${producto.imagen}`"
             >
-               <div class="cortar" @click="verProducto(producto)">
-              <strong  > {{ tituloAjustar(producto.titulo) }}</strong>
-            </div>
+              <div class="cortar" @click="verProducto(producto)">
+                <strong> {{ tituloAjustar(producto.titulo) }}</strong>
+              </div>
               <p>
                 <small>
                   {{ getImporte(producto.precio) }}
@@ -207,24 +207,15 @@ export default {
       return string.charAt(0).toUpperCase() + string.slice(1);
     },
     verProducto(producto) {
-      if (this.getUserId == null) {
-        this.$router.push({
-          name: "login",
-          params: {
-            autentificacion: false,
-          },
-        });
-      } else {
-        if (producto != null) {
-          const path = `/buscarProductos/${producto.titulo}`;
-          if (this.$route.path !== path)
-            this.$router.push({
-              name: "buscarProductos",
-              params: {
-                producto: producto.titulo,
-              },
-            });
-        }
+      if (producto != null) {
+        const path = `/buscarProductos/${producto.titulo}`;
+        if (this.$route.path !== path)
+          this.$router.push({
+            name: "buscarProductos",
+            params: {
+              producto: producto.titulo,
+            },
+          });
       }
     },
   },
@@ -244,25 +235,25 @@ export default {
 
 
 <style scoped>
-.cortar{
-     font-weight: 700;
-    display: block;
-    display: -webkit-box;
-    height: 46px;
-    margin: 0;
-    /* text-align: left; */
-    cursor: pointer;
-    font-size: 13px;
-    line-height: 18px;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-overflow: -o-ellipsis-lastline;
-    white-space: normal;
-    padding-top: 10px;
-    color: #2C354F;
-    max-width: 191px;
+.cortar {
+  font-weight: 700;
+  display: block;
+  display: -webkit-box;
+  height: 46px;
+  margin: 0;
+  /* text-align: left; */
+  cursor: pointer;
+  font-size: 13px;
+  line-height: 18px;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-overflow: -o-ellipsis-lastline;
+  white-space: normal;
+  padding-top: 10px;
+  color: #2c354f;
+  max-width: 191px;
 }
 .texto {
   color: rgb(226, 205, 199);

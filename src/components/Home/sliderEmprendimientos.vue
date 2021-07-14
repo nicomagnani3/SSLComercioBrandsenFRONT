@@ -4,7 +4,9 @@
       <b-col cols="1"></b-col>
       <b-col cols="8">
         <div class="h3 font-britannic text widget-title destacados">
-          <strong class="parraforTitProd badge badge-primary"  > Emprendimientos destacados</strong>
+          <strong class="parraforTitProd badge badge-primary">
+            Emprendimientos destacados</strong
+          >
           <a v-if="!loading" @click="verDestacados()" class="verMas">ver mas</a>
         </div>
       </b-col>
@@ -177,7 +179,8 @@ export default {
     },
     async getPorductos() {
       try {
-        const response = await EmprendimientoService.getPublicacionEmprendimientos();
+        const response =
+          await EmprendimientoService.getPublicacionEmprendimientos();
         if (response.data.error == false) {
           this.productos = response.data.data;
         }
@@ -202,24 +205,15 @@ export default {
       return string.charAt(0).toUpperCase() + string.slice(1);
     },
     verProducto(producto) {
-      if (this.getUserId == null) {
-        this.$router.push({
-          name: "login",
-          params: {
-            autentificacion: false,
-          },
-        });
-      } else {
-        if (producto != null) {
-          const path = `/buscarProductos/${producto.titulo}`;
-          if (this.$route.path !== path)
-            this.$router.push({
-              name: "buscarProductos",
-              params: {
-                producto: producto.titulo,
-              },
-            });
-        }
+      if (producto != null) {
+        const path = `/buscarProductos/${producto.titulo}`;
+        if (this.$route.path !== path)
+          this.$router.push({
+            name: "buscarProductos",
+            params: {
+              producto: producto.titulo,
+            },
+          });
       }
     },
   },

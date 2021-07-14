@@ -100,24 +100,18 @@
                       <!--  <a target="_black" :href="producto.web">{{
                       producto.web
                     }}</a> -->
-                      <p v-if="producto.telefono != null && logeado">
+                      <p v-if="producto.telefono != '' && producto.telefono != null">
                         Telefono: <strong>{{ producto.telefono }}</strong>
                       </p>
                       <p
                         style="white-space: nowrap"
-                        v-if="producto.email != null && logeado"
+                        v-if="producto.email != null"
                       >
                         <strong>{{ producto.email }}</strong>
-                      </p>
-                      <div v-if="!logeado">
-                        <p style="white-space: nowrap">
-                          Para contactarte registrate
-                          <router-link to="/login">ACA!</router-link>
-                        </p>
-                      </div>
-                      <div v-else>
+                      </p>                     
+                      <div>
                         <a
-                          v-if="producto.telefono != null && logeado"
+                          v-if="producto.telefono != null "
                           :href="
                             'https://api.whatsapp.com/send?text=Hola!%20,desde%20Malambo%20observe%20la%20publicacion%20' +
                             producto.titulo +
@@ -128,11 +122,11 @@
                           target="_black"
                         >
                           <img
-                            v-if="logeado && producto.telefono != null"
+                            v-if=" producto.telefono != null"
                             src="@/assets/wsp.png"
                             alt=""
                             height="auto"
-                            style="width: 45px; margin: 4px"
+                            style="width: 43px; margin:2px"
                           />&nbsp;&nbsp;
                         </a>
                         <a
@@ -148,7 +142,7 @@
                           target="_black"
                           >&nbsp;&nbsp;
                           <img
-                            v-if="logeado"
+                          
                             src="@/assets/mail.png"
                             alt=""
                             height="auto"
@@ -193,7 +187,7 @@
                           src="@/assets/web.png"
                           alt=""
                           height="auto"
-                          style="width: 45px; margin: 4px"
+                          style="width: 43px; margin: 5px"
                         />&nbsp;&nbsp;
                       </a>
                     </b-card-body>
@@ -243,7 +237,7 @@
           title="Imagenes de la publicacion"
           centered
           id="modal-xl"
-          size="xl"
+         
           ref="modalVerImagenes"
           hide-footer
           ok-only
@@ -262,12 +256,12 @@
           centered
           ref="modalVerProductos"
           ok-only
-          size="xl"
+         
         >
           <DetallesDeUnaPublicacion
             @okDetalles="okDetalles"
             :publicacion="this.productoSeleccionado"
-            :logeado="this.logeado"
+            
           ></DetallesDeUnaPublicacion>
         </b-modal>
       </div>
@@ -316,7 +310,7 @@ export default {
     return {
       mostrarNoHayPublicaciones: false,
       tipoPublicacion: "",
-      logeado: false,
+
       verImagen: false,
       productoSeleccionado: [],
       perPage: 2,
@@ -330,9 +324,7 @@ export default {
     };
   },
   created() {
-    if (this.getUserId != null) {
-      this.logeado = true;
-    }
+ 
     this.getcategorias();
     this.getEmprendimientos();
     this.getServicios();

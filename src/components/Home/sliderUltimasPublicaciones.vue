@@ -21,49 +21,47 @@
       </b-spinner>
     </div>
     <div v-else class="animated fadeIn">
-            <b-container fluid="sm">
-
-      <b-row class="text-center" cols="2" cols-sm="8" cols-md="8" cols-lg="5">
-        <b-col
-          v-for="(producto, index) in currentPageClubs"
-          :key="index"
-          class="mb-2"
-        >
-          <b-card
-            class="ItemProd"
-            style="max-width: 250px"
-            :img-src="`data:image/png;base64, ${producto.imagen}`"
-            img-height="250px; max-height:100%;"
-            alt="Responsive image"
+      <b-container fluid="sm">
+        <b-row class="text-center" cols="2" cols-sm="8" cols-md="8" cols-lg="5">
+          <b-col
+            v-for="(producto, index) in currentPageClubs"
+            :key="index"
+            class="mb-2"
           >
-            <div class="cortar" @click="verProducto(producto)">
-              <strong> {{ tituloAjustar(producto.titulo) }}</strong>
-            </div>
-            <div v-if="Number(producto.precio) > Number(0)">
-                 <p  class="card-text">              
-              {{ getImporte(producto.precio) }}
-                 </p>
-            </div>
-            <div v-else>
-              <br>
-            </div>
-            <div slot="footer">
-              <b-btn
-                @click="verProducto(producto)"
-                variant="warning"
-                block
-                class="btnMas"
-                >Ver mas</b-btn
-              >
-            </div>
-          </b-card>
-        </b-col>
-      </b-row>
-            </b-container>
+            <b-card
+              class="ItemProd"
+              style="max-width: 250px"
+              :img-src="`data:image/png;base64, ${producto.imagen}`"
+              img-height="250px; max-height:100%;"
+              alt="Responsive image"
+            >
+              <div class="cortar" @click="verProducto(producto)">
+                <strong> {{ tituloAjustar(producto.titulo) }}</strong>
+              </div>
+              <div v-if="Number(producto.precio) > Number(0)">
+                <p class="card-text">
+                  {{ getImporte(producto.precio) }}
+                </p>
+              </div>
+              <div v-else>
+                <br />
+              </div>
+              <div slot="footer">
+                <b-btn
+                  @click="verProducto(producto)"
+                  variant="warning"
+                  block
+                  class="btnMas"
+                  >Ver mas</b-btn
+                >
+              </div>
+            </b-card>
+          </b-col>
+        </b-row>
+      </b-container>
     </div>
-  <br>  
+    <br />
   </div>
-  
 </template>
 
 
@@ -154,7 +152,7 @@ export default {
     async getPorductos() {
       try {
         const response = await ProductosService.getUltimasPublicaciones();
-     
+
         if (response.data.error == false) {
           this.productos = response.data.data;
           //this.getImporte(this.productos);
@@ -180,24 +178,15 @@ export default {
       return string.charAt(0).toUpperCase() + string.slice(1);
     },
     verProducto(producto) {
-      if (this.getUserId == null) {
-        this.$router.push({
-          name: "login",
-          params: {
-            autentificacion: false,
-          },
-        });
-      } else {
-        if (producto != null) {
-          const path = `/buscarProductos/${producto.titulo}`;
-          if (this.$route.path !== path)
-            this.$router.push({
-              name: "buscarProductos",
-              params: {
-                producto: producto.titulo,
-              },
-            });
-        }
+      if (producto != null) {
+        const path = `/buscarProductos/${producto.titulo}`;
+        if (this.$route.path !== path)
+          this.$router.push({
+            name: "buscarProductos",
+            params: {
+              producto: producto.titulo,
+            },
+          });
       }
     },
   },

@@ -33,32 +33,27 @@
                     <b-card-body>
                       <h5>
                         <strong style="white-space: pre-wrap"
-                          >{{ producto.titulo }} </strong
-                        >
+                          >{{ producto.titulo }}
+                        </strong>
                       </h5>
                       <strong class="parrafor">{{ producto.padre }}</strong>
                       <hr />
-                     <h5 v-if="Number(producto.precio) > Number(0)">
+                      <h5 v-if="Number(producto.precio) > Number(0)">
                         {{ getImporte(producto.precio) }}
                       </h5>
-  <p v-if="producto.telefono != null && logeado">
+                      <p v-if="producto.telefono != null">
                         Telefono: <strong>{{ producto.telefono }}</strong>
                       </p>
                       <p
                         style="white-space: nowrap"
-                        v-if="producto.email != null && logeado"
+                        v-if="producto.email != null"
                       >
                         <strong>{{ producto.email }}</strong>
                       </p>
-                      <div v-if="!logeado">
-                        <p style="white-space: nowrap">
-                          Para contactarte registrate
-                          <router-link to="/login">ACA!</router-link>
-                        </p>
-                      </div>
-                      <div v-else>
+                     
+                      <div >
                         <a
-                          v-if="producto.telefono != null && logeado"
+                          v-if="producto.telefono != null "
                           :href="
                             'https://api.whatsapp.com/send?text=Hola!%20,desde%20Malambo%20observe%20la%20publicacion%20' +
                             producto.titulo +
@@ -69,7 +64,7 @@
                           target="_black"
                         >
                           <img
-                            v-if="logeado && producto.telefono != null"
+                            v-if=" producto.telefono != null"
                             src="@/assets/wsp.png"
                             alt=""
                             height="auto"
@@ -89,7 +84,7 @@
                           target="_black"
                           >&nbsp;&nbsp;
                           <img
-                            v-if="logeado"
+                           
                             src="@/assets/mail.png"
                             alt=""
                             height="auto"
@@ -151,7 +146,7 @@
           title="Imagenes de la publicacion"
           centered
           id="modal-xl"
-          size="xl"
+     
           ref="modalVerImagenes"
           hide-footer
         >
@@ -169,12 +164,12 @@
           centered
           ref="modalVerProductos"
           ok-only
-          size="xl"
+         
         >
           <DetallesDeUnaPublicacion
             @okDetalles="okDetalles"
             :publicacion="this.productoSeleccionado"
-            :logeado="this.logeado"
+            
           ></DetallesDeUnaPublicacion>
         </b-modal>
       </div>
@@ -204,7 +199,7 @@ export default {
   data() {
     return {
       tipoPublicacion: "",
-      logeado: false,
+      
       verImagen: false,
       productoSeleccionado: [],
       perPage: 2,
@@ -213,9 +208,7 @@ export default {
     };
   },
   created() {
-    if (this.getUserId != null) {
-      this.logeado = true;
-    }
+  
   },
   computed: {
     ...mapGetters("storeUser", ["getUserId"]),

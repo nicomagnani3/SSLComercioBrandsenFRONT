@@ -1,7 +1,7 @@
 <template>
   <div v-if="loading" class="text-center">
     <b-spinner
-       style="width: 7rem; height: 7rem"
+      style="width: 7rem; height: 7rem"
       variant="warning"
       label="Text Centered"
     >
@@ -10,52 +10,21 @@
 
   <div v-else>
     <b-row class="text-center">
-      <b-col class="d-none d-sm-none d-md-block">
-        <div class="d-none d-sm-none d-md-block">
-          <b-icon
-            @click="backPage()"
-            :class="{ active: pagina() }"
-            icon="arrow-left-circle-fill"
-            id="iconright"
-          >
-          </b-icon>
-        </div>
-      </b-col>
-      <b-col cols="10">
+      <b-col cols="12">
         <b-card-group autoplay deck>
           <b-card
             v-for="(producto, index) in imagenes"
             :key="index"
+            no-body
             :img-src="`data:image/png;base64, ${producto.imagen}`"
-            img-height="300px; max-height:100%;"
-            class="ItemProd"
-            style="max-width: 350px;cursor: pointer"
+            img-top
+            class="cardGuia"
+            style="cursor: pointer; max-width: 283px"
             alt="Responsive image"
             @click="verImagen(producto.imagen)"
           >
           </b-card>
         </b-card-group>
-
-        <div class="card-pagination">
-          <div
-            class="page-index"
-            v-for="i in nbPages"
-            :key="i"
-            @click="goto(i)"
-            :class="{ active: currentPage(i) }"
-          ></div>
-        </div>
-      </b-col>
-      <b-col class="d-none d-sm-none d-md-block">
-        <div class="d-none d-sm-none d-md-block">
-          <b-icon
-            @click="nexPage()"
-            :class="{ active: pagina() }"
-            icon="arrow-right-circle-fill"
-            id="iconright"
-          >
-          </b-icon>
-        </div>
       </b-col>
     </b-row>
     <hr />
@@ -63,7 +32,7 @@
       <b-img
         fluid
         alt="Responsive image"
-        style="max-height: 600px; width: 450px"
+        style="max-height: 450px; width: 450px"
         class="rounded-0"
         :src="`data:image/png;base64,${this.imgSlider()}`"
       ></b-img>
@@ -74,7 +43,6 @@
 <script>
 import axios from "axios";
 import PublicacionService from "@/services/PublicacionService";
-
 
 export default {
   name: "imagenesDeUnaPublicacion",
@@ -173,6 +141,10 @@ export default {
 <style scoped>
 .ItemProd img {
   object-fit: contain;
+}
+.cardGuia img {
+  max-height: 209px;
+  max-width: 280px;
 }
 </style>>
 
