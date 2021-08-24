@@ -68,7 +68,7 @@ html,
 body {
   width: auto !important;
   overflow-x: hidden ;
-  
+  font-family: 'Roboto';
 }
 .logoBig {
   width: 30%;
@@ -79,7 +79,10 @@ body {
 }
 @import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
 body {
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Roboto", sans-serif !important;
+}
+p{
+  font-family: "Roboto" !important
 }
 .contenedor1 {
   

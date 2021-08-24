@@ -72,6 +72,15 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "NuevoSlide",
+props: {
+    productos:{ 
+      type: Array,
+    },
+     nuevaPublicacion:{ 
+      type: Boolean,
+      default:false
+    },
+},
   data() {
     return {
       paginatedClubs: [],
@@ -80,11 +89,16 @@ export default {
       nbRowPerPage: 10,
       currentPageIndex: 0,
       indice: 1,
-      productos: [],
       loading: true,
     };
   },
   components: {},
+  created (){
+    console.log(this.nuevaPublicacion)
+    if (this.nuevaPublicacion){
+      this.getPorductos()
+    }
+  },
   computed: {
     ...mapGetters("storeUser", ["getUserId"]),
     currentPageClubs() {
@@ -192,7 +206,7 @@ export default {
   },
   mounted() {
     axios
-      .all([this.getPorductos()])
+      .all([/* this.getPorductos() */])
       .then(() => {
         this.loading = false;
       })

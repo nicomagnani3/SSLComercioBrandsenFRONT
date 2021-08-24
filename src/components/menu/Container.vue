@@ -7,7 +7,7 @@
   <div v-else class="contenedor">
     <div class="wrapper">
       <Menu  />
-      <router-view class="content" />
+      <router-view class="content" :productos="productos" />
     </div>
     <Publicidad :publicidades="this.publicidadesSlider4" />
     <Footer class="footer" />
@@ -19,6 +19,7 @@ import Footer from "@/components/menu/Footer.vue";
 import Menu from "@/components/menu/Menu.vue";
 import Publicidad from "@/components/Home/EspacioPublicidad.vue";
 import PublicidadService from "@/services/PublicidadService";
+import PublicacionService from "@/services/PublicacionService";
 
 import axios from "axios";
 
@@ -34,6 +35,8 @@ export default {
       loading: true,
       publicidades: [],
       publicidadesSlider4: [],
+     productos: [],
+
     
     };
   },
@@ -83,10 +86,27 @@ export default {
     asignarPublicidades4(publicidades) {
       this.publicidadesSlider4 = publicidades.filter((c) => c.ubicacion == 4);
     },
+    async getPorductos() {
+      this.loading = true;
+      try {
+        const response = await PublicacionService.getUltimasPublicaciones();
+        if (response.data.error == false) {
+          this.productos = response.data.data;
+          //this.getImporte(this.productos);
+        }
+      } catch (err) {
+        console.log(err)
+        this.loading = true;
+        this.getPorductos();
+        this.productos = "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS";
+      } finally {
+        this.loading = false;
+      }
+    },
   },
   mounted() {
     axios
-      .all([this.getPublicidades(),])
+      .all([this.getPublicidades(),this.getPorductos()])
       .then(() => {
         this.loading = false;
       })

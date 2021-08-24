@@ -9,20 +9,16 @@
     </b-spinner>
   </div>
   <div v-else class="body">
-    <br>
+    <br />
     <Slider :publicidades="this.publicidadesSlider1" />
-    <div class="subtitulo">
-      <p class="parraforNotificacion">
-        <strong> ¡Registrate y publicá tu primer producto gratis!</strong><br />
-        ¡Participá de los sorteos semanales en nuestras redes sociales!
-      </p>
-      <!--  <p class="parrafor">Al publicar está colaborando con Apaa de Brandsen</p> -->
+    <div>
+      <Novedades :novedades="novedades"> </Novedades>
     </div>
     <sliderPubli :publicidades="this.publicidadesSlider2" />
-    <CategoriasHomeImagenes/>
+    <CategoriasHomeImagenes />
 
     <NuevoSlide />
-    <sliderUltimasPublicaciones />
+    <sliderUltimasPublicaciones :productos="this.productos" :nuevaPublicacion="this.nuevaPublicacion"/>
     <sliderServicios />
     <sliderEmprendimientos />
 
@@ -32,7 +28,6 @@
 
 
 <script>
-
 import CategoriasHomeImagenes from "@/components/categorias/CategoriasHomeImagenes.vue";
 import Slider from "@/components/Home/Slider.vue";
 import NuevoSlide from "@/components/Home/NuevoSlide.vue";
@@ -40,10 +35,11 @@ import Sliderempresa from "@/components/Home/slideEmpresas.vue";
 import sliderServicios from "@/components/Home/sliderServicios.vue";
 import sliderEmprendimientos from "@/components/Home/sliderEmprendimientos.vue";
 import sliderUltimasPublicaciones from "@/components/Home/sliderUltimasPublicaciones.vue";
-
 import sliderPubli from "@/components/Home/sliderPubli.vue";
 import axios from "axios";
 import PublicidadService from "@/services/PublicidadService";
+import Novedades from "../novedades/novedades.vue";
+
 export default {
   name: "Home",
 
@@ -56,20 +52,33 @@ export default {
     sliderEmprendimientos,
     sliderPubli,
     sliderUltimasPublicaciones,
-    
+    Novedades,
   },
-
+props: {
+    productos:{ 
+      type: Array,
+    },  
+},
   data() {
     return {
       loading: true,
+      novedades: [],
       publicidades: [],
       publicidadesSlider1: [],
       publicidadesSlider2: [],
       publicidadesSlider3: [],
+      nuevaPublicacion:false
     };
   },
-
-  methods: {
+  created (){
+    
+    if (this.$route.params.nuevaPublicacion == true){
+      this.nuevaPublicacion=true
+   
+    }
+  },
+  methods: {   
+    
     async getPublicidades() {
       try {
         const response = await PublicidadService.getPublicidades();
@@ -93,10 +102,22 @@ export default {
     asignarPublicidades3(publicidades) {
       this.publicidadesSlider3 = publicidades.filter((c) => c.ubicacion == 3);
     },
+    async getNovedad() {
+      this.loading = true;
+      try {
+        const response = await PublicidadService.getNovedad();
+        this.novedades = response.data.data;
+      } catch (err) {
+        this.novedades = "ATENCION NO SE PUDIERON OBTENER LAS EMPRESAS";
+        this.loading = true;
+      } finally {
+        this.loading = false;
+      }
+    },
   },
   mounted() {
     axios
-      .all([this.getPublicidades()])
+      .all([this.getPublicidades(), this.getNovedad()])
       .then(() => {
         this.loading = false;
       })
@@ -109,6 +130,7 @@ export default {
 
 
 <style>
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;500;700&display=swap");
 @media only screen and (max-width: 480px) {
   .parraforTitProd {
     white-space: pre;
@@ -160,13 +182,22 @@ export default {
 .body {
   background-color: #ebebeb;
   height: auto;
+  font-family: "Roboto" !important;
 }
-
+p,
+input,
+strong,
+li,
+label,
+a,
+b {
+  font-family: "Roboto" !important;
+}
 .subtitulo {
   text-align: center;
   font-size: 18px;
   background-color: rgb(70 70 70);
-
+  font-family: "Roboto";
   color: white;
 }
 </style>

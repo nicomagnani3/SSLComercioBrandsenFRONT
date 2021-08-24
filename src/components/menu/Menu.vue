@@ -150,6 +150,11 @@
               v-if="hasPermisos('CREAR_GUIA')"
               >Crear guia comercial</b-dropdown-item
             >
+             <b-dropdown-item
+              :to="{ name: 'crearNovedad' }"
+              v-if="hasPermisos('CREAR_GUIA')"
+              >Crear novedad</b-dropdown-item
+            >
             <b-dropdown-item
               v-if="hasPermisos('CAMBIAR_CLAVE')"
               @click.prevent="logout"

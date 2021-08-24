@@ -216,6 +216,7 @@ export default {
             );
             this.$router.push({
               name: "Home",
+              params: {nuevaPublicacion: true }
             });
           } else {
             this.esperarBotonMercadoPago = true;
@@ -409,7 +410,10 @@ export default {
           idUsuario: this.getUserId,
         });
         if (response.data.error == false) {
-          this.yapublico = response.data.data;
+          // ya publico lo pongo en false porque las publicaciones de usuarios comunes ahora son GRATIS,
+          // Si vuelven a pagar lo pongo lo que da la respuesta que si no publico tiene 1 gratis
+          // si yapublico es true se le va acobrar al pagar, lo lleva a MP
+          this.yapublico = false;
           if (!this.yapublico) {
             this.valorBotonFinalizar = "Finalizar";
             this.valorUltimoPaso = "Finalizar";

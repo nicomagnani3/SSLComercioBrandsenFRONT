@@ -4,11 +4,11 @@
       <b-row class="pb-2">
         <b-col class="text-center pt-3">
           <br />
-          <p class="h3 text-center">Pagar publicacion</p>
-          <strong
+          <p class="h3 text-center">Finalizar</p>
+          <!--  <strong
             >Para que tu pago sea seguro integramos Mercado Pago en el
             sistema</strong
-          >
+          > -->
         </b-col>
       </b-row>
       <b-card class="text-center" header="Detalles de tu publicacion">
@@ -27,7 +27,7 @@
                                 thumbnail
                                 fluid
                                 alt="Responsive image"
-                                style="max-height: 350px"
+                                style="max-height: 130px; object-fit: contain"
                                 :src="
                                   this.imagen[0] == null
                                     ? 'https://picsum.photos/400/400/?image=20'
@@ -37,7 +37,7 @@
                               ></b-card-img>
                             </b-col>
                             <div class="col-md-4 product-detail">
-                              <h3>{{ this.publicacion.titulo }}</h3>
+                              <h4>{{ this.publicacion.titulo }}</h4>
                               <div class="product-info">
                                 <div>
                                   <div
@@ -135,8 +135,8 @@
                   <div class="item">
                     <span class="price" id="summary-price"></span>
                     <p class="item-name">
-                      En un instante estara listo el  boton "pagar" para pagar la publicacion<strong>
-                        {{ this.publicacion.titulo }}</strong
+                      En un instante estara listo el boton "pagar" para pagar la
+                      publicacion<strong> {{ this.publicacion.titulo }}</strong
                       >, cuando finalices el pago tu publicacion se cargara en
                       Malambo<span id="summary-quantity"></span>
                     </p>

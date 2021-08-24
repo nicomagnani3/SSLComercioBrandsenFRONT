@@ -13,4 +13,16 @@ export default {
     getGuiaComercial(credentials) {    
         return Api().get(API_URL + API_USER + "get_guia_comercial", credentials)
     },
+    eliminarGuia(credentials) {
+        return Api().post(API_URL + API_USER + "delete_guia_comercial", credentials)
+    },
+    getNovedad(credentials) {    
+        return Api().get(API_URL + API_USER + "get_novedades", credentials)
+    },
+    addNovedad(credentials) {
+        return Api().post(API_URL + API_USER + "nueva_novedad", credentials)
+    },
+    eliminarNovedad(credentials) {
+        return Api().post(API_URL + API_USER + "delete_novedad", credentials)
+    },
 }

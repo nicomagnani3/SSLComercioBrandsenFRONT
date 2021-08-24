@@ -83,10 +83,35 @@
           </b-row>
           <b-row>
             <div v-if="!yapublico">
-              <b-alert variant="success" show
-                >Tu primera publicacion es gratis! De parte de malambo te
-                queremos agradecer por confiar en nosotros</b-alert
-              >
+                <b-col md="12">
+                <b-form-group
+                  id="TipoPublicacion-label"
+                  label="Tipo de publicacion :"
+                  label-for="TipoPublicacion"
+                >
+                  <ValidationProvider
+                    :name="'TipoPublicacion '"
+                    :rules="'required'"
+                    v-slot="{ errors, valid }"
+                  >
+                    <b-form-select
+                      v-model="tipoSeleccionado"
+                      responsive="sm"
+                      size="sm"
+                      required
+                      :options="optionnormal"
+                      @change="verSiEsDestacada()"
+                      :state="errors[0] ? false : valid ? true : null"
+                    ></b-form-select>
+                    <b-form-invalid-feedback
+                      v-for="error in errors"
+                      :key="error.key"
+                    >
+                      {{ error }}
+                    </b-form-invalid-feedback>
+                  </ValidationProvider>
+                </b-form-group>
+              </b-col>
             </div>
             <div v-else-if="contrato.length > 0">
               <b-col md="12">
@@ -212,7 +237,7 @@ export default {
       alerts: [],
       montoEntregaInvalido: false,
       tipoSeleccionado: null,
-      options: [
+      optionnormal: [
         { value: null, text: "-- Seleccione el tipo de publicacion --" },
         { value: 1, text: "Publicacion estandar" },
         { value: 2, text: "Publicacion destacada (Home + redes sociales)" },

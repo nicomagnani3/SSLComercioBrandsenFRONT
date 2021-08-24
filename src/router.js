@@ -38,6 +38,8 @@ import home from '@/components/Home/Home.vue'
 /* Empreas - comcercios -rubros*/
 import VerEmpresas from '@/components/empresas/VerEmpresas.vue'
 import crearEmpresa from '@/components/empresas/crearEmpresa.vue'
+import crearNovedad from '@/components/novedades/crearNovedad.vue'
+
 import verSoporte from '@/components/soporte/VerSoporte.vue'
 import VerRubros from '@/components/empresas/VerRubros.vue'
 
@@ -205,6 +207,14 @@ const router = new Router({
             requireAuth: true
           },  
         },      
+        {
+          path: '/crearNovedad',
+           name: 'crearNovedad',
+           component: crearNovedad,
+           meta: {
+            requireAuth: true
+          },  
+        }, 
         {
             path: '/vencimientoContrato',
              name: 'vencimientoContrato',

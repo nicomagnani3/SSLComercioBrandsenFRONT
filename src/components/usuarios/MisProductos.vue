@@ -19,8 +19,10 @@
           </b-col>
         </b-row>
       </div>  
-    <b-container fluid class="bv-example-row">      
+    <b-container fluid class="bv-example-row">    
+      <br>  
       <b-row align-h="start">
+        
         <b-col md="4"></b-col>
           <div v-if="publicaciones.length == 0">
            <br />
@@ -51,9 +53,9 @@
                     thumbnail
                     fluid
                     alt="Responsive image"
-                    style="max-height: 450px"
+                    style="max-height: 196px;object-fit: contain"
                       :src="`data:image/png;base64, ${producto.imagen}`"
-                      class="rounded-0"
+                      class="imagenCard"
                     ></b-card-img>
                   </b-col>
                   <b-col md="6">
@@ -185,5 +187,6 @@ export default {
 </script>
 
 <style>
+
 </style>
        

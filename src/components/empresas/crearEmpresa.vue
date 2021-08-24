@@ -292,6 +292,62 @@
         </b-row>
       </b-card>
     </b-container>
+    <b-container class="pb-3">
+      <b-card
+        class="mb-3"
+        header="Eliminar de la guia comercial"
+        border-variant="danger"
+        header-border-variant="danger"
+        header-bg-variant="transparent"
+      >
+        <b-row>
+          <b-col lg="8" md="6">
+            <b-form-group
+              id="Nombrecomercio"
+              label="Nombre del comercio:"
+              label-for="Nombrecomercio"
+            >
+              <ValidationProvider
+                :name="'Nombrecomercio '"
+                v-slot="{ errors, valid }"
+              >
+                    <v-select
+                      placeholder="--Seleccione la guia a borrar--"
+                      :options="foptionsguia"
+                      :value="nombreComercio"
+                      v-model="nombreComercio"
+                      responsive="sm"
+                      size="sm"
+                      :required="!nombreComercio"
+                      :searchable="true"
+                      language="en-US"
+                      :state="errors[0] ? false : valid ? true : null"
+                    ></v-select>
+                <b-form-invalid-feedback
+                  v-for="error in errors"
+                  :key="error.key"
+                >
+                  {{ error }}
+                </b-form-invalid-feedback>
+              </ValidationProvider>
+            </b-form-group>
+          </b-col>
+        </b-row>
+        <b-row>
+          <b-col class="text-center">
+            <br />
+            <b-button
+              @click="EliminarGuia()"
+              type="primary"
+              style="width: 274px"
+              variant="danger"
+              
+              >Eliminar
+            </b-button>
+          </b-col>
+        </b-row>
+      </b-card>
+    </b-container>
   </div>
 </template>
 
@@ -310,13 +366,16 @@ export default {
     return {
       empresaNueva: [],
       rubros: [],
+      guia: [],
       rubroSelected: null,
+      nombreComercio:null,
       rubroNuevo: [],
       alerts: [],
       loading: false,
       montoEntregaInvalido: false,
       tipoSeleccionado: 1,
       empresaSelected: null,
+      guiaSelected:null,
       mostrarAlertEmpresa: false,
       mostrarAlertrubro: false,
       nombreRubro: null,
@@ -361,6 +420,7 @@ export default {
       this.mostrarAlertrubro = false;
       this.rubroNuevo.nombre = this.rubroSelected.nombre;
     },
+   
     limpiarCampos() {
       this.empresaNueva.nombre = "";
       this.empresaNueva.url = "";
@@ -448,10 +508,61 @@ export default {
         this.mostrarAlertrubro = true;
       }
     },
+     async getGuiaComercial() {
+      this.loading = true;
+      try {
+        const response = await PublicidadService.getGuiaComercial();
+        this.guia = response.data.data;
+        this.guia = this.ordenarDatos(this.guia);
+      } catch (err) {
+        this.empresas = "ATENCION NO SE PUDIERON OBTENER LAS EMPRESAS";
+        this.loading = true;
+      } finally {
+        this.loading = false;
+      }
+    },
+    async EliminarGuia(){
+      if (this.nombreComercio != null) {
+        try {
+          const response = await PublicidadService.eliminarGuia({
+            id: this.nombreComercio.id,
+         
+          });
+          if (response.data.error == false) {
+            this.$root.$bvToast.toast(
+              "Se elimino con exito de la guia comercial",
+              {
+                title: "Atencion!",
+                toaster: "b-toaster-top-center",
+                solid: true,
+                variant: "success",
+              }
+            );
+            this.getGuiaComercial();
+          }
+        } catch (error) {
+          this.$bvToast.toast(`No se pudo eliminar de la guia comercial`, {
+            title: error.response.data,
+            toaster: "b-toaster-top-center",
+            solid: true,
+            variant: "danger",
+          });
+        }
+      }
+    
+      
+    }
   },
   computed: {
     foptionsEmpresas() {
       let mc = this.empresas.map((e) => ({
+        id: e.id,
+        label: e.nombre,
+      }));
+      return mc;
+    },
+     foptionsguia() {
+      let mc = this.guia.map((e) => ({
         id: e.id,
         label: e.nombre,
       }));
@@ -468,7 +579,7 @@ export default {
 
   mounted() {
     axios
-      .all([this.getEmpresas(), this.getRubros()])
+      .all([this.getEmpresas(), this.getRubros(),this.getGuiaComercial()])
       .then(() => {
         this.loading = false;
       })
