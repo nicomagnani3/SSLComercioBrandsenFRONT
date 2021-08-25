@@ -4,7 +4,7 @@
       <img class="project-image" :src="item.imagen" />
     </div>
     <div class="cuerpo">
-      <div style="text-align: center" class="selectTamaño">
+      <div style="text-align: center;    font-size: 12px;" class="selectTamaño">
         <div>
           <small
             ><strong
@@ -14,9 +14,8 @@
         </div>     
          <div class="">
           <small
-            ><strong
-              >{{ item.descripcion}}</strong
-            ></small
+            >
+              {{ item.descripcion}}</small
           >
         </div>       
     
@@ -94,6 +93,21 @@ export default {
 };
 </script>
 <style >
+@media only screen and (max-width: 480px) {
+ 
+  .project-image {
+  max-width: 183px;
+  border: 4px solid transparent;
+  display: block;
+  margin: auto;
+ height: 100px !important;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  object-fit: contain;
+}
+}
 .cortar {
   font-weight: 700;
   /* display: -webkit-box; */
