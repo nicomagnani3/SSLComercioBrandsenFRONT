@@ -163,7 +163,7 @@ export default {
   text-align: center;
   /* margin: 10px; */
   background-color: rgb(70 70 70);
-  font-size: 22px;
+  font-size: 0px;
   color: white;
 }
 </style>

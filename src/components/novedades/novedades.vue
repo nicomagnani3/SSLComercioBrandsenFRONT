@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid" v-if="novedades.lenght > 0">
+  <div class="container-fluid" v-if="novedades.length > 0">
     <VueSlickCarousel :arrows="true" :dots="true" v-bind="settings">
       <b-col
       

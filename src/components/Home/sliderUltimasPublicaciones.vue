@@ -94,7 +94,6 @@ props: {
   },
   components: {},
   created (){
-    console.log(this.nuevaPublicacion)
     if (this.nuevaPublicacion){
       this.getPorductos()
     }

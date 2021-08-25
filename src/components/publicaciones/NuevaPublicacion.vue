@@ -120,8 +120,7 @@ export default {
       imgPrimera: [
         {
           id: 0,
-          url:
-            "https://i.pinimg.com/originals/ad/53/64/ad53643d33b99130bc99e04d19857e39.png",
+          url: "https://i.pinimg.com/originals/ad/53/64/ad53643d33b99130bc99e04d19857e39.png",
           file: null,
           tipo: null,
           loadingImg: false,
@@ -214,10 +213,17 @@ export default {
                 variant: "success",
               }
             );
-            this.$router.push({
-              name: "Home",
-              params: {nuevaPublicacion: true }
-            });
+            if (this.publicacion.destacada) {
+              this.$router.push({
+                name: "Home",
+                params: { nuevaPublicacionDestacada: true },
+              });
+            } else {
+              this.$router.push({
+                name: "Home",
+                params: { nuevaPublicacion: true },
+              });
+            }
           } else {
             this.esperarBotonMercadoPago = true;
             this.validarPagoMercadoPago(response.data.data);
@@ -395,7 +401,6 @@ export default {
         const response = await PublicacionService.getPreciosPublicaciones();
         this.preciosPublicacion = response.data.data;
       } catch (err) {
-      
         this.$router.push({
           name: "login",
           params: {

@@ -17,7 +17,7 @@
     <sliderPubli :publicidades="this.publicidadesSlider2" />
     <CategoriasHomeImagenes />
 
-    <NuevoSlide />
+    <NuevoSlide :productos="this.productosDestacados" :nuevaPublicacion="this.nuevaPublicacionDestacada" />
     <sliderUltimasPublicaciones :productos="this.productos" :nuevaPublicacion="this.nuevaPublicacion"/>
     <sliderServicios />
     <sliderEmprendimientos />
@@ -57,7 +57,10 @@ export default {
 props: {
     productos:{ 
       type: Array,
-    },  
+    }, 
+    productosDestacados :{ 
+      type: Array,
+    }, 
 },
   data() {
     return {
@@ -67,14 +70,17 @@ props: {
       publicidadesSlider1: [],
       publicidadesSlider2: [],
       publicidadesSlider3: [],
-      nuevaPublicacion:false
+      nuevaPublicacion:false,
+      nuevaPublicacionDestacada:false
     };
   },
   created (){
     
     if (this.$route.params.nuevaPublicacion == true){
-      this.nuevaPublicacion=true
-   
+      this.nuevaPublicacion=true   
+    }
+    if (this.$route.params.nuevaPublicacionDestacada == true){
+      this.nuevaPublicacionDestacada=true   
     }
   },
   methods: {   
@@ -156,9 +162,7 @@ props: {
     font-size: 16px;
     text-align: center;
   }
-  .categoria {
-    font-size: 0px;
-  }
+
   .card-deck {
     margin-left: auto;
     margin-right: auto;

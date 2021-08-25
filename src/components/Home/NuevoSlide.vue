@@ -100,6 +100,15 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "NuevoSlide",
+  props: {
+    productos: {
+      type: Array,
+    },
+    nuevaPublicacion: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
       paginatedClubs: [],
@@ -108,7 +117,6 @@ export default {
       nbRowPerPage: 5,
       currentPageIndex: 0,
       indice: 1,
-      productos: [],
       loading: true,
     };
   },
@@ -122,7 +130,11 @@ export default {
       return this.paginatedClubs[this.currentPageIndex];
     },
   },
-
+  created() {
+    if (this.nuevaPublicacion) {
+      this.getPorductos();
+    }
+  },
   methods: {
     verDestacados() {
       this.$router.push({
@@ -219,9 +231,12 @@ export default {
       }
     },
   },
-  created() {
+
+  mounted() {
     axios
-      .all([this.getPorductos()])
+      .all([
+        /* this.getPorductos() */
+      ])
       .then(() => {
         this.loading = false;
       })
@@ -229,7 +244,6 @@ export default {
         console.log(err);
       });
   },
-  mounted() {},
 };
 </script>
 

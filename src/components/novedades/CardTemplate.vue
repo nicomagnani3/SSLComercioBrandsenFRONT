@@ -12,7 +12,7 @@
             ></small
           >
         </div>     
-         <div class="cortar">
+         <div class="">
           <small
             ><strong
               >{{ item.descripcion}}</strong
@@ -127,7 +127,6 @@ export default {
   border: 4px solid transparent;
   display: block;
   margin: auto;
-  height: 150px;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   border-top-left-radius: 3px;
