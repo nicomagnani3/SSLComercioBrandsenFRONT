@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid" v-if="novedades.length > 0">
+  <div class="" v-if="novedades.length > 0">
     <VueSlickCarousel :arrows="true" :dots="true" v-bind="settings">
       <b-col      
         v-for="(item, index) in novedades"
@@ -60,7 +60,7 @@ export default {
           {
             breakpoint: 480,
             settings: {
-              slidesToShow: 1,
+              slidesToShow: 2,
               slidesToScroll: 1,
              
             },
@@ -124,6 +124,7 @@ display: none !important;
   margin: 10px;
   box-shadow: 0px 2px 8px lightgrey;
   border-radius: 13px;
+  width: 180px;
 
   flex-direction: column;
   align-items: center;
