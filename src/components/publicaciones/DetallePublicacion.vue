@@ -239,8 +239,8 @@ export default {
       tipoSeleccionado: null,
       optionnormal: [
         { value: null, text: "-- Seleccione el tipo de publicacion --" },
-        { value: 1, text: "Publicacion estandar" },
-        { value: 2, text: "Publicacion destacada (Home + redes sociales)" },
+        { value: 1, text: "Publicacion estandar: Gratis" },
+        { value: 2, text: "Publicacion destacada (Home + redes sociales): Paga" },
       ],
     };
   },

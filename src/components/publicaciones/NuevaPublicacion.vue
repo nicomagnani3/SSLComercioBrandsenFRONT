@@ -168,6 +168,7 @@ export default {
     },
     async validarDetalleProducto() {
       window.scrollTo(0, 140);
+      this.yapublico = this.publicacion.destacada ? true : false
       let result = await this.$refs.detallePublicacion.validate();
       return result;
     },

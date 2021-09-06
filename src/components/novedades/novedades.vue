@@ -21,7 +21,7 @@
         <div class="project"><card-template :item="item" /></div>
       </b-col>
     </VueSlickCarousel>
-  </div>
+    </div>
 </template>
 
 <script>
@@ -137,8 +137,14 @@ display: none !important;
   box-shadow: 0px 2px 8px lightgrey;
   border-radius: 13px;
   width: 180px;
-
   flex-direction: column;
   align-items: center;
+}
+.zoom {
+  transition: transform 0.2s;
+}
+
+.project:hover {
+  transform: scale(1.3)
 }
 </style>
