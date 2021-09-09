@@ -89,6 +89,9 @@ export default {
   .columnaCards {
     padding-left: 0px !important;
   }
+  .project:hover {
+  transform: scale(1.0) !important;
+}
 }
 .slick-arrow {
         display: block;
