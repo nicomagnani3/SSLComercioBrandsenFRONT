@@ -181,6 +181,7 @@ export default {
       try {
         const response =
           await EmprendimientoService.getPublicacionEmprendimientos();
+          console.log(response.data.data)
         if (response.data.error == false) {
           this.productos = response.data.data;
         }
