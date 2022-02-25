@@ -51,7 +51,6 @@ export default {
     },
     agregarCarrito(item) {
 
-      console.log(item)
       if (this.cantidad > 0) {
         if (!this.yaEstaSeleccionado(item.id, this.selected, this.cantidad)) {
           let categoria = this.verNombreCategoria(item);
@@ -76,10 +75,8 @@ export default {
       }
     },
     yaEstaSeleccionado(id, tamaño, cantidad) {
-      console.log("pedido")
       let retornan = false;
       this.productosSeleccionados.forEach((pedido) => {
-        console.log(pedido)
         
         if (pedido.pedido == id && pedido.tamaño == tamaño) {
           pedido.cantidad = Number(pedido.cantidad) + Number(cantidad);

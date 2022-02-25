@@ -289,7 +289,7 @@ export default {
   border-radius: 20px;
 }
 .verMasServi {
-  margin-left: 12px;
+  margin-left: 20px;
   color: #676767;
   cursor: pointer;
   font-size: 14px;

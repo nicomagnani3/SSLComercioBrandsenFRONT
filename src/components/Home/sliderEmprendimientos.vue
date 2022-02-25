@@ -181,7 +181,6 @@ export default {
       try {
         const response =
           await EmprendimientoService.getPublicacionEmprendimientos();
-          console.log(response.data.data)
         if (response.data.error == false) {
           this.productos = response.data.data;
         }
@@ -289,7 +288,7 @@ export default {
   border-radius: 20px;
 }
 .verMas {
-  margin-left: 12px;
+  margin-left: 20px;
   color: #676767;
   cursor: pointer;
   font-size: 14px;

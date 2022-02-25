@@ -55,10 +55,13 @@ export default {
     getPublicoUsuario(credentials) {         
         return Api().post(API_URL + API_USER + "get_publico_usuario",credentials)
     },
-    getUltimasPublicaciones(credentials) {   
-      
+    getUltimasPublicaciones(credentials) {         
         return Api().get(API_URL + API_USER + "get_ultimas_publicaciones", credentials)
     },
+    getUltimosProductos(page){
+        return Api().get(API_URL + API_USER + "get_ultimas_publicaciones_paginate/"+ page)
+
+    }
   
     
     

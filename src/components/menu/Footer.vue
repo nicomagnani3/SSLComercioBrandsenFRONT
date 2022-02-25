@@ -22,8 +22,10 @@
       </b-col>
 
       <b-col xs="12" md="12" lg="3" align-self="end">
-        <p>Contáctenos:</p>
+        <p>Contáctenos:</p>           
         <p>info@malambobrandsen.com.ar</p>
+        <p  style="cursor: pointer;"><a @click="verSoporte()"><strong>Soporte</strong></a></p>
+        
         <a  :href="
                   'https://api.whatsapp.com/send?text=Hola!%20,me%20comunico' +
                   '&phone=+542223431948'
@@ -54,8 +56,19 @@ export default {
   name: "Footer",
   components: {},
   data() {
-    return {};
-  },
+    return {
+       };
+   },     
+      methods: {
+      verSoporte(){
+        console.log("entr")
+          this.$router.push({
+        name: "verSoporte"       
+      });
+      }
+      }
+   
+ 
 };
 </script>
 

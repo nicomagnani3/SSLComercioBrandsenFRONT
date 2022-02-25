@@ -4,10 +4,10 @@
       <b-col cols="1"></b-col>
       <b-col cols="8">
         <div class="h3 font-britannic text widget-title destacados">
-          <strong class="parraforTitProd badge badge-primary"
-            >Productos y comercios destacados</strong
+          <h4 class="parraforTitProd "
+            >Productos destacados
+          <a v-if="!loading" @click="verDestacados()" class="verMas">ver mas</a></h4
           >
-          <a v-if="!loading" @click="verDestacados()" class="verMas">ver mas</a>
         </div>
       </b-col>
     </b-row>
@@ -303,13 +303,19 @@ export default {
   height: 20px;
   border-radius: 20px;
 }
-.verMas {
-  margin-left: 12px;
-  color: #676767;
-  cursor: pointer;
-  font-size: 14px;
-  text-decoration: underline #676767;
-  white-space: nowrap;
+.verMas { 
+    margin-left: 13px;
+    text-decoration: none;
+    color: #3483fa;
+    cursor: pointer;
+    font-size: 20px;
+    -webkit-text-decoration: underline #676767;
+    text-decoration: underline #676767;
+    white-space: nowrap;
+    text-decoration: none;
+}
+.verMas:hover{
+    color: #1b4e9b;
 }
 .btnMas {
   white-space: normal;
@@ -343,7 +349,8 @@ export default {
   cursor: pointer;
 }
 .destacados {
-  color: rgb(255, 254, 254);
+  color: rgb(109, 108, 108);
+   white-space: nowrap;
 }
 </style>
 

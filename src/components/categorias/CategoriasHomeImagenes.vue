@@ -273,7 +273,7 @@ export default {
   margin-left: 12px;
   color: #676767;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 20px;
   text-decoration: underline #676767;
   white-space: nowrap;
 }

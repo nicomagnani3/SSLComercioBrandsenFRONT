@@ -1,53 +1,90 @@
 <template>
   <div>
-    <br />
-
-    <b-container class="contenedorPubli mb-5">
-      <div class="card-deck-wrapper">
-        <div class="card-deck">
-          <b-row
-            v-for="publicidad in publicidades"
-            v-bind:key="publicidad.id"
-            class="text-center"
-          >
-            <b-col class="itemCarrusel">
-              <b-card
-              style="
-                cursor: pointer;
-                border-width: 1px;
-                border-style: solid;
-                border-color: black;
-              "
-                overlay
-                :img-src="publicidad.imagen"
-                img-alt="Responsive image"
-                img-top
-                class="img-fluid"
-                alt="Responsive image"
-                @click="irUrl(publicidad.url)"
-              >
-              </b-card>
-            </b-col>
-          </b-row>
-        </div>
-      </div>
-    </b-container>
+   <div class="" v-if="publicidades.length > 0">
+    <br>    
+    <VueSlickCarousel :arrows="true" :dots="true" v-bind="settings">
+      <b-col      
+        v-for="(item, index) in publicidades"
+        :key="index"
+        class="columnaCards"
+      >
+        <img :src="item.imagen" />
+      </b-col>
+    </VueSlickCarousel>
+    </div>
   </div>
 </template>
 
 
 
 <script>
+import VueSlickCarousel from "vue-slick-carousel";
+import "vue-slick-carousel/dist/vue-slick-carousel.css";
+// optional style for arrows & dots
+import "vue-slick-carousel/dist/vue-slick-carousel-theme.css";
 export default {
   name: "slider",
-  components: {},
+  components: { VueSlickCarousel },
   props: {
     publicidades: {
       type: Array,
     },
   },
   data() {
-    return {};
+    return {
+      slide: 0,
+      sliding: null,
+      settings: {
+        arrows: false,
+        dots: true,
+        infinite: true,
+        slidesToShow:6,
+        rows: 1,
+        slidesToScroll: 1,
+      autoplay:true,
+        speed: 6000,
+        autoplaySpeed: 2000,
+        cssEase: "linear",
+        responsive: [
+          {
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 3,
+                rows: 2,
+              slidesToScroll: 2,
+              infinite: true,
+              speed: 6000,
+              autoplaySpeed: 2000,
+              dots: true,
+            },
+          },
+          {
+            breakpoint: 600,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 2,
+              initialSlide: 2,
+                    rows: 2,
+            },
+          },
+          {
+            breakpoint: 480,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 2,
+               infinite: true,
+               rows: 2,
+              speed: 6000,
+              autoplaySpeed: 2000,
+              dots: true,
+               centerPadding: "20px",
+
+              
+            },
+          },
+        ],
+      },
+    };
   },
   methods: {
     irUrl(url) {

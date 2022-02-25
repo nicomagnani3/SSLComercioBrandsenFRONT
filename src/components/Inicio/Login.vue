@@ -82,6 +82,10 @@ import AuthenticationService from "@/services/AuthenticationService";
 export default {
   name: "Login",
   props: {   
+     desdePublicacion: {
+      type: Boolean,
+      default:false
+    },
   },
   data() {
     return {
@@ -138,7 +142,12 @@ export default {
         this.setGrupos(response.data.grupos);
         //this.setNombre (response.data.nombre);
         this.setPermisos(response.data.permission);
-        this.$router.push("/");
+        if (!this.desdePublicacion){
+           this.$router.push("/");
+        }else{
+          console.log("loginPublicacion")
+          this.$emit("okLoginPublicacion");
+        }
       } catch (err) {
         this.form.ingresar = true;
         this.error = err.response.data.errors[0];

@@ -71,6 +71,18 @@
         </PagarPublicacion>
       </tab-content>
     </form-wizard>
+    <div class="modalLogin">
+      <b-modal           
+        ref="modalLogin"
+        hide-footer
+      
+      >
+        <Login
+          :desdePublicacion=true
+          @okLoginPublicacion="okLoginPublicacion()"
+        ></Login>
+      </b-modal>
+    </div>
   </div>
 </template>
 
@@ -85,6 +97,7 @@ import ImagenesCarga from "@/components/imagenes/ImagenesCarga.vue";
 import PagarPublicacion from "@/components/publicaciones/PagarPublicacion.vue";
 import MercadoPago from "@/services/MercadoPago";
 import Contratos from "@/services/ContratosService";
+import Login from "@/components/Inicio/Login.vue";
 
 import DetallePublicacion from "@/components/publicaciones/DetallePublicacion.vue";
 export default {
@@ -95,6 +108,7 @@ export default {
     ImagenesCarga,
     DetallePublicacion,
     PagarPublicacion,
+    Login
   },
   data() {
     return {
@@ -110,7 +124,7 @@ export default {
       loading: true,
       publicacion: [],
       alerts: [],
-      valorBotonFinalizar: "Obtener boton de pago!",
+      valorBotonFinalizar: "Publicar!",
       valorUltimoPaso: "Pagar la publicacion",
       contrato: [],
       montoEntregaInvalido: false,
@@ -136,20 +150,25 @@ export default {
   },
   created() {
     window.scrollTo(0, 200);
-    if (this.getUserId == null) {
+/*     if (this.getUserId == null) {
       this.$router.push({
         name: "login",
         params: {
           autentificacion: false,
         },
       });
-    }
+    } */
   },
   computed: {
     ...mapState("storeUser", ["grupos"]),
     ...mapGetters("storeUser", ["getUserId"]),
   },
   methods: {
+    okLoginPublicacion(){
+      console.log("ok publi")
+      this.$refs["modalLogin"].hide();
+      this.crearPublicacion()
+    },
     validarCategoria() {
       window.scrollTo(0, 140);
       return true;
@@ -175,12 +194,14 @@ export default {
     async onComplete() {
       this.presionoFinalizar = true;
       if (this.getUserId == null) {
-        this.$router.push({
+         this.$refs["modalLogin"].show();
+        console.log("Login user")
+       /*  this.$router.push({
           name: "login",
           params: {
             autentificacion: false,
           },
-        });
+        }); */
       } else {
         if (!this.presionoCrear) {
           this.crearPublicacion();
@@ -310,7 +331,7 @@ export default {
           this.montoEntregaInvalido = true;
           return false;
         }
-        if (this.getUserId == null) {
+     /*    if (this.getUserId == null) {
           this.$router.push({
             name: "login",
             params: {
@@ -318,7 +339,7 @@ export default {
             },
           });
           return false;
-        }
+        } */
       }
       return result;
     },
@@ -402,12 +423,12 @@ export default {
         const response = await PublicacionService.getPreciosPublicaciones();
         this.preciosPublicacion = response.data.data;
       } catch (err) {
-        this.$router.push({
+    /*     this.$router.push({
           name: "login",
           params: {
             autentificacion: false,
           },
-        });
+        }); */
       }
     },
     async misPublicaciones() {
@@ -448,3 +469,8 @@ export default {
   },
 };
 </script>
+<style scoped>
+.modalLogin{
+  background-color: #ffce4e !important;
+}
+</style>

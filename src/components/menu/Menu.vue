@@ -16,12 +16,11 @@
           <!--    <b-nav-item v-if="!this.logeado" :to="{ name: 'verCategorias' }"
             >Productos</b-nav-item
           >
-          <b-nav-item v-if="!this.logeado" :to="{ name: 'verEmprendimiento' }"
-            >Emprendimientos</b-nav-item
-          >
+         
           <b-nav-item v-if="!this.logeado" :to="{ name: 'verServicio' }"
             >Servicios</b-nav-item
           > -->
+          
           <b-nav-item-dropdown>
             <template slot="button-content">
               <span class="light">Categorias</span>
@@ -38,9 +37,12 @@
             <b-dropdown-item :to="{ name: 'verProfesionales' }"
               >Profesionales</b-dropdown-item
             >
+            <b-dropdown-item :to="{ name: 'verRubros' }">Rubros</b-dropdown-item>
           </b-nav-item-dropdown>
-
-          <b-nav-item :to="{ name: 'verRubros' }">Rubros</b-nav-item>
+ <b-nav-item  :to="{ name: 'verProductosEmprendimientos' }"
+            >Autonomos</b-nav-item
+          >
+          
           <b-nav-item
             :to="{ name: 'verEmpresas' }"
             style="
@@ -50,14 +52,16 @@
                   font-size: 18px;
             "
             class="logo"
+            id="guia"
             ><strong>Guia Comercial</strong
             ><span class="badge badge-pill badge-info" id="valorDestacado" style="    overflow: hidden;">
               NEW</span
             ></b-nav-item
           >
+         
           <b-nav-item-dropdown v-if="hasPermisos('CREAR')">
-            <template slot="button-content">
-              <span class="light">Publicar</span>
+            <template slot="button-content" >
+              <span class="light"><strong>Publicar</strong></span>
             </template>
             <b-dropdown-item
               :to="{ name: 'nuevaPublicacion' }"
@@ -107,39 +111,46 @@
               >Vencimientos</b-dropdown-item
             >
           </b-nav-item-dropdown>
-          <b-nav-item :to="{ name: 'verSoporte' }">Soporte</b-nav-item>
-        </b-navbar-nav>
 
-        <b-navbar-nav class="">
+        </b-navbar-nav>
+         <b-nav-item 
+              class="itemLoginResponsive"
+              :to="{ name: 'login' }"
+              v-if="!hasPermisos('CAMBIAR_CLAVE')"
+              >Ingresa</b-nav-item
+            >
+            <br>
+            <b-nav-item 
+              class="itemLoginResponsive"        
+              :to="{ name: 'Registrarse' }"
+              v-if="!hasPermisos('CAMBIAR_CLAVE')"
+              >Creá tu cuenta</b-nav-item
+            >  
+            <br>
+              <b-nav-item 
+              class="itemLoginResponsive"        
+              :to="{ name: 'nuevaPublicacion' }"
+              v-if="!hasPermisos('CAMBIAR_CLAVE')"
+              >PUBLICAR</b-nav-item
+            >  
+        <b-navbar-nav class=""  v-if="logeado">
           <b-navbar-nav v-if="logeado" class="ml-auto">
             <b-nav-item class="light mx-4 my-0 py-0">
-              <b-icon icon="user" />Bienvenido,
-              <b>{{ username }}</b>
-              <div class="my-0 py-0 text-md-center">
-                <b>{{ nombre }}</b>
-              </div>
+              <b-icon icon="user" />
+        
             </b-nav-item>
           </b-navbar-nav>
           <b-nav-item-dropdown right>
             <!-- Using 'button-content' slot -->
             <template #button-content>
-              <b-icon icon="person-fill"></b-icon>
+              <b-icon icon="person-fill"></b-icon><b> {{ username }}</b>
             </template>
             <b-dropdown-item
               :to="{ name: 'misproductos' }"
               v-if="hasPermisos('MIS_PRODUCTOS')"
               >Mis Productos</b-dropdown-item
             >
-            <b-dropdown-item
-              :to="{ name: 'login' }"
-              v-if="!hasPermisos('CAMBIAR_CLAVE')"
-              >Iniciar sesion</b-dropdown-item
-            >
-            <b-dropdown-item
-              :to="{ name: 'Registrarse' }"
-              v-if="!hasPermisos('CAMBIAR_CLAVE')"
-              >Crear cuenta</b-dropdown-item
-            >
+           
             <b-dropdown-item
               :to="{ name: 'cambiarClave' }"
               v-if="hasPermisos('CAMBIAR_CLAVE')"
@@ -149,6 +160,11 @@
               :to="{ name: 'crearEmpresa' }"
               v-if="hasPermisos('CREAR_GUIA')"
               >Crear guia comercial</b-dropdown-item
+            >
+             <b-dropdown-item
+              :to="{ name: 'crearPublicidad' }"
+              v-if="hasPermisos('CREAR_GUIA')"
+              >Publicidades</b-dropdown-item
             >
              <b-dropdown-item
               :to="{ name: 'crearNovedad' }"
@@ -162,7 +178,7 @@
             >
           </b-nav-item-dropdown>
         </b-navbar-nav>
-      </b-collapse>
+      </b-collapse>   
     </b-navbar>
 
     <div class="contenedorBuscador">
@@ -180,6 +196,26 @@
           ><b-icon icon="search"></b-icon
         ></b-button>
       </div>
+      <br>
+        <b-nav-item 
+        class="itemLogin"
+              :to="{ name: 'login' }"
+              v-if="!hasPermisos('CAMBIAR_CLAVE')"
+              >Ingresa</b-nav-item
+            >
+            <b-nav-item 
+              class="itemLogin"        
+              :to="{ name: 'Registrarse' }"
+              v-if="!hasPermisos('CAMBIAR_CLAVE')"
+              >Creá tu cuenta</b-nav-item
+            >  
+              <b-nav-item 
+              class="itemLogin"        
+              :to="{ name: 'nuevaPublicacion' }"
+              v-if="!hasPermisos('CAMBIAR_CLAVE')"
+              >PUBLICAR</b-nav-item
+            >  
+ 
     </div>
   </b-container>
 </template>
@@ -235,6 +271,53 @@ export default {
 </script>
 
 <style scoped>
+@media only screen and (max-width: 480px) {
+.itemLogin{  
+display:none !important;
+}
+.itemLoginResponsive{
+  display:inline !important;
+       border: none;
+    left: 12px;
+    font-size: 14px;
+    display: inline;
+    height: auto;
+    border-top: none;
+    color: #333;
+    
+}
+
+}
+.itemLoginResponsive a{
+  display: inline;
+    height: auto;
+    border-top: none;
+    color: #333;   
+    font-size:18px;
+}
+
+.itemLogin{
+       border: none;
+    left: 12px;
+    padding: 0 10px;
+    font-size: 14px;
+    display: inline;
+    height: auto;
+    border-top: none;
+    color: #333;
+    
+}
+.itemLogin a{
+  display: inline;
+    height: auto;
+    border-top: none;
+    color: #333;   
+    font-size:18px;
+}
+.itemLoginResponsive{
+  display: none ;
+  
+}
 .Buscador {
   color: rgb(255, 206, 78);
   cursor: pointer;
@@ -256,9 +339,8 @@ export default {
   width: 100%;
   justify-content: center;
 }
-.logo{
- 
-}
+
+
 .logo{
   -webkit-animation: tiembla 2.1s infinite;
 }

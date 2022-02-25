@@ -3,11 +3,11 @@
     <b-row class="text-left">
       <b-col cols="1"></b-col>
       <b-col cols="8">
-        <div class="h4 font-britannic text widget-title destacados">
-          <strong class="parraforTitProd"> Últimos Ingresos </strong>
-          <!-- <a v-if="!loading" @click="verDestacados()" class="verMasServi"
-            >ver mas</a
-          > -->
+        <div class="h2 font-britannic text widget-title destacados">
+          <h2 class="parraforTitProd"> MarketPlace 
+           <a v-if="!loading" @click="verDestacados()" class="verMasServi"
+            >ver todos</a
+          > </h2>
         </div>
       </b-col>
     </b-row>
@@ -94,6 +94,7 @@ props: {
   },
   components: {},
   created (){
+    console.log(this.nuevaPublicacion)
     if (this.nuevaPublicacion){
       this.getPorductos()
     }
@@ -110,7 +111,7 @@ props: {
   methods: {
     verDestacados() {
       this.$router.push({
-        name: "verDestacados",
+        name: "vermarket",
         query: {
           q: this.searchQuery,
           t: new Date().getTime(),
@@ -272,13 +273,19 @@ props: {
   height: 20px;
   border-radius: 20px;
 }
-.verMasServi {
-  margin-left: 12px;
-  color: #676767;
-  cursor: pointer;
-  font-size: 14px;
-  text-decoration: underline #676767;
-  white-space: nowrap;
+.verMasServi { 
+    margin-left: 13px;
+    text-decoration: none;
+    color: #3483fa;
+    cursor: pointer;
+    font-size: 20px;
+    -webkit-text-decoration: underline #676767;
+    text-decoration: underline #676767;
+    white-space: nowrap;
+    text-decoration: none;
+}
+.verMasServi:hover{
+    color: #1b4e9b;
 }
 .btnMas {
   white-space: normal;
@@ -313,6 +320,7 @@ props: {
 }
 .destacados {
   color: rgb(109, 108, 108);
+   white-space: nowrap;
 }
 </style>
 

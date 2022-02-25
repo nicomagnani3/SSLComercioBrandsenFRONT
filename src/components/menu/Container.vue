@@ -93,6 +93,7 @@ productosDestacados: [],
         const response = await PublicacionService.getUltimasPublicaciones();
         if (response.data.error == false) {
           this.productos = response.data.data;
+          
           //this.getImporte(this.productos);
         }
       } catch (err) {

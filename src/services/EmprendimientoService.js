@@ -19,5 +19,9 @@ export default {
     setPagoPublicacion(credentials) {    
         return Api().get(API_URL + API_USER + "set_pago_publicacion/"+ credentials.publicacion)
     },
+    get_ultimas_emprendimientos_paginate(page){
+        return Api().get(API_URL + API_USER + "get_ultimas_emprendimientos_paginate/"+ page)
+
+    }
   
 }

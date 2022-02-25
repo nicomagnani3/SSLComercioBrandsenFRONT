@@ -13,11 +13,12 @@ import BuscarProductos from "@/components/Home/BuscarProductos.vue";
 import NuevaPublicacion from '@/components/publicaciones/NuevaPublicacion.vue'
 import VerCategorias from '@/components/categorias/VerCategorias.vue'
 import VerDestacados from '@/components/Home/VerDestacados.vue'
-
+import verMarketPlace from '@/components/Home/verMarketPlace.vue'
 
 /* Emprendimiento */
 import NuevoEmprendimiento from '@/components/emprendimientos/NuevoEmprendimiento.vue'
 import VerEmprendimiento from '@/components/emprendimientos/VerEmprendimiento.vue'
+import verProductosEmprendimientos from "@/components/emprendimientos/verProductosEmprendimientos.vue"; 
 
 /* Servicio  Profesionales*/
 import NuevoServicio from '@/components/servicios/NuevoServicio.vue'
@@ -39,6 +40,8 @@ import home from '@/components/Home/Home.vue'
 import VerEmpresas from '@/components/empresas/VerEmpresas.vue'
 import crearEmpresa from '@/components/empresas/crearEmpresa.vue'
 import crearNovedad from '@/components/novedades/crearNovedad.vue'
+import crearPublicidad from '@/components/publicidad/CrearPublicidad.vue'
+
 
 import verSoporte from '@/components/soporte/VerSoporte.vue'
 import VerRubros from '@/components/empresas/VerRubros.vue'
@@ -71,7 +74,7 @@ const router = new Router({
         name: 'nuevaPublicacion',
         component: NuevaPublicacion,
         meta: {
-          requireAuth: true
+          requireAuth: false
         },              
        },
        {
@@ -114,8 +117,7 @@ const router = new Router({
          meta: {
            requireAuth: false
          }, 
-       },
-       
+       },       
        {
         path: '/verSoporte',
          name: 'verSoporte',
@@ -123,7 +125,15 @@ const router = new Router({
          meta: {
            requireAuth: false
          }, 
-       },        
+       },  
+       {
+        path: '/vermarket',
+         name: 'vermarket',
+         component: verMarketPlace,   
+         meta: {
+           requireAuth: false
+         }, 
+       },       
        {
         path: '/verCategorias',
          name: 'verCategorias',
@@ -136,6 +146,14 @@ const router = new Router({
         path: '/verEmprendimiento',
          name: 'verEmprendimiento',
          component: VerEmprendimiento,   
+         meta: {
+           requireAuth: false
+         }, 
+       },
+       {
+        path: '/verProductosEmprendimientos',
+         name: 'verProductosEmprendimientos',
+         component: verProductosEmprendimientos,   
          meta: {
            requireAuth: false
          }, 
@@ -207,6 +225,14 @@ const router = new Router({
             requireAuth: true
           },  
         },      
+        {
+          path: '/crearPublicidad',
+           name: 'crearPublicidad',
+           component: crearPublicidad,
+           meta: {
+            requireAuth: true
+          },  
+        },   
         {
           path: '/crearNovedad',
            name: 'crearNovedad',

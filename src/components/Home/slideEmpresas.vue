@@ -2,7 +2,7 @@
   <div>
     <!-- <h3 class="m-5 titulo text-center">
       <strong class="parraforAPA">Al publicar estas colaborando con Apaa</strong>
-    </h3> -->
+    </h3> -->  
     <b-container class="contenedorPubli mb-5">
       <div class="card-deck-wrapper">
         <div class="card-deck">
