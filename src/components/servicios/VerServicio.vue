@@ -9,7 +9,7 @@
       >
       </b-spinner>
     </div>
-    <div v-else class="body">
+    <div v-else class="body " >
       <div fluid class="categoria">
         <b-row class="pb-2">
           <b-col class="text-center pt-3">
@@ -21,7 +21,7 @@
         </b-row>
       </div>
       <br />
-      <b-row class="text-center">
+      <b-row class="text-center" >
                 <b-col cols="3" class="text-center d-none d-sm-none d-md-block">
                 </b-col>
         <b-col>

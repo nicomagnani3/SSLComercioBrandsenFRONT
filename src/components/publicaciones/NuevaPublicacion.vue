@@ -21,7 +21,7 @@
       error-color="#dc3545"
     >
       <tab-content
-        title="¿Qué tipo de categoría necesitas publicar? "
+     
         :before-change="validarCategoria"
       >
         <ListarCategorias
@@ -30,7 +30,7 @@
         ></ListarCategorias>
       </tab-content>
       <tab-content
-        title="¿Qué necesitas publicar?"
+       
         :before-change="validarCategoriaHija"
       >
         <ListarCategoriasHijas
@@ -39,7 +39,6 @@
         ></ListarCategoriasHijas>
       </tab-content>
       <tab-content
-        title="Detalles de la publicacion"
         :before-change="validarDetalleProducto"
       >
         <DetallePublicacion
@@ -50,7 +49,7 @@
           :yapublico="this.yapublico"
         ></DetallePublicacion>
       </tab-content>
-      <tab-content title="Imagenes" :before-change="validarImagenes">
+      <tab-content  :before-change="validarImagenes">
         <ImagenesCarga
           ref="altaImagenes"
           :imagenes="this.imagenes"
@@ -58,7 +57,7 @@
         >
         </ImagenesCarga>
       </tab-content>
-      <tab-content :title="this.valorUltimoPaso">
+      <tab-content >
         <PagarPublicacion
           :publicacion="this.publicacion"
           :imagen="this.imgPrimera"

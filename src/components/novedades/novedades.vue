@@ -4,7 +4,7 @@
        <b-row class="text-left">
       <b-col cols="1"></b-col>
       <b-col cols="8">
-        <div class="h4 font-britannic text widget-title destacados" style="    text-align: center;">
+        <div class="h4 font-britannic text widget-title destacados" >
           <strong class="parraforTitProd"> Novedades de la semana </strong>
           <!-- <a v-if="!loading" @click="verDestacados()" class="verMasServi"
             >ver mas</a

@@ -8,7 +8,7 @@
         :key="index"
         class="columnaCards"
       >
-        <img :src="item.imagen" />
+        <img :src="item.imagen" fluid alt="Responsive image" />
       </b-col>
     </VueSlickCarousel>
     </div>
@@ -61,7 +61,7 @@ export default {
           {
             breakpoint: 600,
             settings: {
-              slidesToShow: 2,
+              slidesToShow: 3,
               slidesToScroll: 2,
               initialSlide: 2,
                     rows: 2,
@@ -70,7 +70,7 @@ export default {
           {
             breakpoint: 480,
             settings: {
-              slidesToShow: 2,
+              slidesToShow: 3,
               slidesToScroll: 2,
                infinite: true,
                rows: 2,
@@ -111,9 +111,11 @@ export default {
     justify-content: center;
     align-items: center;    
   }
- 
-
+   img {
+    width: 60%;
+  }
 }
+
 
 
 .itemCarrusel img {

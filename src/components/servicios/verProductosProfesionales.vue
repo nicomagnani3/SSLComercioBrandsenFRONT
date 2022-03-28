@@ -5,7 +5,7 @@
         <b-row class="pb-3">        
           <b-col class="text-center pt-3">
             <p class="h1 font-britannic text">
-              <strong class="parrafoCategorias">Emprendedores</strong>
+              <strong class="parrafoCategorias">Profesionales</strong>
             </p>
           </b-col>
         </b-row>
@@ -20,7 +20,7 @@
       >
       </b-spinner>
     </div>
-    <div v-else  style="margin:1%;" >
+    <div v-else  style=" margin: 1%;">
     
         <b-row class="text-center" cols="2" cols-sm="8" cols-md="8" cols-lg="5">
           <b-col
@@ -78,7 +78,8 @@
 
 <script>
 import axios from "axios";
-import EmprendimientoService from "@/services/EmprendimientoService";
+import ServiciosService from "@/services/ServiciosService";
+
 import { mapGetters } from "vuex";
 
 export default {
@@ -113,7 +114,7 @@ props: {
        try {
         window.scrollTo(0, 200);
         this.loading = true;
-        const response = await EmprendimientoService.get_ultimas_emprendimientos_paginate(page);
+        const response = await ServiciosService.get_ultimas_servicios_paginate(page);
         
         if (response.data.error == false) {
           this.productos = response.data.data;
@@ -131,7 +132,7 @@ props: {
      
     async getUltimosProductos() {
       try {
-        const response = await EmprendimientoService.get_ultimas_emprendimientos_paginate(1);
+        const response = await ServiciosService.get_ultimas_servicios_paginate(1);
     console.log(response)
         if (response.data.error == false) {
           this.productos = response.data.data;

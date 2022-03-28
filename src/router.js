@@ -24,6 +24,7 @@ import verProductosEmprendimientos from "@/components/emprendimientos/verProduct
 import NuevoServicio from '@/components/servicios/NuevoServicio.vue'
 import VerServicio from '@/components/servicios/VerServicio.vue'
 import VerProfesionales from '@/components/servicios/VerProfesionales.vue'
+import verProductosProfesionales from "@/components/servicios/verProductosProfesionales.vue"; 
 
 
 /* Contratos  admin y empresas o comercios*/
@@ -158,6 +159,15 @@ const router = new Router({
            requireAuth: false
          }, 
        },
+       {
+        path: '/verProductosProfesionales',
+         name: 'verProductosProfesionales',
+         component: verProductosProfesionales,   
+         meta: {
+           requireAuth: false
+         }, 
+       },
+       
        {
         path: '/verServicio',
          name: 'verServicio',

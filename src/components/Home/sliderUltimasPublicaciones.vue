@@ -20,7 +20,7 @@
       >
       </b-spinner>
     </div>
-    <div v-else class="animated fadeIn">
+    <div v-else class="animated fadeIn" style="margin: 1%;">
       <b-container fluid="sm">
         <b-row class="text-center" cols="2" cols-sm="8" cols-md="8" cols-lg="5">
           <b-col

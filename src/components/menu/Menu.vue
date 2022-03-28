@@ -21,9 +21,9 @@
             >Servicios</b-nav-item
           > -->
           
-          <b-nav-item-dropdown>
+          <b-nav-item-dropdown  >
             <template slot="button-content">
-              <span class="light">Categorias</span>
+              <span  class="textoMenu">Categorias</span>
             </template>
             <b-dropdown-item :to="{ name: 'verCategorias' }"
               >Productos</b-dropdown-item
@@ -39,8 +39,11 @@
             >
             <b-dropdown-item :to="{ name: 'verRubros' }">Rubros</b-dropdown-item>
           </b-nav-item-dropdown>
- <b-nav-item  :to="{ name: 'verProductosEmprendimientos' }"
+          <b-nav-item  class="textoMenu"  :to="{ name: 'verProductosEmprendimientos' }"
             >Autonomos</b-nav-item
+          >
+           <b-nav-item  class="textoMenu" :to="{ name: 'verProductosProfesionales' }"
+            >Guia profesional</b-nav-item
           >
           
           <b-nav-item
@@ -113,7 +116,7 @@
           </b-nav-item-dropdown>
 
         </b-navbar-nav>
-         <b-nav-item 
+       <!--   <b-nav-item 
               class="itemLoginResponsive"
               :to="{ name: 'login' }"
               v-if="!hasPermisos('CAMBIAR_CLAVE')"
@@ -126,13 +129,15 @@
               v-if="!hasPermisos('CAMBIAR_CLAVE')"
               >Creá tu cuenta</b-nav-item
             >  
-            <br>
+            <br> -->           
               <b-nav-item 
               class="itemLoginResponsive"        
               :to="{ name: 'nuevaPublicacion' }"
               v-if="!hasPermisos('CAMBIAR_CLAVE')"
               >PUBLICAR</b-nav-item
-            >  
+            >
+            
+
         <b-navbar-nav class=""  v-if="logeado">
           <b-navbar-nav v-if="logeado" class="ml-auto">
             <b-nav-item class="light mx-4 my-0 py-0">
@@ -197,7 +202,11 @@
         ></b-button>
       </div>
       <br>
-        <b-nav-item 
+      <b-button  size="sm" class="button" @click="loguearse()" v-if="!hasPermisos('CAMBIAR_CLAVE')">
+          <b-icon icon="person-fill" ></b-icon>
+        Ingreso o Registro
+      </b-button>
+   <!--      <b-nav-item 
         class="itemLogin"
               :to="{ name: 'login' }"
               v-if="!hasPermisos('CAMBIAR_CLAVE')"
@@ -208,7 +217,7 @@
               :to="{ name: 'Registrarse' }"
               v-if="!hasPermisos('CAMBIAR_CLAVE')"
               >Creá tu cuenta</b-nav-item
-            >  
+            >   -->
               <b-nav-item 
               class="itemLogin"        
               :to="{ name: 'nuevaPublicacion' }"
@@ -217,16 +226,31 @@
             >  
  
     </div>
+    <div class="modalLogin">
+      <b-modal  
+        ref="modalLogin"
+        hide-footer   
+        style="color: #ffce4e;"   
+      >
+        <Login
+          :desdePublicacion=true
+          @okLoginPublicacion="okLoginPublicacion()"
+        ></Login>
+      </b-modal>
+    </div>
   </b-container>
+  
 </template>
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
 import Header from "@/components/menu/Header.vue";
+import Login from "@/components/Inicio/Login.vue";
 
 export default {
   name: "Menu",
   components: {
     Header,
+    Login
   },
   props: {},
   data() {
@@ -247,6 +271,15 @@ export default {
     ...mapGetters("storeUser", ["hasPermisos", "getGrupos", "getUserId"]),
   },
   methods: {
+    loguearse(){
+ this.$refs["modalLogin"].show();
+    },
+    okLoginPublicacion(){
+      console.log("ok login")
+      this.$refs["modalLogin"].hide();
+      window.location.reload()
+   
+    },
     buscarProducto(producto) {
       const path = `/buscarProductos/${producto}`;
       if (this.$route.path !== path)
@@ -276,9 +309,9 @@ export default {
 display:none !important;
 }
 .itemLoginResponsive{
-  display:inline !important;
-       border: none;
-    left: 12px;
+   display:inline !important;
+    border: none;
+    left: 11px;
     font-size: 14px;
     display: inline;
     height: auto;
@@ -286,14 +319,39 @@ display:none !important;
     color: #333;
     
 }
+.button{
+  display:inline !important;
+   -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    color: rgba(0, 0, 0, 0.5);
+    background-color: #ffce4e !important; 
+    font-size: 10px !important;
+}
+}
 
+
+.button {
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    color: rgba(0, 0, 0, 0.5);
+    background-color: #ffce4e !important; 
+    font-size: 20px;
+}
+.button:hover {
+    background-color: #efbe3c;
+    color: white;
+   
 }
 .itemLoginResponsive a{
   display: inline;
     height: auto;
     border-top: none;
     color: #333;   
-    font-size:18px;
+
+    white-space: nowrap;
+   overflow: hidden;
+  text-overflow: ellipsis;
+   font-size: 20px;
 }
 
 .itemLogin{
@@ -316,6 +374,11 @@ display:none !important;
 }
 .itemLoginResponsive{
   display: none ;
+  white-space: nowrap;
+   overflow: hidden;
+  text-overflow: ellipsis;
+   font-size: 18px;
+  
   
 }
 .Buscador {
@@ -348,5 +411,23 @@ display:none !important;
   0%  { -webkit-transform:rotateZ(0deg); }
   50% { -webkit-transform:rotateZ( 0deg) scale(.7); }
   100%{ -webkit-transform:rotateZ(0deg); }
+}
+.textoMenu{
+    white-space: nowrap;
+   overflow: hidden;
+  text-overflow: ellipsis;
+   font-size: 20px;
+}
+.textoMenu :hover{
+   background-color: #ffce4e !important;
+    color: white !important;
+}
+.logo :hover{
+   background-color: #ffce4e !important;
+    color: white !important;
+}
+.itemLogin :hover{
+   background-color: #ffce4e !important;
+    color: white !important;
 }
 </style>

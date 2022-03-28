@@ -163,7 +163,7 @@ props: {
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;500;700&display=swap");
 @media only screen and (max-width: 480px) {
   .parraforTitProd {
-  font-size: 26px;
+  font-size: 20px !important;
     font-weight: 300;
     margin: 0 0 0 8px;
     color: #666;
@@ -220,7 +220,8 @@ strong,
 li,
 label,
 a,
-b {
+b,
+button {
   font-family: "Roboto" !important;
 }
 .subtitulo {
@@ -248,6 +249,12 @@ b {
 .btn-wsp:hover{
     background: #20ba5a;
 }
+ .parraforTitProd {
+  font-size: 26px;
+    font-weight: 300;
+    margin: 0 0 0 8px;
+    color: #666;
+  }
 @media only screen and (min-width:320px) and (max-width:768px){
     .btn-wsp{
         width:63px;

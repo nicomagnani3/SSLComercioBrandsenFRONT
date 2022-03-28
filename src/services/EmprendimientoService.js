@@ -21,7 +21,6 @@ export default {
     },
     get_ultimas_emprendimientos_paginate(page){
         return Api().get(API_URL + API_USER + "get_ultimas_emprendimientos_paginate/"+ page)
-
     }
   
 }

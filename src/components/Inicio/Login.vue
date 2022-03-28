@@ -47,7 +47,7 @@
       </b-form-group>
       <hr />
       <b-form-group class="text-center">
-        <b-button type="submit" block variant="primary" v-if="form.ingresar"
+        <b-button type="submit" block variant="warning" v-if="form.ingresar"
           >Ingresar
         </b-button>
 
@@ -59,7 +59,7 @@
         <b-button
           block
           @click="$router.push('registrar')"
-          variant="outline-light"
+          variant="outline-info"
           >Crear cuenta
         </b-button>
       </b-form-group>
