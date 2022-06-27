@@ -14,6 +14,9 @@ import NuevaPublicacion from '@/components/publicaciones/NuevaPublicacion.vue'
 import VerCategorias from '@/components/categorias/VerCategorias.vue'
 import VerDestacados from '@/components/Home/VerDestacados.vue'
 import verMarketPlace from '@/components/Home/verMarketPlace.vue'
+import alquileres from '@/components/alquileres/alquileres.vue'
+import nuevoAlquiler from '@/components/alquileres/nuevoAlquiler.vue'
+
 
 /* Emprendimiento */
 import NuevoEmprendimiento from '@/components/emprendimientos/NuevoEmprendimiento.vue'
@@ -134,7 +137,15 @@ const router = new Router({
          meta: {
            requireAuth: false
          }, 
-       },       
+       },      
+       {
+        path: '/alquileres',
+         name: 'alquileres',
+         component: alquileres,   
+         meta: {
+           requireAuth: false
+         }, 
+       }, 
        {
         path: '/verCategorias',
          name: 'verCategorias',
@@ -210,6 +221,16 @@ const router = new Router({
         meta: {
           requireAuth: false
         },  
+      },
+        {     
+          path: '/nuevo_alquiler',
+          name: 'nuevoAlquiler',
+          component: nuevoAlquiler,   
+          props: true,    
+          meta: {
+            requireAuth: false
+          },  
+        
        },
        {
         path: '/renovarContrato',

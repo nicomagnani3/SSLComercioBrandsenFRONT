@@ -60,10 +60,15 @@ export default {
     },
     getUltimosProductos(page){
         return Api().get(API_URL + API_USER + "get_ultimas_publicaciones_paginate/"+ page)
-
-    }
-  
-    
-    
+    },
+    addCurriculum(credentials){       
+        return Api().post(API_URL + API_USER + "nuevo_curriculum",credentials)     
+    },
+    addAlquiler(credentials) {
+        return Api().post(API_URL + API_USER + "nuevo_alquiler", credentials)
+    },       
+    getAlquileres(page){
+        return Api().get(API_URL + API_USER + "get_alquileres/"+ page)
+    },
     
 }
