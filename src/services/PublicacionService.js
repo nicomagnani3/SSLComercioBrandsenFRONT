@@ -71,4 +71,5 @@ export default {
         return Api().get(API_URL + API_USER + "get_alquileres/"+ page)
     },
     
+    
 }

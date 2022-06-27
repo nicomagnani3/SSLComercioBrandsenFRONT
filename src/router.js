@@ -16,6 +16,8 @@ import VerDestacados from '@/components/Home/VerDestacados.vue'
 import verMarketPlace from '@/components/Home/verMarketPlace.vue'
 import alquileres from '@/components/alquileres/alquileres.vue'
 import nuevoAlquiler from '@/components/alquileres/nuevoAlquiler.vue'
+import RentAction from '@/components/alquileres/RentAction.vue'
+
 
 
 /* Emprendimiento */
@@ -229,9 +231,17 @@ const router = new Router({
           props: true,    
           meta: {
             requireAuth: false
-          },  
-        
+          },         
        },
+       {     
+        path: '/RentAction',
+        name: 'RentAction',
+        component: RentAction,   
+        props: true,    
+        meta: {
+          requireAuth: false
+        },         
+     },
        {
         path: '/renovarContrato',
          name: 'renovarContrato',
