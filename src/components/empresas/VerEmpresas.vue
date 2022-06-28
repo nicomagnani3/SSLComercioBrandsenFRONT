@@ -33,7 +33,66 @@
       >
       </b-spinner>
     </div>
-    <div v-else class="animated fadeIn">
+    <div v-else class="cardsBody">
+      <b-row>
+        <b-col>
+          <ul class="cards">
+            <li
+              class="cards__item"
+              v-for="producto in paginatedCards"
+              :key="producto.id"
+            >
+              <div class="card">
+                <div class="card__image">
+                  <img :src="producto.imagen" class="imgCard" />
+                </div>
+                <div class="card__content">
+                  <div class="card__title">{{ producto.nombre }}</div>
+                  <div class="btnInfo">
+                    <button
+                      class="btn btn--block card__btn"
+                      @click="verdetalles(producto)"
+                    >
+                      Más información
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <div class="d-flex justify-content-center">
+            <b-pagination
+              pills
+              v-model="currentPage"
+              :per-page="perPage"
+              :total-rows="empresas.length"
+            ></b-pagination>
+          </div>
+        </b-col>
+        <b-col class="col-md-2">
+          <strong style="font-weight: 700; font-size: 20px">
+            Filtrar Por:
+          </strong>
+          <b-form-group>
+            <b-form-checkbox
+              v-for="item in rubros"
+              :key="item.id"
+              v-model="selected"
+              :value="item.nombre"
+              name="flavour-3a"
+              class="buscador"
+              @change="buscarPorCategoria(item.id)"
+              :indeterminate="indeterminate"
+            >
+              {{ item.nombre }}
+            </b-form-checkbox>
+          </b-form-group>
+        </b-col>
+      </b-row>
+    </div>
+
+    <!-- 
+
       <div id="careersVue">
         <div class="container-fluid">
           <div class="row">
@@ -112,8 +171,7 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </div> -->
     <b-modal
       id="modal-center"
       ok-only
@@ -145,7 +203,7 @@ export default {
       indeterminate: false,
       selected: null,
       currentPage: 1,
-      perPage:12,
+      perPage: 12,
       productoSeleccionado: [],
     };
   },
@@ -199,10 +257,10 @@ export default {
         nombre: e.rubroNombre,
       }));
       this.rubros = Array.from(new Set(mc.map(JSON.stringify))).map(JSON.parse);
-      this.ordenarRubros(this.rubros)
+      this.ordenarRubros(this.rubros);
     },
-       ordenarRubros(categoria) {
-       return categoria.sort(function (a, b) {
+    ordenarRubros(categoria) {
+      return categoria.sort(function (a, b) {
         if (a.nombre > b.nombre) {
           return 1;
         }
@@ -223,7 +281,7 @@ export default {
           return -1;
         }
         return 0;
-      }); 
+      });
     },
     verEmpresa(empresa) {
       const path = `/buscarProductos/${empresa.nombre}`;
@@ -253,11 +311,13 @@ export default {
       }
     },
     buscarPorCategoria(rubrosId) {
-            window.scrollTo(0, 200);
+      window.scrollTo(0, 200);
 
       if (this.noFiltro != false) {
         this.empresas = this.empresasCompleta;
-        this.empresas = this.empresasCompleta.filter((c) => c.rubroId == rubrosId);
+        this.empresas = this.empresasCompleta.filter(
+          (c) => c.rubroId == rubrosId
+        );
       }
     },
     tituloAjustar(titulo) {
@@ -276,7 +336,7 @@ export default {
   },
   mounted() {
     axios
-      .all([this.getGuiaComercial()/* , this.getRubros() */])
+      .all([this.getGuiaComercial() /* , this.getRubros() */])
       .then(() => {
         this.loading = false;
       })
@@ -395,4 +455,124 @@ export default {
   max-height: 209px;
   max-width: 280px;
 }
+.cardsBody {
+  font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0;
+  padding: 1rem;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+}
+.cards__item {
+  display: flex;
+  padding: 1rem;
+}
+
+.card {
+  background-color: white;
+  border-radius: 0.25rem;
+  box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  max-width: 300px;
+}
+
+.card__content {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  padding: 1rem;
+      height: 103px;
+      position:relative
+}
+.card__title {
+  color: #000000;
+  font-size: 1rem;
+  font-weight: 300;
+  /* letter-spacing: 2px; */
+  text-transform: uppercase;
+}
+.card__subtitle {
+  color: #000000;
+  font-weight: 300;
+}
+.card__text {
+  flex: 1 1 auto;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin-bottom: 1.25rem;
+  display: -webkit-box;
+  height: 139px;
+  cursor: pointer;
+  line-height: 18px;
+  -webkit-line-clamp: 7;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-overflow: -o-ellipsis-lastline;
+  white-space: normal;
+  padding-top: 10px;
+  color: #2c354f;
+}
+.btn {
+  background-color: white;
+  border: 1px solid #cccccc;
+  color: #696969;
+  padding: 0.5rem;
+}
+
+.btn--block {
+  display: block;
+  width: 100%;
+}
+.card__image {
+  object-fit: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+  filter: contrast(70%);
+  overflow: hidden;
+  position: relative;
+  transition: filter 0.5s cubic-bezier(0.43, 0.41, 0.22, 0.91);
+}
+.card__image::before {
+  display: block;
+  padding-top: 56.25%;
+}
+@media (min-width: 40rem) {
+  .card__image::before {
+    padding-top: 66.6%;
+  }
+}
+.imgCard {
+  width: auto;
+  max-height: 100%;
+  display: block;
+  margin: 0px auto;
+  object-fit: contain;
+  max-width: 301px;
+}
+.btnInfo{
+      width: 100%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 6px;
+}
+
 </style>

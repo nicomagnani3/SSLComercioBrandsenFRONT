@@ -2,7 +2,7 @@
   <div>
     <div class="body">
       <div fluid class="categoria">
-        <b-row class="pb-3">        
+        <b-row class="pb-3">
           <b-col class="text-center pt-3">
             <p class="h1 font-britannic text">
               <strong class="parrafoCategorias">MarketPlace</strong>
@@ -20,56 +20,82 @@
       >
       </b-spinner>
     </div>
-    <div v-else style=" margin-left: 2em" >
-    
-        <b-row class="text-center" cols="2" cols-sm="8" cols-md="8" cols-lg="5">
-          <b-col
-            v-for="(producto, index) in productos"
-            :key="index"
-            class="mb-2"
-          >
-            <b-card
-              class="ItemProd"
-              style="max-width: 250px"
-              :img-src="`data:image/png;base64, ${producto.imagen}`"
-              img-height="250px; max-height:100%;"
-              alt="Responsive image"
-            >
-             <!--  <div class="cortar" @click="verProducto(producto)">
-                <strong> {{ tituloAjustar(producto.titulo) }}</strong>
-              </div>
-              <div v-if="Number(producto.precio) > Number(0)">
-                <p class="card-text">
-                  {{ getImporte(producto.precio) }}
-                </p>
-              </div>
-              <div v-else>
-                <br />
-              </div> -->
-              <div slot="footer">
-                <b-btn
+    <div v-else class="cardsBody">
+      <ul class="cards">
+        <li
+          class="cards__item"
+          v-for="(producto, index) in productos"
+          :key="index"
+        >
+          <div class="card">
+            <div class="card__image">
+              <img
+                :src="`data:image/png;base64, ${producto.imagen}`"
+                class="imgCard"
+              />
+            </div>
+            <div class="card__content">
+              <div class="card__title">{{ producto.titulo }}</div>
+              <div class="btnInfo">
+                <button
+                  class="btn btn--block card__btn"
                   @click="verProducto(producto)"
-                  variant="warning"
-                  block
-                  class="btnMas"
-                  >Ver mas</b-btn
                 >
+                  Más información
+                </button>
               </div>
-            </b-card>
-          </b-col>
-        </b-row>
-        <br>
- <div class="d-flex justify-content-center">
-                <b-pagination
-                 pills 
-                  v-model="currentPagePaginate"
-                  :per-page="perPage"
-                  :total-rows="totalRows"                
-                @change="nextPage"
-                ></b-pagination>
-              </div>
+              <br>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <br />
+      <div class="d-flex justify-content-center">
+        <b-pagination
+          pills
+          v-model="currentPagePaginate"
+          :per-page="perPage"
+          :total-rows="totalRows"
+          @change="nextPage"
+        ></b-pagination>
+      </div>
     </div>
-     
+
+    <!-- 
+    <div v-else style="margin-left: 2em">
+      <b-row class="text-center" cols="2" cols-sm="8" cols-md="8" cols-lg="5">
+        <b-col v-for="(producto, index) in productos" :key="index" class="mb-2">
+          <b-card
+            class="ItemProd"
+            style="max-width: 250px"
+            :img-src="`data:image/png;base64, ${producto.imagen}`"
+            img-height="250px; max-height:100%;"
+            alt="Responsive image"
+          >
+            <div slot="footer">
+              <b-btn
+                @click="verProducto(producto)"
+                variant="warning"
+                block
+                class="btnMas"
+                >Ver mas</b-btn
+              >
+            </div>
+          </b-card>
+        </b-col>
+      </b-row>
+      <br />
+      <div class="d-flex justify-content-center">
+        <b-pagination
+          pills
+          v-model="currentPagePaginate"
+          :per-page="perPage"
+          :total-rows="totalRows"
+          @change="nextPage"
+        ></b-pagination>
+      </div>
+    </div>
+ -->
     <br />
   </div>
 </template>
@@ -82,12 +108,10 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "NuevoSlide",
-props: {
- 
-},
+  props: {},
   data() {
     return {
-        totalRows:0,
+      totalRows: 0,
       paginatedClubs: [],
       nbPages: 0,
       ubicaicon: 0,
@@ -96,28 +120,26 @@ props: {
       indice: 1,
       loading: true,
       currentPagePaginate: 1,
-      perPage:20,
+      perPage: 15,
     };
   },
   components: {},
-  created (){   
-  },
+  created() {},
   computed: {
     ...mapGetters("storeUser", ["getUserId"]),
-
   },
 
-  methods: { 
-     async nextPage(page){ 
-       try {
+  methods: {
+    async nextPage(page) {
+      try {
         window.scrollTo(0, 200);
         this.loading = true;
         const response = await ProductosService.getUltimosProductos(page);
-        
+
         if (response.data.error == false) {
           this.productos = response.data.data;
-          this.currentPagePaginate=page
-         this.loading = false;
+          this.currentPagePaginate = page;
+          this.loading = false;
           //this.getImporte(this.productos);
         }
       } catch (err) {
@@ -125,19 +147,15 @@ props: {
         this.getPorductos();
         this.productos = "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS";
       }
-        
-      },
-   
-   
-  
-  
+    },
+
     async getUltimosProductos() {
       try {
         const response = await ProductosService.getUltimosProductos(1);
-    console.log(response)
+        console.log(response);
         if (response.data.error == false) {
           this.productos = response.data.data;
-          this.totalRows= response.data.cantidad
+          this.totalRows = response.data.cantidad;
           //this.getImporte(this.productos);
         }
       } catch (err) {
@@ -174,9 +192,8 @@ props: {
     },
   },
   mounted() {
-   
     axios
-      .all([ this.getUltimosProductos() ])
+      .all([this.getUltimosProductos()])
       .then(() => {
         this.loading = false;
       })
@@ -189,29 +206,6 @@ props: {
 
 
 <style scoped>
-.cortar {
-  font-weight: 700;
-  display: -webkit-box;
-
-  margin: 0;
-  /* text-align: left; */
-  cursor: pointer;
-  font-size: 13px;
-  line-height: 18px;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-overflow: -o-ellipsis-lastline;
-  white-space: normal;
-  padding-top: 10px;
-  color: #2c354f;
-  max-width: 191px;
-}
-.texto {
-  color: rgb(226, 205, 199);
-  font-family: "Poppins", sans-serif;
-}
 .vueperslide__title {
   font-size: 7em;
   opacity: 0.7;
@@ -220,69 +214,160 @@ props: {
 .ItemProd img {
   object-fit: contain;
 }
-
+.icono {
+  width: 35px;
+  margin: 5px;
+}
 .item {
   box-shadow: 3px 3px 5px 3px rgba(0, 0, 0, 0.2);
 }
-.card-pagination {
+
+.cardsBody {
+  font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0;
+  padding: 2rem;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.cards {
   display: flex;
-  align-items: center;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  display: flex;
   justify-content: center;
-  padding: 20px;
 }
-.page-index {
-  margin-left: 10px;
-  width: 15px;
-  height: 15px;
-  border-radius: 15px;
-  background: #7d7d7d;
+.cards__item {
+  display: flex;
+  padding: 1rem;
+  max-width: 300px;
 }
-.active {
-  width: 20px;
-  height: 20px;
-  border-radius: 20px;
+
+.card {
+  background-color: white;
+  border-radius: 0.25rem;
+  box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  max-width: 300px;
+  min-width: 280px;
 }
-.verMasServi {
-  margin-left: 12px;
-  color: #676767;
+
+.card__content {
+   display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  padding: 1rem;
+      height: 103px;
+      position:relative
+}
+.card__title {
+  color: #000000;
+  font-size: 1.25rem;
+  font-weight: 300;
+    display: -webkit-box;
+    /* height: 139px; */
+    /* cursor: pointer; */
+    line-height: 18px;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    /* text-overflow: ellipsis; */
+    text-overflow: -o-ellipsis-lastline;
+    /* white-space: normal; */
+    /* padding-top: 10px; */
+    color: #2c354f;
+
+
+
+
+
+
+}
+.card__subtitle {
+  color: #000000;
+  font-weight: 300;
+}
+.card__text {
+  flex: 1 1 auto;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin-bottom: 1.25rem;
+  display: -webkit-box;
+  height: 139px;
   cursor: pointer;
-  font-size: 20px;
-  text-decoration: underline #676767;
-  white-space: nowrap;
-}
-.btnMas {
+  line-height: 18px;
+  -webkit-line-clamp: 7;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-overflow: -o-ellipsis-lastline;
   white-space: normal;
-  background: #ffce4e;
-  background: -moz-linear-gradient(
-    45deg,
-    #00ddf5 0%,
-    #00d9d7 32%,
-    #00d6ba 100%
-  );
-  background: -webkit-linear-gradient(
-    45deg #00ddf5 0%,
-    #00d9d7 32%,
-    #ffce4e 100%
-  );
-  background: linear-gradient(45deg #00ddf5 0%, #00d9d7 32%, #ffce4e 100%);
-  -moz-border-radius: 20px;
-  -webkit-border-radius: 20px;
-  border-radius: 20px;
-  margin: -3px 0 0 0;
-  padding: 9px 7px 16px 8px;
-  width: 88%;
-  text-transform: none;
-  font-size: 14px;
-  line-height: 11px;
-  color: #fff;
+  padding-top: 10px;
+  color: #2c354f;
 }
-#iconright {
-  height: 29rem;
-  width: 30px;
-  cursor: pointer;
+.btn {
+    /* white-space: normal; */
+    background: #ffce4e;
+    background: linear-gradient(45deg #00ddf5 0,#00d9d7 32%,#ffce4e);
+    /* border-radius: 20px; */
+    /* margin: -3px 0 0 0; */
+    /* padding: 9px 7px 16px 8px; */
+    /* width: 88%; */
+    /* text-transform: none; */
+    /* font-size: 14px; */
+    /* line-height: 11px; */
+    color: #fff;
 }
-.destacados {
-  color: rgb(109, 108, 108);
+
+.btn--block {
+  display: block;
+  width: 100%;
+}
+.card__image {
+  object-fit: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+  filter: contrast(80%);
+  overflow: hidden;
+  position: relative;
+  transition: filter 0.5s cubic-bezier(0.43, 0.41, 0.22, 0.91);
+}
+.card__image::before {
+  display: block;
+  padding-top: 56.25%;
+}
+@media (min-width: 40rem) {
+  .card__image::before {
+    padding-top: 66.6%;
+  }
+}
+.imgCard {
+    width: 100%;
+    height: 250px;
+    /* max-height: 100%; */
+    display: block;
+    margin: 0px auto;
+    height: 300px;
+    /* object-fit: contain;*/
+}
+.btnPublicar:hover {
+  color: #ffc107;
+}
+.btnInfo{
+      width: 100%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
 }
 </style>
 

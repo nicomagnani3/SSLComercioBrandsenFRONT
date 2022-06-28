@@ -40,14 +40,78 @@
         </b-col>
       </b-row>
       <b-row>
-           <div class="card__title">{{ publicacion.propiedad }}</div>
-        <div class="card__subtitle">{{ publicacion.operacion }}</div>   
-        </b-row>
-        <b-row>
+        <b-col class="text-center pt-3">
+          <div class="card__title">{{ publicacion.propiedad }}</div>
+          <div class="card__subtitle">{{ publicacion.operacion }}</div>
+        </b-col>
+      </b-row>
+      <b-row>
         <b-col class="text-center pt-3">
           <p class="card__text">
             {{ publicacion.observaciones }}
           </p>
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col class="text-center pt-3">
+          <div>
+            <strong>Contacto:</strong>   
+        
+            <a
+            variant="primary" class="mb-2"
+              v-if="publicacion.telefono != null"
+              :href="
+                'https://api.whatsapp.com/send?text=Hola!%20,desde%20Malambo%20observe%20la%20propiedad%20' +
+                publicacion.propiedad +
+                ',queria%20obtener%20mas%20detalles' +
+                '&?url=https://malambobrandsen.com.ar&phone=+54' +
+                acomodarCelular(publicacion.telefono)
+              "
+              target="_black"
+            >
+              
+              <img
+                v-if="publicacion.telefono != null"
+                src="@/assets/wsp.png"
+                alt=""
+                height="auto"
+                style="width: 40px; margin: 4px"
+              />&nbsp;&nbsp;
+            </a>
+            <a
+              :href="
+                'https://mail.google.com/mail/?view=cm&fs=1&to=' +
+                publicacion.email +
+                '&body=Hola!%20,desde%20Malambo%20observe%20la%20publicacion%20' +
+                publicacion.propiedad +
+                ',queria%20obtener%20mas%20detalles' +
+                '&su=Malambo consulta por ' +
+                publicacion.operacion
+              "
+              target="_black"
+              >&nbsp;&nbsp;
+              <img
+                v-if="publicacion.email != null"
+                src="@/assets/mail.png"
+                alt=""
+                height="auto"
+                style="width: 40px; margin: 4px"
+              />
+            </a>
+          </div>
+        </b-col>
+        
+      </b-row>
+      <br>
+      <b-row v-if="this.cordenadas.length > 1">
+        <b-col lg="12" md="8">
+          <l-map style="height: 50vh" :zoom="zoom" :center="this.cordenadas">
+            <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
+            <l-marker :lat-lng="this.cordenadas">
+              <l-icon
+                icon-url="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/map-marker-icon.png"
+            /></l-marker>
+          </l-map>
         </b-col>
       </b-row>
     </b-container>
@@ -57,10 +121,12 @@
 <script>
 import axios from "axios";
 import PublicacionService from "@/services/PublicacionService";
-
+import { LMap, LMarker, LTileLayer } from "vue2-leaflet";
+import "leaflet/dist/leaflet.css";
+import { LIcon } from "vue2-leaflet";
 export default {
   name: "imagenesDeUnaPublicacion",
-  components: {},
+  components: { LMap, LTileLayer, LMarker, LIcon },
   props: {
     idPublicacion: {
       type: Number,
@@ -79,6 +145,24 @@ export default {
       ubicaicon: 0,
       currentPageIndex: 0,
       imagenseleccionada: null,
+      url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+      attribution:
+        '&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+      zoom: 15,
+      center: [-35.169137, -58.231642],
+      cordenadas: [],
+       metaInfo: {
+    title: 'Default App Title',
+    titleTemplate: '%s | vue-meta Example App',
+    htmlAttrs: {
+      lang: 'en-US'
+    },
+    meta: [
+      { charset: 'utf-8' },
+      { name: 'description', content: 'An example Vue application with vue-meta.' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' }
+    ]
+  },
     };
   },
   directives: {
@@ -88,6 +172,21 @@ export default {
       },
     },
   },
+  created() {
+    console.log(this.publicacion);
+    if (this.publicacion.coordenadas != "") {
+      let coordinate_str = this.publicacion.coordenadas
+        .replace("[", "")
+        .replace("]", "");
+      coordinate_str = coordinate_str.split(",");
+      this.cordenadas = [
+        parseFloat(coordinate_str[0]),
+        parseFloat(coordinate_str[1]),
+      ];
+      console.log(this.cordenadas);
+    }
+  },
+
   methods: {
     imgSlider() {
       return this.imagenseleccionada;
@@ -124,8 +223,12 @@ export default {
       this.ubicaicon = this.currentPageIndex;
       return i - 1 === this.currentPageIndex;
     },
-    aceptarDetalle() {
-      this.$emit("okImagenesPublicacion");
+
+    acomodarCelular(telefono) {
+      if (telefono[0] == 0) {
+        return telefono.substr(1);
+      }
+      return telefono;
     },
     async getImagenesPublicacion() {
       try {
@@ -133,7 +236,6 @@ export default {
           idPublicacion: this.idPublicacion,
           tipo: this.tipo,
         });
-        console.log(response);
         if (response.data.error == false) {
           this.imagenes = response.data.data;
           this.imagenseleccionada = this.imagenes[0].imagen;
@@ -219,8 +321,9 @@ export default {
   object-fit: contain;
 }
 .card__text {
-  padding: 15px 15px;
   overflow: hidden;
+  white-space: pre-wrap;
+  color: #666;
 }
 </style>
 

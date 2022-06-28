@@ -3,15 +3,28 @@
     <div class="body">
       <div fluid class="categoria">
         <b-row class="pb-3">
-          <p style="font-size: 17px">
-            Publicar
-            <a @click="publicarAlquiler()">
+          <!--     <p style="font-size: 17px" @click="publicarAlquiler()"> 
+              !!!!Publicar!
+             <a @click="publicarAlquiler()">
               <img class="icono" src="@/assets/wsp.png" alt="" />
-            </a>
-          </p>
+            </a> 
+          </p> -->
           <b-col class="text-center pt-3">
             <p class="h1 font-britannic text">
-              <strong class="parrafoCategorias"> Alquileres disponibles</strong>
+              <strong class="parrafoCategorias"> Propiedades disponibles   </strong>
+
+              <b-button
+              @click="publicarAlquiler()"
+                style="
+                  overflow: hidden;
+                  text-transform: uppercase;
+                  background-color: rgb(247, 248, 249);
+                  line-height: 1.25em;
+                "
+                class="btnPublicar"
+              >
+                Publicar
+              </b-button>
             </p>
           </b-col>
         </b-row>
@@ -28,28 +41,36 @@
       <!--  :img-src="`data:image/png;base64, ${producto.imagen}`" -->
     </div>
     <div v-else class="cardsBody">
-      <ul class="cards"  >
+      <ul class="cards">
         <li
-          class="cards__item"     
+          class="cards__item"
           v-for="(producto, index) in productos"
-          :key="index"    
+          :key="index"
         >
           <div class="card">
             <div class="card__image">
-              <img :src="`data:image/png;base64, ${producto.imagen}`"  class="imgCard" />
+              <img
+                :src="`data:image/png;base64, ${producto.imagen}`"
+                class="imgCard"
+              />
             </div>
             <div class="card__content">
-              <div class="card__title">{{producto.propiedad}}</div>
-               <div class="card__subtitle">{{producto.operacion}}</div>
+              <div class="card__title">{{ producto.propiedad }}</div>
+              <div class="card__subtitle">{{ producto.operacion }}</div>
               <p class="card__text">
-               {{producto.observaciones}}
+                {{ producto.observaciones }}
               </p>
-              <button class="btn btn--block card__btn" @click="masInformacion(producto)">Mas información</button>
+              <button
+                class="btn btn--block card__btn"
+                @click="masInformacion(producto)"
+              >
+                Más información
+              </button>
             </div>
           </div>
         </li>
       </ul>
-            <br />
+      <br />
       <div class="d-flex justify-content-center">
         <b-pagination
           pills
@@ -62,7 +83,6 @@
     </div>
 
     <br />
-
   </div>
 </template>
 
@@ -86,7 +106,7 @@ export default {
       indice: 1,
       loading: true,
       currentPagePaginate: 1,
-      perPage: 20,
+      perPage: 10,
     };
   },
   components: {},
@@ -105,22 +125,22 @@ export default {
         },
       });
     },
-    masInformacion(propiedad){
-      console.log(propiedad)
-        this.$router.push({
-          name: "RentAction",
-          params: {
-            idPublicacion: propiedad.id,
-            tipo:'ALQUILER',
-            publicacion:propiedad
-          },
-        });
+    masInformacion(propiedad) {
+      console.log(propiedad);
+      this.$router.push({
+        name: "RentAction",
+        params: {
+          idPublicacion: propiedad.id,
+          tipo: "ALQUILER",
+          publicacion: propiedad,
+        },
+      });
     },
     async nextPage(page) {
       try {
         window.scrollTo(0, 200);
         this.loading = true;
-        const response = await ProductosService.getUltimosProductos(page);
+        const response = await ProductosService.getAlquileres(page);
 
         if (response.data.error == false) {
           this.productos = response.data.data;
@@ -141,7 +161,8 @@ export default {
         console.log(response);
         if (response.data.error == false) {
           this.productos = response.data.data;
-          this.totalRows = response.data.cantidad;
+         this.totalRows= response.data.cantidad
+         console.log(this.totalRows)
           //this.getImporte(this.productos);
         }
       } catch (err) {
@@ -192,7 +213,6 @@ export default {
 
 
 <style scoped>
-
 .vueperslide__title {
   font-size: 7em;
   opacity: 0.7;
@@ -209,11 +229,8 @@ export default {
   box-shadow: 3px 3px 5px 3px rgba(0, 0, 0, 0.2);
 }
 
-
-
-
-.cardsBody{    
-  font-family: 'Roboto','Helvetica Neue', Helvetica, Arial, sans-serif;
+.cardsBody {
+  font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-style: normal;
   font-weight: 400;
   letter-spacing: 0;
@@ -228,10 +245,9 @@ export default {
   list-style: none;
   margin: 0;
   padding: 0;
-   list-style-type:none;
-  display:flex;
+  list-style-type: none;
+  display: flex;
   justify-content: center;
-
 }
 .cards__item {
   display: flex;
@@ -246,6 +262,8 @@ export default {
   flex-direction: column;
   overflow: hidden;
   max-width: 300px;
+  min-width: 300px;
+
 }
 
 .card__content {
@@ -266,15 +284,15 @@ export default {
   font-weight: 300;
 }
 .card__text {
-  flex: 1 1 auto;
-  font-size: 0.875rem;
-  line-height: 1.5;
-  margin-bottom: 1.25rem;
-  display: -webkit-box;
-    height: 139px;   
-    cursor: pointer;
+    flex: 1 1 auto;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin-bottom: 1.25rem;
+    display: -webkit-box;
+    /* height: 139px; */
+    /* cursor: pointer; */
     line-height: 18px;
-    -webkit-line-clamp: 7;
+    -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -288,7 +306,6 @@ export default {
   border: 1px solid #cccccc;
   color: #696969;
   padding: 0.5rem;
-
 }
 
 .btn--block {
@@ -306,7 +323,6 @@ export default {
   overflow: hidden;
   position: relative;
   transition: filter 0.5s cubic-bezier(0.43, 0.41, 0.22, 0.91);
-
 }
 .card__image::before {
   display: block;
@@ -318,14 +334,19 @@ export default {
   }
 }
 .imgCard {
-    width: auto;
-    max-height: 100%;
-    display: block;
-    margin: 0px auto;
-    height:300px;
+  width: auto;
+  max-height: 100%;
+  display: block;
+  margin: 0px auto;
+  height: 300px;
   object-fit: contain;
 }
-
+.btn:hover{
+color: #ffc107;
+}
+.btnPublicar:hover{
+color: #ffc107;
+}
 </style>
 
 

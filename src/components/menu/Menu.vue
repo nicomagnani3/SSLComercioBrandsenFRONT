@@ -77,7 +77,7 @@
             <b-nav-item
             class="textoMenu"
             :to="{ name: 'alquileres' }"
-            >Alquileres</b-nav-item
+            >Propiedades</b-nav-item
           >
 
           <b-nav-item-dropdown v-if="hasPermisos('CREAR')">

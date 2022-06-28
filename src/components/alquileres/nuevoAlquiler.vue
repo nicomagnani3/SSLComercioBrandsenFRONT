@@ -224,7 +224,7 @@ export default {
       alerts: [],
       imagenes: [],
       observaciones: "",
-      operacionSeleccionada: 1,
+      operacionSeleccionada: "Alquiler",
       presionoCrear: false,
       optionOperacion: [
         { value: "Alquiler", text: "Alquiler" },

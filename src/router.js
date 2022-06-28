@@ -57,6 +57,8 @@ import publicarMobile from '@/components/publicacionMobile/NuevaPublicacion.vue'
 
 import CrearPublicacion from '@/components/publicaciones/CrearPublicacion.vue'
 import CrearContrato from '@/components/contratos/CrearContrato.vue'
+import VueMeta from 'vue-meta'
+Vue.use(VueMeta)
 
 
 Vue.use(Router)
