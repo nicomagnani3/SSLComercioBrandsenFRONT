@@ -11,12 +11,9 @@
   <div v-else>
     <br />
     <VueSlickCarousel :arrows="true" :dots="true" v-bind="settings">
-      <b-col
-        v-for="(dolar, index) in dolares"
-        :key="index"
-        class="columnaCards"
-      >
-        <div class="card">
+ 
+        <div class="card" v-for="(dolar, index) in dolares"
+        :key="index">
           <div class="card__content">
             <div class="card__titleDolar">Dolar: {{ dolar.casa.nombre }}</div>
             <b-row>
@@ -33,20 +30,32 @@
             </b-row>
           </div>
         </div>
-      </b-col>
     </VueSlickCarousel>
     <br />
     <VueSlickCarousel :arrows="true" :dots="true" v-bind="settingsMicros">
-      <b-col v-for="(utilidad, index) in utilidades" :key="index">
-        <img
-          alt="Responsive image"
-          :src="utilidad.imagen"
-          height="300"
-          class="imgUtilidades"
-          v-if="utilidad.nombre != 'Farmacia'"
-        />
-      </b-col>
+      <div
+        v-for="(utilidad, index) in utilidades"
+        :key="index"
+      >
+        <img :src="utilidad.imagen" class="imgCard" />
+      </div>
     </VueSlickCarousel>
+    <!--     <ul class="cards">
+
+        <li
+          class="cards__item"
+          v-for="(utilidad, index) in utilidades"
+          :key="index"
+        >
+            <div class="card__image">
+              <img
+                :src="utilidad.imagen"
+                class="imgCard"
+              />
+            </div>
+           
+        </li>
+      </ul> -->
 
     <b-container>
       <b-row class="text-center">
@@ -89,7 +98,7 @@ export default {
         dots: true,
         infinite: false,
         speed: 500,
-        slidesToShow: 6,
+        slidesToShow: 4,
         slidesToScroll: 4,
         initialSlide: 0,
         responsive: [
@@ -120,12 +129,12 @@ export default {
         ],
       },
       settings: {
-         dots: true,
+        dots: true,
         infinite: false,
-            autoplay:true,
+        autoplay: true,
         speed: 160000,
         autoplaySpeed: 2000,
-        slidesToShow: 6,
+        slidesToShow: 5,
         slidesToScroll: 4,
         initialSlide: 0,
         responsive: [
@@ -243,7 +252,7 @@ export default {
 </script>
 <style scoped>
 @media only screen and (max-width: 1300px) {
-  .imgUtilidades {
+  .imgCard {
     width: 100%;
     height: 100%;
     max-width: 90%;
@@ -254,10 +263,13 @@ export default {
   }
 }
 @media only screen and (max-width: 480px) {
-  .imgUtilidades {
-    max-height: 250px !important;
-    object-fit: contain;
-  }
+.imgCard {
+    width: 300px;
+max-height: 200px !important;
+min-height: 200px !important;
+ 
+}
+
 }
 .cardsBody {
   font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -312,22 +324,32 @@ export default {
   background-color: #ffce4e;
 }
 .imgCard {
-  width: auto;
-  /* max-height: 100%; */
-  display: block;
-  margin: 0px auto;
-  height: 556px;
-  object-fit: contain;
+    width: 400px;
+max-height: 400px;
+min-height: 400px;
+ 
 }
+
 
 .card__image {
   object-fit: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+  filter: contrast(90%);
+  overflow: hidden;
+  position: relative;
+  transition: filter 0.5s cubic-bezier(0.43, 0.41, 0.22, 0.91);
 }
 .imgUtilidades {
   width: auto;
+  max-height: 100%;
   display: block;
+  margin: 0px auto;
+  height: 300px;
   object-fit: contain;
-  max-height: 300px;
 }
 </style>
  

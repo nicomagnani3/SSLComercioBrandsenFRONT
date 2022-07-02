@@ -38,13 +38,14 @@ export default {
         arrows: false,
         dots: true,
         infinite: true,
-        slidesToShow: 6,
+        slidesToShow: 5,
         rows: 1,
         slidesToScroll: 1,
         autoplay: true,
         speed: 6000,
         autoplaySpeed: 2000,
         cssEase: "linear",
+
         responsive: [
           {
             breakpoint: 1024,
