@@ -11,32 +11,27 @@
   <div v-else>
     <br />
     <VueSlickCarousel :arrows="true" :dots="true" v-bind="settings">
- 
-        <div class="card" v-for="(dolar, index) in dolares"
-        :key="index">
-          <div class="card__content">
-            <div class="card__titleDolar">Dolar: {{ dolar.casa.nombre }}</div>
-            <b-row>
-              <b-col>
-                <div class="card__subtitle">
-                  Compra: <b>${{ dolar.casa.compra }}</b>
-                </div>
-              </b-col>
-              <b-col>
-                <div class="card__subtitle">
-                  Venta: <b>${{ dolar.casa.venta }}</b>
-                </div>
-              </b-col>
-            </b-row>
-          </div>
+      <div class="card" v-for="(dolar, index) in dolares" :key="index">
+        <div class="card__content">
+          <div class="card__titleDolar">Dolar: {{ dolar.casa.nombre }}</div>
+          <b-row>
+            <b-col>
+              <div class="card__subtitle">
+                Compra: <b>${{ dolar.casa.compra }}</b>
+              </div>
+            </b-col>
+            <b-col>
+              <div class="card__subtitle">
+                Venta: <b>${{ dolar.casa.venta }}</b>
+              </div>
+            </b-col>
+          </b-row>
         </div>
+      </div>
     </VueSlickCarousel>
     <br />
     <VueSlickCarousel :arrows="true" :dots="true" v-bind="settingsMicros">
-      <div
-        v-for="(utilidad, index) in utilidades"
-        :key="index"
-      >
+      <div v-for="(utilidad, index) in utilidades" :key="index">
         <img :src="utilidad.imagen" class="imgCard" />
       </div>
     </VueSlickCarousel>
@@ -142,6 +137,15 @@ export default {
             breakpoint: 1024,
             settings: {
               slidesToShow: 3,
+              slidesToScroll: 3,
+              infinite: true,
+              dots: true,
+            },
+          },
+              {
+            breakpoint: 1000,
+            settings: {
+              slidesToShow: 2,
               slidesToScroll: 3,
               infinite: true,
               dots: true,
@@ -263,13 +267,18 @@ export default {
   }
 }
 @media only screen and (max-width: 480px) {
-.imgCard {
+  .imgCard {
     width: 300px;
-max-height: 200px !important;
-min-height: 200px !important;
- 
+    max-height: 200px !important;
+    min-height: 200px !important;
+  }
 }
-
+@media only screen and (max-width: 1000px) {
+  .imgCard {
+ width: 300px;
+    max-height: 200px !important;
+    min-height: 200px !important;
+  }
 }
 .cardsBody {
   font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -324,12 +333,10 @@ min-height: 200px !important;
   background-color: #ffce4e;
 }
 .imgCard {
-    width: 400px;
-max-height: 400px;
-min-height: 400px;
- 
+  width: 400px;
+  max-height: 400px;
+  min-height: 400px;
 }
-
 
 .card__image {
   object-fit: contain;
