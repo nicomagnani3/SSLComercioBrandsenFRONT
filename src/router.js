@@ -42,11 +42,16 @@ import MisProductos from '@/components/usuarios/MisProductos.vue'
 /* Menu */
 import container from '@/components/menu/Container.vue'
 import home from '@/components/Home/Home.vue'
-/* Empreas - comcercios -rubros*/
+import utilidades from '@/components/Home/utilidades.vue'
+
+
+/* Empreas - comcercios -rubros -curriculums*/
 import VerEmpresas from '@/components/empresas/VerEmpresas.vue'
 import crearEmpresa from '@/components/empresas/crearEmpresa.vue'
 import crearNovedad from '@/components/novedades/crearNovedad.vue'
 import crearPublicidad from '@/components/publicidad/CrearPublicidad.vue'
+import verCurriculums from '@/components/contratos/verCurriculums.vue'
+
 
 
 import verSoporte from '@/components/soporte/VerSoporte.vue'
@@ -101,6 +106,15 @@ const router = new Router({
          requireAuth: true
        },              
       },
+      {
+        path: '/ver_curriculums',
+        name: 'ver_curriculums',
+        component: verCurriculums,
+        meta: {
+          requireAuth: true
+        },              
+       },
+      
        {
        path: '/buscarProductos/:producto',
         name: 'buscarProductos',
@@ -150,6 +164,15 @@ const router = new Router({
            requireAuth: false
          }, 
        }, 
+       {
+        path: '/utilidades',
+         name: 'utilidades',
+         component: utilidades,   
+         meta: {
+           requireAuth: false
+         }, 
+       }, 
+       
        {
         path: '/verCategorias',
          name: 'verCategorias',

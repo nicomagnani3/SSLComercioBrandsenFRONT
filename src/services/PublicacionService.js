@@ -70,6 +70,12 @@ export default {
     getAlquileres(page){
         return Api().get(API_URL + API_USER + "get_alquileres/"+ page)
     },
+    getUtilidades(credentials) {         
+        return Api().get(API_URL + API_USER + "get_utilidades/",credentials)
+    },
+    cambiarImagenUtilidades(credentials) {    
+        return Api().post(API_URL + API_USER + "cambiar_imagen_utilidad", credentials)
+    },
     
     
 }

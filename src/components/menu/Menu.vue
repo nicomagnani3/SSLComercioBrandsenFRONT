@@ -79,6 +79,11 @@
             :to="{ name: 'alquileres' }"
             >Propiedades</b-nav-item
           >
+             <b-nav-item
+            class="textoMenu"
+            :to="{ name: 'utilidades' }"
+            >Utilidades</b-nav-item
+          >
 
           <b-nav-item-dropdown v-if="hasPermisos('CREAR')">
             <template slot="button-content">
@@ -181,10 +186,15 @@
               v-if="hasPermisos('CREAR_GUIA')"
               >Crear guia comercial</b-dropdown-item
             >
+             <b-dropdown-item
+              :to="{ name: 'ver_curriculums' }"
+              v-if="hasPermisos('CREAR_GUIA')"
+              >Listado Curriculums</b-dropdown-item
+            >
             <b-dropdown-item
               :to="{ name: 'crearPublicidad' }"
               v-if="hasPermisos('CREAR_GUIA')"
-              >Publicidades</b-dropdown-item
+              >Publicidades y utilidades</b-dropdown-item
             >
             <b-dropdown-item
               :to="{ name: 'crearNovedad' }"

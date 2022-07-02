@@ -106,7 +106,7 @@ export default {
       indice: 1,
       loading: true,
       currentPagePaginate: 1,
-      perPage: 10,
+      perPage: 18,
     };
   },
   components: {},
@@ -319,7 +319,7 @@ export default {
   background-size: cover;
   border-top-left-radius: 0.25rem;
   border-top-right-radius: 0.25rem;
-  filter: contrast(70%);
+  filter: contrast(90%);
   overflow: hidden;
   position: relative;
   transition: filter 0.5s cubic-bezier(0.43, 0.41, 0.22, 0.91);

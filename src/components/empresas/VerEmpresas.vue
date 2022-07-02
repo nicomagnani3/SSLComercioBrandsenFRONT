@@ -51,11 +51,13 @@
                   <div class="btnInfo">
                     <button
                       class="btn btn--block card__btn"
+                      id="btnInfo"
                       @click="verdetalles(producto)"
                     >
                       Más información
                     </button>
                   </div>
+                  
                 </div>
               </div>
             </li>
@@ -203,7 +205,7 @@ export default {
       indeterminate: false,
       selected: null,
       currentPage: 1,
-      perPage: 12,
+      perPage: 15,
       productoSeleccionado: [],
     };
   },
@@ -353,14 +355,9 @@ export default {
     width: 23px !important;
     margin: 5px !important;
   }
-  .cortar {
-    display: none !important;
-  }
+
 }
-.imagnesIcon {
-  width: 45px;
-  margin: 4px;
-}
+
 .buscador:hover {
   color: rgb(255, 206, 78);
   cursor: pointer;
@@ -369,97 +366,16 @@ export default {
   width: 366px;
 }
 
-.grid-item1 {
-  background: #ffffff;
-  text-align: center;
-  border: rgb(165, 165, 165) 1px solid;
-  /* width: 100px !important; */
-  font-size: 20px;
-  cursor: pointer;
-  padding-top: 20px;
-}
-.cortar {
-  font-weight: 700;
-  /* display: -webkit-box; */
-  /* height: 30px; */
-  /* margin: 0; */
-  /* text-align: left; */
-  /* cursor: pointer; */
-  font-size: 13px;
-  line-height: 18px;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  /* text-overflow: ellipsis; */
-  text-overflow: -o-ellipsis-lastline;
-  white-space: normal;
-  padding-top: 10px;
-  color: #2c354f;
-  max-width: 191px;
-  white-space: nowrap;
-  /* overflow: hidden; */
-  text-overflow: ellipsis;
-}
-.btnProductos {
-  box-shadow: 0px 0px 0px 0px #ffce4e;
-  background-color: #ffce4e;
-  border-radius: 50rem !important;
-  /* border: 1px solid #ffce4e; */
-  /* display: inline-block; */
-  cursor: pointer;
-  color: #ffffff;
-  font-family: "Montserrat", sans-serif !important;
-  font-size: 13px;
-  padding: 11px 24px;
-  text-decoration: none;
-  text-shadow: 0px 0px 0px #ffce4e;
-}
-.btnProductos:hover {
-  background-color: #d0a537;
-}
-.btnProductos:active {
-  position: relative;
-  top: 1px;
-}
-.btnDetalle {
-  box-shadow: 0px 0px 0px 0px #e6e6ff;
-  /* background-color: #ffce4e; */
-  border-radius: 38rem !important;
-  border: 1px solid #212529;
-  /* display: inline-block; */
-  cursor: pointer;
-  color: #212529;
-  font-family: "Montserrat", sans-serif !important;
-  font-size: 13px;
-  padding: 8px 24px;
-  text-decoration: none;
-  text-shadow: 0px 0px 0px #000000;
-}
-.btnDetalle:hover {
-  background-color: #e6e6e6;
-}
-.btnDetalle:active {
-  position: relative;
-  top: 1px;
-}
 .icono {
   width: 35px;
   margin: 5px;
 }
-.flip-card-back {
-  background-color: #2980b9;
-  color: white;
-  transform: rotateY(180deg);
-}
-.cardGuia img {
-  max-height: 209px;
-  max-width: 280px;
-}
+
+
 .cardsBody {
   font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-style: normal;
   font-weight: 400;
-  letter-spacing: 0;
   padding: 1rem;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -488,6 +404,10 @@ export default {
   flex-direction: column;
   overflow: hidden;
   max-width: 300px;
+  min-width: 300px;
+    max-height: 330px;
+  min-height: 330px;
+
 }
 
 .card__content {
@@ -495,14 +415,11 @@ export default {
   flex: 1 1 auto;
   flex-direction: column;
   padding: 1rem;
-      height: 103px;
-      position:relative
 }
 .card__title {
   color: #000000;
-  font-size: 1rem;
+  font-size: 1.0rem;
   font-weight: 300;
-  /* letter-spacing: 2px; */
   text-transform: uppercase;
 }
 .card__subtitle {
@@ -510,22 +427,22 @@ export default {
   font-weight: 300;
 }
 .card__text {
-  flex: 1 1 auto;
-  font-size: 0.875rem;
-  line-height: 1.5;
-  margin-bottom: 1.25rem;
-  display: -webkit-box;
-  height: 139px;
-  cursor: pointer;
-  line-height: 18px;
-  -webkit-line-clamp: 7;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-overflow: -o-ellipsis-lastline;
-  white-space: normal;
-  padding-top: 10px;
-  color: #2c354f;
+    flex: 1 1 auto;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin-bottom: 1.25rem;
+    display: -webkit-box;
+    /* height: 139px; */
+    /* cursor: pointer; */
+    line-height: 18px;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-overflow: -o-ellipsis-lastline;
+    white-space: normal;
+    padding-top: 10px;
+    color: #2c354f;
 }
 .btn {
   background-color: white;
@@ -545,7 +462,7 @@ export default {
   background-size: cover;
   border-top-left-radius: 0.25rem;
   border-top-right-radius: 0.25rem;
-  filter: contrast(70%);
+  filter: contrast(90%);
   overflow: hidden;
   position: relative;
   transition: filter 0.5s cubic-bezier(0.43, 0.41, 0.22, 0.91);
@@ -560,19 +477,24 @@ export default {
   }
 }
 .imgCard {
-  width: auto;
+   width: auto;
   max-height: 100%;
   display: block;
   margin: 0px auto;
   object-fit: contain;
   max-width: 301px;
 }
-.btnInfo{
-      width: 100%;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    padding: 6px;
+.btn:hover{
+color: #ffc107;
 }
-
+.btnPublicar:hover{
+color: #ffc107;
+}
+#btnInfo{
+     position: absolute;
+    bottom: 0;
+width: 90%;}
 </style>
+
+
+

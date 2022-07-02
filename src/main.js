@@ -17,7 +17,9 @@ Vue.use(VueNumeric)
 import VueGlide from 'vue-glide-js'
 import 'vue-glide-js/dist/vue-glide.css'
 Vue.use(VueGlide)
-
+import AxiosPlugin from 'vue-axios-cors';
+ 
+Vue.use(AxiosPlugin)
 
 import vSelect from "vue-select";
 
