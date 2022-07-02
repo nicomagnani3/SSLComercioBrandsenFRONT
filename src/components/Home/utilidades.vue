@@ -41,7 +41,6 @@
                   <div class="card__titleDolar">
                     Dolar: {{ dolar.casa.nombre }}
                   </div>
-                  <br />
                   <b-row>
                     <b-col>
                       <div class="card__subtitle">
@@ -111,7 +110,6 @@ export default {
     },
 
     async getGeolocation(data) {
-      this.loading = true;
       try {
         await axios(
           `https://api.openweathermap.org/data/2.5/forecast/daily?lat=${data.coords.latitude}&lon=${data.coords.longitude}&units=metric&appid=20571ab45c74dc2a1897b60c5b8047a1`
@@ -133,14 +131,12 @@ export default {
     },
     async dolarHoy() {
       try {
-        this.loading = true;
 
         const apiUSD = "https://www.dolarsi.com/api/api.php?type=dolar";
         const cotizacionDolar = await fetch(apiUSD);
         const cotizacionJSON = await cotizacionDolar.json();
         this.dolares = cotizacionJSON;
         console.log(this.dolares);
-        this.loading = false;
       } catch (error) {
         console.log(error);
       }
@@ -186,6 +182,21 @@ export default {
     width: 100%;
     height: 100%;
         max-width: 90%;
+        width: auto;
+    display: block;
+    object-fit: contain;
+    max-height: 363px;
+  }
+}
+@media only screen and (max-width: 480px) {
+  .imgUtilidades {
+    width: 100%;
+    height: 100%;
+        max-width: 90%;
+        width: auto;
+    display: block;
+    object-fit: contain;
+    max-height: 363px;
   }
 }
 .cardsBody {
@@ -216,8 +227,8 @@ export default {
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
-  padding: 1rem;
-}
+/*   padding: 1rem;
+ */}
 .card__subtitle {
   color: #000000;
   font-weight: 300;
@@ -234,7 +245,7 @@ export default {
 }
 .card__titleDolar {
   color: #000000;
-  font-size: 1.25rem;
+  font-size: 1.0rem;
   font-weight: 300;
   text-transform: uppercase;
   background-color: #ffce4e;
@@ -254,7 +265,6 @@ export default {
 .imgUtilidades {
   width: auto;
   display: block;
-  margin: 0px auto;
   object-fit: contain;
   max-height: 500px;
 }
