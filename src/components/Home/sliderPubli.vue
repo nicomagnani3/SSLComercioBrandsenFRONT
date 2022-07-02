@@ -1,16 +1,16 @@
 <template>
   <div>
-   <div class="" v-if="publicidades.length > 0">
-    <br>    
-    <VueSlickCarousel :arrows="true" :dots="true" v-bind="settings">
-      <b-col      
-        v-for="(item, index) in publicidades"
-        :key="index"
-        class="columnaCards"
-      >
-        <img :src="item.imagen" fluid alt="Responsive image" />
-      </b-col>
-    </VueSlickCarousel>
+    <div class="" v-if="publicidades.length > 0">
+      <br />
+      <VueSlickCarousel :arrows="true" :dots="true" v-bind="settings">
+        <b-col
+          v-for="(item, index) in publicidades"
+          :key="index"
+          class="columnaCards"
+        >
+          <img :src="item.imagen" fluid alt="Responsive image" />
+        </b-col>
+      </VueSlickCarousel>
     </div>
   </div>
 </template>
@@ -38,10 +38,10 @@ export default {
         arrows: false,
         dots: true,
         infinite: true,
-        slidesToShow:6,
+        slidesToShow: 6,
         rows: 1,
         slidesToScroll: 1,
-      autoplay:true,
+        autoplay: true,
         speed: 6000,
         autoplaySpeed: 2000,
         cssEase: "linear",
@@ -50,7 +50,7 @@ export default {
             breakpoint: 1024,
             settings: {
               slidesToShow: 3,
-                rows: 2,
+              rows: 2,
               slidesToScroll: 2,
               infinite: true,
               speed: 6000,
@@ -64,7 +64,7 @@ export default {
               slidesToShow: 3,
               slidesToScroll: 2,
               initialSlide: 2,
-                    rows: 2,
+              rows: 2,
             },
           },
           {
@@ -72,14 +72,12 @@ export default {
             settings: {
               slidesToShow: 3,
               slidesToScroll: 2,
-               infinite: true,
-               rows: 2,
+              infinite: true,
+              rows: 2,
               speed: 6000,
               autoplaySpeed: 2000,
               dots: true,
-               centerPadding: "20px",
-
-              
+              centerPadding: "20px",
             },
           },
         ],
@@ -102,21 +100,19 @@ export default {
   .itemCarrusel {
     width: 124px;
     height: auto;
-    margin-left:8px;
+    margin-left: 8px;
     margin-right: 5px;
     justify-content: center;
   }
   .contenedorPubli {
     display: flex;
     justify-content: center;
-    align-items: center;    
+    align-items: center;
   }
-   img {
+  img {
     width: 60%;
   }
 }
-
-
 
 .itemCarrusel img {
   object-fit: contain;

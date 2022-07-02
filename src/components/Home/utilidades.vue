@@ -9,57 +9,45 @@
     </b-spinner>
   </div>
   <div v-else>
-    <b-row>
-      <b-row>
-        <ul class="cards">
-          <li
-            class="cards__item"
-            v-for="(utilidad, index) in utilidades"
-            :key="index"
-          >
-            <b-col>
-              <div class="card__image">
-                <b-img
-                  alt="Responsive image"
-                  :src="utilidad.imagen"
-                  class="imgUtilidades"
-                  height="500"
-                ></b-img>
-              </div>
-            </b-col>
-          </li>
-        </ul>
-        <b-col>
-          <ul class="cards">
-            <li
-              class="cards__item"
-              v-for="(dolar, index) in dolares"
-              :key="index"
-            >
-              <div class="card">
-                <div class="card__content">
-                  <div class="card__titleDolar">
-                    Dolar: {{ dolar.casa.nombre }}
-                  </div>
-                  <b-row>
-                    <b-col>
-                      <div class="card__subtitle">
-                        Compra: <b>${{ dolar.casa.compra }}</b>
-                      </div>
-                    </b-col>
-                    <b-col>
-                      <div class="card__subtitle">
-                        Venta: <b>${{ dolar.casa.venta }}</b>
-                      </div>
-                    </b-col>
-                  </b-row>
+    <br />
+    <VueSlickCarousel :arrows="true" :dots="true" v-bind="settings">
+      <b-col
+        v-for="(dolar, index) in dolares"
+        :key="index"
+        class="columnaCards"
+      >
+        <div class="card">
+          <div class="card__content">
+            <div class="card__titleDolar">Dolar: {{ dolar.casa.nombre }}</div>
+            <b-row>
+              <b-col>
+                <div class="card__subtitle">
+                  Compra: <b>${{ dolar.casa.compra }}</b>
                 </div>
-              </div>
-            </li>
-          </ul>
-        </b-col>
-      </b-row>
-    </b-row>
+              </b-col>
+              <b-col>
+                <div class="card__subtitle">
+                  Venta: <b>${{ dolar.casa.venta }}</b>
+                </div>
+              </b-col>
+            </b-row>
+          </div>
+        </div>
+      </b-col>
+    </VueSlickCarousel>
+    <br />
+    <VueSlickCarousel :arrows="true" :dots="true" v-bind="settingsMicros">
+      <b-col v-for="(utilidad, index) in utilidades" :key="index">
+        <img
+          alt="Responsive image"
+          :src="utilidad.imagen"
+          height="300"
+          class="imgUtilidades"
+          v-if="utilidad.nombre != 'Farmacia'"
+        />
+      </b-col>
+    </VueSlickCarousel>
+
     <b-container>
       <b-row class="text-center">
         <b-col class="text-center">
@@ -80,10 +68,14 @@ import Cards from "@/components/Home/cards.vue";
 /* import Search from "@/components/Home/search.vue";
  */ import axios from "axios";
 import PublicacionService from "@/services/PublicacionService";
+import VueSlickCarousel from "vue-slick-carousel";
+import "vue-slick-carousel/dist/vue-slick-carousel.css";
+// optional style for arrows & dots
+import "vue-slick-carousel/dist/vue-slick-carousel-theme.css";
 
 export default {
   name: "Home",
-  components: { Cards /* Search */ },
+  components: { Cards, VueSlickCarousel /* Search */ },
   data() {
     return {
       sevenData: [],
@@ -93,6 +85,76 @@ export default {
       loading: true,
       dolares: [],
       utilidades: [],
+      settingsMicros: {
+        dots: true,
+        infinite: false,
+        speed: 500,
+        slidesToShow: 6,
+        slidesToScroll: 4,
+        initialSlide: 0,
+        responsive: [
+          {
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 3,
+              slidesToScroll: 3,
+              infinite: true,
+              dots: true,
+            },
+          },
+          {
+            breakpoint: 600,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 2,
+              initialSlide: 2,
+            },
+          },
+          {
+            breakpoint: 480,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+            },
+          },
+        ],
+      },
+      settings: {
+         dots: true,
+        infinite: false,
+            autoplay:true,
+        speed: 160000,
+        autoplaySpeed: 2000,
+        slidesToShow: 6,
+        slidesToScroll: 4,
+        initialSlide: 0,
+        responsive: [
+          {
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 3,
+              slidesToScroll: 3,
+              infinite: true,
+              dots: true,
+            },
+          },
+          {
+            breakpoint: 600,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 2,
+              initialSlide: 2,
+            },
+          },
+          {
+            breakpoint: 480,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+            },
+          },
+        ],
+      },
     };
   },
   created() {},
@@ -131,7 +193,6 @@ export default {
     },
     async dolarHoy() {
       try {
-
         const apiUSD = "https://www.dolarsi.com/api/api.php?type=dolar";
         const cotizacionDolar = await fetch(apiUSD);
         const cotizacionJSON = await cotizacionDolar.json();
@@ -145,7 +206,11 @@ export default {
       try {
         const response = await PublicacionService.getUtilidades();
         console.log(response);
-        this.utilidades = response.data.data;
+        this.utilidades = response.data.data.filter(
+          (c) => c.nombre != "Farmacia"
+        );
+
+        //this.utilidades = response.data.data;
         console.log(this.utilidades);
       } catch (err) {
         this.$bvToast.toast(err.response.data.message, {
@@ -181,22 +246,17 @@ export default {
   .imgUtilidades {
     width: 100%;
     height: 100%;
-        max-width: 90%;
-        width: auto;
+    max-width: 90%;
+    width: auto;
     display: block;
     object-fit: contain;
-    max-height: 363px;
+    max-height: 250px !important;
   }
 }
 @media only screen and (max-width: 480px) {
   .imgUtilidades {
-    width: 100%;
-    height: 100%;
-        max-width: 90%;
-        width: auto;
-    display: block;
+    max-height: 250px !important;
     object-fit: contain;
-    max-height: 363px;
   }
 }
 .cardsBody {
@@ -227,8 +287,9 @@ export default {
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
-/*   padding: 1rem;
- */}
+  /*   padding: 1rem;
+ */
+}
 .card__subtitle {
   color: #000000;
   font-weight: 300;
@@ -245,7 +306,7 @@ export default {
 }
 .card__titleDolar {
   color: #000000;
-  font-size: 1.0rem;
+  font-size: 1rem;
   font-weight: 300;
   text-transform: uppercase;
   background-color: #ffce4e;
@@ -266,7 +327,7 @@ export default {
   width: auto;
   display: block;
   object-fit: contain;
-  max-height: 500px;
+  max-height: 300px;
 }
 </style>
  
