@@ -90,6 +90,10 @@
               <span class="light"><strong>Publicar</strong></span>
             </template>
             <b-dropdown-item
+              :to="{ name: 'nuevoAlquiler' }"
+              >Propiedad</b-dropdown-item
+            >
+            <b-dropdown-item
               :to="{ name: 'nuevaPublicacion' }"
               v-if="hasPermisos('CREAR_PRODUCTO')"
               >Producto</b-dropdown-item

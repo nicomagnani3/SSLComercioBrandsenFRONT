@@ -303,7 +303,11 @@ export default {
       try {
         const response = await PublicacionService.getUtilidades();
         console.log(response);
-        this.utilidades = response.data.data;
+
+        //this.utilidades = response.data.data;
+         this.utilidades = response.data.data.filter(
+          (c) => c.imagenprincipal == null
+        );
         this.totalRows = this.utilidades.length;
         console.log(this.utilidades);
       } catch (err) {

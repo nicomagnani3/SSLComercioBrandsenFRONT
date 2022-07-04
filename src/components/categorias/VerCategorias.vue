@@ -154,6 +154,7 @@ export default {
 </script>
 
 <style >
+
 .buscador:hover {
   color: rgb(255, 206, 78);
   cursor: pointer;

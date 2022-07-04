@@ -11,7 +11,7 @@
   <div v-else>
     <br />
     <VueSlickCarousel :arrows="true" :dots="true" v-bind="settings">
-      <div class="card" v-for="(dolar, index) in dolares" :key="index">
+      <div class="cardutilidades" v-for="(dolar, index) in dolares" :key="index">
         <div class="card__content">
           <div class="card__titleDolar">Dolar: {{ dolar.casa.nombre }}</div>
           <b-row>
@@ -29,29 +29,39 @@
         </div>
       </div>
     </VueSlickCarousel>
-    <br />
-    <VueSlickCarousel :arrows="true" :dots="true" v-bind="settingsMicros">
-      <div v-for="(utilidad, index) in utilidades" :key="index">
-        <img :src="utilidad.imagen" class="imgCard" />
-      </div>
-    </VueSlickCarousel>
-    <!--     <ul class="cards">
-
-        <li
-          class="cards__item"
-          v-for="(utilidad, index) in utilidades"
-          :key="index"
-        >
-            <div class="card__image">
-              <img
-                :src="utilidad.imagen"
-                class="imgCard"
-              />
-            </div>
-           
-        </li>
-      </ul> -->
-
+    <ul class="cards">
+      <li
+        class="cards__itemUtilidad"
+        v-for="(utilidad, index) in utilidades"
+        :key="index"
+      >
+        <div class="cardMicros">
+          <div class="card__imageUtilidad">
+            <img :src="utilidad.imagenprincipal" class="imgCard" />
+          </div>
+          <div class="card__contentMicros">
+           <!--  <div class="card__titleUtilidad">{{ utilidad.nombre }}</div> -->
+            <p class="card__textUtilidad">
+              {{ utilidad.descripcion }}
+            </p>
+            <button
+              class="btnUtiles btn--blockUtilidad card__btn"
+              @click="masInformacion(utilidad)"
+              v-if="utilidad.nombre != 'Teléfonos Útiles'"
+            >
+              Horarios
+            </button>
+            <button
+              class="btnUtiles btn--block card__btn"
+              @click="masInformacion(utilidad)"
+              v-if="utilidad.nombre == 'Teléfonos Útiles'"
+            >
+              Telefonos
+            </button>
+          </div>
+        </div>
+      </li>
+    </ul>
     <b-container>
       <b-row class="text-center">
         <b-col class="text-center">
@@ -64,6 +74,33 @@
         </b-col>
       </b-row>
     </b-container>
+    <div class="modalImgUtilidad">
+      <b-modal
+        ref="modalDetalleUtilidad"
+        class="modalDetalleUtilidad"
+        hide-footer
+        size="lg"
+        style="color: #ffce4e"
+      >
+        <b-carousel
+          id="carousel-1"
+          v-model="slide"
+          :interval="5000"
+          controls
+          indicators
+          background="#ababab"
+          img-width="1024"
+        >
+          <div v-for="item in this.utilidadesDetalle" :key="item.id">
+            <b-carousel-slide
+              :img-src="item.imagen"
+              class="item"
+              alt="image slot"
+            ></b-carousel-slide>
+          </div>
+        </b-carousel>
+      </b-modal>
+    </div>
   </div>
 </template>
 
@@ -83,78 +120,65 @@ export default {
   data() {
     return {
       sevenData: [],
+      slide: 0,
+
       dailyData: [],
       darkMode: false,
       showCard: true,
       loading: true,
       dolares: [],
       utilidades: [],
-      settingsMicros: {
-        dots: true,
-        infinite: false,
-        speed: 500,
-        slidesToShow: 4,
-        slidesToScroll: 4,
-        initialSlide: 0,
-        responsive: [
-          {
-            breakpoint: 1024,
-            settings: {
-              slidesToShow: 3,
-              slidesToScroll: 3,
-              infinite: true,
-              dots: true,
-            },
-          },
-          {
-            breakpoint: 600,
-            settings: {
-              slidesToShow: 2,
-              slidesToScroll: 2,
-              initialSlide: 2,
-            },
-          },
-          {
-            breakpoint: 480,
-            settings: {
-              slidesToShow: 1,
-              slidesToScroll: 1,
-            },
-          },
-        ],
-      },
+      utilidadesCompleto: [],
+      utilidadesDetalle: [],
       settings: {
+        arrows: false,
         dots: true,
-        infinite: false,
-        autoplay: true,
-        speed: 160000,
-        autoplaySpeed: 2000,
+        infinite: true,
         slidesToShow: 5,
-        slidesToScroll: 4,
-        initialSlide: 0,
+        slidesToScroll: 1,
+      autoplay:true,
+        speed: 60000,
+        autoplaySpeed: 2000,
+        cssEase: "linear",
         responsive: [
+                      {
+            breakpoint: 1600,
+            settings: {
+              slidesToShow: 4,
+              slidesToScroll: 2,
+              infinite: true,
+              speed: 60000,
+              autoplaySpeed: 2000,
+              dots: true,
+            },
+          },
+                  {
+            breakpoint: 1200,
+            settings: {
+              slidesToShow: 3,
+              slidesToScroll: 2,
+              infinite: true,
+              speed: 60000,
+              autoplaySpeed: 2000,
+              dots: true,
+            },
+          },
           {
             breakpoint: 1024,
             settings: {
-              slidesToShow: 3,
-              slidesToScroll: 3,
-              infinite: true,
-              dots: true,
-            },
-          },
-              {
-            breakpoint: 1000,
-            settings: {
               slidesToShow: 2,
-              slidesToScroll: 3,
+              slidesToScroll: 2,
               infinite: true,
+              speed: 60000,
+              autoplaySpeed: 2000,
               dots: true,
             },
           },
+     
           {
             breakpoint: 600,
             settings: {
-              slidesToShow: 2,
+              slidesToShow: 1,
               slidesToScroll: 2,
               initialSlide: 2,
             },
@@ -163,7 +187,13 @@ export default {
             breakpoint: 480,
             settings: {
               slidesToShow: 1,
-              slidesToScroll: 1,
+              slidesToScroll: 2,
+               infinite: true,
+              speed: 60000,
+              autoplaySpeed: 2000,
+              dots: true,
+               centerPadding: "20px",
+              
             },
           },
         ],
@@ -183,7 +213,14 @@ export default {
       console.log(data);
       this.sevenData = data;
     },
-
+    masInformacion(utilidad) {
+      console.log(utilidad);
+      this.utilidadesDetalle = this.utilidadesCompleto.filter(
+        (c) => c.nombre == utilidad.nombre && c.imagen != null
+      );
+      console.log(this.utilidadesDetalle);
+      this.$refs["modalDetalleUtilidad"].show();
+    },
     async getGeolocation(data) {
       try {
         await axios(
@@ -210,7 +247,6 @@ export default {
         const cotizacionDolar = await fetch(apiUSD);
         const cotizacionJSON = await cotizacionDolar.json();
         this.dolares = cotizacionJSON;
-        console.log(this.dolares);
       } catch (error) {
         console.log(error);
       }
@@ -219,8 +255,9 @@ export default {
       try {
         const response = await PublicacionService.getUtilidades();
         console.log(response);
+        this.utilidadesCompleto = response.data.data;
         this.utilidades = response.data.data.filter(
-          (c) => c.nombre != "Farmacia"
+          (c) => c.imagenprincipal != null
         );
 
         //this.utilidades = response.data.data;
@@ -254,68 +291,12 @@ export default {
   },
 };
 </script>
-<style scoped>
-@media only screen and (max-width: 1300px) {
-  .imgCard {
-    width: 100%;
-    height: 100%;
-    max-width: 90%;
-    width: auto;
-    display: block;
-    object-fit: contain;
-    max-height: 250px !important;
-  }
+<style >
+body.modal-open {
+  height: 100vh;
+  overflow-y: hidden;
 }
-@media only screen and (max-width: 480px) {
-  .imgCard {
-    width: 300px;
-    max-height: 200px !important;
-    min-height: 200px !important;
-  }
-}
-@media only screen and (max-width: 1000px) {
-  .imgCard {
- width: 300px;
-    max-height: 200px !important;
-    min-height: 200px !important;
-  }
-}
-.cardsBody {
-  font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  letter-spacing: 0;
-  padding: 1rem;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-.cards {
-  display: flex;
-  flex-wrap: wrap;
-  list-style: none;
-  margin: 0;
-  /* padding: 0; */
-  /* list-style-type: none; */
-  /* display: flex; */
-  /* justify-content: center;*/
-}
-.cards__item {
-  display: flex;
-  padding: 1rem;
-}
-.card__content {
-  display: flex;
-  flex: 1 1 auto;
-  flex-direction: column;
-  /*   padding: 1rem;
- */
-}
-.card__subtitle {
-  color: #000000;
-  font-weight: 300;
-}
-.card {
+.cardutilidades {
   background-color: white;
   border-radius: 0.25rem;
   box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);
@@ -327,18 +308,44 @@ export default {
 }
 .card__titleDolar {
   color: #000000;
-  font-size: 1rem;
-  font-weight: 300;
+  font-size: 1.0rem;
+  font-weight: 400;
   text-transform: uppercase;
   background-color: #ffce4e;
 }
 .imgCard {
-  width: 400px;
-  max-height: 400px;
-  min-height: 400px;
+  width: auto;
+  max-height: 100%;
+  display: block;
+  margin: 0px auto;
+/*   height: 250px; */
+  object-fit: contain;
 }
-
-.card__image {
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+}
+.cards__itemUtilidad {
+  display: flex;
+  padding: 1rem;
+}
+.cardMicros {
+  background-color: white;
+  border-radius: 0.25rem;
+  box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  max-width: 250px;
+  min-width: 250px;
+}
+.card__imageUtilidad {
   object-fit: contain;
   background-position: center center;
   background-repeat: no-repeat;
@@ -350,13 +357,72 @@ export default {
   position: relative;
   transition: filter 0.5s cubic-bezier(0.43, 0.41, 0.22, 0.91);
 }
-.imgUtilidades {
-  width: auto;
-  max-height: 100%;
+.card__titleUtilidad {
+  color: #000000;
+  font-size: 1.25rem;
+  font-weight: 300;
+  letter-spacing: 0px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.btnUtiles {
+ background-color: white;
+  border: 1px solid #cccccc;
+  color: #696969;
+  padding: 0.5rem;
+}
+.card__subtitle {
+  color: #000000;
+  font-weight: 400;
+}
+.btnUtiles--blockUtilidad {
   display: block;
-  margin: 0px auto;
-  height: 300px;
-  object-fit: contain;
+  width: 100%;
+}
+.btnUtiles:hover {
+  color: #ffc107;
+}
+.btnPublicar:hover {
+  color: #ffc107;
+}
+.card__contentMicros {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  padding: 1rem;
+}
+.card__textUtilidad {
+  flex: 1 1 auto;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin-bottom: 1.25rem;
+  display: -webkit-box;
+  /* height: 139px; */
+  /* cursor: pointer; */
+  line-height: 18px;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-overflow: -o-ellipsis-lastline;
+  white-space: normal;
+  padding-top: 10px;
+    white-space: pre-wrap;
+
+  color: #2c354f;
+}
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  height: 30px !important;
+  width: 30px !important;
+}
+.carousel-control-prev-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ff0000' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E") !important;
+}
+
+.carousel-control-next-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ff0000' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E") !important;
 }
 </style>
  

@@ -352,9 +352,7 @@ export default {
   }
 }
 .imgCard {
-    width: 100%;
-    height: 250px;
-    /* max-height: 100%; */
+      width: 100%;
     display: block;
     margin: 0px auto;
     height: 300px;
@@ -369,6 +367,7 @@ export default {
     bottom: 0;
     right: 0;
 }
+
 </style>
 
 

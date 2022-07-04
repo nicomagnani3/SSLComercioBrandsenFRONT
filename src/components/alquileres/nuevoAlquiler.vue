@@ -310,11 +310,17 @@ export default {
             });
             console.log(response);
             if (response.data.code == 200) {
-              this.$root.$bvToast.toast("Usted publico con exito la propiedad", {
-                title: "Atencion!",
-                toaster: "b-toaster-top-center",
-                solid: true,
-                variant: "success",
+              this.$root.$bvToast.toast(
+                "Se publico con exito la propiedad y se encuentra disponible en la sección de propiedades para que los usuarios de Malambo la puedan observar",
+                {
+                  title: "Muchas Gracias!",
+                  toaster: "b-toaster-top-center",
+                  solid: true,
+                  variant: "success",
+                }
+              );
+              this.$router.push({
+                name: "alquileres",
               });
             }
           }
