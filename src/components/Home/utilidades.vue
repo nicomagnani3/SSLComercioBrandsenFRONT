@@ -11,9 +11,13 @@
   <div v-else>
     <br />
     <VueSlickCarousel :arrows="true" :dots="true" v-bind="settings">
-      <div class="cardutilidades" v-for="(dolar, index) in dolares" :key="index">
+      <div
+        class="cardutilidades"
+        v-for="(dolar, index) in dolares"
+        :key="index"
+      >
         <div class="card__content">
-          <div class="card__titleDolar">  Dolar: {{ dolar.casa.nombre }}</div>
+          <div class="card__titleDolar">Dolar: {{ dolar.casa.nombre }}</div>
           <b-row>
             <b-col>
               <div class="card__subtitle">
@@ -40,7 +44,7 @@
             <img :src="utilidad.imagenprincipal" class="imgCard" />
           </div>
           <div class="card__contentMicros">
-           <!--  <div class="card__titleUtilidad">{{ utilidad.nombre }}</div> -->
+            <!--  <div class="card__titleUtilidad">{{ utilidad.nombre }}</div> -->
             <p class="card__textUtilidad">
               {{ utilidad.descripcion }}
             </p>
@@ -120,7 +124,7 @@ export default {
     return {
       sevenData: [],
       slide: 0,
-      utilidadNombre:null,
+      utilidadNombre: null,
       dailyData: [],
       darkMode: false,
       showCard: true,
@@ -130,16 +134,12 @@ export default {
       utilidadesCompleto: [],
       utilidadesDetalle: [],
       settings: {
-        arrows: false,
-        dots: true,
-        infinite: true,
+        
         slidesToShow: 5,
         slidesToScroll: 1,
-      autoplay:true,
-        speed: 60000,
-        autoplaySpeed: 2000,
+
         responsive: [
-                      {
+          {
             breakpoint: 1600,
             settings: {
               slidesToShow: 4,
@@ -150,7 +150,7 @@ export default {
               dots: true,
             },
           },
-                  {
+          {
             breakpoint: 1200,
             settings: {
               slidesToShow: 3,
@@ -172,7 +172,7 @@ export default {
               dots: true,
             },
           },
-     
+
           {
             breakpoint: 600,
             settings: {
@@ -186,12 +186,11 @@ export default {
             settings: {
               slidesToShow: 1,
               slidesToScroll: 2,
-               infinite: true,
+              infinite: true,
               speed: 60000,
               autoplaySpeed: 2000,
               dots: true,
-               centerPadding: "20px",
-              
+              centerPadding: "20px",
             },
           },
         ],
@@ -213,7 +212,7 @@ export default {
     },
     masInformacion(utilidad) {
       console.log(utilidad);
-      this.utilidadNombre=utilidad.nombre
+      this.utilidadNombre = utilidad.nombre;
       this.utilidadesDetalle = this.utilidadesCompleto.filter(
         (c) => c.nombre == utilidad.nombre && c.imagen != null
       );
@@ -307,7 +306,7 @@ body.modal-open {
 }
 .card__titleDolar {
   color: #000000;
-  font-size: 1.0rem;
+  font-size: 1rem;
   font-weight: 400;
   text-transform: uppercase;
   background-color: #ffce4e;
@@ -318,7 +317,7 @@ body.modal-open {
   max-height: 100%;
   display: block;
   margin: 0px auto;
-/*   height: 250px; */
+  /*   height: 250px; */
   object-fit: contain;
 }
 .cards {
@@ -367,7 +366,7 @@ body.modal-open {
 }
 
 .btnUtiles {
- background-color: white;
+  background-color: white;
   border: 1px solid #cccccc;
   color: #696969;
   padding: 0.5rem;
@@ -408,7 +407,7 @@ body.modal-open {
   text-overflow: -o-ellipsis-lastline;
   white-space: normal;
   padding-top: 10px;
-    white-space: pre-wrap;
+  white-space: pre-wrap;
 
   color: #2c354f;
 }
