@@ -13,7 +13,7 @@
     <VueSlickCarousel :arrows="true" :dots="true" v-bind="settings">
       <div class="cardutilidades" v-for="(dolar, index) in dolares" :key="index">
         <div class="card__content">
-          <div class="card__titleDolar">Dolar: {{ dolar.casa.nombre }}</div>
+          <div class="card__titleDolar">  Dolar: {{ dolar.casa.nombre }}</div>
           <b-row>
             <b-col>
               <div class="card__subtitle">
@@ -47,14 +47,14 @@
             <button
               class="btnUtiles btn--blockUtilidad card__btn"
               @click="masInformacion(utilidad)"
-              v-if="utilidad.nombre != 'Teléfonos Útiles'"
+              v-if="utilidad.nombre != 'telefonos'"
             >
               Horarios
             </button>
             <button
               class="btnUtiles btn--block card__btn"
               @click="masInformacion(utilidad)"
-              v-if="utilidad.nombre == 'Teléfonos Útiles'"
+              v-if="utilidad.nombre == 'telefonos'"
             >
               Telefonos
             </button>
@@ -85,7 +85,6 @@
         <b-carousel
           id="carousel-1"
           v-model="slide"
-          :interval="5000"
           controls
           indicators
           background="#ababab"
@@ -139,7 +138,6 @@ export default {
       autoplay:true,
         speed: 60000,
         autoplaySpeed: 2000,
-        cssEase: "linear",
         responsive: [
                       {
             breakpoint: 1600,
@@ -313,6 +311,7 @@ body.modal-open {
   font-weight: 400;
   text-transform: uppercase;
   background-color: #ffce4e;
+  text-indent: 10%;
 }
 .imgCard {
   width: auto;

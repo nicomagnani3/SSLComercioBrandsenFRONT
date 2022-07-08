@@ -23,7 +23,7 @@
 
           <b-nav-item-dropdown>
             <template slot="button-content">
-              <span class="textoMenu">Categorias</span>
+              <span class="textoMenu">Categorías</span>
             </template>
             <b-dropdown-item :to="{ name: 'verCategorias' }"
               >Productos</b-dropdown-item
@@ -54,7 +54,15 @@
 
           <b-nav-item
             :to="{ name: 'verEmpresas' }"
-            style="
+          class="textoMenu" 
+            >Guia Comercial</b-nav-item
+          >
+          <b-nav-item class="textoMenu" @click="bolsaTrabajo()"
+            >Bolsa de Trabajo</b-nav-item
+          >
+            <b-nav-item
+            :to="{ name: 'alquileres' }"
+          style="
               white-space: nowrap;
               overflow: hidden;
               text-overflow: ellipsis;
@@ -62,7 +70,7 @@
             "
             class="logo"
             id="guia"
-            ><strong>Guia Comercial</strong
+            ><strong>Propiedades y Alquileres</strong
             ><span
               class="badge badge-pill badge-info"
               id="valorDestacado"
@@ -71,18 +79,10 @@
               NEW</span
             ></b-nav-item
           >
-          <b-nav-item class="textoMenu" @click="bolsaTrabajo()"
-            >Bolsa de Trabajo</b-nav-item
-          >
-            <b-nav-item
-            class="textoMenu"
-            :to="{ name: 'alquileres' }"
-            >Propiedades y Alquileres</b-nav-item
-          >
              <b-nav-item
             class="textoMenu"
             :to="{ name: 'utilidades' }"
-            >Utilidades</b-nav-item
+            >Datos útiles</b-nav-item
           >
 
           <b-nav-item-dropdown v-if="hasPermisos('CREAR')">
