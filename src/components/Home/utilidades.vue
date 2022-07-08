@@ -89,13 +89,13 @@
           controls
           indicators
           background="#ababab"
-          img-width="1024"
+          img-width="500"
         >
           <div v-for="item in this.utilidadesDetalle" :key="item.id">
             <b-carousel-slide
               :img-src="item.imagen"
               class="item"
-              alt="image slot"
+              alt="image responsive"
             ></b-carousel-slide>
           </div>
         </b-carousel>
@@ -121,7 +121,7 @@ export default {
     return {
       sevenData: [],
       slide: 0,
-
+      utilidadNombre:null,
       dailyData: [],
       darkMode: false,
       showCard: true,
@@ -215,6 +215,7 @@ export default {
     },
     masInformacion(utilidad) {
       console.log(utilidad);
+      this.utilidadNombre=utilidad.nombre
       this.utilidadesDetalle = this.utilidadesCompleto.filter(
         (c) => c.nombre == utilidad.nombre && c.imagen != null
       );

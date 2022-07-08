@@ -77,7 +77,7 @@
             <b-nav-item
             class="textoMenu"
             :to="{ name: 'alquileres' }"
-            >Propiedades</b-nav-item
+            >Propiedades y Alquileres</b-nav-item
           >
              <b-nav-item
             class="textoMenu"

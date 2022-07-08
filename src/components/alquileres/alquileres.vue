@@ -11,10 +11,12 @@
           </p> -->
           <b-col class="text-center pt-3">
             <p class="h1 font-britannic text">
-              <strong class="parrafoCategorias"> Propiedades disponibles   </strong>
+              <strong class="parrafoCategorias">
+                Propiedades y Alquileres disponibles
+              </strong>
 
               <b-button
-              @click="publicarAlquiler()"
+                @click="publicarAlquiler()"
                 style="
                   overflow: hidden;
                   text-transform: uppercase;
@@ -41,6 +43,16 @@
       <!--  :img-src="`data:image/png;base64, ${producto.imagen}`" -->
     </div>
     <div v-else class="cardsBody">
+      <div v-if="productos.length < 1" class="text-center">    
+        <img
+          class="logo"           
+          style="cursor:pointer;"
+          src="https://res.cloudinary.com/malambo/image/upload/v1657303127/Malambo/utilidades/propiedades_gpvw0j.jpg"
+          @click="publicarAlquiler()"
+        />
+      </div>
+      <div v-else>
+      
       <ul class="cards">
         <li
           class="cards__item"
@@ -71,14 +83,16 @@
         </li>
       </ul>
       <br />
-      <div class="d-flex justify-content-center">
+      <div class="d-flex justify-content-center" >
         <b-pagination
           pills
           v-model="currentPagePaginate"
           :per-page="perPage"
           :total-rows="totalRows"
           @change="nextPage"
+          
         ></b-pagination>
+      </div>
       </div>
     </div>
 
@@ -161,8 +175,8 @@ export default {
         console.log(response);
         if (response.data.error == false) {
           this.productos = response.data.data;
-         this.totalRows= response.data.cantidad
-         console.log(this.totalRows)
+          this.totalRows = response.data.cantidad;
+          console.log(this.totalRows);
           //this.getImporte(this.productos);
         }
       } catch (err) {
@@ -263,7 +277,6 @@ export default {
   overflow: hidden;
   max-width: 300px;
   min-width: 300px;
-
 }
 
 .card__content {
@@ -284,22 +297,22 @@ export default {
   font-weight: 300;
 }
 .card__text {
-    flex: 1 1 auto;
-    font-size: 0.875rem;
-    line-height: 1.5;
-    margin-bottom: 1.25rem;
-    display: -webkit-box;
-    /* height: 139px; */
-    /* cursor: pointer; */
-    line-height: 18px;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-overflow: -o-ellipsis-lastline;
-    white-space: normal;
-    padding-top: 10px;
-    color: #2c354f;
+  flex: 1 1 auto;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin-bottom: 1.25rem;
+  display: -webkit-box;
+  /* height: 139px; */
+  /* cursor: pointer; */
+  line-height: 18px;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-overflow: -o-ellipsis-lastline;
+  white-space: normal;
+  padding-top: 10px;
+  color: #2c354f;
 }
 .btn {
   background-color: white;
@@ -341,11 +354,11 @@ export default {
   height: 300px;
   object-fit: contain;
 }
-.btn:hover{
-color: #ffc107;
+.btn:hover {
+  color: #ffc107;
 }
-.btnPublicar:hover{
-color: #ffc107;
+.btnPublicar:hover {
+  color: #ffc107;
 }
 </style>
 
