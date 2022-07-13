@@ -93,6 +93,7 @@
           indicators
           background="#ababab"
           img-width="500"
+          :interval="9000000"
         >
           <div v-for="item in this.utilidadesDetalle" :key="item.id">
             <b-carousel-slide
@@ -221,7 +222,6 @@ export default {
     },
     async getGeolocation(data) {
       try {
-        
         await axios(
           `https://api.openweathermap.org/data/2.5/forecast/daily?lat=${data.coords.latitude}&lon=${data.coords.longitude}&units=metric&appid=20571ab45c74dc2a1897b60c5b8047a1`
         ).then((res) => {

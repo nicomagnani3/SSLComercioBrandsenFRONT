@@ -65,16 +65,16 @@
           <b-nav-item
             class="textoMenu"
             :to="{ name: 'verProductosEmprendimientos' }"
-            >Autonomos</b-nav-item
+            >Autónomos</b-nav-item
           >
           <b-nav-item
             class="textoMenu"
             :to="{ name: 'verProductosProfesionales' }"
-            >Guia profesional</b-nav-item
+            >Guía Profesional</b-nav-item
           >
 
           <b-nav-item :to="{ name: 'verEmpresas' }" class="textoMenu"
-            >Guia Comercial</b-nav-item
+            >Guía Comercial</b-nav-item
           >
           <b-nav-item class="textoMenu" @click="bolsaTrabajo()"
             >Bolsa de Trabajo</b-nav-item
@@ -100,7 +100,7 @@
             ></b-nav-item
           >
           <b-nav-item class="textoMenu" :to="{ name: 'utilidades' }"
-            >Datos útiles</b-nav-item
+            >Datos Útiles</b-nav-item
           >
 
           <b-nav-item-dropdown v-if="hasPermisos('CREAR')">
@@ -253,7 +253,7 @@
           maxlength="128"
           @keyup.enter="buscarProducto(filterPrev)"
           v-model="filterPrev"
-          placeholder="¿Qué  estas buscando? "
+          placeholder="¿Qué Estás Buscando?  "
         ></b-form-input>
 
         <b-button
