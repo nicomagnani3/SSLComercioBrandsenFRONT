@@ -1,13 +1,16 @@
 <template>
   <div v-if="loading" class="text-center">
-     <br /><br />
+    <br /><br />
     <img class="logo" src="@/assets/malamboIngreso.png" alt="" height="auto" />
-  
   </div>
   <div v-else class="contenedor">
     <div class="wrapper">
-      <Menu  />
-      <router-view class="content" :productos="productos" :productosDestacados="productosDestacados" />
+      <Menu :daily="dailyData" :seven="sevenData" />
+      <router-view
+        class="content"
+        :productos="productos"
+        :productosDestacados="productosDestacados"
+      />
     </div>
     <Publicidad :publicidades="this.publicidadesSlider4" />
     <Footer class="footer" />
@@ -21,9 +24,7 @@ import Publicidad from "@/components/Home/EspacioPublicidad.vue";
 import PublicidadService from "@/services/PublicidadService";
 import PublicacionService from "@/services/PublicacionService";
 import ProductosService from "@/services/ProductosService";
-
 import axios from "axios";
-
 export default {
   name: "Dashboard",
   components: {
@@ -36,9 +37,10 @@ export default {
       loading: true,
       publicidades: [],
       publicidadesSlider4: [],
-     productos: [],
-productosDestacados: [],
-    
+      productos: [],
+      productosDestacados: [],
+      dailyData: [],
+      sevenData: [],
     };
   },
   props: {},
@@ -72,7 +74,7 @@ productosDestacados: [],
         this.getPublicidades();
         this.publicidades = "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS";
       }
-    }, 
+    },
     ordenarDatos(categoria) {
       return categoria.sort(function (a, b) {
         if (a.nombre > b.nombre) {
@@ -93,11 +95,11 @@ productosDestacados: [],
         const response = await PublicacionService.getUltimasPublicaciones();
         if (response.data.error == false) {
           this.productos = response.data.data;
-          
+
           //this.getImporte(this.productos);
         }
       } catch (err) {
-        console.log(err)
+        console.log(err);
         this.loading = true;
         this.getPorductos();
         this.productos = "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS";
@@ -105,7 +107,7 @@ productosDestacados: [],
         this.loading = false;
       }
     },
-       async getPorductosDestacados() {
+    async getPorductosDestacados() {
       this.loading = true;
       try {
         const response = await ProductosService.getProductosDestacados();
@@ -116,15 +118,50 @@ productosDestacados: [],
       } catch (err) {
         this.loading = true;
         this.getPorductosDestacados();
-        this.productosDestacados = "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS";
+        this.productosDestacados =
+          "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS";
       } finally {
         this.loading = false;
+      }
+    },
+    async clima() {
+      try {
+        let data = {
+          coords: {},
+        };
+        data.coords.latitude = -35.1635;
+        data.coords.longitude = -58.233007;
+        this.getGeolocation(data);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async getGeolocation(data) {
+      try {
+        await axios(
+          `https://api.openweathermap.org/data/2.5/forecast/daily?lat=${data.coords.latitude}&lon=${data.coords.longitude}&units=metric&appid=20571ab45c74dc2a1897b60c5b8047a1`
+        ).then((res) => {
+          this.sevenData = res.data;
+        });
+
+        await axios(
+          `https://api.openweathermap.org/data/2.5/weather?lat=${data.coords.latitude}&lon=${data.coords.longitude}&units=metric&appid=20571ab45c74dc2a1897b60c5b8047a1`
+        ).then((res) => {
+          this.dailyData = res.data;
+        });
+      } catch (error) {
+        console.log(error);
       }
     },
   },
   mounted() {
     axios
-      .all([this.getPublicidades(),this.getPorductos(),this.getPorductosDestacados()])
+      .all([
+        this.getPublicidades(),
+        this.getPorductos(),
+        this.getPorductosDestacados(),
+        this.clima(),
+      ])
       .then(() => {
         this.loading = false;
       })

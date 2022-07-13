@@ -55,10 +55,11 @@
       <b-row>
         <b-col class="text-center pt-3">
           <div>
-            <strong>Contacto:</strong>   
-        
+            <strong>Contacto:</strong>
+
             <a
-            variant="primary" class="mb-2"
+              variant="primary"
+              class="mb-2"
               v-if="publicacion.telefono != null"
               :href="
                 'https://api.whatsapp.com/send?text=Hola!%20,desde%20Malambo%20observe%20la%20propiedad%20' +
@@ -69,7 +70,6 @@
               "
               target="_black"
             >
-              
               <img
                 v-if="publicacion.telefono != null"
                 src="@/assets/wsp.png"
@@ -100,16 +100,15 @@
             </a>
           </div>
         </b-col>
-        
       </b-row>
-      <br>
+      <br />
       <b-row v-if="this.cordenadas.length > 1">
         <b-col lg="12" md="8">
           <l-map style="height: 50vh" :zoom="zoom" :center="this.cordenadas">
             <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
             <l-marker :lat-lng="this.cordenadas">
               <l-icon
-                icon-url="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/map-marker-icon.png"
+                icon-url="https://res.cloudinary.com/malambo/image/upload/v1657681219/location-pin_n8bqao.png"
             /></l-marker>
           </l-map>
         </b-col>
@@ -151,18 +150,21 @@ export default {
       zoom: 15,
       center: [-35.169137, -58.231642],
       cordenadas: [],
-       metaInfo: {
-    title: 'Default App Title',
-    titleTemplate: '%s | vue-meta Example App',
-    htmlAttrs: {
-      lang: 'en-US'
-    },
-    meta: [
-      { charset: 'utf-8' },
-      { name: 'description', content: 'An example Vue application with vue-meta.' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' }
-    ]
-  },
+      metaInfo: {
+        title: "Default App Title",
+        titleTemplate: "%s | vue-meta Example App",
+        htmlAttrs: {
+          lang: "en-US",
+        },
+        meta: [
+          { charset: "utf-8" },
+          {
+            name: "description",
+            content: "An example Vue application with vue-meta.",
+          },
+          { name: "viewport", content: "width=device-width, initial-scale=1" },
+        ],
+      },
     };
   },
   directives: {

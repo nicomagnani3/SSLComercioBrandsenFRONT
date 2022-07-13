@@ -33,7 +33,6 @@
             <b-card
               class="mb-3"
               header="Datos de la propiedad"
-              align="center"
               border-variant="success"
               header-border-variant="success"
               header-bg-variant="transparent"
@@ -115,7 +114,7 @@
                     ></l-tile-layer>
                     <l-marker :lat-lng="coordinates">
                       <l-icon
-                        icon-url="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/map-marker-icon.png"
+                        icon-url="https://res.cloudinary.com/malambo/image/upload/v1657681219/location-pin_n8bqao.png"
                     /></l-marker>
                   </l-map>
                 </b-col>

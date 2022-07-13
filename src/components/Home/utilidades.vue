@@ -17,7 +17,7 @@
         :key="index"
       >
         <div class="card__content">
-          <div class="card__titleDolar">Dolar: {{ dolar.casa.nombre }}</div>
+          <div class="card__titleDolar">Dólar: {{ dolar.casa.nombre }}</div>
           <b-row>
             <b-col>
               <div class="card__subtitle">
@@ -120,6 +120,12 @@ import "vue-slick-carousel/dist/vue-slick-carousel-theme.css";
 export default {
   name: "Home",
   components: { Cards, VueSlickCarousel /* Search */ },
+  props: {
+    desdeMenu: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
       sevenData: [],
@@ -134,10 +140,15 @@ export default {
       utilidadesCompleto: [],
       utilidadesDetalle: [],
       settings: {
-        
         slidesToShow: 5,
         slidesToScroll: 1,
-
+        arrows: false,
+        dots: true,
+        infinite: true,
+        autoplay: true,
+        speed: 6000,
+        autoplaySpeed: 2000,
+        cssEase: "linear",
         responsive: [
           {
             breakpoint: 1600,
@@ -185,8 +196,7 @@ export default {
             breakpoint: 480,
             settings: {
               slidesToShow: 1,
-              slidesToScroll: 1,              
-            
+              slidesToScroll: 1,
             },
           },
         ],
@@ -196,27 +206,22 @@ export default {
   created() {},
   methods: {
     getDaily(data) {
-      console.log("getDaily");
-      console.log(data);
       this.dailyData = data;
     },
 
     getSeven(data) {
-      console.log("getSeven");
-      console.log(data);
       this.sevenData = data;
     },
     masInformacion(utilidad) {
-      console.log(utilidad);
       this.utilidadNombre = utilidad.nombre;
       this.utilidadesDetalle = this.utilidadesCompleto.filter(
         (c) => c.nombre == utilidad.nombre && c.imagen != null
       );
-      console.log(this.utilidadesDetalle);
       this.$refs["modalDetalleUtilidad"].show();
     },
     async getGeolocation(data) {
       try {
+        
         await axios(
           `https://api.openweathermap.org/data/2.5/forecast/daily?lat=${data.coords.latitude}&lon=${data.coords.longitude}&units=metric&appid=20571ab45c74dc2a1897b60c5b8047a1`
         ).then((res) => {
@@ -248,14 +253,12 @@ export default {
     async getUtilidades() {
       try {
         const response = await PublicacionService.getUtilidades();
-        console.log(response);
         this.utilidadesCompleto = response.data.data;
         this.utilidades = response.data.data.filter(
           (c) => c.imagenprincipal != null
         );
 
         //this.utilidades = response.data.data;
-        console.log(this.utilidades);
       } catch (err) {
         this.$bvToast.toast(err.response.data.message, {
           title: "Atencion!",
@@ -265,12 +268,26 @@ export default {
         });
       }
     },
+    async situarBrandsen() {
+      try {
+        let data = {
+          coords: {},
+        };
+        data.coords.latitude = -35.1635;
+        data.coords.longitude = -58.233007;
+        this.getGeolocation(data);
+        this.$emit("showCards");
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
   mounted() {
     axios
       .all([
         this.getUtilidades(),
         this.dolarHoy(),
+        this.situarBrandsen(),
         navigator.geolocation.getCurrentPosition((data) => {
           this.getGeolocation(data);
           this.$emit("showCards");
@@ -278,6 +295,9 @@ export default {
       ])
       .then(() => {
         this.loading = false;
+        if (this.desdeMenu == true) {
+          window.scrollTo(0, 578);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -307,6 +327,7 @@ body.modal-open {
   text-transform: uppercase;
   background-color: #ffce4e;
   text-indent: 10%;
+  text-align: center;
 }
 .imgCard {
   width: auto;
@@ -370,6 +391,7 @@ body.modal-open {
 .card__subtitle {
   color: #000000;
   font-weight: 400;
+  padding: 6px;
 }
 .btnUtiles--blockUtilidad {
   display: block;
@@ -419,7 +441,7 @@ body.modal-open {
 .carousel-control-next-icon {
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ff0000' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E") !important;
 }
-.slick-slide slick-active slick-current{
+.slick-slide slick-active slick-current {
   text-align: center !important;
 }
 </style>

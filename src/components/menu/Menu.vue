@@ -8,19 +8,38 @@
     </b-spinner>
   </div>
   <b-container class="nav" fluid v-else>
-    <b-navbar toggleable="lg" type="light" class="">
+    <b-navbar toggleable="lg" type="light" >
       <b-navbar-brand :to="'/'"><Header /> </b-navbar-brand>
-      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-      <b-collapse class="navbar-collapse" id="nav-collapse" is-nav>
-        <b-navbar-nav>
-          <!--    <b-nav-item v-if="!this.logeado" :to="{ name: 'verCategorias' }"
-            >Productos</b-nav-item
+      <b-navbar-toggle  target="nav-collapse"></b-navbar-toggle>
+      <b-col
+        style="text-align: right"
+        class="temperaturaMenu"
+        @click="verClima()"
+      >
+        <div class="temperaturaMenu">
+          <span style="font-size: 20px">
+            <b>{{ parseInt(daily.main.temp) }}°</b></span
           >
-         
-          <b-nav-item v-if="!this.logeado" :to="{ name: 'verServicio' }"
-            >Servicios</b-nav-item
-          > -->
-
+          <img
+              :src="
+                require(`@/assets/weater_elements/${
+                  weathers[daily.weather[0].main]
+                }.svg`)
+              "
+              width="90px"
+              alt
+              v-if="hora.getHours() < 19"
+            />
+            <img
+              src="@/assets/weater_elements/luna.svg"
+              width="40px"
+              alt
+              v-if="hora.getHours() >= 19"
+            />
+        </div>
+      </b-col>
+      <b-collapse class="navbar-collapse" id="nav-collapse" is-nav>
+        <b-navbar-nav class="ml-auto">       
           <b-nav-item-dropdown>
             <template slot="button-content">
               <span class="textoMenu">Categorías</span>
@@ -52,17 +71,15 @@
             >Guia profesional</b-nav-item
           >
 
-          <b-nav-item
-            :to="{ name: 'verEmpresas' }"
-          class="textoMenu" 
+          <b-nav-item :to="{ name: 'verEmpresas' }" class="textoMenu"
             >Guia Comercial</b-nav-item
           >
           <b-nav-item class="textoMenu" @click="bolsaTrabajo()"
             >Bolsa de Trabajo</b-nav-item
           >
-            <b-nav-item
+          <b-nav-item
             :to="{ name: 'alquileres' }"
-          style="
+            style="
               white-space: nowrap;
               overflow: hidden;
               text-overflow: ellipsis;
@@ -79,9 +96,7 @@
               NEW</span
             ></b-nav-item
           >
-             <b-nav-item
-            class="textoMenu"
-            :to="{ name: 'utilidades' }"
+          <b-nav-item class="textoMenu" :to="{ name: 'utilidades' }"
             >Datos útiles</b-nav-item
           >
 
@@ -89,8 +104,7 @@
             <template slot="button-content">
               <span class="light"><strong>Publicar</strong></span>
             </template>
-            <b-dropdown-item
-              :to="{ name: 'nuevoAlquiler' }"
+            <b-dropdown-item :to="{ name: 'nuevoAlquiler' }"
               >Propiedad</b-dropdown-item
             >
             <b-dropdown-item
@@ -142,20 +156,34 @@
             >
           </b-nav-item-dropdown>
         </b-navbar-nav>
-        <!--   <b-nav-item 
-              class="itemLoginResponsive"
-              :to="{ name: 'login' }"
-              v-if="!hasPermisos('CAMBIAR_CLAVE')"
-              >Ingresa</b-nav-item
-            >
-            <br>
-            <b-nav-item 
-              class="itemLoginResponsive"        
-              :to="{ name: 'Registrarse' }"
-              v-if="!hasPermisos('CAMBIAR_CLAVE')"
-              >Creá tu cuenta</b-nav-item
-            >  
-            <br> -->
+        <b-col
+          style="text-align: right"
+          class="temperaturaResponsive"
+          @click="verClima()"
+        >
+      
+          <div class="temperaturaResponsive">
+            <span style="font-size: 20px">
+              <b>{{ parseInt(daily.main.temp) }}°</b></span
+            >            
+            <img
+              :src="
+                require(`@/assets/weater_elements/${
+                  weathers[daily.weather[0].main]
+                }.svg`)
+              "
+              width="90px"
+              alt
+              v-if="hora.getHours() < 19"
+            />
+            <img
+              src="@/assets/weater_elements/luna.svg"
+              width="40px"
+              alt
+              v-if="hora.getHours() >= 19"
+            />
+          </div>
+        </b-col>    
         <b-nav-item
           class="itemLoginResponsive"
           :to="{ name: 'nuevaPublicacion' }"
@@ -190,7 +218,7 @@
               v-if="hasPermisos('CREAR_GUIA')"
               >Crear guia comercial</b-dropdown-item
             >
-             <b-dropdown-item
+            <b-dropdown-item
               :to="{ name: 'ver_curriculums' }"
               v-if="hasPermisos('CREAR_GUIA')"
               >Listado Curriculums</b-dropdown-item
@@ -240,18 +268,6 @@
         <b-icon icon="person-fill"></b-icon>
         Ingreso o Registro
       </b-button>
-      <!--      <b-nav-item 
-        class="itemLogin"
-              :to="{ name: 'login' }"
-              v-if="!hasPermisos('CAMBIAR_CLAVE')"
-              >Ingresa</b-nav-item
-            >
-            <b-nav-item 
-              class="itemLogin"        
-              :to="{ name: 'Registrarse' }"
-              v-if="!hasPermisos('CAMBIAR_CLAVE')"
-              >Creá tu cuenta</b-nav-item
-            >   -->
       <b-nav-item
         class="itemLogin"
         :to="{ name: 'nuevaPublicacion' }"
@@ -259,6 +275,7 @@
         >PUBLICAR</b-nav-item
       >
     </div>
+
     <div class="modalLogin">
       <b-modal ref="modalLogin" hide-footer style="color: #ffce4e">
         <Login
@@ -362,9 +379,10 @@ export default {
     Header,
     Login,
   },
-  props: {},
+  props: ["daily", "seven"],
   data() {
     return {
+      hora:new Date(),
       loading: false,
       filterPrev: null,
       filter: null,
@@ -374,6 +392,13 @@ export default {
       file1: null,
       tipo: null,
       cargando: true,
+      weathers: {
+        Snow: "snowy",
+        Clouds: "cloudy",
+        Rain: "rainy",
+        Clear: "sunny",
+        Thunderstorm: "thunder",
+      },
     };
   },
   created() {
@@ -421,7 +446,6 @@ export default {
             variant: "success",
           });
           this.$refs["modalBolsaTrabajo"].hide();
-
         }
         console.log(response);
       } catch (error) {
@@ -433,6 +457,15 @@ export default {
       console.log("ok login");
       this.$refs["modalLogin"].hide();
       window.location.reload();
+    },
+    verClima(){
+      console.log("entro")
+         this.$router.push({
+          name: "utilidades",
+          params: {
+            desdeMenu: true,
+          },
+        });
     },
     buscarProducto(producto) {
       const path = `/buscarProductos/${producto}`;
@@ -486,6 +519,13 @@ export default {
     border-top: none;
     color: #333;
   }
+  .temperaturaResponsive {
+    display: none;
+  }
+  .temperaturaMenu {
+    display: inline !important;
+    cursor:pointer
+  }
   .button {
     display: inline !important;
     -webkit-transition-duration: 0.4s; /* Safari */
@@ -495,7 +535,9 @@ export default {
     font-size: 10px !important;
   }
 }
-
+.temperaturaResponsive{
+  cursor:pointer
+}
 .button {
   -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
@@ -518,6 +560,9 @@ export default {
   text-overflow: ellipsis;
   font-size: 20px;
 }
+.imgTemp {
+  width: 70px;
+}
 
 .itemLogin {
   border: none;
@@ -536,6 +581,9 @@ export default {
   color: #333;
   font-size: 18px;
 }
+.temperaturaMenu {
+  display: none;
+}
 .itemLoginResponsive {
   display: none;
   white-space: nowrap;
@@ -543,6 +591,7 @@ export default {
   text-overflow: ellipsis;
   font-size: 18px;
 }
+
 .Buscador {
   color: rgb(255, 206, 78);
   cursor: pointer;
@@ -596,5 +645,39 @@ export default {
 .itemLogin :hover {
   background-color: #ffce4e !important;
   color: white !important;
+}
+.navbar .nav-item:not(:last-child) {
+  margin-right: 25px;
+}
+
+.dropdown-toggle::after {
+  transition: transform 0.15s linear;
+}
+
+.show.dropdown .dropdown-toggle::after {
+  transform: translateY(3px);
+}
+
+.dropdown-menu {
+  margin-top: 0;
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+.container {
+  display: flex;
+  width: 100vw;
+}
+.container-item {
+  flex: auto;
+  border: 1px solid;
+  text-align: center;
+}
+
+@media screen and (max-width: 501px) {
+  .container {
+    flex-direction: column;
+  }
 }
 </style>

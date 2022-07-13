@@ -93,8 +93,7 @@ props: {
     }
   },
   methods: {   
-    verWSP(){
-    },
+   
     async getPublicidades() {
       try {
         const response = await PublicidadService.getPublicidades();
