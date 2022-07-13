@@ -8,12 +8,40 @@
     </b-spinner>
   </div>
   <b-container class="nav" fluid v-else>
-    <b-navbar toggleable="lg" type="light" >
+    <b-navbar toggleable="lg" type="light">
       <b-navbar-brand :to="'/'"><Header /> </b-navbar-brand>
-      <b-navbar-toggle  target="nav-collapse"></b-navbar-toggle>
-     
+      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+               <b-col
+          style="text-align: right;padding: 7px;"
+          class="temperaturaMenu"
+          @click="verClima()"
+        >
+          <div class="temperaturaMenu">                      
+            <img
+              :src="
+                require(`@/assets/weater_elements/${
+                  weathers[daily.weather[0].main]
+                }.svg`)
+              "
+              width="60px"
+              alt
+              
+              v-if="hora.getHours() >= 19 && hora.getHours() >= 5"
+            />
+            <img
+              src="@/assets/weater_elements/luna.svg"
+              width="20px"
+              alt
+              v-if="hora.getHours() < 19 && hora.getHours() < 5"
+            />
+            <span style="font-size: 14x">
+              <b> {{ parseInt(daily.main.temp) }}°</b></span            
+            >  
+          </div>
+        </b-col>  
+
       <b-collapse id="nav-collapse" is-nav>
-        <b-navbar-nav class="ml-auto">       
+        <b-navbar-nav class="ml-auto">
           <b-nav-item-dropdown>
             <template slot="button-content">
               <span class="textoMenu">Categorías</span>
@@ -58,6 +86,7 @@
               overflow: hidden;
               text-overflow: ellipsis;
               font-size: 18px;
+              padding: 5px;
             "
             class="logo"
             id="guia"
@@ -65,7 +94,7 @@
             ><span
               class="badge badge-pill badge-info"
               id="valorDestacado"
-              style="overflow: hidden"
+              style="overflow: hidden; padding: 5px"
             >
               NEW</span
             ></b-nav-item
@@ -131,14 +160,14 @@
           </b-nav-item-dropdown>
         </b-navbar-nav>
         <b-col
-          style="text-align: right"
+          style="text-align: right; padding: 7px"
           class="temperaturaResponsive"
           @click="verClima()"
         >
           <div class="temperaturaResponsive">
             <span style="font-size: 20px">
               <b>{{ parseInt(daily.main.temp) }}°</b></span
-            >            
+            >
             <img
               :src="
                 require(`@/assets/weater_elements/${
@@ -147,7 +176,6 @@
               "
               width="90px"
               alt
-              
               v-if="hora.getHours() >= 19 && hora.getHours() >= 5"
             />
             <img
@@ -157,7 +185,7 @@
               v-if="hora.getHours() < 19 && hora.getHours() < 5"
             />
           </div>
-        </b-col>    
+        </b-col>
         <b-nav-item
           class="itemLoginResponsive"
           :to="{ name: 'nuevaPublicacion' }"
@@ -228,7 +256,10 @@
           placeholder="¿Qué  estas buscando? "
         ></b-form-input>
 
-        <b-button style="    width: 30px;" size="sm" @click="buscarProducto(filterPrev)"
+        <b-button
+          style="width: 30px"
+          size="sm"
+          @click="buscarProducto(filterPrev)"
           ><b-icon icon="search"></b-icon
         ></b-button>
       </div>
@@ -356,7 +387,7 @@ export default {
   props: ["daily", "seven"],
   data() {
     return {
-      hora:new Date(),
+      hora: new Date(),
       loading: false,
       filterPrev: null,
       filter: null,
@@ -432,14 +463,14 @@ export default {
       this.$refs["modalLogin"].hide();
       window.location.reload();
     },
-    verClima(){
-      console.log("entro")
-         this.$router.push({
-          name: "utilidades",
-          params: {
-            desdeMenu: true,
-          },
-        });
+    verClima() {
+      console.log("entro");
+      this.$router.push({
+        name: "utilidades",
+        params: {
+          desdeMenu: true,
+        },
+      });
     },
     buscarProducto(producto) {
       const path = `/buscarProductos/${producto}`;
@@ -498,7 +529,7 @@ export default {
   }
   .temperaturaMenu {
     display: inline !important;
-    cursor:pointer
+    cursor: pointer;
   }
   .button {
     display: inline !important;
@@ -509,8 +540,8 @@ export default {
     font-size: 10px !important;
   }
 }
-.temperaturaResponsive{
-  cursor:pointer
+.temperaturaResponsive {
+  cursor: pointer;
 }
 .button {
   -webkit-transition-duration: 0.4s; /* Safari */
@@ -537,7 +568,7 @@ export default {
 .imgTemp {
   width: 70px;
 }
-.navbar-toggler not-collapsed{
+.navbar-toggler not-collapsed {
   width: 70px;
   height: 50px;
 }
@@ -623,38 +654,9 @@ export default {
   background-color: #ffce4e !important;
   color: white !important;
 }
-.navbar .nav-item:not(:last-child) {
-  margin-right: 25px;
-}
-
-.dropdown-toggle::after {
-  transition: transform 0.15s linear;
-}
-
-.show.dropdown .dropdown-toggle::after {
-  transform: translateY(3px);
-}
-
-.dropdown-menu {
-  margin-top: 0;
-}
-* {
-  margin: 0;
-  padding: 0;
-}
-.container {
-  display: flex;
-  width: 100vw;
-}
-.container-item {
-  flex: auto;
-  border: 1px solid;
-  text-align: center;
-}
-
-@media screen and (max-width: 501px) {
-  .container {
-    flex-direction: column;
-  }
+.navbar-toggler {
+  overflow-anchor: none;
+  width: 72px !important;
+  height: 42px !important;
 }
 </style>
