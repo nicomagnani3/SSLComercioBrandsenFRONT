@@ -11,34 +11,8 @@
     <b-navbar toggleable="lg" type="light" >
       <b-navbar-brand :to="'/'"><Header /> </b-navbar-brand>
       <b-navbar-toggle  target="nav-collapse"></b-navbar-toggle>
-      <b-col
-        style="text-align: right"
-        class="temperaturaMenu"
-        @click="verClima()"
-      >
-        <div class="temperaturaMenu">
-          <span style="font-size: 20px">
-            <b>{{ parseInt(daily.main.temp) }}°</b></span
-          >
-          <img
-              :src="
-                require(`@/assets/weater_elements/${
-                  weathers[daily.weather[0].main]
-                }.svg`)
-              "
-              width="90px"
-              alt
-              v-if="hora.getHours() < 19"
-            />
-            <img
-              src="@/assets/weater_elements/luna.svg"
-              width="40px"
-              alt
-              v-if="hora.getHours() >= 19"
-            />
-        </div>
-      </b-col>
-      <b-collapse class="navbar-collapse" id="nav-collapse" is-nav>
+     
+      <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav class="ml-auto">       
           <b-nav-item-dropdown>
             <template slot="button-content">
@@ -161,7 +135,6 @@
           class="temperaturaResponsive"
           @click="verClima()"
         >
-      
           <div class="temperaturaResponsive">
             <span style="font-size: 20px">
               <b>{{ parseInt(daily.main.temp) }}°</b></span
@@ -174,13 +147,14 @@
               "
               width="90px"
               alt
-              v-if="hora.getHours() < 19"
+              
+              v-if="hora.getHours() >= 19 && hora.getHours() >= 5"
             />
             <img
               src="@/assets/weater_elements/luna.svg"
               width="40px"
               alt
-              v-if="hora.getHours() >= 19"
+              v-if="hora.getHours() < 19 && hora.getHours() < 5"
             />
           </div>
         </b-col>    
@@ -254,7 +228,7 @@
           placeholder="¿Qué  estas buscando? "
         ></b-form-input>
 
-        <b-button size="sm" @click="buscarProducto(filterPrev)"
+        <b-button style="    width: 30px;" size="sm" @click="buscarProducto(filterPrev)"
           ><b-icon icon="search"></b-icon
         ></b-button>
       </div>
@@ -563,7 +537,10 @@ export default {
 .imgTemp {
   width: 70px;
 }
-
+.navbar-toggler not-collapsed{
+  width: 70px;
+  height: 50px;
+}
 .itemLogin {
   border: none;
   left: 12px;
