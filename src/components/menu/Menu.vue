@@ -153,6 +153,21 @@
               >Crear novedad</b-dropdown-item
             >
             <b-dropdown-item
+              :to="{ name: 'renovarContrato' }"
+              v-if="hasPermisos('VER_CONTRATO')"
+              >Ver Contrato</b-dropdown-item
+            >
+            <b-dropdown-item
+              :to="{ name: 'asignarContrato' }"
+              v-if="hasPermisos('ASIGNAR_CONTRATO')"
+              >Nuevo Contrato</b-dropdown-item
+            >
+            <b-dropdown-item
+              :to="{ name: 'vencimientoContrato' }"
+              v-if="hasPermisos('VENCIMIENTO_CONTRATO')"
+              >Vencimientos de contratos</b-dropdown-item
+            >
+            <b-dropdown-item
               v-if="hasPermisos('CAMBIAR_CLAVE')"
               @click.prevent="logout"
               >SALIR</b-dropdown-item
@@ -174,7 +189,7 @@
                   weathers[daily.weather[0].main]
                 }.svg`)
               "
-              width="80px"
+              width="60px"
               alt
               v-if="hora.getHours() <= 19 && hora.getHours() >= 5"
             />
@@ -224,8 +239,11 @@
         >PUBLICAR</b-nav-item
       >
 
-      <b-nav-item-dropdown v-if="hasPermisos('CREAR')"      style="color: rgba(0, 0, 0, 0.5)">
-        <template slot="button-content" >
+      <b-nav-item-dropdown
+        v-if="hasPermisos('CREAR')"
+        style="color: rgba(0, 0, 0, 0.5)"
+      >
+        <template slot="button-content">
           <span class="textoMenu" style="color: rgba(0, 0, 0, 0.5)"
             ><strong>Publicar</strong></span
           >
@@ -250,38 +268,6 @@
           v-if="hasPermisos('CREAR_SERVICIO')"
           class="textoMenu"
           >Servicio</b-dropdown-item
-        >
-      </b-nav-item-dropdown>
-      <b-nav-item-dropdown
-        v-if="hasPermisos('MIS_CONTRATOS')"
-        :to="{ name: 'renovarContrato' }"
-      >
-        <template slot="button-content">
-          <span class="light">Contrato</span>
-        </template>
-
-        <b-dropdown-item
-          :to="{ name: 'renovarContrato' }"
-          v-if="hasPermisos('VER_CONTRATO')"
-          >Ver</b-dropdown-item
-        >
-      </b-nav-item-dropdown>
-      <b-nav-item-dropdown
-        v-if="hasPermisos('ASIGNAR_CONTRATO')"
-        :to="{ name: 'asignarContrato' }"
-      >
-        <template slot="button-content">
-          <span class="light">Contrato</span>
-        </template>
-        <b-dropdown-item
-          :to="{ name: 'asignarContrato' }"
-          v-if="hasPermisos('ASIGNAR_CONTRATO')"
-          >Nuevo</b-dropdown-item
-        >
-        <b-dropdown-item
-          :to="{ name: 'vencimientoContrato' }"
-          v-if="hasPermisos('VENCIMIENTO_CONTRATO')"
-          >Vencimientos</b-dropdown-item
         >
       </b-nav-item-dropdown>
     </div>
