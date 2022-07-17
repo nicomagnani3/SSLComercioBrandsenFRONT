@@ -105,6 +105,7 @@
         </b-carousel>
       </b-modal>
     </div>
+    
   </div>
 </template>
 
@@ -242,9 +243,10 @@ export default {
     },
     async dolarHoy() {
       try {
-        const apiUSD = "https://www.dolarsi.com/api/api.php?type=dolar";
+       const apiUSD = "https://www.dolarsi.com/api/api.php?type=dolar";
         const cotizacionDolar = await fetch(apiUSD);
         const cotizacionJSON = await cotizacionDolar.json();
+        console.log(cotizacionJSON)
         this.dolares = cotizacionJSON;
       } catch (error) {
         console.log(error);

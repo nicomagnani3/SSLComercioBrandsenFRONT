@@ -11,34 +11,33 @@
     <b-navbar toggleable="lg" type="light">
       <b-navbar-brand :to="'/'"><Header /> </b-navbar-brand>
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-               <b-col
-          style="text-align: right;padding: 7px;"
-          class="temperaturaMenu"
-          @click="verClima()"
-        >
-          <div class="temperaturaMenu">                      
-            <img
-              :src="
-                require(`@/assets/weater_elements/${
-                  weathers[daily.weather[0].main]
-                }.svg`)
-              "
-              width="60px"
-              alt
-              
-              v-if="hora.getHours() >= 19 && hora.getHours() >= 5"
-            />
-            <img
-              src="@/assets/weater_elements/luna.svg"
-              width="20px"
-              alt
-              v-if="hora.getHours() < 19 && hora.getHours() < 5"
-            />
-            <span style="font-size: 14x">
-              <b> {{ parseInt(daily.main.temp) }}°</b></span            
-            >  
-          </div>
-        </b-col>  
+      <b-col
+        style="text-align: right"
+        class="temperaturaMenu"
+        @click="verClima()"
+      >
+        <div class="temperaturaMenu">
+          <span style="font-size: 12x">
+            <b> {{ parseInt(daily.main.temp) }}°</b></span
+          >
+          <img
+            :src="
+              require(`@/assets/weater_elements/${
+                weathers[daily.weather[0].main]
+              }.svg`)
+            "
+            width="50px"
+            alt
+            v-if="hora.getHours() <= 19 && hora.getHours() >= 5"
+          />
+          <img
+            src="@/assets/weater_elements/luna.svg"
+            width="20px"
+            alt
+            v-if="hora.getHours() > 19 && hora.getHours() < 5"
+          />
+        </div>
+      </b-col>
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav class="ml-auto">
@@ -160,7 +159,7 @@
           </b-nav-item-dropdown>
         </b-navbar-nav>
         <b-col
-          style="text-align: right; padding: 7px"
+          style="text-align: right"
           class="temperaturaResponsive"
           @click="verClima()"
         >
@@ -174,15 +173,15 @@
                   weathers[daily.weather[0].main]
                 }.svg`)
               "
-              width="90px"
+              width="80px"
               alt
-              v-if="hora.getHours() >= 19 && hora.getHours() >= 5"
+              v-if="hora.getHours() <= 19 && hora.getHours() >= 5"
             />
             <img
               src="@/assets/weater_elements/luna.svg"
               width="40px"
               alt
-              v-if="hora.getHours() < 19 && hora.getHours() < 5"
+              v-if="hora.getHours() > 19 && hora.getHours() < 5"
             />
           </div>
         </b-col>
@@ -464,7 +463,6 @@ export default {
       window.location.reload();
     },
     verClima() {
-      console.log("entro");
       this.$router.push({
         name: "utilidades",
         params: {

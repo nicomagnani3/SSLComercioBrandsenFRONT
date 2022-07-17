@@ -71,6 +71,7 @@
             ></b-pagination>
           </div>
         </b-col>
+        <br>
         <b-col class="col-md-2">
           <strong style="font-weight: 700; font-size: 20px">
             Filtrar Por:
@@ -205,7 +206,7 @@ export default {
       indeterminate: false,
       selected: null,
       currentPage: 1,
-      perPage: 15,
+      perPage: 16,
       productoSeleccionado: [],
     };
   },
