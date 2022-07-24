@@ -6,7 +6,7 @@
         "@context": "https://schema.org",
         "@type": "WPFooter",
         "url": "https://www.malambobrandsen.com.ar/",
-        "abstract": "Malambo es una plataforma digital que impulsa la compra y venta de Servicios, Productos de  Brandsen provincia de Buenos Aires Argentina, tambien manteniendo la información de Micros,Farmacias,Noticias y Clima"
+        "abstract": "Malambo es una plataforma digital que impulsa la compra y venta de Servicios, Productos de  Brandsen provincia de Buenos Aires Argentina, tambien manteniendo la información de Micros,Farmacias,Noticias y Clima",
         "accountablePerson":{
             "additionalName":"Malambo Brandsen",
             "address": "Coronel Brandsen Provincia de Buenos Aires",
@@ -16,7 +16,7 @@
             "@type": "CommunicateAction",
             "inLanguage": "Español",
             "agent": {
-              "@type" : "Organization",
+                          "@type" : "Organization",
                           "url": "https://www.malambobrandsen.com.ar/",
                           "email": "info@malambobrandsen.com.ar",
                           "legalName":"Malambo Brandsen",
@@ -24,13 +24,13 @@
                           "alternateName":"Compra-Venta, e-commerce",
                           "description": "e-commerce, Productos, Servicios, información",
                           "sameAs": "https://www.infobrandsen.com.ar/",
-                        "contactPoint" : [
+                        "contactPoint" : 
                           { "@type" : "ContactPoint",
                             "telephone" : "+542223431948",
                             "contactType" : "Productos, Servicios,información"
                           }
-            }
-          },
+                     }
+          }
       }
     </component>
   </teleport>
@@ -102,7 +102,6 @@ export default {
   },
   methods: {
     verSoporte() {
-      console.log("entr");
       this.$router.push({
         name: "verSoporte",
       });
