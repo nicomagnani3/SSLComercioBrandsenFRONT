@@ -1,5 +1,40 @@
 <template>
   <b-container fluid class="contenedor">
+      <teleport to="head">
+    <component :is="'script'" type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WPFooter",
+        "url": "https://www.malambobrandsen.com.ar/",
+        "abstract": "Malambo es una plataforma digital que impulsa la compra y venta de Servicios, Productos de  Brandsen provincia de Buenos Aires Argentina, tambien manteniendo la información de Micros,Farmacias,Noticias y Clima"
+        "accountablePerson":{
+            "additionalName":"Malambo Brandsen",
+            "address": "Coronel Brandsen Provincia de Buenos Aires",
+        },
+        "comment":"Gracias por los horarios de los micros, farmacias de turna y los valores del Dolar "
+        "about": {
+            "@type": "CommunicateAction",
+            "inLanguage": "Español",
+            "agent": {
+              "@type" : "Organization",
+                          "url": "https://www.malambobrandsen.com.ar/",
+                          "email": "info@malambobrandsen.com.ar",
+                          "legalName":"Malambo Brandsen",
+                          "logo": "@/assets/MalamboLogo.png",
+                          "alternateName":"Compra-Venta, e-commerce",
+                          "description": "e-commerce, Productos, Servicios, información",
+                          "sameAs": "https://www.infobrandsen.com.ar/",
+                        "contactPoint" : [
+                          { "@type" : "ContactPoint",
+                            "telephone" : "+542223431948",
+                            "contactType" : "Productos, Servicios,información"
+                          }
+            }
+          },
+      }
+    </component>
+  </teleport>
+    <footer  itemscope itemtype="https://schema.org/WPFooter">
     <b-row class="fila">
       <b-col xs="12" md="6" lg="3" align-self="center">
         <img class="logo" src="@/assets/MalamboLogo.png" alt="" />
@@ -53,6 +88,7 @@
         </a>
       </b-col>
     </b-row>
+    </footer>
   </b-container>
 </template>
 

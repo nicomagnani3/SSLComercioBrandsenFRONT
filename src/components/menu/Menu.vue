@@ -8,6 +8,7 @@
     </b-spinner>
   </div>
   <b-container class="nav" fluid v-else>
+  <nav class="menu">
     <b-navbar toggleable="lg" type="light">
       <b-navbar-brand :to="'/'"><Header /> </b-navbar-brand>
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -28,13 +29,13 @@
             "
             width="50px"
             alt
-            v-if="hora.getHours() <= 19 && hora.getHours() >= 5"
+            v-if="this.esMenosdeLas8()"
           />
           <img
             src="@/assets/weater_elements/luna.svg"
             width="20px"
             alt
-            v-if="hora.getHours() > 19 && hora.getHours() < 5"
+            v-if="this.esMasDeLas8()"
           />
         </div>
       </b-col>
@@ -180,6 +181,7 @@
           @click="verClima()"
         >
           <div class="temperaturaResponsive">
+          
             <span style="font-size: 18px">
               <b>{{ parseInt(daily.main.temp) }}°</b></span
             >
@@ -191,13 +193,13 @@
               "
               width="60px"
               alt
-              v-if="hora.getHours() <= 19 && hora.getHours() >= 5"
+              v-if="this.esMenosdeLas8()"
             />
             <img
               src="@/assets/weater_elements/luna.svg"
               width="40px"
               alt
-              v-if="hora.getHours() > 19 && hora.getHours() < 5"
+              v-if="this.esMasDeLas8()"
             />
           </div>
         </b-col>
@@ -361,6 +363,7 @@
         </div>
       </b-modal>
     </div>
+    </nav>
   </b-container>
 </template>
 <script>
@@ -425,6 +428,18 @@ export default {
       };
       reader.readAsDataURL(file);
       this.tipo = file.type == "application/pdf" ? "pdf" : "docx";
+    },
+    esMenosdeLas8(){
+      return Number(this.hora.getHours()) <= Number(19) && Number(this.hora.getHours()) >= Number(5)
+    },
+    esMasDeLas8(){
+       if (Number(this.hora.getHours()) > Number(19)){
+        return true
+       }
+       if (Number(this.hora.getHours()) < Number(5)){
+          return true
+       } 
+      return false
     },
     async enviarCurriculum() {
       try {

@@ -43,56 +43,59 @@
       <!--  :img-src="`data:image/png;base64, ${producto.imagen}`" -->
     </div>
     <div v-else class="cardsBody">
-      <div v-if="productos.length < 1" class="text-center">    
+      <div v-if="productos.length < 1" class="text-center">
         <img
-          class="logo"           
-          style="cursor:pointer;"
+          class="logo"
+          style="cursor: pointer"
           src="https://res.cloudinary.com/malambo/image/upload/v1657303127/Malambo/utilidades/propiedades_gpvw0j.jpg"
           @click="publicarAlquiler()"
         />
       </div>
       <div v-else>
-      
-      <ul class="cards">
-        <li
-          class="cards__item"
-          v-for="(producto, index) in productos"
-          :key="index"
-        >
-          <div class="card">
-            <div class="card__image">
-              <img
-                :src="`data:image/png;base64, ${producto.imagen}`"
-                class="imgCard"
-              />
+        <ul class="cards">
+          <li
+            class="cards__item"
+            v-for="(producto, index) in productos"
+            :key="index"
+          >
+            <div class="card" itemscope itemtype="https://schema.org/Property">
+              <div class="card__image">
+                <img
+                  :src="`data:image/png;base64, ${producto.imagen}`"
+                  class="imgCard"
+                  itemprop="image"
+                />
+              </div>
+              <div class="card__content">
+                <div class="card__title" itemprop="identifier">
+                  {{ producto.propiedad }}
+                </div>
+                <div class="card__subtitle" itemprop="alternateName">
+                  {{ producto.operacion }}
+                </div>
+                <p class="card__text" itemprop="description">
+                  {{ producto.observaciones }}
+                </p>
+                <button
+                  class="btn btn--block card__btn"
+                  @click="masInformacion(producto)"
+                >
+                  Más información
+                </button>
+              </div>
             </div>
-            <div class="card__content">
-              <div class="card__title">{{ producto.propiedad }}</div>
-              <div class="card__subtitle">{{ producto.operacion }}</div>
-              <p class="card__text">
-                {{ producto.observaciones }}
-              </p>
-              <button
-                class="btn btn--block card__btn"
-                @click="masInformacion(producto)"
-              >
-                Más información
-              </button>
-            </div>
-          </div>
-        </li>
-      </ul>
-      <br />
-      <div class="d-flex justify-content-center" >
-        <b-pagination
-          pills
-          v-model="currentPagePaginate"
-          :per-page="perPage"
-          :total-rows="totalRows"
-          @change="nextPage"
-          
-        ></b-pagination>
-      </div>
+          </li>
+        </ul>
+        <br />
+        <div class="d-flex justify-content-center">
+          <b-pagination
+            pills
+            v-model="currentPagePaginate"
+            :per-page="perPage"
+            :total-rows="totalRows"
+            @change="nextPage"
+          ></b-pagination>
+        </div>
       </div>
     </div>
 

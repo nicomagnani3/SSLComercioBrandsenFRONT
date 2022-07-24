@@ -22,7 +22,7 @@
     </div>
     <div v-else class="animated fadeIn" style="margin: 1%;">
       <b-container fluid="sm">
-        <b-row class="text-center" cols="2" cols-sm="8" cols-md="8" cols-lg="5">
+        <b-row class="text-center" cols="2" cols-sm="8" cols-md="8" cols-lg="5"  itemscope itemtype="https://schema.org/Product">
           <b-col
             v-for="(producto, index) in currentPageClubs"
             :key="index"
@@ -34,12 +34,13 @@
               :img-src="`data:image/png;base64, ${producto.imagen}`"
               img-height="250px; max-height:100%;"
               alt="Responsive image"
+              itemprop="image"
             >
               <div class="cortar" @click="verProducto(producto)">
-                <strong> {{ tituloAjustar(producto.titulo) }}</strong>
+                <strong itemprop="name"> {{ tituloAjustar(producto.titulo) }}</strong>
               </div>
               <div v-if="Number(producto.precio) > Number(0)">
-                <p class="card-text">
+                <p class="card-text" itemprop="priceCurrency" content="ARG">
                   {{ getImporte(producto.precio) }}
                 </p>
               </div>
@@ -48,10 +49,11 @@
               </div>
               <div slot="footer">
                 <b-btn
+                itemprop="description"
                   @click="verProducto(producto)"
                   variant="warning"
                   block
-                  class="btnMas"
+                    class="btn btn--block card__btn"
                   >Ver mas</b-btn
                 >
               </div>
@@ -63,8 +65,6 @@
     <br />
   </div>
 </template>
-
-
 <script>
 import axios from "axios";
 import ProductosService from "@/services/PublicacionService";
@@ -321,6 +321,23 @@ props: {
 .destacados {
   color: rgb(109, 108, 108);
    white-space: nowrap;
+}
+.btn {
+  background-color: #ffc107;
+  border: 1px solid #cccccc;
+  color: white;
+  padding: 0.5rem;
+}
+
+.btn--block {
+  display: block;
+  width: 100%;
+}
+.btn:hover {
+  color: white;
+}
+.btnPublicar:hover {
+  color: #ffc107;
 }
 </style>
 

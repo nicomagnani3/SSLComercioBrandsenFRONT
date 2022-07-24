@@ -4,10 +4,12 @@
       <b-col cols="1"></b-col>
       <b-col cols="8">
         <div class="h3 font-britannic text widget-title destacados">
-          <h4 class="parraforTitProd "
-            >Productos destacados
-          <a v-if="!loading" @click="verDestacados()" class="verMas">ver mas</a></h4
-          >
+          <h4 class="parraforTitProd">
+            Productos destacados
+            <a v-if="!loading" @click="verDestacados()" class="verMas"
+              >ver mas</a
+            >
+          </h4>
         </div>
       </b-col>
     </b-row>
@@ -34,7 +36,7 @@
           </div>
         </b-col>
         <b-col cols="10">
-          <b-card-group deck>
+          <b-card-group deck itemscope itemtype="https://schema.org/Product">
             <b-card
               v-for="(producto, index) in currentPageClubs"
               :key="index"
@@ -43,23 +45,30 @@
               class="ItemProd"
               style="max-width: 250px"
               :img-src="`data:image/png;base64, ${producto.imagen}`"
+              itemprop="image"
             >
-              <div class="cortar" @click="verProducto(producto)">
-                <strong> {{ tituloAjustar(producto.titulo) }}</strong>
-              </div>
-              <p>
-                <small>
+              <div @click="verProducto(producto)">
+                <strong
+                  class="cortar"
+                  @click="verProducto(producto)"
+                  itemprop="name"
+                >
+                  {{ tituloAjustar(producto.titulo) }}</strong
+                >
+
+                <small itemprop="priceCurrency" content="ARG">
                   {{ getImporte(producto.precio) }}
                 </small>
-              </p>
-              <small>{{ producto.padre }}</small>
 
+                <small itemprop="category">{{ producto.padre }}</small>
+              </div>
               <div slot="footer">
                 <b-btn
+                  itemprop="description"
                   @click="verProducto(producto)"
                   variant="warning"
                   block
-                  class="btnMas"
+                  class="btn btn--block card__btn"
                   >Ver mas</b-btn
                 >
               </div>
@@ -303,19 +312,19 @@ export default {
   height: 20px;
   border-radius: 20px;
 }
-.verMas { 
-    margin-left: 13px;
-    text-decoration: none;
-    color: #3483fa;
-    cursor: pointer;
-    font-size: 20px;
-    -webkit-text-decoration: underline #676767;
-    text-decoration: underline #676767;
-    white-space: nowrap;
-    text-decoration: none;
+.verMas {
+  margin-left: 13px;
+  text-decoration: none;
+  color: #3483fa;
+  cursor: pointer;
+  font-size: 20px;
+  -webkit-text-decoration: underline #676767;
+  text-decoration: underline #676767;
+  white-space: nowrap;
+  text-decoration: none;
 }
-.verMas:hover{
-    color: #1b4e9b;
+.verMas:hover {
+  color: #1b4e9b;
 }
 .btnMas {
   white-space: normal;
@@ -350,7 +359,24 @@ export default {
 }
 .destacados {
   color: rgb(109, 108, 108);
-   white-space: nowrap;
+  white-space: nowrap;
+}
+.btn {
+  background-color: #ffc107;
+  border: 1px solid #cccccc;
+  color: white;
+  padding: 0.5rem;
+}
+
+.btn--block {
+  display: block;
+  width: 100%;
+}
+.btn:hover {
+  color: white;
+}
+.btnPublicar:hover {
+  color: #ffc107;
 }
 </style>
 
