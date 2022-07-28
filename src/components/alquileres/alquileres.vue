@@ -45,7 +45,8 @@
     <div v-else class="cardsBody">
       <div v-if="productos.length < 1" class="text-center">
         <img
-          class="logo"
+                    class="responsiveNotProducts"
+
           style="cursor: pointer"
           src="https://res.cloudinary.com/malambo/image/upload/v1657303127/Malambo/utilidades/propiedades_gpvw0j.jpg"
           @click="publicarAlquiler()"

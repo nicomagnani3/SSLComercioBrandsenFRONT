@@ -9,7 +9,7 @@
     </b-spinner>
   </div>
   <div v-else>
-    <br />
+ <br>
     <VueSlickCarousel :arrows="true" :dots="true" v-bind="settings">
       <div
         class="cardutilidades"
@@ -243,6 +243,7 @@ export default {
     },
     async dolarHoy() {
       try {
+     
        const apiUSD = "https://www.dolarsi.com/api/api.php?type=dolar";
         const cotizacionDolar = await fetch(apiUSD);
         const cotizacionJSON = await cotizacionDolar.json();

@@ -430,10 +430,10 @@ export default {
       this.tipo = file.type == "application/pdf" ? "pdf" : "docx";
     },
     esMenosdeLas8(){
-      return Number(this.hora.getHours()) <= Number(19) && Number(this.hora.getHours()) >= Number(5)
+      return Number(this.hora.getHours()) < Number(19) && Number(this.hora.getHours()) >= Number(5)
     },
     esMasDeLas8(){
-       if (Number(this.hora.getHours()) > Number(19)){
+       if (Number(this.hora.getHours()) >= Number(19)){
         return true
        }
        if (Number(this.hora.getHours()) < Number(5)){

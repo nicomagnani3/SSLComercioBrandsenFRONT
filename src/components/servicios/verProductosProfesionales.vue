@@ -2,7 +2,7 @@
   <div>
     <div class="body">
       <div fluid class="categoria">
-        <b-row class="pb-3">        
+        <b-row class="pb-3">
           <b-col class="text-center pt-3">
             <p class="h1 font-britannic text">
               <strong class="parrafoCategorias">Profesionales</strong>
@@ -20,8 +20,16 @@
       >
       </b-spinner>
     </div>
-    <div v-else  style=" margin: 1%;">
-    
+    <div v-else style="margin: 1%">
+      <div v-if="productos.length < 1" class="text-center">
+        <img
+        class="responsiveNotProducts"
+          style="cursor: pointer"
+          src="https://res.cloudinary.com/malambo/image/upload/v1659026568/Malambo/utilidades/PROFESIONALES_uaxlwk.jpg"
+           @click="$router.push('login')"
+        />
+      </div>
+      <div v-else>
         <b-row class="text-center" cols="2" cols-sm="8" cols-md="8" cols-lg="5">
           <b-col
             v-for="(producto, index) in productos"
@@ -58,20 +66,21 @@
             </b-card>
           </b-col>
         </b-row>
-        <br>
- <div class="d-flex justify-content-center">
-                <b-pagination
-                
-                 pills 
-                  v-model="currentPagePaginate"
-                  :per-page="perPage"
-                  :total-rows="totalRows"                
-                @change="nextPage"
-                ></b-pagination>
-              </div>
+        <br />
+        <div class="d-flex justify-content-center">
+          <b-pagination
+            pills
+            v-model="currentPagePaginate"
+            :per-page="perPage"
+            :total-rows="totalRows"
+            @change="nextPage"
+          ></b-pagination>
+        </div>
+        <br />
+      </div>
+      
     </div>
-     
-    <br />
+    
   </div>
 </template>
 
@@ -84,12 +93,10 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "NuevoSlide",
-props: {
- 
-},
+  props: {},
   data() {
     return {
-        totalRows:0,
+      totalRows: 0,
       paginatedClubs: [],
       nbPages: 0,
       ubicaicon: 0,
@@ -98,28 +105,28 @@ props: {
       indice: 1,
       loading: true,
       currentPagePaginate: 1,
-      perPage:20,
+      perPage: 20,
     };
   },
   components: {},
-  created (){   
-  },
+  created() {},
   computed: {
     ...mapGetters("storeUser", ["getUserId"]),
-
   },
 
-  methods: { 
-     async nextPage(page){ 
-       try {
+  methods: {
+    async nextPage(page) {
+      try {
         window.scrollTo(0, 200);
         this.loading = true;
-        const response = await ServiciosService.get_ultimas_servicios_paginate(page);
-        
+        const response = await ServiciosService.get_ultimas_servicios_paginate(
+          page
+        );
+
         if (response.data.error == false) {
           this.productos = response.data.data;
-          this.currentPagePaginate=page
-         this.loading = false;
+          this.currentPagePaginate = page;
+          this.loading = false;
           //this.getImporte(this.productos);
         }
       } catch (err) {
@@ -127,16 +134,17 @@ props: {
         this.getPorductos();
         this.productos = "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS";
       }
-        
-      }, 
-     
+    },
+
     async getUltimosProductos() {
       try {
-        const response = await ServiciosService.get_ultimas_servicios_paginate(1);
-    console.log(response)
+        const response = await ServiciosService.get_ultimas_servicios_paginate(
+          1
+        );
+        console.log(response);
         if (response.data.error == false) {
           this.productos = response.data.data;
-          this.totalRows= response.data.cantidad
+          this.totalRows = response.data.cantidad;
           //this.getImporte(this.productos);
         }
       } catch (err) {
@@ -173,9 +181,8 @@ props: {
     },
   },
   mounted() {
-   
     axios
-      .all([ this.getUltimosProductos() ])
+      .all([this.getUltimosProductos()])
       .then(() => {
         this.loading = false;
       })
@@ -283,6 +290,7 @@ props: {
 .destacados {
   color: rgb(109, 108, 108);
 }
+
 </style>
 
 
