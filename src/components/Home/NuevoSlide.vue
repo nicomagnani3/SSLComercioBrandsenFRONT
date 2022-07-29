@@ -36,17 +36,18 @@
           </div>
         </b-col>
         <b-col cols="10">
-          <b-card-group deck >
+          <b-card-group deck>
             <b-card
               v-for="(producto, index) in currentPageClubs"
               :key="index"
               img-height="250px; max-height:100%;"
-              :img-alt=index
+              :img-alt="index"
               class="ItemProd"
               style="max-width: 250px"
               :img-src="`data:image/png;base64, ${producto.imagen}`"
               itemprop="image"
-              itemscope itemtype="https://schema.org/Product"
+              itemscope
+              itemtype="https://schema.org/Product"
             >
               <div @click="verProducto(producto)">
                 <strong
@@ -57,10 +58,14 @@
                   {{ tituloAjustar(producto.titulo) }}</strong
                 >
 
-                <small itemprop="priceCurrency" content="ARG" :value="producto.precio">
+                <small
+                  itemprop="priceCurrency"
+                  content="ARG"
+                  :value="producto.precio"
+                >
                   {{ getImporte(producto.precio) }}
                 </small>
-    <link itemprop="sameAs" :href="producto.web">
+                <link itemprop="sameAs" :href="producto.web" />
 
                 <small itemprop="category">{{ producto.padre }} </small>
               </div>
