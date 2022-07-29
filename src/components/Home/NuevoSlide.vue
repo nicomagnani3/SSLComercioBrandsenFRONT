@@ -41,7 +41,7 @@
               v-for="(producto, index) in currentPageClubs"
               :key="index"
               img-height="250px; max-height:100%;"
-              alt="Responsive image"
+              :img-alt=index
               class="ItemProd"
               style="max-width: 250px"
               :img-src="`data:image/png;base64, ${producto.imagen}`"

@@ -28,7 +28,7 @@
               v-for="(producto, index) in currentPageClubs"
               :key="index"
               @click="verProducto(producto)"
-              alt="Responsive image"
+               :img-alt=index
               class="ItemProd"
               style="max-width: 150px; background-color: #ebebeb; border: 0px"
               :img-src="producto.imagen"

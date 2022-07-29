@@ -2,12 +2,12 @@
   <div>
  <div>
     <VueSlickCarousel v-bind="settings">
-      <div><img src="@/assets/correa.png" fluid alt="Responsive image"  /></div>
-      <div><img src="@/assets/ford.png" /></div>
-      <div><img src="@/assets/marquez.png" /></div>
-      <div><img src="@/assets/trivilin.png" /></div>
-      <div><img src="@/assets/viceconte.png" /></div>
-      <div><img src="@/assets/ecobolsa.png" /></div>
+      <div><img src="@/assets/correa.png" fluid alt="Responsive image 1"  /></div>
+      <div><img src="@/assets/ford.png"  alt="Responsive image 2" /></div>
+      <div><img src="@/assets/marquez.png"  alt="Responsive image 3" /></div>
+      <div><img src="@/assets/trivilin.png"  alt="Responsive image 4" /></div>
+      <div><img src="@/assets/viceconte.png"  alt="Responsive image 5"/></div>
+      <div><img src="@/assets/ecobolsa.png"  alt="Responsive image 6"/></div>
     </VueSlickCarousel>
  </div>
     <b-carousel
