@@ -1,16 +1,6 @@
 <template>
   <div>
-    <b-row class="pb-2">
-      <b-col class="text-center pt-3">
-        <p class="h3 text-center">
-          <strong class="parrafoCategorias">
-            Crear una Novedad</strong
-          >
-        </p>
-      </b-col>
-    </b-row>
-    <ValidationObserver ref="crearPublicidad">
-      <b-container class="pb-3">
+      <ValidationObserver ref="crearPublicidad">
         <b-form-group>
           <b-alert
             v-for="alert in alerts"
@@ -23,13 +13,12 @@
         </b-form-group>
         <b-card
           class="mb-3"
-          header="Crear una nueva novedad"
+          header="Novedades de la semana"
           border-variant="success"
           header-border-variant="success"
           header-bg-variant="transparent"
         >
-       
-          <div >
+          <div>
             <b-row>
               <b-col lg="5" md="6">
                 <b-form-group
@@ -62,9 +51,7 @@
                   label="Guia comercial :"
                   label-for="Guia"
                 >
-                  <ValidationProvider
-                    v-slot="{ errors, valid }"
-                  >
+                  <ValidationProvider v-slot="{ errors, valid }">
                     <v-select
                       placeholder="--Seleccione si ya esta en la guia comercial--"
                       :options="foptionsguia"
@@ -81,12 +68,12 @@
                       :key="error.key"
                     >
                       {{ error }}
-                    </b-form-invalid-feedback>                   
+                    </b-form-invalid-feedback>
                   </ValidationProvider>
                 </b-form-group>
               </b-col>
             </b-row>
-          </div>         
+          </div>
 
           <b-row>
             <b-col lg="8" md="6">
@@ -135,7 +122,7 @@
                     size="sm"
                     rows="8"
                     v-model="empresaNueva.observaciones"
-                    placeholder="Descripcion "
+                    placeholder="Descripcion, debe ser una descripcion breve de no mas de 15 palabras "
                   ></b-form-textarea>
                   <b-form-invalid-feedback
                     v-for="error in errors"
@@ -155,14 +142,13 @@
                 type="primary"
                 style="width: 274px"
                 variant="success"
-                >Crear
+                >Agregar Novedad
               </b-button>
             </b-col>
           </b-row>
         </b-card>
-      </b-container>
-    </ValidationObserver>
-    <b-container class="pb-3">
+      </ValidationObserver>
+  
       <b-card
         class="mb-3"
         header="Eliminar novedad"
@@ -181,18 +167,18 @@
                 :name="'Nombrecomercio '"
                 v-slot="{ errors, valid }"
               >
-                    <v-select
-                      placeholder="--Seleccione la novedad a borrar--"
-                      :options="foptionsnovedades"
-                      :value="nombrenovedad"
-                      v-model="nombrenovedad"
-                      responsive="sm"
-                      size="sm"
-                      :required="!nombrenovedad"
-                      :searchable="true"
-                      language="en-US"
-                      :state="errors[0] ? false : valid ? true : null"
-                    ></v-select>
+                <v-select
+                  placeholder="--Seleccione la novedad a borrar--"
+                  :options="foptionsnovedades"
+                  :value="nombrenovedad"
+                  v-model="nombrenovedad"
+                  responsive="sm"
+                  size="sm"
+                  :required="!nombrenovedad"
+                  :searchable="true"
+                  language="en-US"
+                  :state="errors[0] ? false : valid ? true : null"
+                ></v-select>
                 <b-form-invalid-feedback
                   v-for="error in errors"
                   :key="error.key"
@@ -211,19 +197,18 @@
               type="primary"
               style="width: 274px"
               variant="danger"
-              
               >Eliminar
             </b-button>
           </b-col>
         </b-row>
       </b-card>
-    </b-container>
-  </div>
+    </div>
 </template>
 
 
 <script>
 import PublicidadService from "@/services/PublicidadService";
+import swal from "sweetalert";
 
 import "vue-select/dist/vue-select.css";
 import axios from "axios";
@@ -235,14 +220,12 @@ export default {
       guiaComercial: [],
       novedades: [],
       guiaSelected: null,
-      nombrenovedad:null,
+      nombrenovedad: null,
       alerts: [],
       loading: false,
-     
     };
   },
   methods: {
-   
     ordenarDatos(categoria) {
       return categoria.sort(function (a, b) {
         if (a.nombre > b.nombre) {
@@ -253,13 +236,12 @@ export default {
         }
         return 0;
       });
-    },    
+    },
     limpiarCampos() {
       this.empresaNueva.nombre = "";
       this.empresaNueva.url = "";
       this.empresaNueva.observaciones = "";
       this.guiaSelected = null;
-
     },
     async getGuiaComercial() {
       this.loading = true;
@@ -272,7 +254,7 @@ export default {
       } finally {
         this.loading = false;
       }
-    },    
+    },
     async crearPublicidad() {
       let result = await this.$refs.crearPublicidad.validate();
       if (result) {
@@ -281,20 +263,16 @@ export default {
             nombre: this.empresaNueva.nombre,
             imagen: this.empresaNueva.url,
             observaciones: this.empresaNueva.observaciones,
-            idGuia:
-              this.guiaSelected == null ? null : this.guiaSelected.id
+            idGuia: this.guiaSelected == null ? null : this.guiaSelected.id,
           });
           if (response.data.error == false) {
-            this.$root.$bvToast.toast(
-              "Se creo con exito la Novedad",
-              {
-                title: "Atencion!",
-                toaster: "b-toaster-top-center",
-                solid: true,
-                variant: "success",
-              }
-            );
+            swal(
+            "¡Tu novedad ha sido creada con éxito!",
+            "Novedad Creada!",
+            "success"
+          ).then(() => {
             this.limpiarCampos();
+          });         
           }
         } catch (error) {
           this.$bvToast.toast(`No se pudo crear la publicacion`, {
@@ -304,9 +282,9 @@ export default {
             variant: "danger",
           });
         }
-      } 
+      }
     },
-     async getNovedad() {
+    async getNovedad() {
       this.loading = true;
       try {
         const response = await PublicidadService.getNovedad();
@@ -319,24 +297,20 @@ export default {
         this.loading = false;
       }
     },
-    async EliminarGuia(){
+    async EliminarGuia() {
       if (this.nombrenovedad != null) {
         try {
           const response = await PublicidadService.eliminarNovedad({
             id: this.nombrenovedad.id,
-         
           });
           if (response.data.error == false) {
-            this.$root.$bvToast.toast(
-              "Se elimino con exito  la novedad",
-              {
-                title: "Atencion!",
-                toaster: "b-toaster-top-center",
-                solid: true,
-                variant: "success",
-              }
-            );
-            this.getNovedad();
+            swal(
+            "¡La novedad ha sido eliminada con éxito!",
+            "Novedad Eliminada!",
+            "success"
+          ).then(() => {
+            location.reload()
+          });
           }
         } catch (error) {
           this.$bvToast.toast(`No se pudo eliminar novedad`, {
@@ -347,12 +321,10 @@ export default {
           });
         }
       }
-    
-      
-    }
+    },
   },
   computed: {
-   foptionsnovedades() {
+    foptionsnovedades() {
       let mc = this.novedades.map((e) => ({
         id: e.id,
         label: e.nombre,
@@ -370,7 +342,7 @@ export default {
 
   mounted() {
     axios
-      .all([ this.getGuiaComercial(),this.getNovedad()])
+      .all([this.getGuiaComercial(), this.getNovedad()])
       .then(() => {
         this.loading = false;
       })

@@ -128,7 +128,7 @@ export default {
   display: block;
   flex-basis: 33.3%; /* change this value for each breakpoint*/
 }
-</style>>
+</style>
 
 
 

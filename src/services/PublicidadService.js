@@ -25,4 +25,10 @@ export default {
     eliminarNovedad(credentials) {
         return Api().post(API_URL + API_USER + "delete_novedad", credentials)
     },
+    addNuevaPublicidad(credentials) {
+        return Api().post(API_URL + API_USER + "nueva_publicidad", credentials)
+    },
+    eliminarPublicidad(credentials) {
+        return Api().post(API_URL + API_USER + "delete_publicidad", credentials)
+    },
 }

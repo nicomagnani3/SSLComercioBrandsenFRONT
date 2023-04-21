@@ -55,6 +55,13 @@ import publicarMobile from "@/components/publicacionMobile/NuevaPublicacion.vue"
 
 import CrearPublicacion from "@/components/publicaciones/CrearPublicacion.vue";
 import CrearContrato from "@/components/contratos/CrearContrato.vue";
+
+/* Publicidades Home */
+import PublicidadesHome from "@/components/publicidad/PublicidadesHome.vue";
+import PersonalizarPlataforma from "@/components/plataforma/PersonalizarPlataforma.vue";
+
+import presentation from "@/components/plataforma/presentation.vue";
+
 import VueMeta from "vue-meta";
 Vue.use(VueMeta);
 
@@ -318,6 +325,22 @@ const router = new Router({
             requireAuth: true,
           },
         },
+        {
+          path: "/crear_publicidad_home",
+          name: "crear_publicidad_home",
+          component: PublicidadesHome,
+          meta: {
+            requireAuth: true,
+          },
+        },
+        {
+          path: "/personalizar_plataforma",
+          name: "personalizar_plataforma",
+          component: PersonalizarPlataforma,
+          meta: {
+            requireAuth: true,
+          },
+        },        
       ],
     },
     {
@@ -355,6 +378,14 @@ const router = new Router({
       path: "/publicarMobile",
       name: "publicarMobile",
       component: publicarMobile,
+      meta: {
+        requireAuth: false,
+      },
+    },
+    {
+      path: "/homepage",
+      name: "homepage",
+      component: presentation,
       meta: {
         requireAuth: false,
       },

@@ -27,7 +27,8 @@
     >
 
     <br />
-    <Slider :publicidades="this.publicidadesSlider1" />
+    <Slider :publicidades="this.publicidadesSlider2"
+    :publicidades1="this.publicidadesSlider1" />
     <br />
     <NuevoSlide
       :productos="this.productosDestacados"
@@ -41,7 +42,7 @@
     <div>
       <Novedades :novedades="novedades"> </Novedades>
     </div>
-    <sliderPubli :publicidades="this.publicidadesSlider2" />
+    <sliderPubli :publicidades="this.publicidadesSlider4" />
     <!-- <sliderServicios />
     <sliderEmprendimientos /> -->
     <!-- 
@@ -92,6 +93,7 @@ export default {
       publicidades: [],
       publicidadesSlider1: [],
       publicidadesSlider2: [],
+      publicidadesSlider4: [],
       publicidadesSlider3: [],
       nuevaPublicacion: false,
       nuevaPublicacionDestacada: false,
@@ -129,14 +131,19 @@ export default {
         if (publicidad.ubicacion == 2) {
           this.publicidadesSlider2.push(publicidad);
         }
+        if (publicidad.ubicacion == 4) {
+          this.publicidadesSlider4.push(publicidad);
+        }
+
+        
       });
     },
-    asignarPublicidades1(publicidades) {
-      this.publicidadesSlider1 = publicidades.filter((c) => c.ubicacion == 1);
-    },
     asignarPublicidades2(publicidades) {
-      this.publicidadesSlider2 = publicidades.filter((c) =>
-        console.log(c.ubicacion)(c.ubicacion == 2)
+      this.publicidadesSlider2 = publicidades.filter((c) => c.ubicacion == 2);
+    },
+    asignarPublicidades4(publicidades) {
+      this.publicidadesSlider4 = publicidades.filter((c) =>
+        console.log(c.ubicacion)(c.ubicacion == 4)
       );
     },
     /*   asignarPublicidades3(publicidades) {

@@ -1,13 +1,14 @@
 <template>
   <div>
- <div>
-    <VueSlickCarousel v-bind="settings">
-      <div><img src="@/assets/correa.png" fluid alt="Responsive image 1"  /></div>
-      <div><img src="@/assets/ford.png"  alt="Responsive image 2" /></div>
-      <div><img src="@/assets/marquez.png"  alt="Responsive image 3" /></div>
-      <div><img src="@/assets/trivilin.png"  alt="Responsive image 4" /></div>
-      <div><img src="@/assets/viceconte.png"  alt="Responsive image 5"/></div>
-      <div><img src="@/assets/ecobolsa.png"  alt="Responsive image 6"/></div>
+ <div class="" v-if="publicidades1.length > 0">
+    <VueSlickCarousel :dots="true" v-bind="settings">
+      <b-col
+          v-for="(item, index) in publicidades1"
+          :key="index"
+          class="columnaCards"
+        >
+          <img :src="item.imagen" fluid alt="Responsive image" />
+        </b-col>
     </VueSlickCarousel>
  </div>
     <b-carousel
@@ -44,6 +45,9 @@ export default {
   components: { VueSlickCarousel },
   props: {
     publicidades: {
+      type: Array,
+    },
+    publicidades1: {
       type: Array,
     },
   },
@@ -111,10 +115,36 @@ export default {
 
 
 <style scoped>
-@media only screen and (max-width: 480px) {
+@media all and (max-width: 480px) {
+  .itemCarrusel {
+    width: 124px;
+    height: auto;
+    margin-left: 8px;
+    margin-right: 5px;
+    justify-content: center;
+  }
+  .contenedorPubli {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   img {
     width: 90%;
   }
+}
+
+.itemCarrusel img {
+  object-fit: contain;
+}
+.card-deck {
+  display: flex;
+  justify-content: flex-start;
+  flex-flow: row wrap;
+  align-items: stretch;
+}
+.card-deck .card {
+  display: block;
+  flex-basis: 33.3%; /* change this value for each breakpoint*/
 }
 .carousel-wrapper {
   padding: 40px;

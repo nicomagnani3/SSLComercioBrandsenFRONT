@@ -1,11 +1,13 @@
 <template>
   <b-container>
     <div>
-      <b-row class="pb-2">
+  <!--     <b-row class="pb-2">
         <b-col class="text-center pt-3">
-          <p class="h3 text-center">    <strong class="parrafoCategorias">  Imagenes</strong></p>
+          <p class="h3 text-center">
+            <strong class="parrafoCategorias"> Imagenes</strong>
+          </p>
         </b-col>
-      </b-row>
+      </b-row> -->
       <ValidationObserver ref="altaImagenes">
         <b-card
           no-body
@@ -25,7 +27,7 @@
                 <b-col cols="12" sm="6" md="4" lg="2">
                   <div v-if="value.loadingImg" class="py-5 text-center"></div>
                   <b-card-img
-                   thumbnail
+                    thumbnail
                     fluid
                     alt="Responsive image"
                     style="max-height: 225px"
@@ -103,7 +105,7 @@
                 <b-col cols="12" sm="6" md="4" lg="2">
                   <div v-if="value.loadingImg" class="py-5 text-center"></div>
                   <b-card-img
-                   thumbnail
+                    thumbnail
                     fluid
                     alt="Responsive image"
                     style="max-height: 225px"
@@ -193,8 +195,7 @@ export default {
       type: Array,
       default: () => ({
         id: 0,
-        url:
-          "https://i.pinimg.com/originals/ad/53/64/ad53643d33b99130bc99e04d19857e39.png",
+        url: "https://i.pinimg.com/originals/ad/53/64/ad53643d33b99130bc99e04d19857e39.png",
         file: null,
         tipo: null,
         loadingImg: false,
@@ -209,8 +210,7 @@ export default {
       type: Array,
       default: () => ({
         id: 0,
-        url:
-          "https://i.pinimg.com/originals/ad/53/64/ad53643d33b99130bc99e04d19857e39.png",
+        url: "https://i.pinimg.com/originals/ad/53/64/ad53643d33b99130bc99e04d19857e39.png",
         file: null,
         tipo: null,
         loadingImg: false,
@@ -231,9 +231,7 @@ export default {
     };
   },
   computed: {},
-  created() {
-   
-  },
+  created() {},
 
   methods: {
     upAws(event, img) {
@@ -267,12 +265,15 @@ export default {
     async validate() {
       if (!this.loadingImg && !this.loading && !this.base64) {
         let result = await this.$refs.altaImagenes.validate();
-              if (result == true) {
-                  if (! this.sonImagenesValidas(this.imagenes) || !this.sonImagenesValidas(this.imgPrimera)){
-                        alert("Atencion: se permiten solo fotos JPG")
-                        return false;
-                  }
-              }
+        if (result == true) {
+          if (
+            !this.sonImagenesValidas(this.imagenes) ||
+            !this.sonImagenesValidas(this.imgPrimera)
+          ) {
+            alert("Atencion: se permiten solo fotos JPG");
+            return false;
+          }
+        }
         return result;
       } else {
         return false;

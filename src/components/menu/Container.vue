@@ -12,7 +12,7 @@
         :productosDestacados="productosDestacados"
       />
     </div>
-    <Publicidad :publicidades="this.publicidadesSlider4" />
+    <Publicidad :publicidades="this.publicidadesSlider5" />
     <Footer class="footer" />
   </div>
 </template>
@@ -36,7 +36,7 @@ export default {
     return {
       loading: true,
       publicidades: [],
-      publicidadesSlider4: [],
+      publicidadesSlider5: [],
       productos: [],
       productosDestacados: [],
       dailyData: [],
@@ -68,7 +68,7 @@ export default {
         const response = await PublicidadService.getPublicidades();
         if (response.data.error == false) {
           this.publicidades = response.data.data;
-          this.asignarPublicidades4(this.publicidades);
+          this.asignarPublicidades5(this.publicidades);
         }
       } catch (err) {
         this.getPublicidades();
@@ -86,8 +86,8 @@ export default {
         return 0;
       });
     },
-    asignarPublicidades4(publicidades) {
-      this.publicidadesSlider4 = publicidades.filter((c) => c.ubicacion == 4);
+    asignarPublicidades5(publicidades) {
+      this.publicidadesSlider5 = publicidades.filter((c) => c.ubicacion == 5);
     },
     async getPorductos() {
       this.loading = true;

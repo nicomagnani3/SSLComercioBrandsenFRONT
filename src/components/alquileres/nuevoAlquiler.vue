@@ -5,189 +5,203 @@
         <b-row class="pb-3">
           <b-col class="text-center pt-3">
             <p class="h1 font-britannic text">
-              <strong class="parrafoCategorias"> Publica una propiedad</strong>
+              <strong class="parrafoCategorias">Publicar propiedad</strong>
             </p>
           </b-col>
         </b-row>
       </div>
     </div>
-    <b-row>
-      <b-col>
-        <b-col class="text-center pt-3">
-          <p class="h3 text-center">
-            <strong class="parrafoCategorias"> Detalles</strong>
-          </p>
-        </b-col>
-        <ValidationObserver ref="detallePublicacion">
-          <b-container class="pb-3">
-            <b-form-group>
-              <b-alert
-                v-for="alert in alerts"
-                dismissible
-                v-bind:key="alert.key"
-                show
-                :variant="alert.variant"
-                >{{ alert.message }}</b-alert
-              >
-            </b-form-group>
-            <b-card
-              class="mb-3"
-              header="Datos de la propiedad"
-              border-variant="success"
-              header-border-variant="success"
-              header-bg-variant="transparent"
-            >
+    <div class="col-sm-10 col-lg-12 col-xl-12 mx-auto position-static">
+      <div>
+        <div class="card position-static form-group rounded-4">
+          <div class="card-body px-3 pb-0">
+            <div class="card-title" style="line-height: 2">
+              <div class="text-left mt-2"></div>
               <b-row>
-                <b-col md="6">
-                  <b-form-group
-                    id="propiedad-label"
-                    label="Propiedad:"
-                    label-for="Propiedad"
-                  >
-                    <ValidationProvider
-                      :name="'Propiedad '"
-                      :rules="'required'"
-                      v-slot="{ errors, valid }"
-                    >
-                      <b-form-select
-                        v-model="Propiedadseleccionada"
-                        responsive="sm"
-                        size="sm"
-                        required
-                        :options="optionPropiedad"
-                        :state="errors[0] ? false : valid ? true : null"
-                      ></b-form-select>
-                      <b-form-invalid-feedback
-                        v-for="error in errors"
-                        :key="error.key"
+                <b-col>
+                  <ValidationObserver ref="detallePublicacion">
+                    <b-container class="pb-3">
+                      <b-form-group>
+                        <b-alert
+                          v-for="alert in alerts"
+                          dismissible
+                          v-bind:key="alert.key"
+                          show
+                          :variant="alert.variant"
+                          >{{ alert.message }}</b-alert
+                        >
+                      </b-form-group>
+                      <b-card
+                        class="mb-3"
+                        header="Datos de la propiedad"
+                        border-variant="success"
+                        header-border-variant="success"
+                        header-bg-variant="transparent"
                       >
-                        {{ error }}
-                      </b-form-invalid-feedback>
-                    </ValidationProvider>
-                  </b-form-group>
+                        <b-row>
+                          <b-col md="6">
+                            <b-form-group
+                              id="propiedad-label"
+                              label="Tipo de propiedad:"
+                              label-for="Propiedad"
+                            >
+                              <ValidationProvider
+                                :name="'Propiedad '"
+                                :rules="'required'"
+                                v-slot="{ errors, valid }"
+                              >
+                                <b-form-select
+                                  v-model="Propiedadseleccionada"
+                                  responsive="sm"
+                                  size="sm"
+                                  required
+                                  :options="optionPropiedad"
+                                  :state="
+                                    errors[0] ? false : valid ? true : null
+                                  "
+                                ></b-form-select>
+                                <b-form-invalid-feedback
+                                  v-for="error in errors"
+                                  :key="error.key"
+                                >
+                                  {{ error }}
+                                </b-form-invalid-feedback>
+                              </ValidationProvider>
+                            </b-form-group>
+                          </b-col>
+                          <b-col md="6">
+                            <b-form-group
+                              id="operacio-label"
+                              label="Operación:"
+                              label-for="operacio"
+                            >
+                              <ValidationProvider
+                                :name="'operacio '"
+                                :rules="'required'"
+                                v-slot="{ errors, valid }"
+                              >
+                                <b-form-select
+                                  v-model="operacionSeleccionada"
+                                  responsive="sm"
+                                  size="sm"
+                                  required
+                                  :options="optionOperacion"
+                                  :state="
+                                    errors[0] ? false : valid ? true : null
+                                  "
+                                ></b-form-select>
+                                <b-form-invalid-feedback
+                                  v-for="error in errors"
+                                  :key="error.key"
+                                >
+                                  {{ error }}
+                                </b-form-invalid-feedback>
+                              </ValidationProvider>
+                            </b-form-group>
+                          </b-col>
+                        </b-row>
+                        <b-row>
+                          <b-col lg="12" md="8">
+                            <b-form-group
+                              id="ubicacion-label"
+                              label="Ubicacion (seleccione en el mapa):"
+                              label-for="Ubicacion"
+                            ></b-form-group>
+                            <l-map
+                              style="height: 50vh"
+                              :zoom="zoom"
+                              :center="center"
+                              @click="addMarker"
+                            >
+                              <l-tile-layer
+                                :url="url"
+                                :attribution="attribution"
+                              ></l-tile-layer>
+                              <l-marker :lat-lng="coordinates">
+                                <l-icon
+                                  icon-url="https://res.cloudinary.com/malambo/image/upload/v1657681219/location-pin_n8bqao.png"
+                              /></l-marker>
+                            </l-map>
+                          </b-col>
+                        </b-row>
+                        <b-row>
+                          <b-col cols="12">
+                            <br />
+                            <b-form-group
+                              class="mb-0"
+                              id="observaciones-label"
+                              label="Descripción(podes ingresar todo los datos que necesites mostrar)"
+                              label-for="observaciones"
+                            >
+                              <ValidationProvider
+                                :name="'TipoPublicacion '"
+                                v-slot="{ errors, valid }"
+                              >
+                                <b-form-textarea
+                                  id="observaciones"
+                                  :state="
+                                    errors[0] ? false : valid ? true : null
+                                  "
+                                  size="sm"
+                                  rows="8"
+                                  v-model="observaciones"
+                                  placeholder="Descripcion de la propiedad que vas a publicar,se recomienda en forma de listado y no todo junto para una mejor visualizacion"
+                                ></b-form-textarea>
+                                <b-form-invalid-feedback
+                                  v-for="error in errors"
+                                  :key="error.key"
+                                >
+                                  {{ error }}
+                                </b-form-invalid-feedback>
+                              </ValidationProvider>
+                            </b-form-group>
+                          </b-col>
+                        </b-row>
+                      </b-card>
+                    </b-container>
+                  </ValidationObserver>
                 </b-col>
-                <b-col md="6">
-                  <b-form-group
-                    id="operacio-label"
-                    label="Operación:"
-                    label-for="operacio"
+                <b-col>
+                  <ImagenesCarga
+                    ref="altaImagenes"
+                    :imagenes="this.imagenes"
+                    :imgPrimera="this.imgPrimera"
                   >
-                    <ValidationProvider
-                      :name="'operacio '"
-                      :rules="'required'"
-                      v-slot="{ errors, valid }"
-                    >
-                      <b-form-select
-                        v-model="operacionSeleccionada"
-                        responsive="sm"
-                        size="sm"
-                        required
-                        :options="optionOperacion"
-                        :state="errors[0] ? false : valid ? true : null"
-                      ></b-form-select>
-                      <b-form-invalid-feedback
-                        v-for="error in errors"
-                        :key="error.key"
-                      >
-                        {{ error }}
-                      </b-form-invalid-feedback>
-                    </ValidationProvider>
-                  </b-form-group>
+                  </ImagenesCarga>
                 </b-col>
               </b-row>
-              <b-row>
-                <b-col lg="12" md="8">
-                  <b-form-group
-                    id="ubicacion-label"
-                    label="Ubicacion (seleccione en el mapa):"
-                    label-for="Ubicacion"
-                  ></b-form-group>
-                  <l-map
-                    style="height: 50vh"
-                    :zoom="zoom"
-                    :center="center"
-                    @click="addMarker"
+              <b-container class="bv-example-row">
+                <b-col>
+                  <b-alert show variant="danger" v-if="imgvacia"
+                    >La imagen principal es obligatoria</b-alert
                   >
-                    <l-tile-layer
-                      :url="url"
-                      :attribution="attribution"
-                    ></l-tile-layer>
-                    <l-marker :lat-lng="coordinates">
-                      <l-icon
-                        icon-url="https://res.cloudinary.com/malambo/image/upload/v1657681219/location-pin_n8bqao.png"
-                    /></l-marker>
-                  </l-map>
-                </b-col>
-              </b-row>
-              <b-row>
-                <b-col cols="12">
-                  <br />
-                  <b-form-group
-                    class="mb-0"
-                    id="observaciones-label"
-                    label="Descripción(podes ingresar todo los datos que necesites mostrar)"
-                    label-for="observaciones"
-                  >
-                    <ValidationProvider
-                      :name="'TipoPublicacion '"
-                      v-slot="{ errors, valid }"
-                    >
-                      <b-form-textarea
-                        id="observaciones"
-                        :state="errors[0] ? false : valid ? true : null"
-                        size="sm"
-                        rows="8"
-                        v-model="observaciones"
-                        placeholder="Descripcion de la propiedad que vas a publicar,se recomienda en forma de listado y no todo junto para una mejor visualizacion"
-                      ></b-form-textarea>
-                      <b-form-invalid-feedback
-                        v-for="error in errors"
-                        :key="error.key"
-                      >
-                        {{ error }}
-                      </b-form-invalid-feedback>
-                    </ValidationProvider>
-                  </b-form-group>
-                </b-col>
-              </b-row>
-            </b-card>
-          </b-container>
-        </ValidationObserver>
-      </b-col>
-      <b-col>
-        <ImagenesCarga
-          ref="altaImagenes"
-          :imagenes="this.imagenes"
-          :imgPrimera="this.imgPrimera"
-        >
-        </ImagenesCarga>
-      </b-col>
-    </b-row>
-    <b-container class="bv-example-row">
-      <b-col>
-        <b-alert show variant="danger" v-if="imgvacia"
-          >La imagen principal es obligatoria</b-alert
-        >
-        <b-form-group class="text-center">
-          <b-button
-            block
-            @click="publicarPropiedad"
-            variant="success"
-            v-if="!presionoCrear"
-            >Publicar propiedad
-          </b-button>
-          <div class="text-center" v-if="presionoCrear">
-            <b-spinner variant="warning" label="Text Centered"></b-spinner>
-          </div> </b-form-group
-      ></b-col>
-    </b-container>
-    <div class="modalLogin">
-      <b-modal ref="modalLogin" hide-footer>
-        <Login
-          :desdePublicacion="true"
-          @okLoginPublicacion="okLoginPublicacion()"
-        ></Login>
-      </b-modal>
+                  <b-form-group class="text-center">
+                    <b-button
+                      @click="publicarPropiedad"
+                      variant="success"
+                      v-if="!presionoCrear"
+                      >Publicar propiedad
+                    </b-button>
+                    <div class="text-center" v-if="presionoCrear">
+                      <b-spinner
+                        variant="warning"
+                        label="Text Centered"
+                      ></b-spinner>
+                    </div> </b-form-group
+                ></b-col>
+              </b-container>
+              <div class="modalLogin">
+                <b-modal ref="modalLogin" hide-footer>
+                  <Login
+                    :desdePublicacion="true"
+                    @okLoginPublicacion="okLoginPublicacion()"
+                  ></Login>
+                </b-modal>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -201,6 +215,7 @@ import { LIcon } from "vue2-leaflet";
 import { mapGetters } from "vuex";
 import Login from "@/components/Inicio/Login.vue";
 import PublicacionService from "@/services/PublicacionService";
+import swal from "sweetalert";
 
 export default {
   components: {
@@ -309,14 +324,10 @@ export default {
             });
             console.log(response);
             if (response.data.code == 200) {
-              this.$root.$bvToast.toast(
-                "Se publico con exito la propiedad y se encuentra disponible en la sección de propiedades para que los usuarios de Malambo la puedan observar",
-                {
-                  title: "Muchas Gracias!",
-                  toaster: "b-toaster-top-center",
-                  solid: true,
-                  variant: "success",
-                }
+              swal(
+                "¡Propiedad creada!",
+                "Se publico con exito la propiedad y se encuentra disponible en la sección de propiedades ",
+                "success"
               );
               this.$router.push({
                 name: "alquileres",
