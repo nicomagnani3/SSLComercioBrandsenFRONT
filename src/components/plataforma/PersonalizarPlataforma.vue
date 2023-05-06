@@ -7,33 +7,11 @@
           <div class="card-title" style="line-height: 2">
             <div class="text-center mt-2">
               <h2>Personaliza los datos de la plataforma</h2>
-              <p>Actualiza el logo,color y nombre de la plataforma</p>
+              <p>Actualiza el logo,color y nombre de la plataforma</p> {{  this.traduccionesEditadas.footer.color }}
             </div>
           </div>
 
           <ValidationObserver ref="validator">
-            <b-row>
-              <b-col cols="14" md="4">
-                <b-form-group label="Nombre:" label-for="Nombre">
-                  <ValidationProvider rules="required">
-                    <b-form-input v-model="nombre" id="Nombre" />
-                  </ValidationProvider>
-                  <b-form-invalid-feedback>
-                    Ingresa el nombre de la plataforma
-                  </b-form-invalid-feedback>
-                </b-form-group>
-              </b-col>
-              <b-col cols="14" md="4">
-                <b-form-group label="email:" label-for="email">
-                  <ValidationProvider rules="required">
-                    <b-form-input v-model="email" id="email" />
-                  </ValidationProvider>
-                  <b-form-invalid-feedback>
-                    Ingresa el email de la plataforma
-                  </b-form-invalid-feedback>
-                </b-form-group>
-              </b-col>
-            </b-row>
             <b-row>
               <b-col cols="14" md="4">
                 <b-form-group label="Logo:" label-for="logoInput">
@@ -41,7 +19,7 @@
                     <b-form-file
                       v-model="logo.file"
                       size="sm"
-                      accept="image/jpeg"
+                      accept="image/png"
                       placeholder="Seleccione una imagen..."
                       browse-text="Examinar"
                       @change="upAws($event, logo)"
@@ -55,7 +33,12 @@
               <b-col>
                 <b-form-group label="Color principal:" label-for="colorInput">
                   <ValidationProvider rules="required">
-                    <input v-model="color" type="color" id="colorInput" />
+                    <input
+                      v-model="traduccionesEditadas.footer.color"
+                      type="color"
+                      id="colorInput"
+                      @change="changeColor()"
+                    />
                   </ValidationProvider>
                   <b-form-invalid-feedback>
                     Por favor, selecciona un color para el fondo principal.
@@ -63,7 +46,29 @@
                 </b-form-group>
               </b-col>
             </b-row>
-          </ValidationObserver>
+          </ValidationObserver>          
+          <br />
+          <b-col>
+            <div class="row">
+              <Menu
+                :daily="dailyData"
+                :seven="sevenData"
+                :color="traduccionesEditadas.footer.color"
+                :logoPrueba="this.logo.url"
+                :showPrueba="showPrueba"
+                :showPruebaColor="showPruebaColor"
+              />
+            </div>
+            <div class="row mt-3">
+              <Footer
+                :color="traduccionesEditadas.footer.color"
+                :logoPrueba="this.logo.url"
+                :showPrueba="showPrueba"
+                :showPruebaColor="showPruebaColor"
+              />
+            </div>
+          </b-col>
+          <br />
           <b-col>
             <div class="text-center mt-4">
               <b-button variant="primary" @click="submitForm"
@@ -71,16 +76,59 @@
               >
             </div>
           </b-col>
-          <br />
+        </div>
+        <div class="card-body px-3 pb-0">
+        <div class="card-title" style="line-height: 2">
+          <div class="text-center mt-2">
+            <h2>Actualiza los textos de la plataforma</h2>
+            <p></p>
+          </div>
+          <b-row>
+            <b-col >
+              <div
+                v-for="(traduccion, index) in traducciones.footer"
+                :key="index"
+                name="fade"
+              >
+                <div class="form-group row" v-if="index != 'color'">
+                  <label class="col-sm-2 col-form-label">{{ index }} :</label>
+                  <div class="col-sm-6">
+                    <input
+                      class="form-control"
+                      v-model="traduccionesEditadas.footer[index]"
+                      id="Nombre"
+                    />
+                  </div>
+                </div>
+              </div>
+            </b-col>
+            <b-col >
+              <div
+                v-for="(traduccion, index) in traducciones.publicaciones"
+                :key="index"
+                name="fade"
+              >
+                <div class="form-group row" v-if="index != 'color'">
+                  <label class="col-sm-2 col-form-label">{{ index }} :</label>
+                  <div class="col-sm-6">
+                    <input
+                      class="form-control"
+                      v-model="traduccionesEditadas.publicaciones[index]"
+                      id="Nombre"
+                    />
+                  </div>
+                </div>
+              </div>
+            </b-col>
+          </b-row>
           <b-col>
-            <div class="row">
-              <Menu :daily="dailyData" :seven="sevenData" :color="color" />
-            </div>
-            <div class="row mt-3">
-              <Footer :color="color" />
+            <div class="text-center mt-4">
+              <b-button variant="primary" @click="submitTextos"
+                >Guardar Textos</b-button
+              >
             </div>
           </b-col>
-          <br />
+        </div>
         </div>
       </div>
     </div>
@@ -90,7 +138,9 @@
   <script>
 import Menu from "../menu/Menu.vue";
 import Footer from "../menu/Footer.vue";
-import AuthenticationService from "@/services/AuthenticationService";
+ import AuthenticationService from "@/services/AuthenticationService"; 
+import LenguajeService from "@/services/LenguajeService";
+
 export default {
   components: { Menu, Footer },
   data() {
@@ -99,6 +149,13 @@ export default {
       nombre: undefined,
       color: null,
       email: undefined,
+      showPrueba: false,
+      showPruebaColor: false,
+      traducciones: undefined,
+      traduccionesEditadas: {
+        footer: {},
+        publicaciones:{}
+      },
       dailyData: {
         coord: { lon: -58.233, lat: -35.1635 },
         weather: [
@@ -353,9 +410,22 @@ export default {
       },
     };
   },
+  created() {
+    console.log(this.$root.$options.i18n.messages.es);
+    this.traducciones = this.$root.$options.i18n.messages.es;
+    this.traduccionesEditadas.footer = this.traducciones.footer;
+    this.traduccionesEditadas.publicaciones = this.traducciones.publicaciones
+  },
   methods: {
+    changeColor() {
+      this.showPruebaColor = !this.showPrueba;
+    },
+    showModelTraduccion(traduccion) {
+      return traduccion;
+    },
     upAws(event, img) {
-      console.log(img)
+      this.showPrueba = true;
+      console.log(img);
       const file = event.target.files[0];
       this.logo.url = URL.createObjectURL(file);
       this.createBase64Image(file);
@@ -369,19 +439,32 @@ export default {
       reader.readAsDataURL(file);
     },
     async submitForm() {
-      console.log(this.logo);
       try {
-        const response = await AuthenticationService.personalizaPlataforma({
+        console.log(this.logo)
+        if(this.logo.file.type == 'image/png'){
+          const response = await AuthenticationService.personalizaPlataforma({
           logo: this.logo.base64,
-          nombre: this.nombre,
-          color: this.color,
-          email: this.email,
+        }); 
+        console.log(response)
+        }      
+        this.submitTextos()
+   
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async submitTextos(){
+      try {
+        const response = await LenguajeService.actualizarLenguaje({
+          footer: this.traduccionesEditadas.footer,
+          publicaciones: this.traduccionesEditadas.publicaciones
         });
         console.log(response);
       } catch (error) {
         console.error(error);
       }
-    },
+
+    }
   },
 };
 </script>

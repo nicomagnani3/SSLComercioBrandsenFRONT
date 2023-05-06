@@ -24,6 +24,8 @@ import Publicidad from "@/components/Home/EspacioPublicidad.vue";
 import PublicidadService from "@/services/PublicidadService";
 import PublicacionService from "@/services/PublicacionService";
 import ProductosService from "@/services/ProductosService";
+import LenguajeService from "@/services/LenguajeService";
+
 import axios from "axios";
 export default {
   name: "Dashboard",
@@ -44,7 +46,19 @@ export default {
     };
   },
   props: {},
-  methods: {
+  methods: {    
+    async getLenguaje() {
+      try {
+        const response = await LenguajeService.getLenguaje();
+        console.log(response)
+        const i18n = this.$root.$options.i18n
+        console.log(i18n)
+        i18n.setLocaleMessage('es', response.data.es); 
+        console.log(i18n)
+      } catch (err) {
+        console.log(err)
+      }
+    },
     printAlltoast() {
       this.toast.forEach((data) => {
         this.addToast(data);
@@ -161,6 +175,7 @@ export default {
         this.getPorductos(),
         this.getPorductosDestacados(),
         this.clima(),
+        this.getLenguaje()
       ])
       .then(() => {
         this.loading = false;

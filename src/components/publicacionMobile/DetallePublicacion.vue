@@ -84,7 +84,7 @@
           <b-row>
             <div v-if="!yapublico">
               <b-alert variant="success" show
-                >Tu primera publicacion es gratis! De parte de malambo te
+                >Tu primera publicacion es gratis! De parte de  {{$t('footer.nombre_plataforma')}} te
                 queremos agradecer por confiar en nosotros</b-alert
               >
             </div>

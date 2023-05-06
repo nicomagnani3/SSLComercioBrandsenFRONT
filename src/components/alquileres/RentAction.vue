@@ -55,18 +55,16 @@
       <b-row>
         <b-col class="text-center pt-3">
           <div>
-            <strong>Contacto:</strong>
-
             <a
               variant="primary"
               class="mb-2"
               v-if="publicacion.telefono != null"
               :href="
-                'https://api.whatsapp.com/send?text=Hola!%20,desde%20Malambo%20observe%20la%20propiedad%20' +
+                'https://api.whatsapp.com/send?text=Hola!%20,desde%20'+$t('footer.nombre_plataforma')+'%20observe%20la%20propiedad%20' +
                 publicacion.propiedad +
                 ',queria%20obtener%20mas%20detalles' +
-                '&?url=https://malambobrandsen.com.ar&phone=+54' +
-                acomodarCelular(publicacion.telefono)
+                '&?url='+$t('footer.url')+
+                '&phone=+54'+acomodarCelular(publicacion.telefono)
               "
               target="_black"
             >
@@ -82,10 +80,10 @@
               :href="
                 'https://mail.google.com/mail/?view=cm&fs=1&to=' +
                 publicacion.email +
-                '&body=Hola!%20,desde%20Malambo%20observe%20la%20publicacion%20' +
+                '&body=Hola!%20,desde%20'+$t('footer.nombre_plataforma')+'%20observe%20la%20publicacion%20' +
                 publicacion.propiedad +
                 ',queria%20obtener%20mas%20detalles' +
-                '&su=Malambo consulta por ' +
+                '&su='+$t('footer.nombre_plataforma')+' consulta por ' +
                 publicacion.operacion
               "
               target="_black"

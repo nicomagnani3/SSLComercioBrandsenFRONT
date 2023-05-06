@@ -12,8 +12,8 @@
   <div v-else>
     <form-wizard
       @on-complete="onComplete"
-      title="Malambo te simplifica las cosas"
-      subtitle="Elegi lo que quieras publicar en unos simples pasos"
+      :title="$t('publicaciones.simplificar_cosas')"
+      :subtitle="$t('publicaciones.elegi_lo_que_quieras')"
       back-button-text="Volver!"
       next-button-text="Siguiente!"
       :finish-button-text="this.valorBotonFinalizar"
@@ -226,7 +226,7 @@ export default {
         if (response.data.error == false) {
           if (this.tieneContrato || !this.yapublico) {
             this.$root.$bvToast.toast(
-              "Se creo con exito la publicacion, gracias por confiar en MALAMBO",
+              "Se creo con exito la publicacion",
               {
                 title: "Atencion!",
                 toaster: "b-toaster-top-center",
@@ -404,7 +404,7 @@ export default {
         }
       } else {
         this.$root.$bvToast.toast(
-          "La fecha de el contrato se vencio, volve a renovarlo para publicar en MALAMBO",
+          "La fecha de el contrato se vencio, volve a renovarlo para publicar",
           {
             title: "Atencion!",
             toaster: "b-toaster-top-center",

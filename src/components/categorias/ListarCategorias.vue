@@ -3,7 +3,7 @@
     <b-row class="pb-2">
       <b-col class="text-center pt-3">
         <p class="h3 text-center ">
-         <strong class="parrafoCategorias"> ¿Que tipo de categoria es el producto que necesitas publicar?</strong>
+         <strong class="parrafoCategorias"> {{$t('publicaciones.tipo_categoria') }}</strong>
         </p>
       </b-col>
     </b-row>

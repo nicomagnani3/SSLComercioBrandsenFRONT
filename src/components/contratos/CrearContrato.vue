@@ -9,10 +9,10 @@
     </b-navbar-brand>
     <br />
     <br />
-    <h3><strong> Su contrato se creo con exito </strong></h3>
+    <h3><strong>{{ $t('publicaciones.contrato_creado') }}</strong></h3>
     <h3>
       <strong
-        >y esta disponible para que puedas publicar en MALAMBO</strong
+        >{{ $t('publicaciones.contrato_disponible') }}</strong
       >
     </h3>
     <br />

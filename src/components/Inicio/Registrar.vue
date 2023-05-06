@@ -415,7 +415,7 @@ export default {
             this.$root.$bvToast.toast(
               "Su email para ingresar es " + response.data.data,
               {
-                title: "Usted se a registrado en el sistema de Malambo",
+                title: "Usted se a registrado en el sistema",
                 toaster: "b-toaster-top-center succes",
                 solid: true,
                 variant: "success",
@@ -462,7 +462,7 @@ export default {
             this.$root.$bvToast.toast(
               "Su email para ingresar es " + response.data.data,
               {
-                title: "Usted se a registrado en el sistema de MALAMBO",
+                title: "Usted se a registrado en el sistema",
                 toaster: "b-toaster-top-center succes",
                 solid: true,
                 variant: "success",

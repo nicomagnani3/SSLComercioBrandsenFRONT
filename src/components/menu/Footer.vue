@@ -1,5 +1,5 @@
 <template>
-  <b-container fluid class="contenedor" :style="{ '--color': color }">
+  <b-container fluid class="contenedor" :style="{ '--color': showPruebaColor ? color : $t('footer.color')  }">
     <teleport to="head">
       <component :is="'script'" type="application/ld+json">
         { "@context": "https://schema.org", "@type": "WPFooter", "url":
@@ -24,44 +24,48 @@
     <footer itemscope itemtype="https://schema.org/WPFooter">
       <b-row class="fila">
         <b-col xs="12" md="6" lg="3" align-self="center">
-          <img class="logo" src="@/assets/MalamboLogo.png" alt="" />
+              <img
+            v-if="!showPrueba"
+            class="logo"
+            src="@/assets/MalamboLogo.png"
+            alt=""        
+          />
+          <img v-else class="logo" :src="logoPrueba" alt=""/>
+  
         </b-col>
 
         <b-col xs="12" md="12" lg="3" align-self="center">
           <ul>
-            <li>Buscá articulos en Brandsen</li>
-            <li>Buscá servicios en Brandsen</li>
-            <li>Buscá profesionales en Brandsen</li>
+            <li>{{ $t('footer.busca_articulos') }}</li>
+            <li>{{ $t('footer.busca_servicios') }}</li>
+            <li>{{ $t('footer.busca_profesionales') }}</li>
           </ul>
         </b-col>
 
         <b-col xs="12" md="12" lg="3" align-self="center">
           <ul>
-            <li>Todo en un mismo sitio</li>
-            <li>Rápido y fácil</li>
-            <li>Las mejores ofertas</li>
+            <li>{{ $t('footer.mismo_sitio') }}</li>
+            <li>{{ $t('footer.rapido_facil') }}</li>
+            <li>{{ $t('footer.ofertas') }}</li>
           </ul>
         </b-col>
 
         <b-col  align-self="end">     
-          <b>info@malambobrandsen.com.ar</b>
+          <b>{{ $t('footer.email') }}</b>
           <!--    <p style="cursor: pointer">
           <a @click="verSoporte()"><strong>Soporte</strong></a>
         </p> -->
         <div>
           <a
-            :href="
-              'https://api.whatsapp.com/send?text=Hola%20Malambo!' +
-              '&phone=+542223431948'
-            "
+          :href="$t('footer.link_wsp')"
             target="_black"
           >
             <img class="icono" src="@/assets/logowsp.png" alt="" />
           </a>
-          <a href="https://www.instagram.com/malambobrandsen/" target="_black">
+          <a :href="$t('footer.link_instagram')" target="_black">
             <img class="icono" src="@/assets/logo-ig.png" alt="" />
           </a>
-          <a href="https://www.facebook.com/MalamboBrandsen" target="_black">
+          <a :href="$t('footer.link_facebook')" target="_black">
             <img class="icono" src="@/assets/icono-face.png" alt="" />
           </a></div>
         </b-col>
@@ -80,6 +84,18 @@ export default {
     color: {
       type: String,
       default: () => ("#ffce4e"),
+    },
+    logoPrueba: {
+      type: [String],
+      default: () => "",
+    },
+    showPrueba: {
+      type: Boolean,
+      default: false,
+    },
+    showPruebaColor: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {

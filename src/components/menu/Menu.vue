@@ -8,10 +8,10 @@
     </b-spinner>
   </div>
 
-  <b-container class="nav" fluid v-else :style="{ '--color': color }">
+  <b-container class="nav" fluid v-else :style="{ '--color': showPruebaColor ? color : $t('footer.color')  }">
     <nav class="menu">
       <b-navbar toggleable="lg" type="light">
-        <b-navbar-brand :to="'/'"><Header /> </b-navbar-brand>
+        <b-navbar-brand :to="'/'"><Header :logoPrueba="logoPrueba" :showPrueba="showPrueba" ></Header> </b-navbar-brand>
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
         <b-col
           style="text-align: right"
@@ -305,11 +305,10 @@
               @click="home()"
             />
             <br /><br />
-            <h4>Sumate a la comunidad de Malambo</h4>
+            <h4>{{$t('bolsatrabajo.sumate_comunidad')}}</h4>
             <small
-              >Carga tu CV en nuestra plataforma de búsquedas laborales.<br />
-              Nosotros te acercamos a distintas empresas para que puedas obtener
-              una entrevista de trabajo
+              >{{$t('bolsatrabajo.carga_cv')}}<br />
+            {{$t('bolsatrabajo.nos_encargamos')}}
             </small>
             <br />
             <br />
@@ -397,6 +396,17 @@ export default {
     color: {
       type: String,
       default: () => "#ffce4e",
+    },
+    logoPrueba:{
+      type:String, 
+    },
+    showPrueba:{
+      type:Boolean,
+      default: false,
+    },
+    showPruebaColor: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {

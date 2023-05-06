@@ -59,7 +59,7 @@
           <!--    <b-row>
           <b-col lg="10" md="10">
             <b-form-checkbox v-model="publicacion.destacada" name="checkbox-1">
-              Publicacion destacada (las publicaciones destacadas tienen un costo adicional y se visualizan en el home de Malambo)
+              Publicacion destacada (las publicaciones destacadas tienen un costo adicional y se visualizan en el home de +$t('footer.nombre_plataforma')
             </b-form-checkbox>
           </b-col>
           <hr />

@@ -95,7 +95,7 @@
                           Presiona el boton "pagar" para pagar el paquete
                           <strong> {{ this.selectedpaquete[0].nombre }}</strong
                           >, cuando finalices el pago tu paquete se cargara en
-                          Malambo<span id="summary-quantity"></span>
+                          {{$t('footer.nombre_plataforma')}}<span id="summary-quantity"></span>
                         </p>
                       </div>
                       <br />

@@ -2,7 +2,7 @@
   <div>
     <div class="banner_section layout_padding">
       <div class="container">
-        <h1 class="banner_taital">Malambo</h1>
+        <h1 class="banner_taital">{{$t('footer.nombre_plataforma')}}</h1>
         <h2 class="free_text">Una plataforma que se adapta a tus necesidades</h2>
         <div class="read_bt">
           <div class="read_text"><a href="#">Mas información</a></div>

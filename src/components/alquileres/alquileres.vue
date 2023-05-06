@@ -12,7 +12,7 @@
           <b-col class="text-center pt-3">
             <p class="h1 font-britannic text">
               <strong class="parrafoCategorias">
-                Propiedades y Alquileres disponibles
+                {{$t('publicaciones.propiedades_alquileres')}}
               </strong>
 
               <b-button
@@ -81,7 +81,7 @@
                   class="btn btn--block card__btn"
                   @click="masInformacion(producto)"
                 >
-                  Más información
+                {{$t('publicaciones.mas_info')}}
                 </button>
               </div>
             </div>
@@ -144,7 +144,6 @@ export default {
       });
     },
     masInformacion(propiedad) {
-      console.log(propiedad);
       this.$router.push({
         name: "RentAction",
         params: {

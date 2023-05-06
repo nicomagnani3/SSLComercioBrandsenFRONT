@@ -13,8 +13,8 @@
       <b-col cols="12">
         <form-wizard
           @on-complete="onComplete"
-          title="Malambo te simplifica las cosas"
-          subtitle="Elegi lo que quieras publicar en unos simples pasos"
+          :title="$t('publicaciones.simplificar_cosas')"
+          :subtitle="$t('publicaciones.elegi_lo_que_quieras')"
           back-button-text="Volver!"
           next-button-text="Siguiente!"
           finish-button-text="Finalizar"
@@ -176,7 +176,7 @@ export default {
         });
         if (response.data.error == false) {
           this.$root.$bvToast.toast(
-            "Se creo con exito el emprendimiento, gracias por confiar en MALAMBO",
+            "Se creo con exito el emprendimiento, gracias por confiar en"+this.$t('footer.nombre_plataforma'),
             {
               title: "Atencion!",
               toaster: "b-toaster-top-center",
@@ -303,7 +303,7 @@ export default {
         }
       }else{
         this.$root.$bvToast.toast(
-            "La fecha de el contrato se vencio, volve a renovarlo para publicar en MALAMBO",
+            "La fecha de el contrato se vencio, volve a renovarlo para publicar",
             {
               title: "Atencion!",
               toaster: "b-toaster-top-center",

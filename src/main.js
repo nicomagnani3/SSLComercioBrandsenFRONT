@@ -12,6 +12,13 @@ Vue.use(VueFormWizard)
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueNumeric from 'vue-numeric'
+import VueI18n from 'vue-i18n'
+
+Vue.use(VueI18n)
+ const i18n = new VueI18n({
+  locale: 'es', // Establece el idioma predeterminado
+  fallbackLocale: 'en' // Establece el idioma de respaldo
+}); 
 Vue.use(VueNumeric)
 
 import VueGlide from 'vue-glide-js'
@@ -43,5 +50,6 @@ Vue.config.productionTip = false
 new Vue({
    router,
    store,
+   i18n,
   render: h => h(App), 
 }).$mount('#app')

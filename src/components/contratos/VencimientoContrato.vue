@@ -92,7 +92,7 @@
                 <a
                   v-if="contrato.userCel != null"
                   :href="
-                    'https://api.whatsapp.com/send?text=Hola!%20,desde%20Malambo%20queriamos%20notificarle%20que%20se%20vence%20el%20contrato ' +
+                    'https://api.whatsapp.com/send?text=Hola!%20,desde%20'+$t('footer.nombre_plataforma')+'%20queriamos%20notificarle%20que%20se%20vence%20el%20contrato ' +
                     contrato.paquete +
                     ',el%20dia%20' +
                     acomodarFecha(contrato.hasta) +
@@ -113,11 +113,11 @@
                   :href="
                     'https://mail.google.com/mail/?view=cm&fs=1&to=' +
                     contrato.userMail +
-                    '&body=Hola!%20,desde%20Malambo%20queriamos%20notificarle%20que%20se%20vence%20el%20contrato%20' +
+                    '&body=Hola!%20,desde%20'+$t('footer.nombre_plataforma')+'%20queriamos%20notificarle%20que%20se%20vence%20el%20contrato%20' +
                     contrato.paquete +
                     ',el%20dia%20' +
                     acomodarFecha(contrato.hasta) +
-                    '&su=Atencion!Malambo Vencimiento de contrato'
+                    '&su=Atencion!'+$t('footer.nombre_plataforma')+' Vencimiento de contrato'
                   "
                   target="_black"
                   >&nbsp;&nbsp;
@@ -212,7 +212,7 @@
                 <a
                   v-if="contrato.userCel != null"
                   :href="
-                    'https://api.whatsapp.com/send?text=Hola!%20,desde%20Malambo%20queriamos%20notificarle%20que%20se%20vence%20el%20contrato ' +
+                    'https://api.whatsapp.com/send?text=Hola!%20,desde%20'+$t('footer.nombre_plataforma')+'%20queriamos%20notificarle%20que%20se%20vence%20el%20contrato ' +
                     contrato.paquete +
                     ',el%20dia%20' +
                     acomodarFecha(contrato.hasta) +
@@ -233,11 +233,11 @@
                   :href="
                     'https://mail.google.com/mail/?view=cm&fs=1&to=' +
                     contrato.userMail +
-                    '&body=Hola!%20,desde%20Malambo%20queriamos%20notificarle%20que%20se%20vence%20el%20contrato%20' +
+                    '&body=Hola!%20,desde%20'+$t('footer.nombre_plataforma')+'%20queriamos%20notificarle%20que%20se%20vence%20el%20contrato%20' +
                     contrato.paquete +
                     ',el%20dia%20' +
                     acomodarFecha(contrato.hasta) +
-                    '&su=Atencion!Malambo Vencimiento de contrato'
+                    '&su=Atencion!'+$t('footer.nombre_plataforma')+' Vencimiento de contrato'
                   "
                   target="_black"
                   >&nbsp;&nbsp;

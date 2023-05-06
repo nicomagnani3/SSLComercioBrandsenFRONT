@@ -17,7 +17,7 @@
       <a
         v-if="publicacion.telefono != null && logeado"
         :href="
-          'https://api.whatsapp.com/send?text=Hola!%20,desde%20Malambo%20observe%20la%20publicacion%20' +
+          'https://api.whatsapp.com/send?text=Hola!%20,desde%'+$t('footer.nombre_plataforma')+'%20observe%20la%20publicacion%20' +
           publicacion.titulo +
           ',queria%20obtener%20mas%20detalles' +
           '&phone=+54' +
@@ -37,10 +37,10 @@
         :href="
           'https://mail.google.com/mail/?view=cm&fs=1&to=' +
           publicacion.email +
-          '&body=Hola!%20,desde%20Malambo%20observe%20la%20publicacion%20' +
+          '&body=Hola!%20,desde%'+$t('footer.nombre_plataforma')+'%20observe%20la%20publicacion%20' +
           publicacion.titulo +
           ',queria%20obtener%20mas%20detalles' +
-          '&su=Malambo consulta por ' +
+          '&su='+$t('footer.nombre_plataforma')+' consulta por ' +
           publicacion.titulo
         "
         target="_black"

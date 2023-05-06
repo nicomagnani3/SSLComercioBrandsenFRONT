@@ -118,7 +118,7 @@ export default {
            this.$root.$bvToast.toast(
               "Se cambio su contraseña",
               {
-                title: "Usted modifico la contraseña en MALAMBO",
+                title: "Usted modifico la contraseña",
                 toaster: "b-toaster-top-center succes",
                 solid: true,
                 variant: "success",
