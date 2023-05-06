@@ -39,11 +39,13 @@
                 <b-form-group label="Logo:" label-for="logoInput">
                   <ValidationProvider rules="required">
                     <b-form-file
-                      v-model="logo"
-                      id="logoInput"
-                      accept=".jpg,.png,.gif"
-                      @change="upAws($event)"
-                    />
+                      v-model="logo.file"
+                      size="sm"
+                      accept="image/jpeg"
+                      placeholder="Seleccione una imagen..."
+                      browse-text="Examinar"
+                      @change="upAws($event, logo)"
+                    ></b-form-file>
                   </ValidationProvider>
                   <b-form-invalid-feedback>
                     Por favor, selecciona un archivo de imagen para el logo.
@@ -63,13 +65,13 @@
             </b-row>
           </ValidationObserver>
           <b-col>
-          <div class="text-center mt-4">
-            <b-button variant="primary" @click="submitForm"
-              >Guardar cambios</b-button
-            >
-          </div>
+            <div class="text-center mt-4">
+              <b-button variant="primary" @click="submitForm"
+                >Guardar cambios</b-button
+              >
+            </div>
           </b-col>
-          <br>
+          <br />
           <b-col>
             <div class="row">
               <Menu :daily="dailyData" :seven="sevenData" :color="color" />
@@ -88,14 +90,15 @@
   <script>
 import Menu from "../menu/Menu.vue";
 import Footer from "../menu/Footer.vue";
+import AuthenticationService from "@/services/AuthenticationService";
 export default {
   components: { Menu, Footer },
   data() {
     return {
-      logo: {
-        url: undefined,
-      },
+      logo: { url: undefined },
+      nombre: undefined,
       color: null,
+      email: undefined,
       dailyData: {
         coord: { lon: -58.233, lat: -35.1635 },
         weather: [
@@ -351,75 +354,33 @@ export default {
     };
   },
   methods: {
-    onLogoChange(event) {
-      this.logo = event.target.files[0];
-      console.log(this.logo);
-    },
-    upAws(event) {
+    upAws(event, img) {
+      console.log(img)
       const file = event.target.files[0];
       this.logo.url = URL.createObjectURL(file);
-      this.createBase64Image(file, this.logo);
-      console.log(this.logo);
+      this.createBase64Image(file);
     },
-    createBase64Image(file, img) {
+    createBase64Image(file) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        img.base64 = e.target.result;
+        this.logo.base64 = e.target.result;
       };
 
       reader.readAsDataURL(file);
     },
-    /*    async fileLoaded(event) {
-      if (event.target.files) {
-        for (let i = 0; i < event.target.files.length; i++) {
-          let file = event.target.files[i];
-
-          if (file.type == "image/heic") {
-            file = await this.convertHeicToJpg(file);
-          }
-
-          let photo = {
-            file: file,
-            src: URL.createObjectURL(file),
-            error: file.size > process.env.MIX_UPLOAD_LIMIT,
-          };
-
-          this.logo=photo
-        }
-      }
-      this.$forceUpdate();
-    },
-    async convertHeicToJpg(file) {
-      return new Promise((resolve) => {
-        let reader = new FileReader();
-
-        reader.onload = (e) => {
-          fetch(e.target.result)
-            .then((res) => res.blob())
-            .then((blob) =>
-              heic2any({
-                blob,
-                toType: "image/jpeg",
-                quality: 0.85,
-              }).then((conversionResult) => {
-                resolve(conversionResult);
-              })
-            )
-            .catch((e) => {
-              console.log(e);
-            });
-        };
-
-        reader.readAsDataURL(file);
-      });
-    }, */
-    submitForm() {
+    async submitForm() {
       console.log(this.logo);
-      this.$refs.form.validate().then((success) => {
-        if (success) {
-          // Enviar datos al servidor
-        }
-      });
+      try {
+        const response = await AuthenticationService.personalizaPlataforma({
+          logo: this.logo.base64,
+          nombre: this.nombre,
+          color: this.color,
+          email: this.email,
+        });
+        console.log(response);
+      } catch (error) {
+        console.error(error);
+      }
     },
   },
 };

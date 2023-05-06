@@ -383,7 +383,7 @@ const router = new Router({
       },
     },
     {
-      path: "/homepage",
+      path: "/index",
       name: "homepage",
       component: presentation,
       meta: {

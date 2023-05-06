@@ -28,5 +28,8 @@ export default {
     getEmpresas(credentials) {    
         return Api().get(API_URL + API_USER + "get_empresas",credentials)
     },
+    personalizaPlataforma(credentials) {
+        return Api().post(API_URL + API_USER + "personalizar_plataforma", credentials)
+    },
     
 }
