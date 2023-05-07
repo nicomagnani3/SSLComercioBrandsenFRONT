@@ -20,27 +20,19 @@
       color="#000000"
       error-color="#dc3545"
     >
-      <tab-content
-     
-        :before-change="validarCategoria"
-      >
+      <tab-content :before-change="validarCategoria">
         <ListarCategorias
           :categorias="this.categorias"
           @update-categoria="update"
         ></ListarCategorias>
       </tab-content>
-      <tab-content
-       
-        :before-change="validarCategoriaHija"
-      >
+      <tab-content :before-change="validarCategoriaHija">
         <ListarCategoriasHijas
           :categoriasHijas="this.categoriaHijaElegida"
           @update-categoria="updateCategoriaHija"
         ></ListarCategoriasHijas>
       </tab-content>
-      <tab-content
-        :before-change="validarDetalleProducto"
-      >
+      <tab-content :before-change="validarDetalleProducto">
         <DetallePublicacion
           ref="detallePublicacion"
           :contrato="this.contrato"
@@ -49,7 +41,7 @@
           :yapublico="this.yapublico"
         ></DetallePublicacion>
       </tab-content>
-      <tab-content  :before-change="validarImagenes">
+      <tab-content :before-change="validarImagenes">
         <ImagenesCarga
           ref="altaImagenes"
           :imagenes="this.imagenes"
@@ -57,7 +49,7 @@
         >
         </ImagenesCarga>
       </tab-content>
-      <tab-content >
+      <tab-content>
         <PagarPublicacion
           :publicacion="this.publicacion"
           :imagen="this.imgPrimera"
@@ -71,13 +63,9 @@
       </tab-content>
     </form-wizard>
     <div class="modalLogin">
-      <b-modal           
-        ref="modalLogin"
-        hide-footer
-      
-      >
+      <b-modal ref="modalLogin" hide-footer>
         <Login
-          :desdePublicacion=true
+          :desdePublicacion="true"
           @okLoginPublicacion="okLoginPublicacion()"
         ></Login>
       </b-modal>
@@ -97,7 +85,7 @@ import PagarPublicacion from "@/components/publicaciones/PagarPublicacion.vue";
 import MercadoPago from "@/services/MercadoPago";
 import Contratos from "@/services/ContratosService";
 import Login from "@/components/Inicio/Login.vue";
-
+import swal from "sweetalert";
 import DetallePublicacion from "@/components/publicaciones/DetallePublicacion.vue";
 export default {
   name: "nuevaPublicacion",
@@ -107,7 +95,7 @@ export default {
     ImagenesCarga,
     DetallePublicacion,
     PagarPublicacion,
-    Login
+    Login,
   },
   data() {
     return {
@@ -149,7 +137,7 @@ export default {
   },
   created() {
     window.scrollTo(0, 200);
-/*     if (this.getUserId == null) {
+    /*     if (this.getUserId == null) {
       this.$router.push({
         name: "login",
         params: {
@@ -163,10 +151,10 @@ export default {
     ...mapGetters("storeUser", ["getUserId"]),
   },
   methods: {
-    okLoginPublicacion(){
-      console.log("ok publi")
+    okLoginPublicacion() {
+      console.log("ok publi");
       this.$refs["modalLogin"].hide();
-      this.crearPublicacion()
+      this.crearPublicacion();
     },
     validarCategoria() {
       window.scrollTo(0, 140);
@@ -186,16 +174,16 @@ export default {
     },
     async validarDetalleProducto() {
       window.scrollTo(0, 140);
-      this.yapublico = this.publicacion.destacada ? true : false
+      this.yapublico = this.publicacion.destacada ? true : false;
       let result = await this.$refs.detallePublicacion.validate();
       return result;
     },
     async onComplete() {
       this.presionoFinalizar = true;
       if (this.getUserId == null) {
-         this.$refs["modalLogin"].show();
-        console.log("Login user")
-       /*  this.$router.push({
+        this.$refs["modalLogin"].show();
+        console.log("Login user");
+        /*  this.$router.push({
           name: "login",
           params: {
             autentificacion: false,
@@ -225,14 +213,10 @@ export default {
         });
         if (response.data.error == false) {
           if (this.tieneContrato || !this.yapublico) {
-            this.$root.$bvToast.toast(
-              "Se creo con exito la publicacion",
-              {
-                title: "Atencion!",
-                toaster: "b-toaster-top-center",
-                solid: true,
-                variant: "success",
-              }
+            swal(
+              "¡Publicación creada!",
+              "Se creo con exito la publicacion ",
+              "success"
             );
             if (this.publicacion.destacada) {
               this.$router.push({
@@ -252,12 +236,11 @@ export default {
         }
       } catch (error) {
         error.response.data.data.forEach((data) => {
-          this.$bvToast.toast(`No se pudo crear la publicacion`, {
-            title: data,
-            toaster: "b-toaster-top-center",
-            solid: true,
-            variant: "danger",
-          });
+          swal(
+            "¡Atencion!",
+            "No se pudo crear la publicacion " + data,
+            "error"
+          );
         });
       }
     },
@@ -330,7 +313,7 @@ export default {
           this.montoEntregaInvalido = true;
           return false;
         }
-     /*    if (this.getUserId == null) {
+        /*    if (this.getUserId == null) {
           this.$router.push({
             name: "login",
             params: {
@@ -356,26 +339,22 @@ export default {
             this.valorUltimoPaso = "Finalizar";
             this.verificarContrato();
           } else {
-            this.$root.$bvToast.toast(
-              "No tenes ningun contrato disponible para publicar, te recomendamos crear uno o renovar el anterior",
-              {
-                title: "Atencion!",
-                toaster: "b-toaster-top-center",
-                solid: true,
-                variant: "danger",
-              }
-            );
-            this.$router.push({
-              name: "renovarContrato",
+            swal(
+              "¡Renova tu contrato para publicar!",
+              "No tenes ningun contrato disponible para publicar, te recomendamos crear uno o renovar el anterior ",
+              "error"
+            ).then(() => {
+              this.$router.push({
+                name: "renovarContrato",
+              });
             });
           }
         } catch (err) {
-          this.$bvToast.toast(err.response.data.message, {
-            title: "Atencion!",
-            toaster: "b-toaster-top-center",
-            solid: true,
-            variant: "danger",
-          });
+          swal(
+            "¡Atencion!",
+            "No se pudo crear la publicacion " + err.response.data.message,
+            "error"
+          );
         }
       }
     },
@@ -389,31 +368,25 @@ export default {
           this.contrato[0].cantDestacada <= 0 &&
           this.contrato[0].cantnormal <= 0
         ) {
-          this.$root.$bvToast.toast(
-            "No dispones de publicaciones para publicar el producto,volve a renovar el contrato aca!",
-            {
-              title: "Atencion!",
-              toaster: "b-toaster-top-center",
-              solid: true,
-              variant: "danger",
-            }
-          );
-          this.$router.push({
-            name: "renovarContrato",
+          swal(
+            "¡Renova tu contrato para publicar!",
+            "No tenes ningun contrato disponible para publicar, te recomendamos crear uno o renovar el anterior ",
+            "error"
+          ).then(() => {
+            this.$router.push({
+              name: "renovarContrato",
+            });
           });
         }
       } else {
-        this.$root.$bvToast.toast(
-          "La fecha de el contrato se vencio, volve a renovarlo para publicar",
-          {
-            title: "Atencion!",
-            toaster: "b-toaster-top-center",
-            solid: true,
-            variant: "danger",
-          }
-        );
-        this.$router.push({
-          name: "renovarContrato",
+        swal(
+          "¡Renova tu contrato para publicar!",
+          "La fecha de tu contrato esta vencida, te recomendamos renovarlo! ",
+          "error"
+        ).then(() => {
+          this.$router.push({
+            name: "renovarContrato",
+          });
         });
       }
     },
@@ -422,7 +395,7 @@ export default {
         const response = await PublicacionService.getPreciosPublicaciones();
         this.preciosPublicacion = response.data.data;
       } catch (err) {
-    /*     this.$router.push({
+        /*     this.$router.push({
           name: "login",
           params: {
             autentificacion: false,
@@ -469,7 +442,7 @@ export default {
 };
 </script>
 <style scoped>
-.modalLogin{
+.modalLogin {
   background-color: #ffce4e !important;
 }
 </style>

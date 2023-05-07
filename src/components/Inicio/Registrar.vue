@@ -1,321 +1,324 @@
 <template>
-<div >
-  <div v-if="loading" class="text-center">
-    <img
-      @click="home()"
-      src="@/assets/MalamboLogo.png"
-      style="width: 100%; max-width: 600px;cursor: pointer"
-      class="rounded"
-      alt="..."
-    />
-   
-    <br /><br />
-    <b-spinner
-   style="width: 7rem; height: 7rem"
-      variant="info"
-      label="Text Centered"
-    >
-    </b-spinner>
-  </div>
-  <div v-else class="container">
-    <b-container>
-    <img
-      @click="home()"
-      src="@/assets/MalamboLogo.png"
-      style="width: 100%; max-width: 600px;cursor: pointer"
-      class="rounded"
-      alt="..."
-    />
-    <b-form action class="form" @submit.prevent="registrarse">
-      <hr />
-      <p class="title h2 mt-2 text-center">
-        <small>Completa los datos para registrarte</small>
-      </p>
-      <br />
-      <b-input-group size="lg">
-        <b-form-select
-          size="lg"
-          id="plan"
-          data-checkout="Plan"
-          v-model="value"
-          :options="foptions"
-          required
-        ></b-form-select>
-      </b-input-group>
-      <br />
-      <div v-if="this.value == 1 || this.value == 5 || this.value == 4">
-        <b-input-group size="lg">
-          <b-input-group-prepend is-text>
-            <b-icon icon="person-fill"></b-icon>
-          </b-input-group-prepend>
-          <b-form-input
-            id="nombre"
-            size="lg"
-            v-model="persona.nombre"
-            type="text"
-            autocomplete="nombre"
-            required
-            placeholder="Nombre"
-            class="line"
-          ></b-form-input>
-        </b-input-group>
-        <br />
-        <b-input-group size="lg">
-          <b-input-group-prepend is-text>
-            <b-icon icon="person-fill"></b-icon>
-          </b-input-group-prepend>
-          <b-form-input
-            id="apellido"
-            size="lg"
-            v-model="persona.apellido"
-            type="text"
-            autocomplete="apellido"
-            required
-            placeholder="Apellido"
-            class="line"
-          ></b-form-input>
-        </b-input-group>
-        <br />
-        <b-input-group size="lg">
-          <b-input-group-prepend is-text>
-            <b-icon icon="card-checklist"></b-icon>
-          </b-input-group-prepend>
-          <b-form-input
-            size="lg"
-            id="dni"
-            v-model="persona.DNI"
-            type="number"
-            autocomplete="dni"
-            required
-            placeholder="DNI"
-            class="line"
-          ></b-form-input>
-        </b-input-group>
-        <br />
-        <b-input-group size="lg">
-          <b-input-group-prepend is-text>
-            <b-icon icon="phone"></b-icon>
-          </b-input-group-prepend>
+  <div>
+    <div v-if="loading" class="text-center">
+      <img
+        @click="home()"
+        src="@/assets/MalamboLogo.png"
+        style="width: 100%; max-width: 600px; cursor: pointer"
+        class="rounded"
+        alt="..."
+      />
 
-          <b-form-input
-            size="lg"
-            id="celular"
-            v-model="persona.celular"
-            type="number"            
-            placeholder="Celular ingresar sin 0 y sin 15"
-            class="line"
-          ></b-form-input>
-        </b-input-group>
-        <div v-if="this.value == 5 || this.value == 4"> 
-         <br />         
-        <b-input-group  size="lg">
-          <b-input-group-prepend is-text>
-            <b-icon icon="link"></b-icon>
-          </b-input-group-prepend>
-          <b-form-input
-            id="web"
-            size="lg"
-            v-model="persona.web"
-            placeholder="URL de tu web o red social"
-            class="line"
-          ></b-form-input>
-        </b-input-group>
-        </div>
-        <br />
-        <b-input-group size="lg">
-          <b-input-group-prepend is-text>
-            <b-icon icon="envelope"></b-icon>
-          </b-input-group-prepend>
-          <b-form-input
-            id="email"
-            size="lg"
-            v-model="persona.email"
-            type="email"
-            autocomplete="username"
-            required
-            placeholder="Direccion de correo electronico"
-            class="line"
-          ></b-form-input>
-        </b-input-group>
-        <br />
-        <b-input-group size="lg">
-          <b-input-group-prepend is-text>
-            <b-icon icon="lock-fill"></b-icon>
-          </b-input-group-prepend>
-          <b-form-input
-            id="password"
-            size="lg"
-            v-model="persona.password"
-            type="password"
-            required
-            @click="actualizarContraseña()"
-            autocomplete="current-password"
-            placeholder="Ingresa la contraseña"
-            class="line"
-          ></b-form-input>
-        </b-input-group>
-        <br />
-        <b-input-group size="lg">
-          <b-input-group-prepend is-text>
-            <b-icon icon="lock-fill"></b-icon>
-          </b-input-group-prepend>
-          <b-form-input
-            size="lg"
-            id="Currentpassword"
-            v-model="persona.password_confirmation"
-            type="password"
-            required
-            @click="actualizarContraseña()"
-            autocomplete="current-password"
-            placeholder="Confirmar la contraseña"
-            class="line"
-          ></b-form-input>
-        </b-input-group>
-        <br />
-      </div>
-      <div v-if="this.value == 3 || this.value == 2">        
-        <b-input-group size="lg">
-          <b-form-select
-            size="lg"
-            id="rubro"
-            data-checkout="Rubro"
-            v-model="empresa.rubro"
-            :options="fRubros"
-            required
-          ></b-form-select>
-        </b-input-group>
-        <br />
-        <b-input-group size="lg">
-          <b-input-group-prepend is-text>
-            <b-icon icon="person-fill"></b-icon>
-          </b-input-group-prepend>
-          <b-form-input
-            id="nombre"
-            size="lg"
-            v-model="empresa.nombreEmpresa"
-            type="text"
-            autocomplete="nombreEmpresa"
-            required
-            :placeholder="'Nombre de ' + nombreTipoUser(this.value)"
-            class="line"
-          ></b-form-input>
-        </b-input-group>
-        <br />
-        <b-input-group size="lg">
-          <b-input-group-prepend is-text>
-            <b-icon icon="envelope"></b-icon>
-          </b-input-group-prepend>
-          <b-form-input
-            id="emailEmpresa"
-            size="lg"
-            v-model="empresa.emailEmpresa"
-            type="email"
-            autocomplete="username"
-            required
-            placeholder="Direccion de correo electronico"
-            class="line"
-          ></b-form-input>
-        </b-input-group>
-        <br />
-        <b-input-group size="lg">
-          <b-input-group-prepend is-text>
-            <b-icon icon="phone"></b-icon>
-          </b-input-group-prepend>
-          <b-form-input
-            id="celular"
-            size="lg"
-            v-model="empresa.celular"
-            type="number"
-            
-            placeholder="Celular ingresar sin 0 y sin 15"
-            class="line"
-          ></b-form-input>
-        </b-input-group>
-        <br />
-
-        <b-input-group size="lg">
-          <b-input-group-prepend is-text>
-            <b-icon icon="link"></b-icon>
-          </b-input-group-prepend>
-          <b-form-input
-            id="web"
-            size="lg"
-            v-model="empresa.web"
-            placeholder="URL de tu web o red social"
-            class="line"
-          ></b-form-input>
-        </b-input-group>
-        <br />
-        <b-input-group size="lg">
-          <b-input-group-prepend is-text>
-            <b-icon icon="lock-fill"></b-icon>
-          </b-input-group-prepend>
-          <b-form-input
-            id="password"
-            size="lg"
-            v-model="empresa.password"
-            type="password"
-            required
-            autocomplete="current-password"
-            placeholder="Ingresa la contraseña"
-            @click="actualizarContraseña()"
-            class="line"
-          ></b-form-input>
-        </b-input-group>
-        <br />
-        <b-input-group size="lg">
-          <b-input-group-prepend is-text>
-            <b-icon icon="lock-fill"></b-icon>
-          </b-input-group-prepend>
-          <b-form-input
-            size="lg"
-            id="Currentpassword"
-            v-model="empresa.password_confirmation"
-            type="password"
-            required
-            @click="actualizarContraseña()"
-            autocomplete="current-password"
-            placeholder="Confirmar la contraseña"
-            class="line"
-          ></b-form-input>
-        </b-input-group>
-        <br />
-      </div>
-      <b-alert v-if="contraseñaIncorrecta" show variant="danger"
-        >Las contraseñas no coinciden</b-alert
+      <br /><br />
+      <b-spinner
+        style="width: 7rem; height: 7rem"
+        variant="info"
+        label="Text Centered"
       >
-      <b-alert show v-if="mensaje" variant="secondary">{{ mensaje }}</b-alert>
-      <b-row>
-        <b-col class="text-center">
-          <b-button type="submit" block variant="primary"
-            >Registrar
-            <b-icon
-              icon="arrow-counterclockwise"
-              v-if="registrando"
-              animation="spin-reverse-pulse"
-              font-scale="1"
-            ></b-icon>
-          </b-button>
-        </b-col>
-      </b-row>
-      <br />
-      <b-col class="text-center">
-        <router-link to="/login">¿Ya tenes una cuenta?Ingresa aca</router-link>
-      </b-col>
-      <br>
-       <b-col class="text-center">
-        <router-link to="/verSoporte">¿Necesitas ayuda?</router-link>
-      </b-col>
-    </b-form>
-    </b-container>
+      </b-spinner>
+    </div>
+    <div v-else class="container">
+      <b-container>
+        <img
+          @click="home()"
+          src="@/assets/MalamboLogo.png"
+          style="width: 100%; max-width: 600px; cursor: pointer"
+          class="rounded"
+          alt="..."
+        />
+        <b-form action class="form" @submit.prevent="registrarse">
+          <hr />
+          <p class="title h2 mt-2 text-center">
+            <small>Completa los datos para registrarte</small>
+          </p>
+          <br />
+          <b-input-group size="lg">
+            <b-form-select
+              size="lg"
+              id="plan"
+              data-checkout="Plan"
+              v-model="value"
+              :options="foptions"
+              required
+            ></b-form-select>
+          </b-input-group>
+          <br />
+          <div v-if="this.value == 1 || this.value == 5 || this.value == 4">
+            <b-input-group size="lg">
+              <b-input-group-prepend is-text>
+                <b-icon icon="person-fill"></b-icon>
+              </b-input-group-prepend>
+              <b-form-input
+                id="nombre"
+                size="lg"
+                v-model="persona.nombre"
+                type="text"
+                autocomplete="nombre"
+                required
+                placeholder="Nombre"
+                class="line"
+              ></b-form-input>
+            </b-input-group>
+            <br />
+            <b-input-group size="lg">
+              <b-input-group-prepend is-text>
+                <b-icon icon="person-fill"></b-icon>
+              </b-input-group-prepend>
+              <b-form-input
+                id="apellido"
+                size="lg"
+                v-model="persona.apellido"
+                type="text"
+                autocomplete="apellido"
+                required
+                placeholder="Apellido"
+                class="line"
+              ></b-form-input>
+            </b-input-group>
+            <br />
+            <b-input-group size="lg">
+              <b-input-group-prepend is-text>
+                <b-icon icon="card-checklist"></b-icon>
+              </b-input-group-prepend>
+              <b-form-input
+                size="lg"
+                id="dni"
+                v-model="persona.DNI"
+                type="number"
+                autocomplete="dni"
+                required
+                placeholder="DNI"
+                class="line"
+              ></b-form-input>
+            </b-input-group>
+            <br />
+            <b-input-group size="lg">
+              <b-input-group-prepend is-text>
+                <b-icon icon="phone"></b-icon>
+              </b-input-group-prepend>
+
+              <b-form-input
+                size="lg"
+                id="celular"
+                v-model="persona.celular"
+                type="number"
+                placeholder="Celular ingresar sin 0 y sin 15"
+                class="line"
+              ></b-form-input>
+            </b-input-group>
+            <div v-if="this.value == 5 || this.value == 4">
+              <br />
+              <b-input-group size="lg">
+                <b-input-group-prepend is-text>
+                  <b-icon icon="link"></b-icon>
+                </b-input-group-prepend>
+                <b-form-input
+                  id="web"
+                  size="lg"
+                  v-model="persona.web"
+                  placeholder="URL de tu web o red social"
+                  class="line"
+                ></b-form-input>
+              </b-input-group>
+            </div>
+            <br />
+            <b-input-group size="lg">
+              <b-input-group-prepend is-text>
+                <b-icon icon="envelope"></b-icon>
+              </b-input-group-prepend>
+              <b-form-input
+                id="email"
+                size="lg"
+                v-model="persona.email"
+                type="email"
+                autocomplete="username"
+                required
+                placeholder="Direccion de correo electronico"
+                class="line"
+              ></b-form-input>
+            </b-input-group>
+            <br />
+            <b-input-group size="lg">
+              <b-input-group-prepend is-text>
+                <b-icon icon="lock-fill"></b-icon>
+              </b-input-group-prepend>
+              <b-form-input
+                id="password"
+                size="lg"
+                v-model="persona.password"
+                type="password"
+                required
+                @click="actualizarContraseña()"
+                autocomplete="current-password"
+                placeholder="Ingresa la contraseña"
+                class="line"
+              ></b-form-input>
+            </b-input-group>
+            <br />
+            <b-input-group size="lg">
+              <b-input-group-prepend is-text>
+                <b-icon icon="lock-fill"></b-icon>
+              </b-input-group-prepend>
+              <b-form-input
+                size="lg"
+                id="Currentpassword"
+                v-model="persona.password_confirmation"
+                type="password"
+                required
+                @click="actualizarContraseña()"
+                autocomplete="current-password"
+                placeholder="Confirmar la contraseña"
+                class="line"
+              ></b-form-input>
+            </b-input-group>
+            <br />
+          </div>
+          <div v-if="this.value == 3 || this.value == 2">
+            <b-input-group size="lg">
+              <b-form-select
+                size="lg"
+                id="rubro"
+                data-checkout="Rubro"
+                v-model="empresa.rubro"
+                :options="fRubros"
+                required
+              ></b-form-select>
+            </b-input-group>
+            <br />
+            <b-input-group size="lg">
+              <b-input-group-prepend is-text>
+                <b-icon icon="person-fill"></b-icon>
+              </b-input-group-prepend>
+              <b-form-input
+                id="nombre"
+                size="lg"
+                v-model="empresa.nombreEmpresa"
+                type="text"
+                autocomplete="nombreEmpresa"
+                required
+                :placeholder="'Nombre de ' + nombreTipoUser(this.value)"
+                class="line"
+              ></b-form-input>
+            </b-input-group>
+            <br />
+            <b-input-group size="lg">
+              <b-input-group-prepend is-text>
+                <b-icon icon="envelope"></b-icon>
+              </b-input-group-prepend>
+              <b-form-input
+                id="emailEmpresa"
+                size="lg"
+                v-model="empresa.emailEmpresa"
+                type="email"
+                autocomplete="username"
+                required
+                placeholder="Direccion de correo electronico"
+                class="line"
+              ></b-form-input>
+            </b-input-group>
+            <br />
+            <b-input-group size="lg">
+              <b-input-group-prepend is-text>
+                <b-icon icon="phone"></b-icon>
+              </b-input-group-prepend>
+              <b-form-input
+                id="celular"
+                size="lg"
+                v-model="empresa.celular"
+                type="number"
+                placeholder="Celular ingresar sin 0 y sin 15"
+                class="line"
+              ></b-form-input>
+            </b-input-group>
+            <br />
+
+            <b-input-group size="lg">
+              <b-input-group-prepend is-text>
+                <b-icon icon="link"></b-icon>
+              </b-input-group-prepend>
+              <b-form-input
+                id="web"
+                size="lg"
+                v-model="empresa.web"
+                placeholder="URL de tu web o red social"
+                class="line"
+              ></b-form-input>
+            </b-input-group>
+            <br />
+            <b-input-group size="lg">
+              <b-input-group-prepend is-text>
+                <b-icon icon="lock-fill"></b-icon>
+              </b-input-group-prepend>
+              <b-form-input
+                id="password"
+                size="lg"
+                v-model="empresa.password"
+                type="password"
+                required
+                autocomplete="current-password"
+                placeholder="Ingresa la contraseña"
+                @click="actualizarContraseña()"
+                class="line"
+              ></b-form-input>
+            </b-input-group>
+            <br />
+            <b-input-group size="lg">
+              <b-input-group-prepend is-text>
+                <b-icon icon="lock-fill"></b-icon>
+              </b-input-group-prepend>
+              <b-form-input
+                size="lg"
+                id="Currentpassword"
+                v-model="empresa.password_confirmation"
+                type="password"
+                required
+                @click="actualizarContraseña()"
+                autocomplete="current-password"
+                placeholder="Confirmar la contraseña"
+                class="line"
+              ></b-form-input>
+            </b-input-group>
+            <br />
+          </div>
+          <b-alert v-if="contraseñaIncorrecta" show variant="danger"
+            >Las contraseñas no coinciden</b-alert
+          >
+          <b-alert show v-if="mensaje" variant="secondary">{{
+            mensaje
+          }}</b-alert>
+          <b-row>
+            <b-col class="text-center">
+              <b-button type="submit" block variant="primary"
+                >Registrar
+                <b-icon
+                  icon="arrow-counterclockwise"
+                  v-if="registrando"
+                  animation="spin-reverse-pulse"
+                  font-scale="1"
+                ></b-icon>
+              </b-button>
+            </b-col>
+          </b-row>
+          <br />
+          <b-col class="text-center">
+            <router-link to="/login"
+              >¿Ya tenes una cuenta?Ingresa aca</router-link
+            >
+          </b-col>
+          <br />
+          <b-col class="text-center">
+            <router-link to="/verSoporte">¿Necesitas ayuda?</router-link>
+          </b-col>
+        </b-form>
+      </b-container>
+    </div>
   </div>
-</div>
 </template>
 <script>
 import axios from "axios";
 import PublicacionService from "@/services/PublicacionService";
 import AuthenticationService from "@/services/AuthenticationService";
-
+import swal from "sweetalert";
 export default {
   data() {
     return {
@@ -323,7 +326,7 @@ export default {
         nombre: "",
         apellido: "",
         DNI: null,
-        celular:null,
+        celular: null,
         email: "",
         password: "",
         password_confirmation: "",
@@ -336,15 +339,15 @@ export default {
         password_confirmation: "",
         celular: null,
         web: "",
-        rubro:null
+        rubro: null,
       },
       contraseñaIncorrecta: false,
       registrando: false,
       mensaje: "",
       loading: true,
       value: null,
-      rubros:[],
-      tiposUsuarios:[], 
+      rubros: [],
+      tiposUsuarios: [],
     };
   },
   computed: {
@@ -361,7 +364,7 @@ export default {
 
       return mc;
     },
-     foptions() {
+    foptions() {
       let mc = this.tiposUsuarios.map((e) => ({
         value: e.id,
         text: e.nombreMuestra,
@@ -374,9 +377,8 @@ export default {
 
       return mc;
     },
-
   },
-  
+
   methods: {
     home() {
       this.$router.push("/");
@@ -405,31 +407,25 @@ export default {
           });
           if (response.data.error == true) {
             this.registrando = false;
-            this.$bvToast.toast(response.data.data, {
-              title: `No se pudo realizar el registro`,
-              toaster: "b-toaster-top-center",
-              solid: true,
-              variant: "danger",
-            });
+            swal(
+              "¡Ups, verifica los datos!",
+               response.data.data,
+              "error"
+            );
           } else {
-            this.$root.$bvToast.toast(
-              "Su email para ingresar es " + response.data.data,
-              {
-                title: "Usted se a registrado en el sistema",
-                toaster: "b-toaster-top-center succes",
-                solid: true,
-                variant: "success",
-              }
+            swal(
+              "¡Bienvenido, usted se registro en el sistema!",
+              "Su email para ingresar al sistema es " + response.data.data,
+              "success"
             );
             this.$router.push({ name: "login" });
           }
         } catch (error) {
-          this.$bvToast.toast(`No se pudo realizar el registro`, {
-            title: error,
-            toaster: "b-toaster-top-center",
-            solid: true,
-            variant: "danger",
-          });
+          swal(
+            "¡Ups, verifica los datos!",
+            "No se pudo realizar el registro " + error,
+            "error"
+          );
         }
       } else {
         this.contraseñaIncorrecta = true;
@@ -448,35 +444,29 @@ export default {
             celular: this.empresa.celular,
             web: this.empresa.web,
             grupo: this.value,
-            rubro:this.empresa.rubro
+            rubro: this.empresa.rubro,
           });
           if (response.data.error == true) {
             this.registrando = false;
-            this.$bvToast.toast(response.data.data, {
-              title: `No se pudo realizar el registro`,
-              toaster: "b-toaster-top-center",
-              solid: true,
-              variant: "danger",
-            });
+            swal(
+              "¡Ups, verifica los datos!",
+               response.data.data,
+              "error"
+            );
           } else {
-            this.$root.$bvToast.toast(
-              "Su email para ingresar es " + response.data.data,
-              {
-                title: "Usted se a registrado en el sistema",
-                toaster: "b-toaster-top-center succes",
-                solid: true,
-                variant: "success",
-              }
+            swal(
+              "¡Bienvenido, usted se registro en el sistema!",
+              "Su email para ingresar al sistema es " + response.data.data,
+              "success"
             );
             this.$router.push({ name: "login" });
           }
         } catch (error) {
-          this.$bvToast.toast(`No se pudo realizar el registro`, {
-            title: error,
-            toaster: "b-toaster-top-center",
-            solid: true,
-            variant: "danger",
-          });
+          swal(
+            "¡Ups, verifica los datos!",
+            "No se pudo realizar el registro " + error,
+            "error"
+          );
         }
       } else {
         this.contraseñaIncorrecta = true;
@@ -504,32 +494,28 @@ export default {
       } catch (err) {
         this.rubros =
           "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS DE RUBROS";
-          this.loading=true
+        this.loading = true;
       }
     },
-       async getTipoUsuarios() {
+    async getTipoUsuarios() {
       try {
         const response = await AuthenticationService.tiposUsuarios();
         if (response.data.error == false) {
-          console.log(response.data.data)
-     
-      this.tiposUsuarios = response.data.data.filter(
-        (c) => c.id != 4
-      );
-    
+          console.log(response.data.data);
+
+          this.tiposUsuarios = response.data.data.filter((c) => c.id != 4);
         }
       } catch (err) {
         this.rubros =
           "ATENCION NO SE PUDIERON OBTENER LAS CATEGORIAS DE RUBROS";
-          this.loading=true
+        this.loading = true;
       }
     },
-    
   },
-  
+
   mounted() {
     axios
-      .all([this.getRubros(),this.getTipoUsuarios()])
+      .all([this.getRubros(), this.getTipoUsuarios()])
       .then(() => {
         this.loading = false;
       })
@@ -541,8 +527,4 @@ export default {
 </script>
 
 <style>
-
-
-  
-    
 </style>

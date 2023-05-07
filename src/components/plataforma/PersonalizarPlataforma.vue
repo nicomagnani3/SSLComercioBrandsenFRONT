@@ -7,7 +7,7 @@
           <div class="card-title" style="line-height: 2">
             <div class="text-center mt-2">
               <h2>Personaliza los datos de la plataforma</h2>
-              <p>Actualiza el logo,color y nombre de la plataforma</p> {{  this.traduccionesEditadas.footer.color }}
+              <p>Actualiza el logo,color y nombre de la plataforma</p>
             </div>
           </div>
 
@@ -22,7 +22,7 @@
                       accept="image/png"
                       placeholder="Seleccione una imagen..."
                       browse-text="Examinar"
-                      @change="upAws($event, logo)"
+                      @change="upAws($event)"
                     ></b-form-file>
                   </ValidationProvider>
                   <b-form-invalid-feedback>
@@ -46,7 +46,7 @@
                 </b-form-group>
               </b-col>
             </b-row>
-          </ValidationObserver>          
+          </ValidationObserver>
           <br />
           <b-col>
             <div class="row">
@@ -78,57 +78,58 @@
           </b-col>
         </div>
         <div class="card-body px-3 pb-0">
-        <div class="card-title" style="line-height: 2">
-          <div class="text-center mt-2">
-            <h2>Actualiza los textos de la plataforma</h2>
-            <p></p>
-          </div>
-          <b-row>
-            <b-col >
-              <div
-                v-for="(traduccion, index) in traducciones.footer"
-                :key="index"
-                name="fade"
-              >
-                <div class="form-group row" v-if="index != 'color'">
-                  <label class="col-sm-2 col-form-label">{{ index }} :</label>
-                  <div class="col-sm-6">
-                    <input
-                      class="form-control"
-                      v-model="traduccionesEditadas.footer[index]"
-                      id="Nombre"
-                    />
-                  </div>
-                </div>
-              </div>
-            </b-col>
-            <b-col >
-              <div
-                v-for="(traduccion, index) in traducciones.publicaciones"
-                :key="index"
-                name="fade"
-              >
-                <div class="form-group row" v-if="index != 'color'">
-                  <label class="col-sm-2 col-form-label">{{ index }} :</label>
-                  <div class="col-sm-6">
-                    <input
-                      class="form-control"
-                      v-model="traduccionesEditadas.publicaciones[index]"
-                      id="Nombre"
-                    />
-                  </div>
-                </div>
-              </div>
-            </b-col>
-          </b-row>
-          <b-col>
-            <div class="text-center mt-4">
-              <b-button variant="primary" @click="submitTextos"
-                >Guardar Textos</b-button
-              >
+          <div class="card-title" style="line-height: 2">
+            <div class="text-center mt-2">
+              <h2>Actualiza los textos de la plataforma</h2>
+              <p></p>
             </div>
-          </b-col>
-        </div>
+
+            <b-row>
+              <b-col>
+                <div
+                  v-for="(traduccion, index) in traducciones.footer"
+                  :key="index"
+                  name="fade"
+                >
+                  <div class="form-group row" v-if="index != 'color'">
+                    <label class="col-sm-2 col-form-label">{{ index }} :</label>
+                    <div class="col-sm-6">
+                      <input
+                        class="form-control"
+                        v-model="traduccionesEditadas.footer[index]"
+                        id="Nombre"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </b-col>
+              <b-col>
+                <div
+                  v-for="(traduccion, index) in traducciones.publicaciones"
+                  :key="index"
+                  name="fade"
+                >
+                  <div class="form-group row" v-if="index != 'color'">
+                    <label class="col-sm-2 col-form-label">{{ index }} :</label>
+                    <div class="col-sm-6">
+                      <input
+                        class="form-control"
+                        v-model="traduccionesEditadas.publicaciones[index]"
+                        id="Nombre"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </b-col>
+            </b-row>
+            <b-col>
+              <div class="text-center mt-4">
+                <b-button variant="primary" @click="submitTextos"
+                  >Guardar Textos</b-button
+                >
+              </div>
+            </b-col>
+          </div>
         </div>
       </div>
     </div>
@@ -138,9 +139,9 @@
   <script>
 import Menu from "../menu/Menu.vue";
 import Footer from "../menu/Footer.vue";
- import AuthenticationService from "@/services/AuthenticationService"; 
+import AuthenticationService from "@/services/AuthenticationService";
 import LenguajeService from "@/services/LenguajeService";
-
+import swal from "sweetalert";
 export default {
   components: { Menu, Footer },
   data() {
@@ -154,7 +155,7 @@ export default {
       traducciones: undefined,
       traduccionesEditadas: {
         footer: {},
-        publicaciones:{}
+        publicaciones: {},
       },
       dailyData: {
         coord: { lon: -58.233, lat: -35.1635 },
@@ -411,21 +412,19 @@ export default {
     };
   },
   created() {
-    console.log(this.$root.$options.i18n.messages.es);
     this.traducciones = this.$root.$options.i18n.messages.es;
     this.traduccionesEditadas.footer = this.traducciones.footer;
-    this.traduccionesEditadas.publicaciones = this.traducciones.publicaciones
+    this.traduccionesEditadas.publicaciones = this.traducciones.publicaciones;
   },
   methods: {
     changeColor() {
-      this.showPruebaColor = !this.showPrueba;
+      this.showPruebaColor = !this.showPruebaColor;
     },
     showModelTraduccion(traduccion) {
       return traduccion;
     },
-    upAws(event, img) {
+    upAws(event) {
       this.showPrueba = true;
-      console.log(img);
       const file = event.target.files[0];
       this.logo.url = URL.createObjectURL(file);
       this.createBase64Image(file);
@@ -440,31 +439,34 @@ export default {
     },
     async submitForm() {
       try {
-        console.log(this.logo)
-        if(this.logo.file.type == 'image/png'){
-          const response = await AuthenticationService.personalizaPlataforma({
-          logo: this.logo.base64,
-        }); 
-        console.log(response)
-        }      
-        this.submitTextos()
-   
+        if (this.logo.url != undefined && this.logo.file.type == "image/png") {
+           await AuthenticationService.personalizaPlataforma({
+            logo: this.logo.base64,
+          });
+        }
+        this.submitTextos();
       } catch (error) {
         console.error(error);
       }
     },
-    async submitTextos(){
+    async submitTextos() {
       try {
-        const response = await LenguajeService.actualizarLenguaje({
+         await LenguajeService.actualizarLenguaje({
           footer: this.traduccionesEditadas.footer,
-          publicaciones: this.traduccionesEditadas.publicaciones
+          publicaciones: this.traduccionesEditadas.publicaciones,
         });
-        console.log(response);
+        swal(
+          "¡Se actualizaron los datos!",
+          "Usted actualizo los datos de la plataforma ",
+          "success"
+        ).then(() => {
+          location.reload();
+        });
+        location.reload();
       } catch (error) {
         console.error(error);
       }
-
-    }
+    },
   },
 };
 </script>
