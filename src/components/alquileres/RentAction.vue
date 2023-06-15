@@ -293,7 +293,7 @@ export default {
   padding: 1rem;
 }
 .cardsBody {
-  font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: EuclidSquareRegular, sans-serif !important;
   font-style: normal;
   font-weight: 400;
   letter-spacing: 0;

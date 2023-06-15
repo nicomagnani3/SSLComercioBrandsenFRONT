@@ -60,7 +60,6 @@ import CrearContrato from "@/components/contratos/CrearContrato.vue";
 import PublicidadesHome from "@/components/publicidad/PublicidadesHome.vue";
 import PersonalizarPlataforma from "@/components/plataforma/PersonalizarPlataforma.vue";
 
-import presentation from "@/components/plataforma/presentation.vue";
 
 import VueMeta from "vue-meta";
 Vue.use(VueMeta);
@@ -381,15 +380,7 @@ const router = new Router({
       meta: {
         requireAuth: false,
       },
-    },
-    {
-      path: "/index",
-      name: "homepage",
-      component: presentation,
-      meta: {
-        requireAuth: false,
-      },
-    },
+    },    
   ],
   scrollBehavior() {
     return { x: 0, y: 0 };

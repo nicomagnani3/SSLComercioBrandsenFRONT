@@ -52,9 +52,7 @@ export default {
         const response = await LenguajeService.getLenguaje();
         console.log(response)
         const i18n = this.$root.$options.i18n
-        console.log(i18n)
         i18n.setLocaleMessage('es', response.data.es); 
-        console.log(i18n)
       } catch (err) {
         console.log(err)
       }
@@ -196,7 +194,7 @@ body {
 }
 @import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
 body {
-  font-family: "Montserrat", sans-serif !important;
+  font-family: EuclidSquareRegular, sans-serif !important;
   background-color: white;
   line-height: 2.5;
 }

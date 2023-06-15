@@ -1,6 +1,6 @@
 @font-face {
-  font-family: 'Weather';
-  src: url('../fonts/weather.ttf');
+  font-family: "EuclidSquareRegular";
+  src: url("../../assets/fonts/EuclidSquare-Regular.ttf") format("woff");
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;500;600&display=swap');
@@ -47,7 +47,7 @@ body {
   justify-content: space-around;
   align-items: center;
   width: 90%;
-  font-family: 'weather';
+  font-family: 'EuclidSquareRegular';
 }
 
 

@@ -10,7 +10,7 @@
   </div>
   <div v-else class="body">
     <a
-      href="https://api.whatsapp.com/send?text=Hola!%20,me%20quiero%20sumar%20al%20grupo%20de%20Whatsapp%20😃%20¿me%20suman?&phone=+542223431948"
+      href="https://api.whatsapp.com/send?text=Hola!%20,me%20quiero%20sumar%20al%20grupo%20de%20Whatsapp%20😃%20¿me%20suman?&phone=+542223463623"
       class="btn-wsp"
       target="_blank"
       ><img
@@ -232,7 +232,7 @@ export default {
 .body {
   background-color: #ebebeb;
   height: auto;
-  font-family: "Roboto" !important;
+  font-family: EuclidSquareRegular, sans-serif !important;
 }
 p,
 input,
@@ -242,13 +242,13 @@ label,
 a,
 b,
 button {
-  font-family: "Roboto" !important;
+  font-family: EuclidSquareRegular, sans-serif !important;
 }
 .subtitulo {
   text-align: center;
   font-size: 18px;
   background-color: rgb(70 70 70);
-  font-family: "Roboto";
+  font-family: EuclidSquareRegular, sans-serif !important;
   color: white;
 }
 

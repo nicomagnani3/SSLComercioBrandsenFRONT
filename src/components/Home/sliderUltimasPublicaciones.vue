@@ -241,7 +241,7 @@ props: {
 }
 .texto {
   color: rgb(226, 205, 199);
-  font-family: "Poppins", sans-serif;
+  font-family: EuclidSquareRegular, sans-serif !important;
 }
 .vueperslide__title {
   font-size: 7em;
