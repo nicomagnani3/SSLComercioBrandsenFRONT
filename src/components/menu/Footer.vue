@@ -3,19 +3,19 @@
     <teleport to="head">
       <component :is="'script'" type="application/ld+json">
         { "@context": "https://schema.org", "@type": "WPFooter", "url":
-        "https://www.malambobrandsen.com.ar/", "abstract": "Malambo es una
+        "https://www.malambobelgrano.com.ar/", "abstract": "Malambo  Belgrano es una
         plataforma digital que impulsa la compra y venta de Servicios, Productos
-        de Brandsen provincia de Buenos Aires Argentina, tambien manteniendo la
+        de Belgrano provincia de Buenos Aires Argentina, tambien manteniendo la
         información de Micros,Farmacias,Noticias y Clima", "accountablePerson":{
-        "additionalName":"Malambo Brandsen", "address": "Coronel Brandsen
+        "additionalName":"Malambo Belgrano", "address": "General Belgrano
         Provincia de Buenos Aires", }, "comment":"Gracias por los horarios de
         los micros, farmacias de turna y los valores del Dolar " "about": {
         "@type": "CommunicateAction", "inLanguage": "Español", "agent": {
-        "@type" : "Organization", "url": "https://www.malambobrandsen.com.ar/",
-        "email": "info@malambobrandsen.com.ar", "legalName":"Malambo Brandsen",
+        "@type" : "Organization", "url": "https://www.malambobelgrano.com.ar/",
+        "email": "info@malambobelgrano.com.ar", "legalName":"Malambo Belgrano",
         "logo": "@/assets/MalamboLogo.png", "alternateName":"Compra-Venta,
         e-commerce", "description": "e-commerce, Productos, Servicios,
-        información", "sameAs": "https://www.infobrandsen.com.ar/",
+        información", "sameAs": "https://www.generalbelgrano.tur.ar/",
         "contactPoint" : { "@type" : "ContactPoint", "telephone" :
         "+542223431948", "contactType" : "Productos, Servicios,información" } }
         } }
@@ -49,7 +49,12 @@
             <li>{{ $t('footer.ofertas') }}</li>
           </ul>
         </b-col>
-
+ <!-- Agrega las metaetiquetas para mejorar la visibilidad en Google -->
+ <meta name="description" content="Tu mejor opción para encontrar artículos, servicios y profesionales en Belgrano. Todo en un mismo sitio con las mejores ofertas. Rápido, fácil y seguro.">
+  <meta name="keywords" content="Belgrano, General Belgrano, artículos, servicios, profesionales, ofertas">
+  <meta name="geo.placename" content="General Belgrano">
+  <meta name="geo.position" content="-35.766666666667;-58.5">
+  <meta name="ICBM" content="-35.766666666667, -58.5">
         <b-col  align-self="end">     
           <b>{{ $t('footer.email') }}</b>
           <!--    <p style="cursor: pointer">

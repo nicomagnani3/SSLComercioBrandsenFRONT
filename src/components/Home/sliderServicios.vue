@@ -208,10 +208,10 @@ export default {
     },
     verProducto(producto) {
       if (producto != null) {
-        const path = `/buscarProductos/${producto.titulo}`;
+        const path = `/productos/${producto.titulo}`;
         if (this.$route.path !== path)
           this.$router.push({
-            name: "buscarProductos",
+            name: "productos",
             params: {
               producto: producto.titulo,
             },

@@ -82,10 +82,10 @@ export default {
 
   methods: {
       buscarCategoria(nombre){
-          const path = `/buscarProductos/${nombre}`;
+          const path = `/productos/${nombre}`;
       if (this.$route.path !== path)
         this.$router.push({
-          name: "buscarProductos",
+          name: "productos",
           query: {
             q: this.searchQuery,
             t: new Date().getTime(),

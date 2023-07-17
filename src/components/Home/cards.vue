@@ -1,26 +1,17 @@
 <template>
-  <div class="results">
-    <div
-      :style="[darkMode ? $store.state.dark : { color: 'black' }]"
-      class="card-1"
-    >
+  <div class="results" itemscope itemtype="https://schema.org/WeatherObservation">
+    <div :style="[darkMode ? $store.state.dark : { color: 'black' }]" class="card-1">
       <b-row>
         <b-col>
           <div class="today">
             <h3>{{ daily.name }}</h3>
             <h5>{{ hoy }}</h5>
 
-            <img
-              :src="
-                require(`@/assets/weater_elements/${
-                  weathers[daily.weather[0].main]
-                }.svg`)
-              "
-              width="90px"
-              alt
-            />
+            <img :src="require(`@/assets/weater_elements/${weathers[daily.weather[0].main]
+              }.svg`)
+              " width="90px" alt />
             <h3 class="textoTemp">
-              <b>{{ parseInt(daily.main.temp) }}°</b>
+              <b itemprop="temperature">{{ parseInt(daily.main.temp) }}°</b>
             </h3>
             <h3>{{ traducirTiempo(daily.weather[0].main) }}</h3>
           </div>
@@ -54,33 +45,28 @@
             </b-row>
           </h4>
         </b-col>
+        <meta itemprop="lowTemperature" :content="parseInt(daily.main.temp_min)">
+        <meta itemprop="highTemperature" :content="parseInt(daily.main.temp_max)">
+        <meta itemprop="feelsLike" :content="Math.round(daily.main.feels_like)">
+        <meta itemprop="humidity" :content="daily.main.humidity">
+        <meta itemprop="windSpeed" :content="daily.wind.speed">
       </b-row>
     </div>
 
     <div class="card-2">
       <div class="daysDetail">
-        <span
-          style="
+        <span style="
             display: flex;
             flex-direction: column;
             align-items: center;
             padding-left: 10px;
-          "
-          v-for="data in seven.list"
-          :key="data"
-        >
+          " v-for="data in seven.list" :key="data">
           <p>
             {{ data.day }}
           </p>
-          <img
-            :src="
-              require(`@/assets/weater_elements/${
-                weathers[data.weather[0].main]
-              }.svg`)
-            "
-            width="100px"
-            alt
-          />
+          <img :src="require(`@/assets/weater_elements/${weathers[data.weather[0].main]
+            }.svg`)
+            " width="100px" alt />
           <p>{{ traducirTiempo(data.weather[0].main) }}</p>
           <p>
             {{ parseInt(data.temp.day) }}° / {{ parseInt(data.temp.night) }}°
@@ -165,6 +151,7 @@ export default {
     width: 50vw !important;
   }
 }
+
 .results {
   display: flex;
   flex-direction: column;
@@ -178,6 +165,7 @@ export default {
   align-items: center;
   flex-wrap: wrap;
 }
+
 .card-1 {
   width: 100%;
   background-color: white;
@@ -191,6 +179,7 @@ export default {
   flex-direction: column;
   align-items: center;
 }
+
 .todayDetails {
   display: flex;
 
@@ -198,6 +187,7 @@ export default {
   flex-direction: column;
   align-items: flex-start;
 }
+
 .daily {
   display: flex;
   flex-direction: row;
@@ -206,6 +196,7 @@ export default {
   flex-wrap: wrap;
   font-size: 70px;
 }
+
 .card-2 {
   /* width: 100%; */
   /* height: 300px; */
@@ -219,17 +210,20 @@ export default {
   align-items: stretch;
   overflow: auto;
 }
+
 .days {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
 }
+
 .daysDetail {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
 }
+
 .textoTemp {
   font-size: 50px;
 }
@@ -238,10 +232,12 @@ export default {
   .card-2 {
     align-items: baseline;
   }
+
   .results {
     width: 90vw !important;
   }
 }
+
 @media (max-width: 600px) {
   .results {
     width: 100% !important;

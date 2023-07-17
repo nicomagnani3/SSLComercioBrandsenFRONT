@@ -232,7 +232,7 @@ export default {
       attribution:
         '&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',
       zoom: 15,
-      center: [-35.169137, -58.231642],
+      center: [-35.765824, -58.497529],
       coordinates: ["", ""],
       imgvacia: false,
       alerts: [],

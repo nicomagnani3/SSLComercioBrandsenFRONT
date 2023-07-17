@@ -5,13 +5,9 @@
         <b-row class="pb-3">
           <p style="font-size: 17px">
             ¡¡¡¡Sumate aca!
-            <a
-              :href="
-                'https://api.whatsapp.com/send?text=Hola!%20,me%20quiero%20sumar%20a%20la%20guia%20Comercial%20😃' +
-                '&phone=+542223431948'
-              "
-              target="_black"
-            >
+            <a :href="'https://api.whatsapp.com/send?text=Hola!%20,me%20quiero%20sumar%20a%20la%20guia%20Comercial%20😃' +
+              '&phone=+542223431948'
+              " target="_black">
               <img class="icono" src="@/assets/wsp.png" alt="" />
             </a>
           </p>
@@ -26,165 +22,80 @@
     <br />
     <div v-if="loading" class="text-center">
       <br /><br />
-      <b-spinner
-        style="width: 7rem; height: 7rem"
-        variant="warning"
-        label="Text Centered"
-      >
+      <b-spinner style="width: 7rem; height: 7rem" variant="warning" label="Text Centered">
       </b-spinner>
     </div>
-    <div v-else class="cardsBody">
-      <b-row>
-        <b-col>
-          <ul class="cards">
-            <li
-              class="cards__item"
-              v-for="producto in paginatedCards"
-              :key="producto.id"
-            >
-              <div class="card">
-                <div class="card__image">
-                  <img :src="producto.imagen" class="imgCard" />
-                </div>
-                <div class="card__content">
-                  <div class="card__title">{{ producto.nombre }}</div>
-                  <div class="btnInfo">
-                    <button
-                      class="btn btn--block card__btn"
-                      id="btnInfo"
-                      @click="verdetalles(producto)"
-                    >
-                      Más información
-                    </button>
-                  </div>
-                  
-                </div>
-              </div>
-            </li>
-          </ul>
-          <div class="d-flex justify-content-center">
-            <b-pagination
-              pills
-              v-model="currentPage"
-              :per-page="perPage"
-              :total-rows="empresas.length"
-            ></b-pagination>
-          </div>
-        </b-col>
-        <br>
-        <b-col class="col-md-2">
-          <strong style="font-weight: 700; font-size: 20px">
-            Filtrar Por:
-          </strong>
-          <b-form-group>
-            <b-form-checkbox
-              v-for="item in rubros"
-              :key="item.id"
-              v-model="selected"
-              :value="item.nombre"
-              name="flavour-3a"
-              class="buscador"
-              @change="buscarPorCategoria(item.id)"
-              :indeterminate="indeterminate"
-            >
-              {{ item.nombre }}
-            </b-form-checkbox>
-          </b-form-group>
-        </b-col>
-      </b-row>
-    </div>
-
-    <!-- 
-
-      <div id="careersVue">
+    <div v-else>
+      <section class="py-7">
         <div class="container-fluid">
           <div class="row">
-            <div class="col-md-9">
-              <b-card-group columns>
-                <b-card
-                  style="max-width: 283px;    "
-                  v-for="producto in paginatedCards"
-                  :key="producto.id"
-                  :img-src="producto.imagen"
-                  img-alt="Responsive image"
-                  img-top
-                 class="cardGuia"
-                  alt="Responsive image"
-                >
-                  <div class="cortar" @click="verProducto(producto)">
-                    <strong> {{ producto.nombre }}</strong>
+            <div class="col-lg-9">
+              <div class="container-cards" style="width: 95%; margin: 0 auto;">
+                <div class="row gx-4 gx-lg-4 row-cols-2 row-cols-md-3 row-cols-xl-4">
+                  <div class="col mb-5" v-for="(producto, index) in paginatedCards" :key="index">
+                    <div class="card h-100 card-custom" itemscope itemtype="https://schema.org/LocalBusiness">
+                      <!-- Product image -->
+                      <div class="square-image">
+                        <img :src="producto.imagen" :alt="producto.titulo" class="card-img-top" itemprop="image" />
+                      </div>
+                      <!-- Product details -->
+                      <div class="card-body">
+                        <div class="text-center">
+                          <!-- Product name -->
+                          <h5 class="fw-bolder" itemprop="name">{{ tituloAjustar(producto.nombre) }}</h5>
+                          <!-- Product price -->
+                        </div>
+                      </div>
+                      <!-- Product actions -->
+                      <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                        <div class="text-center">
+                          <b-btn @click="verdetalles(producto)" variant="warning" block
+                            class="btn btn btn--block card__btn btn-warning btn-block">Ver más</b-btn>
+                        </div>
+                      </div>
+                      <!-- Agrega el marcado estructurado para la información adicional -->
+                      <div itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+                        <meta itemprop="addressLocality" content="General Belgrano">
+                        <meta itemprop="addressRegion" content="Buenos Aires">
+                        <meta itemprop="addressCountry" content="Argentina">
+                      </div>
+                      <meta itemprop="latitude" content="35.766666666667">
+                      <meta itemprop="longitude" content="-58.5">
+                      <meta itemprop="description" :content="producto.descripcion">
+                      <meta itemprop="category" :content="producto.rubroNombre">
+                    </div>
                   </div>
-                  <div slot="footer" class="d-flex justify-content-center">
-                    <a
-                      variant="white"
-                      v-if="producto.empresa != null"
-                      @click="verEmpresa(producto)"
-                      style="cursor: pointer"
-                    >
-                      <img
-                        src="@/assets/carrito.png"
-                        alt=""
-                        height="auto"
-                        class="imagnesIcon"
-                      />&nbsp;&nbsp;
-                    </a>
-                    <a
-                      variant="white"
-                      v-if="producto.descripcion != null"
-                      @click="verdetalles(producto)"
-                      style="cursor: pointer"
-                    >
-                      <img
-                        src="@/assets/descripcion.png"
-                        alt=""
-                        height="auto"
-                        class="imagnesIcon"
-                      />&nbsp;&nbsp;
-                    </a>
-                  </div>
-                </b-card>
-              </b-card-group>
+                </div>
+              </div>
               <div class="d-flex justify-content-center">
-                <b-pagination
-                 pills 
-                  v-model="currentPage"
-                  :per-page="perPage"
-                  :total-rows="empresas.length"
-                ></b-pagination>
+                <b-pagination pills v-model="currentPage" :per-page="perPage"
+                  :total-rows="empresas.length"></b-pagination>
               </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-lg-3">
               <strong style="font-weight: 700; font-size: 20px">
                 Filtrar Por:
               </strong>
               <b-form-group>
-                <b-form-checkbox
-                  v-for="item in rubros"
-                  :key="item.id"
-                  v-model="selected"
-                  :value="item.nombre"
-                  name="flavour-3a"
-                  class="buscador"
-                  @change="buscarPorCategoria(item.id)"
-                  :indeterminate="indeterminate"
-                >
+                <b-form-checkbox v-for="item in rubros" :key="item.id" v-model="selected" :value="item.nombre"
+                  name="flavour-3a" class="buscador" @change="buscarPorCategoria(item.id)" :indeterminate="indeterminate">
                   {{ item.nombre }}
                 </b-form-checkbox>
               </b-form-group>
             </div>
           </div>
         </div>
-      </div> -->
-    <b-modal
-      id="modal-center"
-      ok-only
-      ref="modalDetalle"
-      centered
-      :title="productoSeleccionado.nombre"
-    >
-      <p style="white-space: pre-wrap" class="my-4">
-        {{ productoSeleccionado.descripcion }}
-      </p>
+      </section>
+
+
+
+    </div>
+    <b-modal ref="modalDetalle" id="modal-center" ok-only ok-title="Cerrar" ok-variant="warning" centered :title="productoSeleccionado.nombre" @hide="resetModal"
+      :no-fade="true" :animation="animationOptions">
+      <div class="modal-body">
+        <p class="modal-description">{{ productoSeleccionado.descripcion }}</p>
+      </div>
+
     </b-modal>
   </div>
 </template>
@@ -194,7 +105,7 @@ import PublicacionService from "@/services/PublicacionService";
 
 import axios from "axios";
 export default {
-  name: "VerEmpresas",
+  name: "comercios",
   components: {},
   data() {
     return {
@@ -206,11 +117,15 @@ export default {
       indeterminate: false,
       selected: null,
       currentPage: 1,
-      perPage: 16,
+      perPage: 12,
       productoSeleccionado: [],
+      animationOptions: {
+        enterActiveClass: 'animate__animated animate__fadeIn',
+        leaveActiveClass: 'animate__animated animate__fadeOut',
+      },
     };
   },
-  created() {},
+  created() { },
   watch: {
     selected(newValue) {
       this.noFiltro = newValue;
@@ -230,10 +145,10 @@ export default {
   },
   methods: {
     buscarProducto(producto) {
-      const path = `/buscarProductos/${producto}`;
+      const path = `/productos/${producto}`;
       if (this.$route.path !== path)
         this.$router.push({
-          name: "buscarProductos",
+          name: "productos",
           params: {
             producto: producto,
           },
@@ -287,10 +202,10 @@ export default {
       });
     },
     verEmpresa(empresa) {
-      const path = `/buscarProductos/${empresa.nombre}`;
+      const path = `/productos/${empresa.nombre}`;
       if (this.$route.path !== path)
         this.$router.push({
-          name: "buscarProductos",
+          name: "productos",
           query: {
             q: this.searchQuery,
             t: new Date().getTime(),
@@ -363,6 +278,7 @@ export default {
   color: rgb(255, 206, 78);
   cursor: pointer;
 }
+
 .buscador {
   width: 366px;
 }
@@ -382,119 +298,82 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-.cards {
-  display: flex;
-  flex-wrap: wrap;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-  display: flex;
-  justify-content: center;
-}
-.cards__item {
-  display: flex;
-  padding: 1rem;
+
+.btn-warning {
+  color: white;
 }
 
 .card {
-  background-color: white;
-  border-radius: 0.25rem;
-  box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  max-width: 300px;
-  min-width: 300px;
-    max-height: 330px;
-  min-height: 330px;
-
-}
-
-.card__content {
-  display: flex;
-  flex: 1 1 auto;
-  flex-direction: column;
-  padding: 1rem;
-}
-.card__title {
-  color: #000000;
-  font-size: 1.0rem;
-  font-weight: 300;
-  text-transform: uppercase;
-}
-.card__subtitle {
-  color: #000000;
-  font-weight: 300;
-}
-.card__text {
-    flex: 1 1 auto;
-    font-size: 0.875rem;
-    line-height: 1.5;
-    margin-bottom: 1.25rem;
-    display: -webkit-box;
-    /* height: 139px; */
-    /* cursor: pointer; */
-    line-height: 18px;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-overflow: -o-ellipsis-lastline;
-    white-space: normal;
-    padding-top: 10px;
-    color: #2c354f;
-}
-.btn {
-  background-color: white;
-  border: 1px solid #cccccc;
-  color: #696969;
-  padding: 0.5rem;
-}
-
-.btn--block {
-  display: block;
   width: 100%;
+  height: 100%;
 }
-.card__image {
-  object-fit: contain;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  border-top-left-radius: 0.25rem;
-  border-top-right-radius: 0.25rem;
-  filter: contrast(90%);
-  overflow: hidden;
+
+.square-image {
   position: relative;
-  transition: filter 0.5s cubic-bezier(0.43, 0.41, 0.22, 0.91);
+  width: 100%;
+  padding-top: 100%;
+  /* Relación de aspecto 1:1 (cuadrado) */
+  overflow: hidden;
 }
-.card__image::before {
-  display: block;
-  padding-top: 56.25%;
+
+.square-image img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: revert;
 }
-@media (min-width: 40rem) {
-  .card__image::before {
-    padding-top: 66.6%;
+
+.container-cards {
+  margin-left: 50px;
+  margin-right: 50px;
+}
+.modal-body {
+  padding: 20px;
+}
+
+.modal-description {
+  white-space: pre-wrap;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.animate__animated {
+  animation-duration: 0.5s;
+}
+
+.animate__fadeIn {
+  animation-name: fadeIn;
+}
+
+.animate__fadeOut {
+  animation-name: fadeOut;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
-.imgCard {
-   width: auto;
-  max-height: 100%;
-  display: block;
-  margin: 0px auto;
-  object-fit: contain;
-  max-width: 301px;
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
-.btn:hover{
-color: #ffc107;
+@media (max-width: 767px) {
+  .container-cards {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
 }
-.btnPublicar:hover{
-color: #ffc107;
-}
-#btnInfo{
-     position: absolute;
-    bottom: 0;
-width: 90%;}
 </style>
 
 

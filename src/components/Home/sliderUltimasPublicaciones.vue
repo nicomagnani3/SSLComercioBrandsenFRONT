@@ -4,38 +4,24 @@
       <b-col cols="1"></b-col>
       <b-col cols="8">
         <div class="h2 font-britannic text widget-title destacados">
-          <h2 class="parraforTitProd"> MarketPlace 
-           <a v-if="!loading" @click="verDestacados()" class="verMasServi"
-            >ver todos</a
-          > </h2>
+          <h2 class="parraforTitProd"> MarketPlace
+            <a v-if="!loading" @click="verDestacados()" class="verMasServi">ver todos</a>
+          </h2>
         </div>
       </b-col>
     </b-row>
     <br />
     <div v-if="loading" class="text-center">
-      <b-spinner
-        style="width: 4rem; height: 4rem"
-        variant="warning"
-        label="Text Centered"
-      >
+      <b-spinner style="width: 4rem; height: 4rem" variant="warning" label="Text Centered">
       </b-spinner>
     </div>
     <div v-else class="animated fadeIn" style="margin: 1%;">
       <b-container fluid="sm">
-        <b-row class="text-center" cols="2" cols-sm="8" cols-md="8" cols-lg="5"  itemscope itemtype="https://schema.org/Product">
-          <b-col
-            v-for="(producto, index) in currentPageClubs"
-            :key="index"
-            class="mb-2"
-          >
-            <b-card
-              class="ItemProd"
-              style="max-width: 250px"
-              :img-src="`data:image/png;base64, ${producto.imagen}`"
-              img-height="250px; max-height:100%;"
-              alt="Responsive image"
-              itemprop="image"
-            >
+        <b-row class="text-center" cols="2" cols-sm="8" cols-md="8" cols-lg="5" itemscope
+          itemtype="https://schema.org/Product">
+          <b-col v-for="(producto, index) in currentPageClubs" :key="index" class="mb-2">
+            <b-card class="ItemProd" style="max-width: 250px" :img-src="`data:image/png;base64, ${producto.imagen}`"
+              img-height="250px; max-height:100%;" alt="Responsive image" itemprop="image">
               <div class="cortar" @click="verProducto(producto)">
                 <strong itemprop="name"> {{ tituloAjustar(producto.titulo) }}</strong>
               </div>
@@ -48,15 +34,21 @@
                 <br />
               </div>
               <div slot="footer">
-                <b-btn
-                itemprop="description"
-                  @click="verProducto(producto)"
-                  variant="warning"
-                  block
-                    class="btn btn--block card__btn"
-                  >Ver mas</b-btn
-                >
+                <b-btn itemprop="description" @click="verProducto(producto)" variant="warning" block
+                  class="btn btn--block card__btn">Ver mas</b-btn>
               </div>
+              <meta itemprop="description" :content="producto.titulo">
+              <meta itemprop="url" :content="'/productos/' + producto.titulo">
+              <meta itemprop="sku" content="SKU del producto">
+              <meta itemprop="category" :content="producto.padre">
+              <meta itemprop="subcategory" :content="producto.hijo">
+              <span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+                <meta itemprop="addressLocality" content="General Belgrano">
+                <meta itemprop="addressRegion" content="Provincia de Buenos Aires">
+                <meta itemprop="postalCode" content="B7223">
+                <meta itemprop="latitude" content="-35.766666666667">
+                <meta itemprop="longitude" content="-58.5">
+              </span>
             </b-card>
           </b-col>
         </b-row>
@@ -72,15 +64,15 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "NuevoSlide",
-props: {
-    productos:{ 
+  props: {
+    productos: {
       type: Array,
     },
-     nuevaPublicacion:{ 
+    nuevaPublicacion: {
       type: Boolean,
-      default:false
+      default: false
     },
-},
+  },
   data() {
     return {
       paginatedClubs: [],
@@ -93,9 +85,9 @@ props: {
     };
   },
   components: {},
-  created (){
+  created() {
     console.log(this.nuevaPublicacion)
-    if (this.nuevaPublicacion){
+    if (this.nuevaPublicacion) {
       this.getPorductos()
     }
   },
@@ -193,10 +185,10 @@ props: {
     },
     verProducto(producto) {
       if (producto != null) {
-        const path = `/buscarProductos/${producto.titulo}`;
+        const path = `/productos/${producto.titulo}`;
         if (this.$route.path !== path)
           this.$router.push({
-            name: "buscarProductos",
+            name: "productos",
             params: {
               producto: producto.titulo,
             },
@@ -239,10 +231,12 @@ props: {
   color: #2c354f;
   max-width: 191px;
 }
+
 .texto {
   color: rgb(226, 205, 199);
   font-family: EuclidSquareRegular, sans-serif !important;
 }
+
 .vueperslide__title {
   font-size: 7em;
   opacity: 0.7;
@@ -255,12 +249,14 @@ props: {
 .item {
   box-shadow: 3px 3px 5px 3px rgba(0, 0, 0, 0.2);
 }
+
 .card-pagination {
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px;
 }
+
 .page-index {
   margin-left: 10px;
   width: 15px;
@@ -268,39 +264,39 @@ props: {
   border-radius: 15px;
   background: #7d7d7d;
 }
+
 .active {
   width: 20px;
   height: 20px;
   border-radius: 20px;
 }
-.verMasServi { 
-    margin-left: 13px;
-    text-decoration: none;
-    color: #3483fa;
-    cursor: pointer;
-    font-size: 20px;
-    -webkit-text-decoration: underline #676767;
-    text-decoration: underline #676767;
-    white-space: nowrap;
-    text-decoration: none;
+
+.verMasServi {
+  margin-left: 13px;
+  text-decoration: none;
+  color: #3483fa;
+  cursor: pointer;
+  font-size: 20px;
+  -webkit-text-decoration: underline #676767;
+  text-decoration: underline #676767;
+  white-space: nowrap;
+  text-decoration: none;
 }
-.verMasServi:hover{
-    color: #1b4e9b;
+
+.verMasServi:hover {
+  color: #1b4e9b;
 }
+
 .btnMas {
   white-space: normal;
   background: #ffce4e;
-  background: -moz-linear-gradient(
-    45deg,
-    #00ddf5 0%,
-    #00d9d7 32%,
-    #00d6ba 100%
-  );
-  background: -webkit-linear-gradient(
-    45deg #00ddf5 0%,
-    #00d9d7 32%,
-    #ffce4e 100%
-  );
+  background: -moz-linear-gradient(45deg,
+      #00ddf5 0%,
+      #00d9d7 32%,
+      #00d6ba 100%);
+  background: -webkit-linear-gradient(45deg #00ddf5 0%,
+      #00d9d7 32%,
+      #ffce4e 100%);
   background: linear-gradient(45deg #00ddf5 0%, #00d9d7 32%, #ffce4e 100%);
   -moz-border-radius: 20px;
   -webkit-border-radius: 20px;
@@ -313,15 +309,18 @@ props: {
   line-height: 11px;
   color: #fff;
 }
+
 #iconright {
   height: 29rem;
   width: 30px;
   cursor: pointer;
 }
+
 .destacados {
   color: rgb(109, 108, 108);
-   white-space: nowrap;
+  white-space: nowrap;
 }
+
 .btn {
   background-color: #ffc107;
   border: 1px solid #cccccc;
@@ -333,9 +332,11 @@ props: {
   display: block;
   width: 100%;
 }
+
 .btn:hover {
   color: white;
 }
+
 .btnPublicar:hover {
   color: #ffc107;
 }

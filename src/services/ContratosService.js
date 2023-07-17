@@ -47,7 +47,7 @@ export default {
     let credenciales = window.localStorage.getItem("token"); 
     axios({
       method: "get",
-      url: "https://malambobrandsenapi.com.ar/api/descargarcurriculum/" + id,
+      url: "https://malambobelgranoapi.com.ar/api/descargarcurriculum/" + id,
       responseType: "arraybuffer",
       headers: { Authorization: "Bearer " + credenciales },
     }).then(function(response) {

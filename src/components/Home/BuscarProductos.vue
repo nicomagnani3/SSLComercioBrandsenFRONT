@@ -11,7 +11,7 @@
     </div>
     <div v-else class="body">
       <b-row class="pb-2">
-        <b-col cols="3" class="text-center d-none d-sm-none d-md-block">
+        <b-col cols="2" class="text-center d-none d-sm-none d-md-block">
           <br />
           <h4>{{ producto }}</h4>
           <strong>Resultados: {{ this.cantidadProductos() }}</strong>
@@ -19,7 +19,12 @@
           <br />
 
           <h4>Productos</h4>
-          <b-list-group>
+          <b-form-select v-model="selectedCategoria" @change="buscarPorCategoria(selectedCategoria)"
+                 class="custom-select custom-select-yellow">
+    <option value="" disabled>Productos</option>
+    <option v-for="item in categorias" :key="item.id" :value="item.id">{{ item.nombre }}</option>
+  </b-form-select>
+  <!--         <b-list-group>
             <b-list-group-item
               button
               v-for="item in categorias"
@@ -31,10 +36,13 @@
                 item.nombre
               }}</a>
             </b-list-group-item>
-          </b-list-group>
+          </b-list-group> -->
 
           <br />
           <h4>Servicios</h4>
+          <b-form-select v-model="selectedServicio" @change="buscarPorServicio(selectedServicio)">
+    <option v-for="item in servicios" :key="item.id" :value="item.id">{{ item.nombre }}</option>
+  </b-form-select>
           <b-list-group>
             <b-list-group-item
               button
@@ -281,7 +289,7 @@ import { mapGetters } from "vuex";
 
 //import axios from "axios";
 export default {
-  name: "BuscarProductos",
+  name: "productos",
   components: {
     ImagenesDeUnaPublicacion,
     DetallesDeUnaPublicacion,
@@ -586,6 +594,14 @@ export default {
 
 .ItemProd img {
   object-fit: contain;
+}
+.custom-select-yellow {
+  background-color: yellow;
+}
+
+.custom-select-yellow option {
+  background-color: white;
+  padding: 8px 12px;
 }
 @media screen and (min-width: 768px) {
   .custom-collapse {

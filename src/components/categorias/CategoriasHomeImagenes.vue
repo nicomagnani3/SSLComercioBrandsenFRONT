@@ -182,10 +182,10 @@ export default {
     },
     verProducto(producto) {
       if (producto != null) {
-        const path = `/buscarProductos/${producto.id}`;
+        const path = `/productos/${producto.id}`;
         if (this.$route.path !== path)
           this.$router.push({
-            name: "buscarProductos",
+            name: "productos",
             query: {
               q: this.searchQuery,
               t: new Date().getTime(),

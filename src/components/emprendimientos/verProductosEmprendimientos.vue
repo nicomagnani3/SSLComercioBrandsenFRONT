@@ -13,68 +13,49 @@
     </div>
     <br />
     <div v-if="loading" class="text-center">
-      <b-spinner
-        style="width: 4rem; height: 4rem"
-        variant="warning"
-        label="Text Centered"
-      >
+      <b-spinner style="width: 4rem; height: 4rem" variant="warning" label="Text Centered">
       </b-spinner>
     </div>
-    <div v-else style="margin: 1%">
+    <div v-else>
       <div v-if="productos.length < 1" class="text-center">
-        <img
-          class="responsiveNotProducts"
-          style="cursor: pointer"
+        <img class="responsiveNotProducts" style="cursor: pointer"
           src="https://res.cloudinary.com/malambo/image/upload/v1659026568/Malambo/utilidades/AUTONOMOS_rgmh5v.jpg"
-          @click="$router.push('login')"
-        />
+          @click="$router.push('login')" />
       </div>
       <div v-else>
-        <b-row class="text-center" cols="2" cols-sm="8" cols-md="8" cols-lg="5">
-          <b-col
-            v-for="(producto, index) in productos"
-            :key="index"
-            class="mb-2"
-          >
-            <b-card
-              class="ItemProd"
-              style="max-width: 250px"
-              :img-src="`data:image/png;base64, ${producto.imagen}`"
-              img-height="250px; max-height:100%;"
-              alt="Responsive image"
-            >
-              <div class="cortar" @click="verProducto(producto)">
-                <strong> {{ tituloAjustar(producto.titulo) }}</strong>
+        <section class="py-7">
+          <div class="container-cards px-4 px-lg-5 mt-5">
+            <div class="row gx-5 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-5 justify-content-center">
+              <div class="col mb-5" v-for="(producto, index) in productos" :key="index">
+                <div class="card h-100 card-custom">
+                  <!-- Product image-->
+                  <div class="square-image">
+                    <img :src="`data:image/png;base64, ${producto.imagen}`" alt="..." class="card-img-top" />
+                  </div>
+                  <!-- Product details-->
+                  <div class="card-body">
+                    <div class="text-center">
+                      <!-- Product name-->
+                      <h5 class="fw-bolder">{{ tituloAjustar(producto.titulo) }}</h5>
+                      <!-- Product price-->
+                      <p class="mb-0">{{ getImporte(producto.precio) }}</p>
+                    </div>
+                  </div>
+                  <!-- Product actions-->
+                  <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                    <div class="text-center">
+                      <b-btn @click="verProducto(producto)" variant="warning" block class="btn btn btn--block card__btn btn-warning btn-block">Ver más</b-btn>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div v-if="Number(producto.precio) > Number(0)">
-                <p class="card-text">
-                  {{ getImporte(producto.precio) }}
-                </p>
-              </div>
-              <div v-else>
-                <br />
-              </div>
-              <div slot="footer">
-                <b-btn
-                  @click="verProducto(producto)"
-                  variant="warning"
-                  block
-                  class="btnMas"
-                  >Ver mas</b-btn
-                >
-              </div>
-            </b-card>
-          </b-col>
-        </b-row>
+            </div>
+          </div>
+        </section>
         <br />
         <div class="d-flex justify-content-center">
-          <b-pagination
-            pills
-            v-model="currentPagePaginate"
-            :per-page="perPage"
-            :total-rows="totalRows"
-            @change="nextPage"
-          ></b-pagination>
+          <b-pagination pills v-model="currentPagePaginate" :per-page="perPage" :total-rows="totalRows"
+            @change="nextPage"></b-pagination>
         </div>
       </div>
     </div>
@@ -105,7 +86,7 @@ export default {
     };
   },
   components: {},
-  created() {},
+  created() { },
   computed: {
     ...mapGetters("storeUser", ["getUserId"]),
   },
@@ -165,10 +146,10 @@ export default {
     },
     verProducto(producto) {
       if (producto != null) {
-        const path = `/buscarProductos/${producto.titulo}`;
+        const path = `/productos/${producto.titulo}`;
         if (this.$route.path !== path)
           this.$router.push({
-            name: "buscarProductos",
+            name: "productos",
             params: {
               producto: producto.titulo,
             },
@@ -191,100 +172,40 @@ export default {
 
 
 <style scoped>
-.cortar {
-  font-weight: 700;
-  display: -webkit-box;
+.btn-warning{
+  color: white;
+}
+.card {
+  width: 100%;
+  height: 100%;
+}
 
-  margin: 0;
-  /* text-align: left; */
-  cursor: pointer;
-  font-size: 13px;
-  line-height: 18px;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+.square-image {
+  position: relative;
+  width: 100%;
+  padding-top: 100%;
+  /* Relación de aspecto 1:1 (cuadrado) */
   overflow: hidden;
-  text-overflow: ellipsis;
-  text-overflow: -o-ellipsis-lastline;
-  white-space: normal;
-  padding-top: 10px;
-  color: #2c354f;
-  max-width: 191px;
-}
-.texto {
-  color: rgb(226, 205, 199);
-  font-family: EuclidSquareRegular, sans-serif !important;
-}
-.vueperslide__title {
-  font-size: 7em;
-  opacity: 0.7;
 }
 
-.ItemProd img {
-  object-fit: contain;
+.square-image img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.item {
-  box-shadow: 3px 3px 5px 3px rgba(0, 0, 0, 0.2);
+.container-cards {
+  margin-left: 50px;
+  margin-right: 50px;
 }
-.card-pagination {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-}
-.page-index {
-  margin-left: 10px;
-  width: 15px;
-  height: 15px;
-  border-radius: 15px;
-  background: #7d7d7d;
-}
-.active {
-  width: 20px;
-  height: 20px;
-  border-radius: 20px;
-}
-.verMasServi {
-  margin-left: 12px;
-  color: #676767;
-  cursor: pointer;
-  font-size: 20px;
-  text-decoration: underline #676767;
-  white-space: nowrap;
-}
-.btnMas {
-  white-space: normal;
-  background: #ffce4e;
-  background: -moz-linear-gradient(
-    45deg,
-    #00ddf5 0%,
-    #00d9d7 32%,
-    #00d6ba 100%
-  );
-  background: -webkit-linear-gradient(
-    45deg #00ddf5 0%,
-    #00d9d7 32%,
-    #ffce4e 100%
-  );
-  background: linear-gradient(45deg #00ddf5 0%, #00d9d7 32%, #ffce4e 100%);
-  -moz-border-radius: 20px;
-  -webkit-border-radius: 20px;
-  border-radius: 20px;
-  margin: -3px 0 0 0;
-  padding: 9px 7px 16px 8px;
-  width: 88%;
-  text-transform: none;
-  font-size: 14px;
-  line-height: 11px;
-  color: #fff;
-}
-#iconright {
-  height: 29rem;
-  width: 30px;
-  cursor: pointer;
-}
-.destacados {
-  color: rgb(109, 108, 108);
+@media (max-width: 767px) {
+  .container-cards {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
 }
 </style>
 

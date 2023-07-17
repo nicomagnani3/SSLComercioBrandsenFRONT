@@ -276,8 +276,8 @@ export default {
         let data = {
           coords: {},
         };
-        data.coords.latitude = -35.1635;
-        data.coords.longitude = -58.233007;
+        data.coords.latitude = -35.766434;
+        data.coords.longitude = -58.497615;
         this.getGeolocation(data);
         this.$emit("showCards");
       } catch (error) {

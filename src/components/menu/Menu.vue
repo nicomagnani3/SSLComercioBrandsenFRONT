@@ -65,16 +65,16 @@
             </b-nav-item-dropdown>
             <b-nav-item
               class="textoMenu"
-              :to="{ name: 'verProductosEmprendimientos' }"
+              :to="{ name: 'emprendedores' }"
               >Autónomos</b-nav-item
             >
             <b-nav-item
               class="textoMenu"
-              :to="{ name: 'verProductosProfesionales' }"
+              :to="{ name: 'profesionales' }"
               >Guía Profesional</b-nav-item
             >
 
-            <b-nav-item :to="{ name: 'verEmpresas' }" class="textoMenu"
+            <b-nav-item :to="{ name: 'comercios' }" class="textoMenu"
               >Guía Comercial</b-nav-item
             >
             <b-nav-item class="textoMenu" @click="bolsaTrabajo()"
@@ -511,10 +511,10 @@ export default {
       });
     },
     buscarProducto(producto) {
-      const path = `/buscarProductos/${producto}`;
+      const path = `/productos/${producto}`;
       if (this.$route.path !== path)
         this.$router.push({
-          name: "buscarProductos",
+          name: "productos",
           params: {
             producto: producto,
           },

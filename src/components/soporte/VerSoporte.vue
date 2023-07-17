@@ -5,7 +5,7 @@
         <b-col class="text-center pt-3">
           <br />
           <p class="h4 font-britannic text">
-            <strong class="parrafoCategorias">Guias de ayuda para los usuarios | 2223 431948 | info@malambobrandsen.com.ar
+            <strong class="parrafoCategorias">Guias de ayuda para los usuarios | 2223 431948 | info@malambobelgrano.com.ar
 
 </strong>
           </p>
@@ -228,7 +228,7 @@
 </template>
 <script>
 export default {
-  name: "VerEmpresas",
+  name: "soporte",
   components: {},
   data() {
     return {

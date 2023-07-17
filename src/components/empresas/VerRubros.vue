@@ -60,10 +60,10 @@ export default {
   computed: {},
   methods: {
     buscarProducto(producto) {
-      const path = `/buscarProductos/${producto}`;
+      const path = `/productos/${producto}`;
       if (this.$route.path !== path)
         this.$router.push({
-          name: "buscarProductos",
+          name: "productos",
           params: {
             producto: producto,
           },
@@ -93,10 +93,10 @@ export default {
       });
     },
    buscarProductoporRubro(rubro) {
-      const path = `/buscarProductos/${rubro.nombre}`;
+      const path = `/productos/${rubro.nombre}`;
       if (this.$route.path !== path)
         this.$router.push({
-          name: "buscarProductos",
+          name: "productos",
           query: {
             q: this.searchQuery,
             t: new Date().getTime(),

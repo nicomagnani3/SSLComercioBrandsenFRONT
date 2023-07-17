@@ -3,11 +3,7 @@
     <div v-if="loading" class="text-center">
       <br /><br />
       <br /><br />
-      <b-spinner
-     style="width: 7rem; height: 7rem"
-        variant="warning"
-        label="Text Centered"
-      >
+      <b-spinner style="width: 7rem; height: 7rem" variant="warning" label="Text Centered">
       </b-spinner>
     </div>
     <div v-else>
@@ -19,14 +15,8 @@
       </b-row>
       <b-card no-body class="mb-3 p-0" header="Detalles de tu contrato">
         <b-container class="pb-3">
-          <b-table
-            show-empty
-            small
-            responsive
-            :items="contrato"
-            :fields="fields"
-            empty-text="Usted todavia no pose ningun contrato,abajo tiene la posibilidad de realizar uno"
-          >
+          <b-table show-empty small responsive :items="contrato" :fields="fields"
+            empty-text="Usted todavia no pose ningun contrato,abajo tiene la posibilidad de realizar uno">
             <template v-slot:cell(desde)="row">{{
               row.item.desde | formatDate
             }}</template>
@@ -36,23 +26,10 @@
           </b-table>
         </b-container>
       </b-card>
-      <b-card
-        no-body
-        class="mb-3 p-0"
-        header="Comprar o renovar paquete para realizar publicaciones"
-      >
+      <b-card no-body class="mb-3 p-0" header="Comprar o renovar paquete para realizar publicaciones">
         <b-container class="pb-3">
-          <b-table
-            class="flip-list-move"
-            ref="selectableTable"
-            small
-            responsive
-            :items="planes"
-            :fields="fieldsContrato"
-            selectable
-            :select-mode="selectMode"
-            @row-selected="onRowSelected"
-          >
+          <b-table class="flip-list-move" ref="selectableTable" small responsive :items="planes" :fields="fieldsContrato"
+            selectable :select-mode="selectMode" @row-selected="onRowSelected">
             <!-- @row-selected="onRowSelected" -->
             <div slot="table-busy" class="text-center text-danger my-2">
               <b-spinner class="align-middle"></b-spinner>
@@ -74,15 +51,10 @@
           </b-table>
           <b-row class="pb-2">
             <b-col class="text-center pt-3">
-              <b-button variant="success" @click="pagarPaquete()"
-                >Confirmar mi Eleccion</b-button
-              >
+              <b-button variant="success" @click="pagarPaquete()">Confirmar mi Eleccion</b-button>
             </b-col>
           </b-row>
-          <b-row
-            v-if="this.presionoBtnPagar && this.selectedpaquete != null"
-            class="pb-2"
-          >
+          <b-row v-if="this.presionoBtnPagar && this.selectedpaquete != null" class="pb-2">
             <b-col class="text-center pt-3">
               <section class="payment-form dark">
                 <div class="container_payment">
@@ -93,9 +65,9 @@
                         <span class="price" id="summary-price"></span>
                         <p class="item-name">
                           Presiona el boton "pagar" para pagar el paquete
-                          <strong> {{ this.selectedpaquete[0].nombre }}</strong
-                          >, cuando finalices el pago tu paquete se cargara en
-                          {{$t('footer.nombre_plataforma')}}<span id="summary-quantity"></span>
+                          <strong> {{ this.selectedpaquete[0].nombre }}</strong>, cuando finalices el pago tu paquete se
+                          cargara en
+                          {{ $t('footer.nombre_plataforma') }}<span id="summary-quantity"></span>
                         </p>
                       </div>
                       <br />
@@ -104,12 +76,8 @@
                         }}<span class="price" id="summary-total"></span>
                       </div>
                     </div>
-                    <b-spinner
-                      style="width: 5rem; height: 5rem"
-                      variant="warning"
-                      v-if="esperarBotonMercadoPago"
-                      label="Text Centered"
-                    >
+                    <b-spinner style="width: 5rem; height: 5rem" variant="warning" v-if="esperarBotonMercadoPago"
+                      label="Text Centered">
                     </b-spinner>
                     <div class="payment-details">
                       <div class="form-group col-sm-12">
@@ -187,7 +155,7 @@ export default {
     ...mapState("storeUser", ["username", "nombre", "grupos"]),
     ...mapGetters("storeUser", ["getUserId"], ["getGrupos"]),
   },
-  created() {},
+  created() { },
   methods: {
     pagarPaquete() {
       this.presionoBtnPagar = true;
@@ -208,9 +176,9 @@ export default {
       this.presionoCrear = true;
       try {
         const response = await Contratos.addContrato({
-          usuario: this.getUserId,          
-          paquete: this.selectedpaquete[0].id,       
-         
+          usuario: this.getUserId,
+          paquete: this.selectedpaquete[0].id,
+
         });
         if (response.data.error == false) {
           this.validarPagoMercadoPago(response.data.data);
@@ -234,8 +202,11 @@ export default {
         precioPublicacion: Math.trunc(this.selectedpaquete[0].precio),
         idPublicacion: idPublicacion,
       });
-      this.createCheckoutButton(response.data.id);
+      location = response.data.redirect_url;
+      //this.createCheckoutButton(response.data.id);
     },
+
+    //TODO is deprecated method
     createCheckoutButton(preference) {
       var script = document.createElement("script");
       script.src =
@@ -316,6 +287,5 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
        

@@ -83,10 +83,10 @@ export default {
       });
     },
         verEmpresa(empresa) {
-      const path = `/buscarProductos/${empresa.nombre}`;
+      const path = `/productos/${empresa.nombre}`;
       if (this.$route.path !== path)
         this.$router.push({
-          name: "buscarProductos",
+          name: "productos",
           query: {
             q: this.searchQuery,
             t: new Date().getTime(),

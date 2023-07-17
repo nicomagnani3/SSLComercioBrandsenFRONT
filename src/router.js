@@ -115,8 +115,8 @@ const router = new Router({
         },
 
         {
-          path: "/buscarProductos/:producto",
-          name: "buscarProductos",
+          path: "/productos/:producto",
+          name: "productos",
           component: BuscarProductos,
           props: true,
           meta: {
@@ -124,8 +124,8 @@ const router = new Router({
           },
         },
         {
-          path: "/verEmpresas",
-          name: "verEmpresas",
+          path: "/comercios",
+          name: "comercios",
           component: VerEmpresas,
           meta: {
             requireAuth: false,
@@ -191,16 +191,16 @@ const router = new Router({
           },
         },
         {
-          path: "/verProductosEmprendimientos",
-          name: "verProductosEmprendimientos",
+          path: "/emprendedores",
+          name: "emprendedores",
           component: verProductosEmprendimientos,
           meta: {
             requireAuth: false,
           },
         },
         {
-          path: "/verProductosProfesionales",
-          name: "verProductosProfesionales",
+          path: "/profesionales",
+          name: "profesionales",
           component: verProductosProfesionales,
           meta: {
             requireAuth: false,

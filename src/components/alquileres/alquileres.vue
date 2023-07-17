@@ -83,6 +83,16 @@
                 >
                 {{$t('publicaciones.mas_info')}}
                 </button>
+                <meta itemprop="description" :content="producto.observaciones">
+              <meta itemprop="category" :content="producto.operacion">
+              <meta itemprop="subcategory" :content="producto.operacion">
+              <span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+                <meta itemprop="addressLocality" content="General Belgrano">
+                <meta itemprop="addressRegion" content="Provincia de Buenos Aires">
+                <meta itemprop="postalCode" content="B7223">
+                <meta itemprop="latitude" content="-35.766666666667">
+                <meta itemprop="longitude" content="-58.5">
+              </span>
               </div>
             </div>
           </li>
@@ -204,10 +214,10 @@ export default {
     },
     verProducto(producto) {
       if (producto != null) {
-        const path = `/buscarProductos/${producto.titulo}`;
+        const path = `/productos/${producto.titulo}`;
         if (this.$route.path !== path)
           this.$router.push({
-            name: "buscarProductos",
+            name: "productos",
             params: {
               producto: producto.titulo,
             },

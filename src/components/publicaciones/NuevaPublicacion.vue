@@ -244,6 +244,7 @@ export default {
         });
       }
     },
+    //TODO create preference MP, and go to sandbox
     async validarPagoMercadoPago(idPublicacion) {
       let precioPublicacion = this.publicacion.destacada
         ? this.preciosPublicacion[1].precio
@@ -255,8 +256,11 @@ export default {
         descripcion: this.publicacion.observaciones,
         tipo: "PUBLICACION",
       });
-      this.createCheckoutButton(response.data.id);
+      location = response.data.redirect_url;
+      //this.createCheckoutButton(response.data.id);
     },
+
+    //TODO is deprecated method
     createCheckoutButton(preference) {
       var script = document.createElement("script");
       script.src =

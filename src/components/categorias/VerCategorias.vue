@@ -59,7 +59,7 @@ import CategoriasService from "@/services/CategoriasService";
 
 import axios from "axios";
 export default {
-  name: "VerEmpresas",
+  name: "comercios",
   components: {},
   data() {
     return {
@@ -83,10 +83,10 @@ export default {
       window.scrollTo(0, 0);
     },
     buscarProducto(producto) {
-      const path = `/buscarProductos/${producto}`;
+      const path = `/productos/${producto}`;
       if (this.$route.path !== path)
         this.$router.push({
-          name: "buscarProductos",
+          name: "productos",
           params: {
             producto: producto,
           },
@@ -125,10 +125,10 @@ export default {
       });
     },
     verEmpresa(empresa) {
-      const path = `/buscarProductos/${empresa.nombre}`;
+      const path = `/productos/${empresa.nombre}`;
       if (this.$route.path !== path)
         this.$router.push({
-          name: "buscarProductos",
+          name: "productos",
           query: {
             q: this.searchQuery,
             t: new Date().getTime(),
