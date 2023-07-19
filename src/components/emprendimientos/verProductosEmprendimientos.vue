@@ -44,7 +44,7 @@
                   <!-- Product actions-->
                   <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                     <div class="text-center">
-                      <b-btn @click="verProducto(producto)" variant="warning" block class="btn btn btn--block card__btn btn-warning btn-block">Ver más</b-btn>
+                      <b-btn @click="verProducto(producto)" block class="btn btn btn--block card__btn btn-block">Ver más</b-btn>
                     </div>
                   </div>
                 </div>
@@ -169,45 +169,3 @@ export default {
   },
 };
 </script>
-
-
-<style scoped>
-.btn-warning{
-  color: white;
-}
-.card {
-  width: 100%;
-  height: 100%;
-}
-
-.square-image {
-  position: relative;
-  width: 100%;
-  padding-top: 100%;
-  /* Relación de aspecto 1:1 (cuadrado) */
-  overflow: hidden;
-}
-
-.square-image img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.container-cards {
-  margin-left: 50px;
-  margin-right: 50px;
-}
-@media (max-width: 767px) {
-  .container-cards {
-    margin-left: 5px;
-    margin-right: 5px;
-  }
-}
-</style>
-
-
-

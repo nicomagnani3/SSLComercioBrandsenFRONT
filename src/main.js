@@ -13,7 +13,11 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueNumeric from 'vue-numeric'
 import VueI18n from 'vue-i18n'
+import '../src/assets/css/app.css'
+import '@fortawesome/fontawesome-free/css/all.css';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
+Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.use(VueI18n)
  const i18n = new VueI18n({
   locale: 'es', // Establece el idioma predeterminado

@@ -48,9 +48,9 @@
                       </div>
                       <!-- Product actions -->
                       <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center">
-                          <b-btn @click="verdetalles(producto)" variant="warning" block
-                            class="btn btn btn--block card__btn btn-warning btn-block">Ver más</b-btn>
+                        <div class="text-center">                       
+                          <b-btn @click="verdetalles(producto)"  block
+                            class="btn btn btn--block card__btn btn-block">Ver más</b-btn>
                         </div>
                       </div>
                       <!-- Agrega el marcado estructurado para la información adicional -->
@@ -90,7 +90,7 @@
 
 
     </div>
-    <b-modal ref="modalDetalle" id="modal-center" ok-only ok-title="Cerrar" ok-variant="warning" centered :title="productoSeleccionado.nombre" @hide="resetModal"
+    <b-modal ref="modalDetalle" id="modal-center" ok-only ok-title="Cerrar" ok-variant="secondary" centered :title="productoSeleccionado.nombre" @hide="resetModal"
       :no-fade="true" :animation="animationOptions">
       <div class="modal-body">
         <p class="modal-description">{{ productoSeleccionado.descripcion }}</p>
@@ -264,117 +264,4 @@ export default {
   },
 };
 </script>
-
-<style  scoped>
-@media only screen and (max-width: 480px) {
-  .imagnesIcon {
-    width: 23px !important;
-    margin: 5px !important;
-  }
-
-}
-
-.buscador:hover {
-  color: rgb(255, 206, 78);
-  cursor: pointer;
-}
-
-.buscador {
-  width: 366px;
-}
-
-.icono {
-  width: 35px;
-  margin: 5px;
-}
-
-
-.cardsBody {
-  font-family: EuclidSquareRegular, sans-serif !important;
-  font-style: normal;
-  font-weight: 400;
-  padding: 1rem;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-.btn-warning {
-  color: white;
-}
-
-.card {
-  width: 100%;
-  height: 100%;
-}
-
-.square-image {
-  position: relative;
-  width: 100%;
-  padding-top: 100%;
-  /* Relación de aspecto 1:1 (cuadrado) */
-  overflow: hidden;
-}
-
-.square-image img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: revert;
-}
-
-.container-cards {
-  margin-left: 50px;
-  margin-right: 50px;
-}
-.modal-body {
-  padding: 20px;
-}
-
-.modal-description {
-  white-space: pre-wrap;
-  font-size: 16px;
-  line-height: 1.5;
-}
-
-.animate__animated {
-  animation-duration: 0.5s;
-}
-
-.animate__fadeIn {
-  animation-name: fadeIn;
-}
-
-.animate__fadeOut {
-  animation-name: fadeOut;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-@media (max-width: 767px) {
-  .container-cards {
-    margin-left: 5px;
-    margin-right: 5px;
-  }
-}
-</style>
-
-
 

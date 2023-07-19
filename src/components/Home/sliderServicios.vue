@@ -59,7 +59,6 @@
               <div slot="footer">
                 <b-btn
                   @click="verProducto(producto)"
-                  variant="warning"
                   block
                   class="btnMas"
                   >Ver mas</b-btn

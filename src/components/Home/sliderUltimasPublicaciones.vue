@@ -15,44 +15,50 @@
       <b-spinner style="width: 4rem; height: 4rem" variant="warning" label="Text Centered">
       </b-spinner>
     </div>
-    <div v-else class="animated fadeIn" style="margin: 1%;">
-      <b-container fluid="sm">
-        <b-row class="text-center" cols="2" cols-sm="8" cols-md="8" cols-lg="5" itemscope
-          itemtype="https://schema.org/Product">
-          <b-col v-for="(producto, index) in currentPageClubs" :key="index" class="mb-2">
-            <b-card class="ItemProd" style="max-width: 250px" :img-src="`data:image/png;base64, ${producto.imagen}`"
-              img-height="250px; max-height:100%;" alt="Responsive image" itemprop="image">
-              <div class="cortar" @click="verProducto(producto)">
-                <strong itemprop="name"> {{ tituloAjustar(producto.titulo) }}</strong>
+    <div v-else>
+      <section class="py-7">
+        <div class="container-cards px-5 px-lg-5 mt-6">
+          <div class="row gx-5 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-5 justify-content-left" itemscope
+            itemtype="https://schema.org/Product">
+            <div class="col mb-5" v-for="(producto, index) in currentPageClubs" :key="index">
+              <div class="card h-100 card-custom">
+                <!-- Product image-->
+                <div class="square-image">
+                  <img :src="`data:image/png;base64, ${producto.imagen}`" alt="..." class="card-img-top" />
+                </div>
+                <!-- Product details-->
+                <div class="card-body">
+                  <div class="text-center">
+                    <!-- Product name-->
+                    <h5 class="fw-bolder">{{ tituloAjustar(producto.titulo) }}</h5>
+                    <!-- Product price-->
+                    <p class="mb-0">{{ getImporte(producto.precio) }}</p>
+                  </div>
+                </div>
+                <!-- Product actions-->
+                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                  <div class="text-center">
+                    <b-btn @click="verProducto(producto)" block class="btn btn btn--block card__btn btn-block">Ver
+                      más</b-btn>
+                  </div>
+                </div>
+                <meta itemprop="description" :content="producto.titulo">
+                <meta itemprop="url" :content="'/productos/' + producto.titulo">
+                <meta itemprop="sku" content="SKU del producto">
+                <meta itemprop="category" :content="producto.padre">
+                <meta itemprop="subcategory" :content="producto.hijo">
+                <span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+                  <meta itemprop="addressLocality" content="General Belgrano">
+                  <meta itemprop="addressRegion" content="Provincia de Buenos Aires">
+                  <meta itemprop="postalCode" content="B7223">
+                  <meta itemprop="latitude" content="-35.766666666667">
+                  <meta itemprop="longitude" content="-58.5">
+                </span>
               </div>
-              <div v-if="Number(producto.precio) > Number(0)">
-                <p class="card-text" itemprop="priceCurrency" content="ARG">
-                  {{ getImporte(producto.precio) }}
-                </p>
-              </div>
-              <div v-else>
-                <br />
-              </div>
-              <div slot="footer">
-                <b-btn itemprop="description" @click="verProducto(producto)" variant="warning" block
-                  class="btn btn--block card__btn">Ver mas</b-btn>
-              </div>
-              <meta itemprop="description" :content="producto.titulo">
-              <meta itemprop="url" :content="'/productos/' + producto.titulo">
-              <meta itemprop="sku" content="SKU del producto">
-              <meta itemprop="category" :content="producto.padre">
-              <meta itemprop="subcategory" :content="producto.hijo">
-              <span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
-                <meta itemprop="addressLocality" content="General Belgrano">
-                <meta itemprop="addressRegion" content="Provincia de Buenos Aires">
-                <meta itemprop="postalCode" content="B7223">
-                <meta itemprop="latitude" content="-35.766666666667">
-                <meta itemprop="longitude" content="-58.5">
-              </span>
-            </b-card>
-          </b-col>
-        </b-row>
-      </b-container>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
     <br />
   </div>
@@ -185,14 +191,14 @@ export default {
     },
     verProducto(producto) {
       if (producto != null) {
-        const path = `/productos/${producto.titulo}`;
-        if (this.$route.path !== path)
-          this.$router.push({
-            name: "productos",
-            params: {
-              producto: producto.titulo,
-            },
-          });
+        this.$router.push({
+          name: "verProducto",
+          params: {
+            tipo: producto.tipo.toLowerCase(),
+            id: producto.id,
+            nombre: producto.titulo
+          },
+        });
       }
     },
   },
@@ -287,29 +293,6 @@ export default {
   color: #1b4e9b;
 }
 
-.btnMas {
-  white-space: normal;
-  background: #ffce4e;
-  background: -moz-linear-gradient(45deg,
-      #00ddf5 0%,
-      #00d9d7 32%,
-      #00d6ba 100%);
-  background: -webkit-linear-gradient(45deg #00ddf5 0%,
-      #00d9d7 32%,
-      #ffce4e 100%);
-  background: linear-gradient(45deg #00ddf5 0%, #00d9d7 32%, #ffce4e 100%);
-  -moz-border-radius: 20px;
-  -webkit-border-radius: 20px;
-  border-radius: 20px;
-  margin: -3px 0 0 0;
-  padding: 9px 7px 16px 8px;
-  width: 88%;
-  text-transform: none;
-  font-size: 14px;
-  line-height: 11px;
-  color: #fff;
-}
-
 #iconright {
   height: 29rem;
   width: 30px;
@@ -322,7 +305,7 @@ export default {
 }
 
 .btn {
-  background-color: #ffc107;
+  background-color: #343a40;
   border: 1px solid #cccccc;
   color: white;
   padding: 0.5rem;
@@ -338,7 +321,7 @@ export default {
 }
 
 .btnPublicar:hover {
-  color: #ffc107;
+  color: #343a40;
 }
 </style>
 

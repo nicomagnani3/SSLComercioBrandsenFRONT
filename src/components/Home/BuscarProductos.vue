@@ -2,285 +2,107 @@
   <div>
     <div v-if="loading" class="text-center">
       <br /><br />
-      <b-spinner
-        style="width: 7rem; height: 7rem"
-        variant="warning"
-        label="Text Centered"
-      >
+      <b-spinner style="width: 7rem; height: 7rem" variant="warning" label="Text Centered">
       </b-spinner>
     </div>
     <div v-else class="body">
       <b-row class="pb-2">
         <b-col cols="2" class="text-center d-none d-sm-none d-md-block">
           <br />
-          <h4>{{ producto }}</h4>
-          <strong>Resultados: {{ this.cantidadProductos() }}</strong>
-          <br />
-          <br />
+          <div class="filtro">
+            <ul class="breadcrumbs">
+              <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                <a itemprop="item">
+                  <span itemprop="name">{{ productos[0]?.padre }}</span>
+                </a>
+                <meta itemprop="position" content="1" />
+              </li>
+            </ul>
+            <h4 class="productos">{{ producto }}</h4>
+          </div>
 
-          <h4>Productos</h4>
-          <b-form-select v-model="selectedCategoria" @change="buscarPorCategoria(selectedCategoria)"
-                 class="custom-select custom-select-yellow">
-    <option value="" disabled>Productos</option>
-    <option v-for="item in categorias" :key="item.id" :value="item.id">{{ item.nombre }}</option>
-  </b-form-select>
-  <!--         <b-list-group>
-            <b-list-group-item
-              button
-              v-for="item in categorias"
-              :key="item.id"
-              @click="buscarPorCategoria(item.id)"
-            >
-              <br />
-              <a class="buscador" @click="buscarPorCategoria(item.id)">{{
-                item.nombre
-              }}</a>
-            </b-list-group-item>
-          </b-list-group> -->
-
+          <h6 class="productos"><strong>Resultados: {{ this.cantidadProductos() }}</strong></h6>
           <br />
-          <h4>Servicios</h4>
-          <b-form-select v-model="selectedServicio" @change="buscarPorServicio(selectedServicio)">
-    <option v-for="item in servicios" :key="item.id" :value="item.id">{{ item.nombre }}</option>
-  </b-form-select>
-          <b-list-group>
-            <b-list-group-item
-              button
-              v-for="item in servicios"
-              :key="item.id"
-              @click="buscarPorServicio(item)"
-            >
-              <br />
-              <a class="buscador" @click="buscarPorServicio(item)">{{
-                item.nombre
-              }}</a>
-            </b-list-group-item>
-          </b-list-group>
+          <div>
+            <ul class="left_menu">
+              <li class="odd" button v-for="item in categorias" :key="item.id" @click="buscarPorCategoria(item.id)">
+                <a class="buscador" @click="buscarPorCategoria(item.id)">
+                  <img :src="item.imagen" alt="Icono" class="icono-categoria">
+                  {{ item.nombre }}
+                </a>
+              </li>
+            </ul>
+          </div><br>
+          <div class="filtroSelect">
+            <div class="select-wrapper">
+              <div class="productos">Buscar por servicios</div>
+              <div class="left-select">
+                <b-form-select v-model="selectedServicio" @change="buscarPorServicio(selectedServicio)" class="productos">
+                  <option value="0" disabled selected>Selecciona una categoria..</option>
+                  <option v-for="item in servicios" :key="item.id" :value="item">{{ item.nombre }}</option>
+                </b-form-select>
+              </div>
+            </div>
+          </div>
+          <div class="filtroSelect">
+            <div class="select-wrapper">
+              <div class="productos">Busca por emprendimiento</div>
+              <div class="left-select">
+                <b-form-select v-model="selectedEmprendimiento" @change="buscarPorEmprendimiento(selectedEmprendimiento)"
+                  class="productos">
+                  <option value="0" disabled selected>Selecciona una categoria..</option>
+                  <option v-for="item in emprendimientos" :key="item.id" :value="item">{{ item.nombre }}</option>
+                </b-form-select>
+              </div>
+            </div>
+          </div>
         </b-col>
 
         <b-col>
-          <br />
-          <transition
-            v-for="producto in productos"
-            v-bind:key="producto.id"
-            :per-page="perPage"
-            :current-page="currentPage"
-          >
-            <div>
-              <b-card
-                no-body
-                class="overflow-hidden"
-                style="max-width: auto; max-height: auto"
-              >
-                <b-row>
-                  <b-col md="6">
-                    <b-card-img
-                      img-height="300px; max-height:100%;"
-                      class="ItemProd"
-                      @click="verImagenes(producto)"
-                      thumbnail
-                      fluid
-                      alt="Responsive image"
-                      style="max-height: 350px; cursor: pointer"
-                      :src="`data:image/png;base64, ${producto.imagen}`"
-                    ></b-card-img>
-                  </b-col>
-                  <b-col md="6">
-                    <b-card-body>
-                      <h5>
-                        <strong style="white-space: pre-wrap"
-                          >{{ producto.titulo }} </strong
-                        ><span
-                          v-if="producto.destacado"
-                          class="badge badge-primary"
-                          id="valorDestacado"
-                        >
-                          Destacado</span
-                        >
-                      </h5>
-                      <strong class="parrafor">{{ producto.padre }}</strong>
-                      <hr />
-                      <h5 v-if="Number(producto.precio) > Number(0)">
-                        {{ getImporte(producto.precio) }}
-                      </h5>
-                      <!--    <p>Fecha: {{ producto.fecha | formatDate }}</p> -->
-
-                      <!--  <a target="_black" :href="producto.web">{{
-                      producto.web
-                    }}</a> -->
-                      <p v-if="producto.telefono != '' && producto.telefono != null">
-                        Telefono: <strong>{{ producto.telefono }}</strong>
-                      </p>
-                      <p
-                        style="white-space: nowrap"
-                        v-if="producto.email != null"
-                      >
-                        <strong>{{ producto.email }}</strong>
-                      </p>                     
-                      <div>
-                        <a
-                          v-if="producto.telefono != null "
-                          :href="
-                            'https://api.whatsapp.com/send?text=Hola!%20,desde%'+$t('footer.nombre_plataforma')+'%20observe%20la%20publicacion%20' +
-                            producto.titulo +
-                            ',queria%20obtener%20mas%20detalles' +
-                            '&phone=+54' +
-                            acomodarCelular(producto.telefono)
-                          "
-                          target="_black"
-                        >
-                          <img
-                            v-if=" producto.telefono != null"
-                            src="@/assets/wsp.png"
-                            alt=""
-                            height="auto"
-                            style="width: 43px; margin:2px"
-                          />&nbsp;&nbsp;
-                        </a>
-                        <a
-                          :href="
-                            'https://mail.google.com/mail/?view=cm&fs=1&to=' +
-                            producto.email +
-                            '&body=Hola!%20,desde%'+$t('footer.nombre_plataforma')+'%20observe%20la%20publicacion%20' +
-                            producto.titulo +
-                            ',queria%20obtener%20mas%20detalles' +
-                            '&su='+$t('footer.nombre_plataforma')+' consulta por ' +
-                            producto.titulo
-                          "
-                          target="_black"
-                          >&nbsp;&nbsp;
-                          <img
-                          
-                            src="@/assets/mail.png"
-                            alt=""
-                            height="auto"
-                            style="width: 45px; margin: 4px"
-                          />
-                        </a>
+          <section class="py-7">
+            <div class="container-cards px-4 px-lg-5 mt-5">
+              <div class="row gx-5 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-left">
+                <div class="col mb-5" v-for="(producto, index) in productos" :key="index">
+                  <div class="card h-100 card-custom">
+                    <!-- Product image-->
+                    <div class="square-image">
+                      <img :src="`data:image/png;base64, ${producto.imagen}`" alt="..." class="card-img-top" />
+                    </div>
+                    <!-- Product details-->
+                    <div class="card-body">
+                      <div class="text-center">
+                        <!-- Product name-->
+                        <h5 class="fw-bolder">
+                          <strong style="white-space: pre-wrap">{{ producto.titulo }} </strong><span
+                            v-if="producto.destacado" class="badge badge-primary" id="valorDestacado">
+                            Destacado</span>
+                        </h5>
+                        <!-- Product price-->
+                        <strong class="parrafor">{{ producto.padre }}</strong>
+                        <p class="mb-0" v-if="producto.precio">{{ getImporte(producto.precio) }}</p>
                       </div>
-                      <!--     <a
-                        variant="white"
-                        @click="verImagenes(producto)"
-                        style="cursor: pointer"
-                      >
-                        <img
-                          src="@/assets/galeria.png"
-                          alt=""
-                          height="auto"
-                          style="width: 45px; margin: 4px"
-                        />&nbsp;&nbsp;
-                      </a> -->
-
-                      <a
-                        variant="white"
-                        v-if="producto.descripcion != 'SN'"
-                        @click="verdetalles(producto)"
-                        style="cursor: pointer"
-                      >
-                        <img
-                          src="@/assets/descripcion.png"
-                          alt=""
-                          height="auto"
-                          style="width: 45px; margin: 4px"
-                        />&nbsp;&nbsp;
-                      </a>
-                      <a
-                        variant="white"
-                        v-if="producto.web != null"
-                        target="_black"
-                        :href="producto.web"
-                        style="cursor: pointer"
-                      >
-                        <img
-                          src="@/assets/web.png"
-                          alt=""
-                          height="auto"
-                          style="width: 43px; margin: 5px"
-                        />&nbsp;&nbsp;
-                      </a>
-                    </b-card-body>
-                  </b-col>
-                </b-row>
-              </b-card>
-              <br />
+                    </div>
+                    <!-- Product actions-->
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                      <div class="text-center">
+                        <b-btn @click="verProducto(producto)" block class="btn btn btn--block card__btn btn-block">Ver
+                          detalle</b-btn>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </transition>
-          <div v-if="this.mostrarNoHayPublicaciones">
-            <br /><br />
-            <b-alert show variant="success">
-              <h4 class="alert-heading">
-                <b-icon scale="1.5" icon="search" variant="info"></b-icon> No
-                hay publicaciones que coincidan con tu búsqueda.!
-              </h4>
-              <p>
-                *Revisá la ortografía de la palabra.<br />
-                *Utilizá palabras más genéricas o menos palabras.<br />
-                *Navegá por las categorías para encontrar un producto similar<br />
-                *Busca en otra categoria o rubro
-              </p>
-            </b-alert>
-          </div>
-        </b-col>
-        <b-col cols="3" class="d-none d-sm-none d-md-block">
-          <br />
-          <h4>Emprendimientos</h4>
-          <b-list-group>
-            <b-list-group-item
-              button
-              v-for="item in emprendimientos"
-              :key="item.id"
-              @click="buscarPorEmprendimiento(item)"
-            >
-              <br />
-              <a class="buscador" @click="buscarPorEmprendimiento(item)">{{
-                item.nombre
-              }}</a>
-            </b-list-group-item>
-          </b-list-group>
+          </section>
         </b-col>
       </b-row>
 
-      <div>
-        <b-modal
-          title="Imagenes de la publicacion"
-          centered
-          id="modal-xl"
-         
-          ref="modalVerImagenes"
-          hide-footer
-          ok-only
-        >
-          <ImagenesDeUnaPublicacion
-            @okImagenesPublicacion="okImagenesPublicacion"
-            :idPublicacion="this.idPublicacionImagen"
-            :tipo="this.tipoPublicacion"
-          ></ImagenesDeUnaPublicacion>
-        </b-modal>
-      </div>
-      <div>
-        <b-modal
-          :title="this.productoSeleccionado.titulo"
-          id="modal-xl"
-          centered
-          ref="modalVerProductos"
-          ok-only
-         
-        >
-          <DetallesDeUnaPublicacion
-            @okDetalles="okDetalles"
-            :publicacion="this.productoSeleccionado"
-            
-          ></DetallesDeUnaPublicacion>
-        </b-modal>
-      </div>
+
     </div>
   </div>
 </template>
 
 <script>
-import ImagenesDeUnaPublicacion from "@/components/imagenes/ImagenesDeUnaPublicacion.vue";
-import DetallesDeUnaPublicacion from "@/components/publicaciones/DetallesDeUnaPublicacion.vue";
-
 import PublicacionService from "@/services/PublicacionService";
 import CategoriasService from "@/services/CategoriasService";
 import EmprendimientoService from "@/services/EmprendimientoService";
@@ -290,10 +112,7 @@ import { mapGetters } from "vuex";
 //import axios from "axios";
 export default {
   name: "productos",
-  components: {
-    ImagenesDeUnaPublicacion,
-    DetallesDeUnaPublicacion,
-  },
+
   props: {
     producto: {
       type: String,
@@ -329,10 +148,12 @@ export default {
       emprendimientos: [],
       servicios: [],
       idPublicacionImagen: "",
+      selectedServicio: 0,
+      selectedEmprendimiento: 0
     };
   },
   created() {
- 
+
     this.getcategorias();
     this.getEmprendimientos();
     this.getServicios();
@@ -344,8 +165,8 @@ export default {
       } else {
         if (this.categoria > Number(0)) {
           this.buscarPorCategoria(this.categoria)
-        }else{
-                  this.getPublicacionesPorNombre();
+        } else {
+          this.getPublicacionesPorNombre();
 
         }
       }
@@ -367,18 +188,28 @@ export default {
           this.buscarPorEmpresa(this.empresa);
 
         } else {
-             if (this.categoria > Number(0)) {
-          this.buscarPorCategoria(this.categoria)
-        }else{
-                    this.getPublicacionesPorNombre();
+          if (this.categoria > Number(0)) {
+            this.buscarPorCategoria(this.categoria)
+          } else {
+            this.getPublicacionesPorNombre();
 
-        }
+          }
 
         }
       }
     },
   },
   methods: {
+    verProducto(producto) {
+      this.$router.push({
+        name: "verProducto",
+        params: {
+          tipo: producto.tipo.toLowerCase(),
+          id: producto.id,
+          nombre: producto.titulo
+        },
+      });
+    },
     mostrarCartelSinPublicaicones() {
       if (this.productos.length == 0) {
         this.mostrarNoHayPublicaciones = true;
@@ -490,6 +321,7 @@ export default {
       window.scrollTo(0, 0);
     },
     async buscarPorEmprendimiento(item) {
+      this.selectedServicio = 0
       this.loading = true;
       try {
         const response = await EmprendimientoService.searchPublicacionesPorEmprendimiento(
@@ -512,6 +344,7 @@ export default {
       }
     },
     async buscarPorServicio(item) {
+      this.selectedEmprendimiento = 0
       this.loading = true;
       try {
         const response = await ServiciosService.searchPublicacionesPorServicio({
@@ -563,38 +396,16 @@ export default {
         this.loading = true;
       }
     },
-    verImagenes(producto) {
-      this.verImagen = true;
-      this.idPublicacionImagen = producto.id;
-      this.tipoPublicacion = producto.tipo;
-      this.$refs["modalVerImagenes"].show();
-    },
-    verdetalles(producto) {
-      this.productoSeleccionado = producto;
-      this.$refs["modalVerProductos"].show();
-    },
-    okImagenesPublicacion() {
-      this.$refs["modalVerImagenes"].hide();
-    },
-    okDetalles() {
-      this.$refs["modalVerProductos"].hide();
-    },
+
   },
-  mounted() {},
+  mounted() { },
 };
 </script>
 <style scoped >
-.buscador:hover {
-  color: rgb(255, 206, 78);
-  cursor: pointer;
-}
-.buscador {
-  width: 366px;
-}
-
 .ItemProd img {
   object-fit: contain;
 }
+
 .custom-select-yellow {
   background-color: yellow;
 }
@@ -603,9 +414,103 @@ export default {
   background-color: white;
   padding: 8px 12px;
 }
+
 @media screen and (min-width: 768px) {
   .custom-collapse {
     display: block;
   }
+}
+
+ul.left_menu {
+  width: 196px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+ul.left_menu li {
+  margin-bottom: 10px;
+  /* Ajusta el valor para separar más los elementos */
+}
+
+.buscador {
+  width: 366px;
+  /* height: 25px; */
+  display: flex;
+  align-items: center;
+  /* background-color: #e1e1e1; */
+  /* border-bottom: 6px; */
+  text-decoration: none;
+  color: #000000;
+  padding-left: 20px;
+  line-height: 25px;
+}
+
+.icono-categoria {
+  width: 20px;
+  /* Ajusta el tamaño del icono según tus necesidades */
+  height: 20px;
+  margin-right: 10px;
+  /* Ajusta el espacio entre el icono y el texto según tus preferencias */
+}
+
+.productos {
+  text-align: left;
+  padding-left: 20px;
+  color: #333;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+  margin-bottom: 10px;
+}
+
+.breadcrumbs {
+  margin-bottom: 20px;
+  list-style: none;
+  padding: 0;
+  text-align: left;
+  padding-left: 20px;
+}
+
+.breadcrumbs li {
+  display: inline;
+  margin-right: 10px;
+}
+
+.breadcrumbs li::after {
+  content: "/";
+  margin-left: 10px;
+  color: #999;
+}
+
+.breadcrumbs li:last-child::after {
+  content: "";
+}
+
+.breadcrumbs a {
+  text-decoration: none;
+  color: #007bff;
+}
+
+.breadcrumbs a:hover {
+  text-decoration: underline;
+}
+
+.select-wrapper {
+  display: inline-block;
+  margin-right: 20px;
+  /* Ajusta el margen derecho según tus necesidades */
+}
+
+.filtroSelect {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+}
+
+.left-select {
+  text-align: left;
+  padding-left: 20px;
 }
 </style>

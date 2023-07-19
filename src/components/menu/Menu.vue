@@ -82,23 +82,8 @@
             >
             <b-nav-item
               :to="{ name: 'alquileres' }"
-              style="
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                font-size: 18px;
-                padding: 5px;
-              "
-              class="logo"
-              id="guia"
-              ><strong>Propiedades y Alquileres</strong
-              ><span
-                class="badge badge-pill badge-info"
-                id="valorDestacado"
-                style="overflow: hidden; padding: 5px"
-              >
-                NEW</span
-              ></b-nav-item
+              class="textoMenu"
+              >Propiedades y Alquileres</b-nav-item
             >
             <b-nav-item class="textoMenu" :to="{ name: 'utilidades' }"
               >Datos Útiles</b-nav-item

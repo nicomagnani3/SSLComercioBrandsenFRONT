@@ -6,112 +6,78 @@
         <div class="h3 font-britannic text widget-title destacados">
           <h4 class="parraforTitProd">
             Productos destacados
-            <a v-if="!loading" @click="verDestacados()" class="verMas"
-              >ver mas</a
-            >
+            <a v-if="!loading" @click="verDestacados()" class="verMas">ver mas</a>
           </h4>
         </div>
       </b-col>
     </b-row>
     <br />
     <div v-if="loading" class="text-center">
-      <b-spinner
-        style="width: 4em; height: 4rem"
-        variant="warning"
-        label="Text Centered"
-      >
+      <b-spinner style="width: 4em; height: 4rem" variant="warning" label="Text Centered">
       </b-spinner>
     </div>
     <div v-else class="animated fadeIn">
       <b-row class="text-center">
         <b-col>
           <div class="d-none d-sm-none d-md-block">
-            <b-icon
-              @click="backPage()"
-              :class="{ active: pagina() }"
-              icon="arrow-left-circle-fill"
-              id="iconright"
-            >
+            <b-icon @click="backPage()" :class="{ active: pagina() }" icon="arrow-left-circle-fill" id="iconright">
             </b-icon>
           </div>
         </b-col>
         <b-col cols="10">
-          <b-card-group deck>
-            <b-card
-              v-for="(producto, index) in currentPageClubs"
-              :key="index"
-              img-height="250px; max-height:100%;"
-              :img-alt="index"
-              class="ItemProd"
-              style="max-width: 250px"
-              :img-src="`data:image/png;base64, ${producto.imagen}`"
-              itemprop="image"
-              itemscope
-              itemtype="https://schema.org/Product"
-            >
-              <div @click="verProducto(producto)">
-                <strong
-                  class="cortar"
-                  @click="verProducto(producto)"
-                  itemprop="name"
-                >
-                  {{ tituloAjustar(producto.titulo) }}</strong
-                >
-
-                <small
-                  itemprop="priceCurrency"
-                  content="ARG"
-                  :value="producto.precio"
-                >
-                  {{ getImporte(producto.precio) }}
-                </small>
-                <link itemprop="sameAs" :href="producto.web" />
-
-                <small itemprop="category">{{ producto.padre }} </small>
+          <section class="py-7">
+            <div class="container-cards px-4 px-lg-5 mt-5">
+              <div class="row gx-1 gx-lg-1 row-cols-1 row-cols-md-2 row-cols-xl-5 justify-content-left" itemscope
+                itemtype="https://schema.org/Product">
+                <div class="col mb-5" v-for="(producto, index) in currentPageClubs" :key="index">
+                  <div class="card h-100 card-custom">
+                    <!-- Product image-->
+                    <div class="square-image">
+                      <img :src="`data:image/png;base64, ${producto.imagen}`" alt="..." class="card-img-top" />
+                    </div>
+                    <!-- Product details-->
+                    <div class="card-body">
+                      <div class="text-center">
+                        <!-- Product name-->
+                        <h5 class="fw-bolder">{{ tituloAjustar(producto.titulo) }}</h5>
+                        <!-- Product price-->
+                        <p class="mb-0">{{ getImporte(producto.precio) }}</p>
+                      </div>
+                    </div>
+                    <!-- Product actions-->
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                      <div class="text-center">
+                        <b-btn @click="verProducto(producto)" block class="btn btn btn--block card__btn btn-block">Ver
+                          más</b-btn>
+                      </div>
+                    </div>
+                    <meta itemprop="description" :content="producto.titulo">
+                    <meta itemprop="url" :content="'/productos/' + producto.titulo">
+                    <meta itemprop="sku" content="SKU del producto">
+                    <meta itemprop="category" :content="producto.padre">
+                    <meta itemprop="subcategory" :content="producto.hijo">
+                    <span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+                      <meta itemprop="addressLocality" content="General Belgrano">
+                      <meta itemprop="addressRegion" content="Provincia de Buenos Aires">
+                      <meta itemprop="postalCode" content="B7223">
+                      <meta itemprop="latitude" content="-35.766666666667">
+                      <meta itemprop="longitude" content="-58.5">
+                    </span>
+                  </div>
+                </div>
               </div>
-              <div slot="footer">
-                <b-btn
-                  itemprop="description"
-                  @click="verProducto(producto)"
-                  variant="warning"
-                  block
-                  class="btn btn--block card__btn"
-                  >Ver mas</b-btn
-                >
-              </div>
-              <meta itemprop="description" :content="producto.titulo">
-              <meta itemprop="url" :content="'/productos/' + producto.titulo">
-              <meta itemprop="sku" content="SKU del producto">
-              <meta itemprop="category" :content="producto.padre">
-              <meta itemprop="subcategory" :content="producto.hijo">
-              <span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
-                <meta itemprop="addressLocality" content="General Belgrano">
-                <meta itemprop="addressRegion" content="Provincia de Buenos Aires">
-                <meta itemprop="postalCode" content="B7223">
-                <meta itemprop="latitude" content="-35.766666666667">
-                <meta itemprop="longitude" content="-58.5">
-              </span>
-            </b-card>
-          </b-card-group>
+            </div>
+          </section>
+
 
           <div class="card-pagination">
-            <div
-              class="page-index"
-              v-for="i in nbPages"
-              :key="i"
-              @click="goto(i)"
-              :class="{ active: currentPage(i) }"
-            ></div>
+            <div class="page-index" v-for="i in nbPages" :key="i" @click="goto(i)" :class="{ active: currentPage(i) }">
+            </div>
           </div>
         </b-col>
         <b-col>
           <div class="d-none d-sm-none d-md-block">
-            <b-icon
-              @click="nexPage()"
-              :class="{ active: pagina() }"
-              icon="arrow-right-circle-fill"
-              id="iconright"
-            >
+            <b-icon @click="nexPage()" :class="{ active: pagina() }" icon="arrow-right-circle-fill" id="iconright">
             </b-icon>
           </div>
         </b-col>
@@ -247,16 +213,14 @@ export default {
       return string.charAt(0).toUpperCase() + string.slice(1);
     },
     verProducto(producto) {
-      if (producto != null) {
-        const path = `/productos/${producto.titulo}`;
-        if (this.$route.path !== path)
-          this.$router.push({
-            name: "productos",
-            params: {
-              producto: producto.titulo,
-            },
-          });
-      }
+      this.$router.push({
+        name: "verProducto",
+        params: {
+          tipo: producto.tipo.toLowerCase(),
+          id: producto.id,
+          nombre: producto.titulo
+        },
+      });
     },
   },
 
@@ -297,10 +261,12 @@ export default {
   color: #2c354f;
   max-width: 191px;
 }
+
 .texto {
   color: rgb(226, 205, 199);
   font-family: EuclidSquareRegular, sans-serif !important;
 }
+
 .vueperslide__title {
   font-size: 7em;
   opacity: 0.7;
@@ -313,12 +279,14 @@ export default {
 .item {
   box-shadow: 3px 3px 5px 3px rgba(0, 0, 0, 0.2);
 }
+
 .card-pagination {
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px;
 }
+
 .page-index {
   margin-left: 10px;
   width: 15px;
@@ -326,11 +294,13 @@ export default {
   border-radius: 15px;
   background: #7d7d7d;
 }
+
 .active {
   width: 20px;
   height: 20px;
   border-radius: 20px;
 }
+
 .verMas {
   margin-left: 13px;
   text-decoration: none;
@@ -342,23 +312,21 @@ export default {
   white-space: nowrap;
   text-decoration: none;
 }
+
 .verMas:hover {
   color: #1b4e9b;
 }
+
 .btnMas {
   white-space: normal;
   background: #ffce4e;
-  background: -moz-linear-gradient(
-    45deg,
-    #00ddf5 0%,
-    #00d9d7 32%,
-    #00d6ba 100%
-  );
-  background: -webkit-linear-gradient(
-    45deg #00ddf5 0%,
-    #00d9d7 32%,
-    #ffce4e 100%
-  );
+  background: -moz-linear-gradient(45deg,
+      #00ddf5 0%,
+      #00d9d7 32%,
+      #00d6ba 100%);
+  background: -webkit-linear-gradient(45deg #00ddf5 0%,
+      #00d9d7 32%,
+      #ffce4e 100%);
   background: linear-gradient(45deg #00ddf5 0%, #00d9d7 32%, #ffce4e 100%);
   -moz-border-radius: 20px;
   -webkit-border-radius: 20px;
@@ -371,17 +339,20 @@ export default {
   line-height: 11px;
   color: #fff;
 }
+
 #iconright {
   height: 29rem;
   width: 30px;
   cursor: pointer;
 }
+
 .destacados {
   color: rgb(109, 108, 108);
   white-space: nowrap;
 }
+
 .btn {
-  background-color: #ffc107;
+  background-color: #343a40;
   border: 1px solid #cccccc;
   color: white;
   padding: 0.5rem;
@@ -391,11 +362,13 @@ export default {
   display: block;
   width: 100%;
 }
+
 .btn:hover {
   color: white;
 }
+
 .btnPublicar:hover {
-  color: #ffc107;
+  color: #343a40;
 }
 </style>
 

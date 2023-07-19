@@ -1,185 +1,43 @@
 <template>
-  <b-container>
-    <div class="animated fadeIn">
-      <b-row class="text-center">
-        <b-col>
-          <br />
-          <transition
-            v-for="producto in productos"
-            v-bind:key="producto.id"
-            :per-page="perPage"
-            :current-page="currentPage"
-          >
-            <div>
-              <b-card
-                no-body
-                class="overflow-hidden"
-                style="max-width: auto; max-height: auto"
-              >
-                <b-row>
-                  <b-col md="6">
-                    <b-card-img
-                      img-height="300px; max-height:100%;"
-                      @click="verImagenes(producto)"
-                      thumbnail
-                      fluid
-                      alt="Responsive image"
-                      style="max-height: 350px; cursor: pointer"
-                      :src="`data:image/png;base64, ${producto.imagen}`"
-                      class="rounded-0"
-                    ></b-card-img>
-                  </b-col>
-                  <b-col md="4">
-                    <b-card-body>
-                      <h5>
-                        <strong style="white-space: pre-wrap"
-                          >{{ producto.titulo }}
-                        </strong>
-                      </h5>
-                      <strong class="parrafor">{{ producto.padre }}</strong>
-                      <hr />
-                      <h5 v-if="Number(producto.precio) > Number(0)">
-                        {{ getImporte(producto.precio) }}
-                      </h5>
-                      <p v-if="producto.telefono != null">
-                        Telefono: <strong>{{ producto.telefono }}</strong>
-                      </p>
-                      <p
-                        style="white-space: nowrap"
-                        v-if="producto.email != null"
-                      >
-                        <strong>{{ producto.email }}</strong>
-                      </p>
-                     
-                      <div >
-                        <a
-                          v-if="producto.telefono != null "
-                          :href="
-                            'https://api.whatsapp.com/send?text=Hola!%20,desde%'+$t('footer.nombre_plataforma')+'%20observe%20la%20publicacion%20' +
-                            producto.titulo +
-                            ',queria%20obtener%20mas%20detalles' +
-                            '&phone=+54' +
-                            acomodarCelular(producto.telefono)
-                          "
-                          target="_black"
-                        >
-                          <img
-                            v-if=" producto.telefono != null"
-                            src="@/assets/wsp.png"
-                            alt=""
-                            height="auto"
-                            style="width: 45px; margin: 4px"
-                          />&nbsp;&nbsp;
-                        </a>
-                        <a
-                          :href="
-                            'https://mail.google.com/mail/?view=cm&fs=1&to=' +
-                            producto.email +
-                            '&body=Hola!%20,desde%'+$t('footer.nombre_plataforma')+'%20observe%20la%20publicacion%20' +
-                            producto.titulo +
-                            ',queria%20obtener%20mas%20detalles' +
-                            '&su='+$t('footer.nombre_plataforma')+' consulta por ' +
-                            producto.titulo
-                          "
-                          target="_black"
-                          >&nbsp;&nbsp;
-                          <img
-                           
-                            src="@/assets/mail.png"
-                            alt=""
-                            height="auto"
-                            style="width: 45px; margin: 4px"
-                          />
-                        </a>
-                      </div>
-                      <!--     <a
-                        variant="white"
-                        @click="verImagenes(producto)"
-                        style="cursor: pointer"
-                      >
-                        <img
-                          src="@/assets/galeria.png"
-                          alt=""
-                          height="auto"
-                          style="width: 45px; margin: 4px"
-                        />&nbsp;&nbsp;
-                      </a> -->
-
-                      <a
-                        variant="white"
-                        v-if="producto.descripcion != 'SN'"
-                        @click="verdetalles(producto)"
-                        style="cursor: pointer"
-                      >
-                        <img
-                          src="@/assets/descripcion.png"
-                          alt=""
-                          height="auto"
-                          style="width: 45px; margin: 4px"
-                        />&nbsp;&nbsp;
-                      </a>
-                      <a
-                        variant="white"
-                        v-if="producto.web != null"
-                        target="_black"
-                        :href="producto.web"
-                        style="cursor: pointer"
-                      >
-                        <img
-                          src="@/assets/web.png"
-                          alt=""
-                          height="auto"
-                          style="width: 45px; margin: 4px"
-                        />&nbsp;&nbsp;
-                      </a>
-                    </b-card-body>
-                  </b-col>
-                </b-row>
-              </b-card>
-              <br />
+  <div>
+    <section class="py-3">
+      <div class="container-cards px-4 px-lg-4 mt-5">
+        <div class="row gx-1 gx-lg-1 row-cols-2 row-cols-md-3 row-cols-xl-5 justify-content-left">
+          <div class="col mb-3" v-for="(producto, index) in productos" :key="index">
+            <div class="card h-100 card-custom">
+              <!-- Product image-->
+              <div class="square-image">
+                <img :src="`data:image/png;base64, ${producto.imagen}`" alt="..." class="card-img-top" />
+              </div>
+              <!-- Product details-->
+              <div class="card-body">
+                <div class="text-center">
+                  <!-- Product name-->
+                  <h5 class="fw-bolder">
+                    <strong style="white-space: pre-wrap">{{ producto.titulo }} </strong>
+                  </h5>
+                  <!-- Product price-->
+                  <strong class="parrafor">{{ producto.padre }}</strong>
+                  <p class="mb-0" v-if="producto.precio">{{ getImporte(producto.precio) }}</p>
+                </div>
+              </div>
+              <!-- Product actions-->
+              <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                <div class="text-center">
+                  <b-btn @click="verProducto(producto)" block class="btn btn btn--block card__btn btn-block">Ver
+                    detalle</b-btn>
+                </div>
+              </div>
             </div>
-          </transition>
-        </b-col>
-      </b-row>
-      <div>
-        <b-modal
-          title="Imagenes de la publicacion"
-          centered
-          id="modal-xl"
-     
-          ref="modalVerImagenes"
-          hide-footer
-        >
-          <ImagenesDeUnaPublicacion
-            @okImagenesPublicacion="okImagenesPublicacion"
-            :idPublicacion="this.idPublicacionImagen"
-            :tipo="this.tipoPublicacion"
-          ></ImagenesDeUnaPublicacion>
-        </b-modal>
+          </div>
+        </div>
       </div>
-      <div>
-        <b-modal
-          :title="this.productoSeleccionado.titulo"
-          id="modal-xl"
-          centered
-          ref="modalVerProductos"
-          ok-only
-         
-        >
-          <DetallesDeUnaPublicacion
-            @okDetalles="okDetalles"
-            :publicacion="this.productoSeleccionado"
-            
-          ></DetallesDeUnaPublicacion>
-        </b-modal>
-      </div>
-    </div>
-  </b-container>
+    </section>
+
+  </div>
 </template>
 
 <script>
-import ImagenesDeUnaPublicacion from "@/components/imagenes/ImagenesDeUnaPublicacion.vue";
-import DetallesDeUnaPublicacion from "@/components/publicaciones/DetallesDeUnaPublicacion.vue";
 
 import { mapGetters } from "vuex";
 
@@ -187,8 +45,7 @@ import { mapGetters } from "vuex";
 export default {
   name: "VerDestacados",
   components: {
-    ImagenesDeUnaPublicacion,
-    DetallesDeUnaPublicacion,
+
   },
   props: {
     productos: {
@@ -199,16 +56,12 @@ export default {
   data() {
     return {
       tipoPublicacion: "",
-      
       verImagen: false,
       productoSeleccionado: [],
       perPage: 2,
       currentPage: 1,
       idPublicacionImagen: "",
     };
-  },
-  created() {
-  
   },
   computed: {
     ...mapGetters("storeUser", ["getUserId"]),
@@ -241,30 +94,18 @@ export default {
         return 0;
       });
     },
+    verProducto(producto) {
+      this.$router.push({
+        name: "verProducto",
+        params: {
+          tipo: producto.tipo.toLowerCase(),
+          id: producto.id,
+          nombre: producto.titulo
+        },
+      });
+    },
 
-    verImagenes(producto) {
-      this.verImagen = true;
-      this.idPublicacionImagen = producto.id;
-      this.tipoPublicacion = producto.tipo;
-      this.$refs["modalVerImagenes"].show();
-    },
-    verdetalles(producto) {
-      this.productoSeleccionado = producto;
-      this.$refs["modalVerProductos"].show();
-    },
-    okImagenesPublicacion() {
-      this.$refs["modalVerImagenes"].hide();
-    },
-    okDetalles() {
-      this.$refs["modalVerProductos"].hide();
-    },
   },
-  mounted() {},
+
 };
 </script>
-<style >
-.buscador:hover {
-  color: rgb(255, 206, 78);
-  cursor: pointer;
-}
-</style>

@@ -12,19 +12,14 @@
           <b-col class="text-center pt-3">
             <p class="h1 font-britannic text">
               <strong class="parrafoCategorias">
-                {{$t('publicaciones.propiedades_alquileres')}}
+                {{ $t('publicaciones.propiedades_alquileres') }}
               </strong>
 
-              <b-button
-                @click="publicarAlquiler()"
-                style="
+              <b-button @click="publicarAlquiler()" style="
                   overflow: hidden;
                   text-transform: uppercase;
-                  background-color: rgb(247, 248, 249);
                   line-height: 1.25em;
-                "
-                class="btnPublicar"
-              >
+                " class="btnPublicar">
                 Publicar
               </b-button>
             </p>
@@ -34,38 +29,22 @@
     </div>
     <br />
     <div v-if="loading" class="text-center">
-      <b-spinner
-        style="width: 4rem; height: 4rem"
-        variant="warning"
-        label="Text Centered"
-      >
+      <b-spinner style="width: 4rem; height: 4rem" variant="warning" label="Text Centered">
       </b-spinner>
       <!--  :img-src="`data:image/png;base64, ${producto.imagen}`" -->
     </div>
     <div v-else class="cardsBody">
       <div v-if="productos.length < 1" class="text-center">
-        <img
-                    class="responsiveNotProducts"
-
-          style="cursor: pointer"
+        <img class="responsiveNotProducts" style="cursor: pointer"
           src="https://res.cloudinary.com/malambo/image/upload/v1657303127/Malambo/utilidades/propiedades_gpvw0j.jpg"
-          @click="publicarAlquiler()"
-        />
+          @click="publicarAlquiler()" />
       </div>
       <div v-else>
         <ul class="cards">
-          <li
-            class="cards__item"
-            v-for="(producto, index) in productos"
-            :key="index"
-          >
+          <li class="cards__item" v-for="(producto, index) in productos" :key="index">
             <div class="card" itemscope itemtype="https://schema.org/Property">
               <div class="card__image">
-                <img
-                  :src="`data:image/png;base64, ${producto.imagen}`"
-                  class="imgCard"
-                  itemprop="image"
-                />
+                <img :src="`data:image/png;base64, ${producto.imagen}`" class="imgCard" itemprop="image" />
               </div>
               <div class="card__content">
                 <div class="card__title" itemprop="identifier">
@@ -77,35 +56,27 @@
                 <p class="card__text" itemprop="description">
                   {{ producto.observaciones }}
                 </p>
-                <button
-                  class="btn btn--block card__btn"
-                  @click="masInformacion(producto)"
-                >
-                {{$t('publicaciones.mas_info')}}
-                </button>
+                <b-btn  block class="btn btn btn--block card__btn btn-block" @click="masInformacion(producto)">
+                  {{ $t('publicaciones.mas_info') }}
+                </b-btn >
                 <meta itemprop="description" :content="producto.observaciones">
-              <meta itemprop="category" :content="producto.operacion">
-              <meta itemprop="subcategory" :content="producto.operacion">
-              <span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
-                <meta itemprop="addressLocality" content="General Belgrano">
-                <meta itemprop="addressRegion" content="Provincia de Buenos Aires">
-                <meta itemprop="postalCode" content="B7223">
-                <meta itemprop="latitude" content="-35.766666666667">
-                <meta itemprop="longitude" content="-58.5">
-              </span>
+                <meta itemprop="category" :content="producto.operacion">
+                <meta itemprop="subcategory" :content="producto.operacion">
+                <span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+                  <meta itemprop="addressLocality" content="General Belgrano">
+                  <meta itemprop="addressRegion" content="Provincia de Buenos Aires">
+                  <meta itemprop="postalCode" content="B7223">
+                  <meta itemprop="latitude" content="-35.766666666667">
+                  <meta itemprop="longitude" content="-58.5">
+                </span>
               </div>
             </div>
           </li>
         </ul>
         <br />
         <div class="d-flex justify-content-center">
-          <b-pagination
-            pills
-            v-model="currentPagePaginate"
-            :per-page="perPage"
-            :total-rows="totalRows"
-            @change="nextPage"
-          ></b-pagination>
+          <b-pagination pills v-model="currentPagePaginate" :per-page="perPage" :total-rows="totalRows"
+            @change="nextPage"></b-pagination>
         </div>
       </div>
     </div>
@@ -138,7 +109,7 @@ export default {
     };
   },
   components: {},
-  created() {},
+  created() { },
   computed: {
     ...mapGetters("storeUser", ["getUserId"]),
   },
@@ -248,10 +219,12 @@ export default {
 .ItemProd img {
   object-fit: contain;
 }
+
 .icono {
   width: 35px;
   margin: 5px;
 }
+
 .item {
   box-shadow: 3px 3px 5px 3px rgba(0, 0, 0, 0.2);
 }
@@ -266,6 +239,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 .cards {
   display: flex;
   flex-wrap: wrap;
@@ -276,6 +250,7 @@ export default {
   display: flex;
   justify-content: center;
 }
+
 .cards__item {
   display: flex;
   padding: 1rem;
@@ -298,6 +273,7 @@ export default {
   flex-direction: column;
   padding: 1rem;
 }
+
 .card__title {
   color: #000000;
   font-size: 1.25rem;
@@ -305,10 +281,12 @@ export default {
   letter-spacing: 2px;
   text-transform: uppercase;
 }
+
 .card__subtitle {
   color: #000000;
   font-weight: 300;
 }
+
 .card__text {
   flex: 1 1 auto;
   font-size: 0.875rem;
@@ -327,17 +305,9 @@ export default {
   padding-top: 10px;
   color: #2c354f;
 }
-.btn {
-  background-color: white;
-  border: 1px solid #cccccc;
-  color: #696969;
-  padding: 0.5rem;
-}
 
-.btn--block {
-  display: block;
-  width: 100%;
-}
+
+
 .card__image {
   object-fit: contain;
   background-position: center center;
@@ -350,15 +320,18 @@ export default {
   position: relative;
   transition: filter 0.5s cubic-bezier(0.43, 0.41, 0.22, 0.91);
 }
+
 .card__image::before {
   display: block;
   padding-top: 56.25%;
 }
+
 @media (min-width: 40rem) {
   .card__image::before {
     padding-top: 66.6%;
   }
 }
+
 .imgCard {
   width: auto;
   max-height: 100%;
@@ -367,11 +340,11 @@ export default {
   height: 300px;
   object-fit: contain;
 }
-.btn:hover {
-  color: #ffc107;
-}
+
+
+
 .btnPublicar:hover {
-  color: #ffc107;
+  color: #343a40;
 }
 </style>
 

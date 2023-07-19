@@ -35,6 +35,7 @@ import VencimientoContrato from "@/components/contratos/VencimientoContrato.vue"
 
 /* misProductos */
 import MisProductos from "@/components/usuarios/MisProductos.vue";
+import VerProducto from "@/components/usuarios/VerProducto.vue";
 /* Menu */
 import container from "@/components/menu/Container.vue";
 import home from "@/components/Home/Home.vue";
@@ -339,7 +340,16 @@ const router = new Router({
           meta: {
             requireAuth: true,
           },
-        },        
+        },
+        {
+          path: "/product/:tipo/:id/:nombre?",
+          name: "verProducto",
+          component: VerProducto,
+          props: true,
+          meta: {
+            requireAuth: false
+          }
+        }   
       ],
     },
     {

@@ -2,7 +2,7 @@
   <div>
    <!--  <p>Se publico el dia : {{ publicacion.fecha | formatDate }}</p>
     <p>Tipo de publicacion: {{ publicacion.tipo }}</p>
-    Categoria :<span class="buscador" style="color: #ffc107" @click="buscarCategoria(publicacion.padre)"> {{ publicacion.padre }}</span>
+    Categoria :<span class="buscador" style="color: #343a40" @click="buscarCategoria(publicacion.padre)"> {{ publicacion.padre }}</span>
     
     <p v-if="Number(publicacion.precio) > Number(0)">
       Precio: {{ getImporte(publicacion.precio) }}

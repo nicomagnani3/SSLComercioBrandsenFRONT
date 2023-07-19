@@ -7,5 +7,10 @@ export default {
     getProductosDestacados(credentials) {    
         return Api().get(API_URL + API_USER + "get_publicaciones_destacadas", credentials)
     },
+    getProducto(credentials) {
+        console.log(credentials)  
+        return Api().get(API_URL + API_USER + "publicacion/" + credentials.tipo + "/" + credentials.id);
+
+    },
   
 }
