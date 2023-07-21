@@ -152,7 +152,6 @@ export default {
   },
   methods: {
     okLoginPublicacion() {
-      console.log("ok publi");
       this.$refs["modalLogin"].hide();
       this.crearPublicacion();
     },
@@ -182,7 +181,6 @@ export default {
       this.presionoFinalizar = true;
       if (this.getUserId == null) {
         this.$refs["modalLogin"].show();
-        console.log("Login user");
         /*  this.$router.push({
           name: "login",
           params: {

@@ -37,7 +37,7 @@
                     </div>
                     <!-- Product details-->
                     <div class="card-body">
-                      <div class="text-center">
+                      <div class="text-center text-xs-left">
                         <!-- Product name-->
                         <h5 class="fw-bolder">{{ tituloAjustar(producto.titulo) }}</h5>
                         <!-- Product price-->
@@ -47,8 +47,8 @@
                     <!-- Product actions-->
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                       <div class="text-center">
-                        <b-btn @click="verProducto(producto)" block class="btn btn btn--block card__btn btn-block">Ver
-                          más</b-btn>
+                        <b-btn @click="verProducto(producto)" block class="btn btn btn--block card__btn btn-block">Ver más</b-btn>
+
                       </div>
                     </div>
                     <meta itemprop="description" :content="producto.titulo">
@@ -301,44 +301,9 @@ export default {
   border-radius: 20px;
 }
 
-.verMas {
-  margin-left: 13px;
-  text-decoration: none;
-  color: #3483fa;
-  cursor: pointer;
-  font-size: 20px;
-  -webkit-text-decoration: underline #676767;
-  text-decoration: underline #676767;
-  white-space: nowrap;
-  text-decoration: none;
-}
 
-.verMas:hover {
-  color: #1b4e9b;
-}
 
-.btnMas {
-  white-space: normal;
-  background: #ffce4e;
-  background: -moz-linear-gradient(45deg,
-      #00ddf5 0%,
-      #00d9d7 32%,
-      #00d6ba 100%);
-  background: -webkit-linear-gradient(45deg #00ddf5 0%,
-      #00d9d7 32%,
-      #ffce4e 100%);
-  background: linear-gradient(45deg #00ddf5 0%, #00d9d7 32%, #ffce4e 100%);
-  -moz-border-radius: 20px;
-  -webkit-border-radius: 20px;
-  border-radius: 20px;
-  margin: -3px 0 0 0;
-  padding: 9px 7px 16px 8px;
-  width: 88%;
-  text-transform: none;
-  font-size: 14px;
-  line-height: 11px;
-  color: #fff;
-}
+
 
 #iconright {
   height: 29rem;
@@ -351,24 +316,7 @@ export default {
   white-space: nowrap;
 }
 
-.btn {
-  background-color: #343a40;
-  border: 1px solid #cccccc;
-  color: white;
-  padding: 0.5rem;
-}
 
-.btn--block {
-  display: block;
-  width: 100%;
-}
 
-.btn:hover {
-  color: white;
-}
-
-.btnPublicar:hover {
-  color: #343a40;
-}
 </style>
 

@@ -217,7 +217,6 @@ export default {
         if (response.data.error == false) {
           this.publicidades = response.data.data;
           this.asignarPublicidades(this.publicidades);
-          console.log(this.publicidades);
         }
       } catch (err) {
         console.log(err);

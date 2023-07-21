@@ -173,7 +173,6 @@ export default {
     },
   },
   created() {
-    console.log(this.publicacion);
     if (this.publicacion.coordenadas != "") {
       let coordinate_str = this.publicacion.coordenadas
         .replace("[", "")
@@ -183,7 +182,6 @@ export default {
         parseFloat(coordinate_str[0]),
         parseFloat(coordinate_str[1]),
       ];
-      console.log(this.cordenadas);
     }
   },
 

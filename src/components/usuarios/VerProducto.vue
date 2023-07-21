@@ -117,7 +117,6 @@ export default {
                     id: this.id
                 });
                 this.producto = response.data.publicacion
-                console.log(this.producto)
             } catch (err) {
                 this.loading = true;
                 this.getPorductos();

@@ -293,7 +293,6 @@ export default {
   },
   methods: {
     addMarker(event) {
-      console.log(event);
       this.coordinates = event.latlng;
     },
     async validate() {
@@ -322,7 +321,6 @@ export default {
               usuarioID: this.getUserId,
               cordenadas: this.coordinates,
             });
-            console.log(response);
             if (response.data.code == 200) {
               swal(
                 "¡Propiedad creada!",

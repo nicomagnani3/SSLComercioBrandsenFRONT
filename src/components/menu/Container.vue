@@ -50,7 +50,6 @@ export default {
     async getLenguaje() {
       try {
         const response = await LenguajeService.getLenguaje();
-        console.log(response)
         const i18n = this.$root.$options.i18n
         i18n.setLocaleMessage('es', response.data.es); 
       } catch (err) {

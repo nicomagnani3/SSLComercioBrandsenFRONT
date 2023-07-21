@@ -24,9 +24,9 @@
       </div>
       <div v-else>
         <section class="py-7">
-          <div class="container-cards px-4 px-lg-5 mt-5">
-            <div class="row gx-5 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-5 justify-content-center">
-              <div class="col mb-5" v-for="(producto, index) in productos" :key="index">
+          <div class="container-cards px-2 px-sm-3 px-md-4 px-lg-5 mt-6">
+            <div class="row row-cols-2 row-cols-md-2 row-cols-xl-5 justify-content-left g-2">
+              <div class="col mb-3" v-for="(producto, index) in productos" :key="index">
                 <div class="card h-100 card-custom">
                   <!-- Product image-->
                   <div class="square-image">
@@ -34,18 +34,17 @@
                   </div>
                   <!-- Product details-->
                   <div class="card-body">
-                    <div class="text-center">
-                      <!-- Product name-->
+                    <div class="text-md-center text-lg-left">
+                      <!-- Product name -->
                       <h5 class="fw-bolder">{{ tituloAjustar(producto.titulo) }}</h5>
-                      <!-- Product price-->
-                      <p class="mb-0">{{ getImporte(producto.precio) }}</p>
+                      <!-- Product price -->
                     </div>
                   </div>
                   <!-- Product actions-->
                   <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                     <div class="text-center">
-                      <b-btn @click="verProducto(producto)" block
-                        class="btn btn btn--block card__btn btn-block">Ver más</b-btn>
+                      <b-btn @click="verProducto(producto)" block class="btn btn btn--block card__btn btn-block">Ver
+                        más</b-btn>
                     </div>
                   </div>
                 </div>
@@ -151,14 +150,14 @@ export default {
     },
     verProducto(producto) {
       if (producto != null) {
-        const path = `/productos/${producto.titulo}`;
-        if (this.$route.path !== path)
-          this.$router.push({
-            name: "productos",
-            params: {
-              producto: producto.titulo,
-            },
-          });
+        this.$router.push({
+          name: "verProducto",
+          params: {
+            tipo: producto.tipo.toLowerCase(),
+            id: producto.id,
+            nombre: producto.titulo
+          },
+        });
       }
     },
   },

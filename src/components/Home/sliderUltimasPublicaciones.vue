@@ -17,7 +17,7 @@
     </div>
     <div v-else>
       <section class="py-7">
-        <div class="container-cards px-5 px-lg-5 mt-6">
+        <div class="container-cards px-2 px-sm-3 px-md-4 px-lg-5 mt-6">
           <div class="row gx-5 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-5 justify-content-left" itemscope
             itemtype="https://schema.org/Product">
             <div class="col mb-5" v-for="(producto, index) in currentPageClubs" :key="index">
@@ -28,13 +28,13 @@
                 </div>
                 <!-- Product details-->
                 <div class="card-body">
-                  <div class="text-center">
-                    <!-- Product name-->
-                    <h5 class="fw-bolder">{{ tituloAjustar(producto.titulo) }}</h5>
-                    <!-- Product price-->
-                    <p class="mb-0">{{ getImporte(producto.precio) }}</p>
+                    <div class="text-md-center text-lg-left">
+                      <!-- Product name -->
+                      <h5 class="fw-bolder">{{ tituloAjustar(producto.titulo) }}</h5>
+                      <!-- Product price -->
+                      <p class="mb-0">{{ getImporte(producto.precio) }}</p>
+                    </div>
                   </div>
-                </div>
                 <!-- Product actions-->
                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                   <div class="text-center">
@@ -304,25 +304,7 @@ export default {
   white-space: nowrap;
 }
 
-.btn {
-  background-color: #343a40;
-  border: 1px solid #cccccc;
-  color: white;
-  padding: 0.5rem;
-}
 
-.btn--block {
-  display: block;
-  width: 100%;
-}
-
-.btn:hover {
-  color: white;
-}
-
-.btnPublicar:hover {
-  color: #343a40;
-}
 </style>
 
 

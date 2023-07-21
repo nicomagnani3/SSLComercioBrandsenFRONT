@@ -156,11 +156,9 @@ export default {
     async getAlquileres() {
       try {
         const response = await ProductosService.getAlquileres(1);
-        console.log(response);
         if (response.data.error == false) {
           this.productos = response.data.data;
           this.totalRows = response.data.cantidad;
-          console.log(this.totalRows);
           //this.getImporte(this.productos);
         }
       } catch (err) {

@@ -121,7 +121,6 @@ export default {
     async getCurriculums() {
       try {
         const response = await Contratos.getCurriculums();
-        console.log(response);
         this.curriculums = response.data.data;
         this.totalRows = this.curriculums.length;
       } catch (err) {
@@ -155,7 +154,6 @@ export default {
           );
           this.getCurriculums();
         }
-        console.log(response);
       } catch (error) {
         console.log(error);
       }

@@ -30,9 +30,9 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-lg-9">
-              <div class="container-cards" style="width: 95%; margin: 0 auto;">
+              <div class="container-cards" style="margin: 0 auto;">
                 <div class="row gx-4 gx-lg-4 row-cols-2 row-cols-md-3 row-cols-xl-4">
-                  <div class="col mb-5" v-for="(producto, index) in paginatedCards" :key="index">
+                  <div class="col mb-3" v-for="(producto, index) in paginatedCards" :key="index">
                     <div class="card h-100 card-custom" itemscope itemtype="https://schema.org/LocalBusiness">
                       <!-- Product image -->
                       <div class="square-image">
@@ -40,7 +40,7 @@
                       </div>
                       <!-- Product details -->
                       <div class="card-body">
-                        <div class="text-center">
+                    <div class="text-md-center text-lg-left">
                           <!-- Product name -->
                           <h5 class="fw-bolder" itemprop="name">{{ tituloAjustar(producto.nombre) }}</h5>
                           <!-- Product price -->

@@ -436,7 +436,6 @@ export default {
       this.createBase64(file);
     },
     createBase64(file) {
-      console.log(file);
       const reader = new FileReader();
       reader.onload = (e) => {
         this.documentoCV = e.target.result;
@@ -476,14 +475,12 @@ export default {
           });
           this.$refs["modalBolsaTrabajo"].hide();
         }
-        console.log(response);
       } catch (error) {
         this.ingresar = true;
         console.log(error);
       }
     },
     okLoginPublicacion() {
-      console.log("ok login");
       this.$refs["modalLogin"].hide();
       window.location.reload();
     },
